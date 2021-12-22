@@ -1,5 +1,5 @@
-import 'package:record_of_classes/Models/classes.dart';
-import 'package:record_of_classes/Models/student.dart';
+import 'package:record_of_classes/models/classes.dart';
+import 'package:record_of_classes/models/student.dart';
 
 class Attendance{
   late int id;

@@ -1,4 +1,4 @@
-import 'package:record_of_classes/Models/student.dart';
+import 'package:record_of_classes/models/student.dart';
 
 import 'bill.dart';
 

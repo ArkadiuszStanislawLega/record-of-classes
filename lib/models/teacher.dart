@@ -1,5 +1,8 @@
 import 'person.dart';
 
-class Teacher extends Person{
+class Teacher {
   late int teacherId;
+  late Person person;
+
+  Teacher({required this.person, this.teacherId = 0});
 }

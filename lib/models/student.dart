@@ -1,7 +1,7 @@
-import 'package:record_of_classes/Models/account.dart';
-import 'package:record_of_classes/Models/attendance.dart';
-import 'package:record_of_classes/Models/group.dart';
-import 'package:record_of_classes/Models/parent.dart';
+import 'package:record_of_classes/models/account.dart';
+import 'package:record_of_classes/models/attendance.dart';
+import 'package:record_of_classes/models/group.dart';
+import 'package:record_of_classes/models/parent.dart';
 
 import 'person.dart';
 

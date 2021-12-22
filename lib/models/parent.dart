@@ -1,5 +1,5 @@
-import 'package:record_of_classes/Models/phone.dart';
-import 'package:record_of_classes/Models/student.dart';
+import 'package:record_of_classes/models/phone.dart';
+import 'package:record_of_classes/models/student.dart';
 
 import 'person.dart';
 

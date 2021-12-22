@@ -1,4 +1,4 @@
-import 'package:record_of_classes/Models/group.dart';
+import 'package:record_of_classes/models/group.dart';
 
 class Classes {
   late int id;
