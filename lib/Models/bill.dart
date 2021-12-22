@@ -1,10 +1,10 @@
 import 'package:record_of_classes/Models/student.dart';
 
-import 'bill.dart';
+import 'classes.dart';
 
-class Account{
+class Bill {
   late int id;
+  late bool isPaid;
+  late Classes classes;
   late Student student;
-  late List<Bill> notPaid;
-  late List<Bill> paid;
 }

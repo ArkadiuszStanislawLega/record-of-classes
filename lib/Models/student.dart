@@ -1,10 +1,16 @@
+import 'package:record_of_classes/Models/account.dart';
+import 'package:record_of_classes/Models/attendance.dart';
+import 'package:record_of_classes/Models/group.dart';
+import 'package:record_of_classes/Models/parent.dart';
+
 import 'person.dart';
 
 class Student extends Person{
   late int studentId;
   late int age;
-  late int accountId;
-  late List<int> parentsId;
-  late List<int> siblingsId;
-  late List<int> groupsId;
+  late Account account;
+  late List<Parent> parents;
+  late List<Student> siblings;
+  late List<Group> groups;
+  late List<Attendance> attendancesList;
 }
