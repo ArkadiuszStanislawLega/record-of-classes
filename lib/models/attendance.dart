@@ -5,4 +5,5 @@ class Attendance{
   late int id;
   late Classes classes;
   late Student student;
+  late bool isPresent;
 }
