@@ -22,19 +22,17 @@ class ObjectBox {
   }
 }
 
-late ObjectBox objectbox;
+late ObjectBox objectBox;
 
 Future<void> main() async {
   // This is required so ObjectBox can get the application directory
   // to store the database in.
   WidgetsFlutterBinding.ensureInitialized();
 
-  objectbox = await ObjectBox.create();
+  objectBox = await ObjectBox.create();
 
   runApp(const RecordOfClassesApp());
 }
-
-
 
 class RecordOfClassesApp extends StatefulWidget {
   const RecordOfClassesApp({Key? key}) : super(key: key);
@@ -48,10 +46,11 @@ class RecordOfClassesApp extends StatefulWidget {
 class _RecordOfClassesApp extends State<RecordOfClassesApp> {
   @override
   Widget build(BuildContext context) {
-    final personsBox = objectbox.store.box<Person>();
+    final personsBox = objectBox.store.box<Person>();
 
     var length = personsBox.getAll().length;
     var personFromDb = personsBox.get(1);
+
     print(personFromDb!.name);
 
     return MaterialApp(
@@ -64,5 +63,4 @@ class _RecordOfClassesApp extends State<RecordOfClassesApp> {
       },
     );
   }
-
 }

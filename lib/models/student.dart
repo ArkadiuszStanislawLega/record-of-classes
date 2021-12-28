@@ -2,15 +2,18 @@ import 'package:record_of_classes/models/account.dart';
 import 'package:record_of_classes/models/attendance.dart';
 import 'package:record_of_classes/models/group.dart';
 import 'package:record_of_classes/models/parent.dart';
+import 'package:objectbox/objectbox.dart';
 
 import 'person.dart';
 
-class Student extends Person{
-  late int studentId;
+@Entity()
+class Student{
+  late int id;
   late int age;
-  late Account account;
-  late List<Parent> parents;
-  late List<Student> siblings;
-  late List<Group> groups;
-  late List<Attendance> attendancesList;
+  late ToOne<Person> person;
+  late ToOne<Account> account;
+  late ToMany<Parent> parents;
+  late ToMany<Student> siblings;
+  late ToMany<Group> groups;
+  late ToMany<Attendance> attendancesList;
 }

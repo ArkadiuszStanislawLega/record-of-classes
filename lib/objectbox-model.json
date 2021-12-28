@@ -26,11 +26,395 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "2:7867667170132954701",
+      "lastPropertyId": "2:948463750746831861",
+      "name": "Account",
+      "properties": [
+        {
+          "id": "1:8033253743708233996",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:948463750746831861",
+          "name": "studentId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "1:2683096897271273148",
+          "relationTarget": "Student"
+        }
+      ],
+      "relations": [
+        {
+          "id": "1:1221970440210856162",
+          "name": "bills",
+          "targetId": "5:2569973322208561741"
+        }
+      ]
+    },
+    {
+      "id": "3:4237185987808461471",
+      "lastPropertyId": "5:4776855031149751765",
+      "name": "Address",
+      "properties": [
+        {
+          "id": "1:4653003567139885767",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:7446497639021315996",
+          "name": "street",
+          "type": 9
+        },
+        {
+          "id": "3:2518400389363416918",
+          "name": "houseNumber",
+          "type": 9
+        },
+        {
+          "id": "4:5971683185450028834",
+          "name": "flatNumber",
+          "type": 9
+        },
+        {
+          "id": "5:4776855031149751765",
+          "name": "city",
+          "type": 9
+        }
+      ],
+      "relations": [
+        {
+          "id": "2:7162615460766791909",
+          "name": "groups",
+          "targetId": "8:5555386999314552904"
+        }
+      ]
+    },
+    {
+      "id": "4:8304019811953848799",
+      "lastPropertyId": "4:6357736263001832829",
+      "name": "Attendance",
+      "properties": [
+        {
+          "id": "1:1157837442318272034",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1036554286567749103",
+          "name": "isPresent",
+          "type": 1
+        },
+        {
+          "id": "3:3706186507634068022",
+          "name": "classesId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "2:6773675177352282519",
+          "relationTarget": "Classes"
+        },
+        {
+          "id": "4:6357736263001832829",
+          "name": "studentId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "3:3876153227275489020",
+          "relationTarget": "Student"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "5:2569973322208561741",
+      "lastPropertyId": "4:3511719454620364937",
+      "name": "Bill",
+      "properties": [
+        {
+          "id": "1:8665943235444996184",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4280196193635632373",
+          "name": "isPaid",
+          "type": 1
+        },
+        {
+          "id": "3:4785750695672916933",
+          "name": "classesId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "4:4134753230374124452",
+          "relationTarget": "Classes"
+        },
+        {
+          "id": "4:3511719454620364937",
+          "name": "studentId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "5:8005409257843509993",
+          "relationTarget": "Account"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "6:8608907494681874391",
+      "lastPropertyId": "3:134950544908276607",
+      "name": "Classes",
+      "properties": [
+        {
+          "id": "1:471551346332002484",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8961382260420971607",
+          "name": "dateTime",
+          "type": 10
+        },
+        {
+          "id": "3:134950544908276607",
+          "name": "groupId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "6:4477573794856855013",
+          "relationTarget": "Group"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "7:397564380929104183",
+      "lastPropertyId": "5:4489896552013617294",
+      "name": "ClassesType",
+      "properties": [
+        {
+          "id": "1:8750576041410662200",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8235849955281182792",
+          "name": "priceForEach",
+          "type": 8
+        },
+        {
+          "id": "3:3401004614813659179",
+          "name": "priceForMonth",
+          "type": 8
+        },
+        {
+          "id": "4:7513474898787404393",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "5:4489896552013617294",
+          "name": "teacherId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "7:114311808619017457",
+          "relationTarget": "Teacher"
+        }
+      ],
+      "relations": [
+        {
+          "id": "3:539727955104591881",
+          "name": "groups",
+          "targetId": "8:5555386999314552904"
+        }
+      ]
+    },
+    {
+      "id": "8:5555386999314552904",
+      "lastPropertyId": "3:7063087958367453988",
+      "name": "Group",
+      "properties": [
+        {
+          "id": "1:7448942118823140109",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2424131766743578433",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:7063087958367453988",
+          "name": "classesTypeId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "8:4135866921457884117",
+          "relationTarget": "ClassesType"
+        }
+      ],
+      "relations": [
+        {
+          "id": "4:9215356480749689848",
+          "name": "students",
+          "targetId": "11:8038409490704286009"
+        }
+      ]
+    },
+    {
+      "id": "9:2140736623696140270",
+      "lastPropertyId": "2:3855328201260456972",
+      "name": "Parent",
+      "properties": [
+        {
+          "id": "1:416524062601399073",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:3855328201260456972",
+          "name": "personId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "9:620057998256937800",
+          "relationTarget": "Person"
+        }
+      ],
+      "relations": [
+        {
+          "id": "5:2990737891109516731",
+          "name": "phone",
+          "targetId": "10:8141085108066277363"
+        },
+        {
+          "id": "6:2098414998713666383",
+          "name": "children",
+          "targetId": "11:8038409490704286009"
+        }
+      ]
+    },
+    {
+      "id": "10:8141085108066277363",
+      "lastPropertyId": "4:9032125497926527827",
+      "name": "Phone",
+      "properties": [
+        {
+          "id": "1:4543176168418814650",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:7104738794691701984",
+          "name": "number",
+          "type": 6
+        },
+        {
+          "id": "3:8981759010096708230",
+          "name": "numberName",
+          "type": 9
+        },
+        {
+          "id": "4:9032125497926527827",
+          "name": "ownerId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "10:4280504408740964787",
+          "relationTarget": "Person"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "11:8038409490704286009",
+      "lastPropertyId": "4:2683141962036944738",
+      "name": "Student",
+      "properties": [
+        {
+          "id": "1:5453510512246741945",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5121766592776384372",
+          "name": "age",
+          "type": 6
+        },
+        {
+          "id": "3:1496439598545710945",
+          "name": "personId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "11:1243801400274110003",
+          "relationTarget": "Person"
+        },
+        {
+          "id": "4:2683141962036944738",
+          "name": "accountId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "12:7585845961853672244",
+          "relationTarget": "Account"
+        }
+      ],
+      "relations": [
+        {
+          "id": "7:6231248647669863271",
+          "name": "parents",
+          "targetId": "9:2140736623696140270"
+        },
+        {
+          "id": "8:5393923549136057815",
+          "name": "siblings",
+          "targetId": "11:8038409490704286009"
+        },
+        {
+          "id": "9:3217513060367901643",
+          "name": "groups",
+          "targetId": "8:5555386999314552904"
+        },
+        {
+          "id": "10:7322280606697731102",
+          "name": "attendancesList",
+          "targetId": "4:8304019811953848799"
+        }
+      ]
+    },
+    {
+      "id": "12:7751236531251891487",
+      "lastPropertyId": "2:841561370609739264",
+      "name": "Teacher",
+      "properties": [
+        {
+          "id": "1:8579947909360137480",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:841561370609739264",
+          "name": "personId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "13:321765665195980038",
+          "relationTarget": "Person"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "1:6677618309001946823",
-  "lastIndexId": "0:0",
-  "lastRelationId": "0:0",
+  "lastEntityId": "12:7751236531251891487",
+  "lastIndexId": "13:321765665195980038",
+  "lastRelationId": "10:7322280606697731102",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,

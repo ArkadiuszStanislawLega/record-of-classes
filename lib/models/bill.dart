@@ -1,10 +1,12 @@
-import 'package:record_of_classes/models/student.dart';
+import 'package:objectbox/objectbox.dart';
 
+import 'account.dart';
 import 'classes.dart';
 
+@Entity()
 class Bill {
   late int id;
   late bool isPaid;
-  late Classes classes;
-  late Student student;
+  late ToOne<Classes> classes;
+  late ToOne<Account> student;
 }
