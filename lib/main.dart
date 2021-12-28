@@ -5,7 +5,7 @@ import 'package:record_of_classes/widgets/pages/start_page.dart';
 
 import 'models/person.dart';
 
-import 'objectbox.g.dart'; // created by `flutter pub run build_runner build`
+import 'objectbox.g.dart';
 
 class ObjectBox {
   /// The Store of this app.
@@ -17,7 +17,6 @@ class ObjectBox {
 
   /// Create an instance of ObjectBox to use throughout the app.
   static Future<ObjectBox> create() async {
-    // Future<Store> openStore() {...} is defined in the generated objectbox.g.dart
     final store = await openStore();
     return ObjectBox._create(store);
   }
@@ -26,12 +25,8 @@ class ObjectBox {
 late ObjectBox objectBox;
 
 Future<void> main() async {
-  // This is required so ObjectBox can get the application directory
-  // to store the database in.
   WidgetsFlutterBinding.ensureInitialized();
-
   objectBox = await ObjectBox.create();
-
   runApp(const RecordOfClassesApp());
 }
 

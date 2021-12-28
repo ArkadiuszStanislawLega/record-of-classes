@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:record_of_classes/constants/app_urls.dart';
+import 'package:record_of_classes/constants/strings.dart';
 
 class StartPageView extends StatefulWidget {
   const StartPageView({Key? key}) : super(key: key);
@@ -16,7 +17,7 @@ class _StartPageViewView extends State<StartPageView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Start page'),
+        title: const Text('Start page'),
       ),
       body: Column(
         children: [
@@ -27,7 +28,7 @@ class _StartPageViewView extends State<StartPageView> {
                 AppUrls.CREATE_STUDENT,
               );
             },
-            child: Text('Utworz studenta'),
+            child: const Text(Strings.CREATE_STUDENT),
           ),
         ],
       ),

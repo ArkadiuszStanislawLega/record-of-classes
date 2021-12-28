@@ -1,13 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:objectbox/objectbox.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/models/person.dart';
 import 'package:record_of_classes/objectbox.g.dart';
-import 'package:path/path.dart';
 
-import '../../main.dart';
 import '../../main.dart';
 
 class CreateStudentPage extends StatefulWidget {
@@ -23,7 +20,8 @@ class _CreateStudentPage extends State<CreateStudentPage> {
   late Store _store;
   bool hasBeenInitialized = false;
   String personName = '', personSurname = '';
-  List<Person> persons = [];
+
+  late Stream<List<Person>> _personStream;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +29,7 @@ class _CreateStudentPage extends State<CreateStudentPage> {
       appBar: AppBar(
         title: const Text('Create student page'),
       ),
-      body: Column(
+      body:           SingleChildScrollView( child: Column(
         children: [
           TextField(
             decoration: const InputDecoration(
@@ -59,33 +57,60 @@ class _CreateStudentPage extends State<CreateStudentPage> {
             onPressed: () {
               var person = Person(name: personName, surname: personSurname);
               _store.box<Person>().put(person);
-              Navigator.pop(
-                context,
-              );
+              // Navigator.pop(
+              //   context,
+              // );
             },
             child: const Text(Strings.CREATE_STUDENT),
           ),
-          ListView.builder(
-            scrollDirection: Axis.vertical,
-            physics: const BouncingScrollPhysics(),
-            shrinkWrap: true,
-            itemCount: persons.length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                title: Text(persons.elementAt(index).toString()),
-              );
-            },
-          )
-        ],
-      ),
-    );
+
+            SizedBox(
+              child: StreamBuilder<List<Person>>(
+                stream: _personStream,
+                builder: (context, snapshot) {
+                  return DataTable(
+                    columns: const [
+                      DataColumn(
+                        label: Text('ID'),
+                      ),
+                      DataColumn(
+                        label: Text('Imię'),
+                      ),
+                      DataColumn(
+                        label: Text('Nazwisko'),
+                      ),
+                    ],
+                    rows: snapshot.data!.map(
+                      (person) {
+                        return DataRow(cells: [
+                          DataCell(
+                            Text(person.id.toString()),
+                          ),
+                          DataCell(
+                            Text(person.name),
+                          ),
+                          DataCell(
+                            Text(person.surname),
+                          ),
+                        ]);
+                      },
+                    ).toList(),
+                  );
+                },
+              ),
+            ),
+          ],)
+        ),
+      );
+
   }
 
   void createNewPerson() {
     var createdPerson = Person(name: personName, surname: personSurname);
     _store.box<Person>().put(createdPerson);
     setState(() {
-      persons = _store.box<Person>().getAll();
+      // persons = _store.box<Person>().getAll();
+      //persons = _store.box<Person>().query(Person_.id.greaterThan(0)..order(Person_.id, flags: Order.descending)).build();
     });
   }
 
@@ -93,6 +118,10 @@ class _CreateStudentPage extends State<CreateStudentPage> {
   void initState() {
     super.initState();
     _store = objectBox.store;
-    persons = _store.box<Person>().getAll();
+    _personStream = _store
+        .box<Person>()
+        .query()
+        .watch(triggerImmediately: true)
+        .map((query) => query.find());
   }
 }
