@@ -1,5 +1,7 @@
 class Strings{
   static const String NAME = 'Imię',
   SURNAME = 'Nazwsiko',
-  ADD = 'Dodaj';
+  ADD = 'Dodaj',
+  CREATE_STUDENT = 'Utwórz ucznia',
+  DATABASE_NAME = 'objectbox';
 }

@@ -7,4 +7,9 @@ class Person{
   late String surname;
 
   Person({this.id = 0, this.name = '', this.surname = ''});
+
+  @override
+  String toString() {
+    return '$id. $name $surname';
+  }
 }

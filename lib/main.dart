@@ -50,7 +50,7 @@ class _RecordOfClassesApp extends State<RecordOfClassesApp> {
     final personsBox = objectBox.store.box<Person>();
 
     var length = personsBox.getAll().length;
-    var personFromDb = personsBox.get(1);
+    var personFromDb = personsBox.get(length-1);
 
     print(personFromDb!.name);
 
@@ -61,7 +61,7 @@ class _RecordOfClassesApp extends State<RecordOfClassesApp> {
       routes: {
         AppUrls.EMPTY: (context) => const StartPageView(),
         AppUrls.HOME: (context) => const StartPageView(),
-        AppUrls.CREATE_STUDENT: (context) => const CreateStudentPage(),
+        AppUrls.CREATE_STUDENT: (context) => const CreateStudentPage()
       },
     );
   }
