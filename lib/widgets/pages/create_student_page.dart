@@ -22,7 +22,7 @@ class _CreateStudentPage extends State<CreateStudentPage> {
   bool hasBeenInitialized = false;
   String personName = '', personSurname = '', personAge = '';
 
-  late Stream<List<Person>> _personStream;
+  late Stream<List<Student>> _personStream;
 
   @override
   Widget build(BuildContext context) {
@@ -67,14 +67,7 @@ class _CreateStudentPage extends State<CreateStudentPage> {
           ),
           ElevatedButton(
             onPressed: () {
-              var person = Person(name: personName, surname: personSurname);
-              var student = Student(age: int.parse(personAge));
-              person.student.target = student;
-
-              _store.box<Person>().put(person);
-
-              var len = _store.box<Student>().getAll().length;
-
+              createNewPerson();
               Navigator.pop(
                 context,
               );
@@ -83,7 +76,7 @@ class _CreateStudentPage extends State<CreateStudentPage> {
           ),
 
             SizedBox(
-              child: StreamBuilder<List<Person>>(
+              child: StreamBuilder<List<Student>>(
                 stream: _personStream,
                 builder: (context, snapshot) {
                   return DataTable(
@@ -97,18 +90,24 @@ class _CreateStudentPage extends State<CreateStudentPage> {
                       DataColumn(
                         label: Text('Nazwisko'),
                       ),
+                      DataColumn(
+                        label: Text('Wiek'),
+                      ),
                     ],
                     rows: snapshot.data!.map(
-                      (person) {
+                      (student) {
                         return DataRow(cells: [
                           DataCell(
-                            Text(person.id.toString()),
+                            Text(student.id.toString()),
                           ),
                           DataCell(
-                            Text(person.name),
+                            Text(student.person.target!.name),
                           ),
                           DataCell(
-                            Text(person.surname),
+                            Text(student.person.target!.surname),
+                          ),
+                          DataCell(
+                            Text(student.age.toString()),
                           ),
                         ]);
                       },
@@ -124,22 +123,23 @@ class _CreateStudentPage extends State<CreateStudentPage> {
   }
 
   void createNewPerson() {
-    var createdPerson = Person(name: personName, surname: personSurname);
-    _store.box<Person>().put(createdPerson);
-
-
-    setState(() {
-      // persons = _store.box<Person>().getAll();
-      //persons = _store.box<Person>().query(Person_.id.greaterThan(0)..order(Person_.id, flags: Order.descending)).build();
-    });
+    var person = Person(name: personName, surname: personSurname);
+    var student = Student(age: int.parse(personAge));
+    student.person.target = person;
+    _store.box<Student>().put(student);
   }
 
   @override
   void initState() {
     super.initState();
     _store = objectBox.store;
+    var studentList = _store.box<Student>().getAll();
+    print(studentList.length.toString());
+    var person = studentList[studentList.length-1]!.person.target;
+    print('Tutaj patrz => ' + person.toString());
+
     _personStream = _store
-        .box<Person>()
+        .box<Student>()
         .query()
         .watch(triggerImmediately: true)
         .map((query) => query.find());

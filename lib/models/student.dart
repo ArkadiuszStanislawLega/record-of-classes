@@ -18,4 +18,10 @@ class Student {
   final attendancesList = ToMany<Attendance>();
 
   Student({this.id = 0, required this.age});
+
+  @override
+  String toString() {
+
+    return '$id $age ${person.target.toString()}';
+  }
 }
