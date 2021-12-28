@@ -5,5 +5,5 @@ import 'package:record_of_classes/models/group.dart';
 class Classes {
   late int id;
   late DateTime dateTime;
-  late ToOne<Group> group;
+  final group = ToOne<Group>();
 }

@@ -6,5 +6,5 @@ class Phone{
   late int id;
   late int number;
   late String numberName;
-  late ToOne<Person> owner;
+  final owner = ToOne<Person>();
 }

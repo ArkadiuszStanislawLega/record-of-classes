@@ -55,13 +55,7 @@
           "relationTarget": "Student"
         }
       ],
-      "relations": [
-        {
-          "id": "1:1221970440210856162",
-          "name": "bills",
-          "targetId": "5:2569973322208561741"
-        }
-      ]
+      "relations": []
     },
     {
       "id": "3:4237185987808461471",
@@ -95,13 +89,7 @@
           "type": 9
         }
       ],
-      "relations": [
-        {
-          "id": "2:7162615460766791909",
-          "name": "groups",
-          "targetId": "8:5555386999314552904"
-        }
-      ]
+      "relations": []
     },
     {
       "id": "4:8304019811953848799",
@@ -235,17 +223,11 @@
           "relationTarget": "Teacher"
         }
       ],
-      "relations": [
-        {
-          "id": "3:539727955104591881",
-          "name": "groups",
-          "targetId": "8:5555386999314552904"
-        }
-      ]
+      "relations": []
     },
     {
       "id": "8:5555386999314552904",
-      "lastPropertyId": "3:7063087958367453988",
+      "lastPropertyId": "4:5753611441503209084",
       "name": "Group",
       "properties": [
         {
@@ -266,11 +248,19 @@
           "flags": 520,
           "indexId": "8:4135866921457884117",
           "relationTarget": "ClassesType"
+        },
+        {
+          "id": "4:5753611441503209084",
+          "name": "addressId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "15:1182126131564333134",
+          "relationTarget": "Address"
         }
       ],
       "relations": [
         {
-          "id": "4:9215356480749689848",
+          "id": "11:8516641969030352180",
           "name": "students",
           "targetId": "11:8038409490704286009"
         }
@@ -386,14 +376,14 @@
           "targetId": "11:8038409490704286009"
         },
         {
-          "id": "9:3217513060367901643",
-          "name": "groups",
-          "targetId": "8:5555386999314552904"
-        },
-        {
           "id": "10:7322280606697731102",
           "name": "attendancesList",
           "targetId": "4:8304019811953848799"
+        },
+        {
+          "id": "12:5848685589650165534",
+          "name": "groups",
+          "targetId": "8:5555386999314552904"
         }
       ]
     },
@@ -421,14 +411,20 @@
     }
   ],
   "lastEntityId": "12:7751236531251891487",
-  "lastIndexId": "14:4895456357721923155",
-  "lastRelationId": "10:7322280606697731102",
+  "lastIndexId": "15:1182126131564333134",
+  "lastRelationId": "12:5848685589650165534",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
   "retiredEntityUids": [],
   "retiredIndexUids": [],
   "retiredPropertyUids": [],
-  "retiredRelationUids": [],
+  "retiredRelationUids": [
+    1221970440210856162,
+    7162615460766791909,
+    539727955104591881,
+    9215356480749689848,
+    3217513060367901643
+  ],
   "version": 1
 }

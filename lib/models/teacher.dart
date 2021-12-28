@@ -5,7 +5,7 @@ import 'person.dart';
 @Entity()
 class Teacher {
   late int id;
-  late ToOne<Person> person;
+  final person = ToOne<Person>();
 
-  Teacher({required this.person, this.id = 0});
+  Teacher({this.id = 0});
 }

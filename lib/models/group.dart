@@ -1,13 +1,14 @@
 import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/models/student.dart';
 
+import 'address.dart';
 import 'classes_type.dart';
 
 @Entity()
-class Group{
+class Group {
   late int id;
   late String name;
-  late ToOne<ClassesType> classesType;
-  late ToMany<Student> students;
+  final address = ToOne<Address>();
+  final classesType = ToOne<ClassesType>();
+  final students = ToMany<Student>();
 }
-

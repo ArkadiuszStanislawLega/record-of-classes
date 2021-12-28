@@ -7,7 +7,7 @@ import 'person.dart';
 @Entity()
 class Parent{
   late int id;
-  late ToOne<Person> person;
-  late ToMany<Phone> phone;
-  late ToMany<Student> children;
+  final person = ToOne<Person>();
+  final phone = ToMany<Phone>();
+  final children = ToMany<Student>();
 }

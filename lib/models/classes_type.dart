@@ -9,13 +9,13 @@ class ClassesType {
   late double priceForEach;
   late double priceForMonth;
   late String name;
-  late ToOne<Teacher> teacher;
-  late ToMany<Group> groups;
+  final teacher = ToOne<Teacher>();
+  @Backlink()
+  final groups = ToMany<Group>();
 
   ClassesType(
       {this.id = 0,
       this.priceForEach = 0.0,
       this.priceForMonth = 0.0,
-      this.name = '',
-      required this.teacher});
+      this.name = ''});
 }
