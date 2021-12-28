@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:record_of_classes/constants/app_urls.dart';
 
-class StartPageView extends StatefulWidget{
+class StartPageView extends StatefulWidget {
   const StartPageView({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-   return _StartPageViewView();
+    return _StartPageViewView();
   }
-
 }
 
 class _StartPageViewView extends State<StartPageView> {
@@ -18,8 +18,19 @@ class _StartPageViewView extends State<StartPageView> {
       appBar: AppBar(
         title: Text('Start page'),
       ),
-      body: Text('Start page'),
+      body: Column(
+        children: [
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pushNamed(
+                context,
+                AppUrls.CREATE_STUDENT,
+              );
+            },
+            child: Text('Utworz studenta'),
+          ),
+        ],
+      ),
     );
   }
-
 }

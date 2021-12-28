@@ -1,4 +1,5 @@
-class AppUrls{
-  static const String EMPTY = '/';
-  static const String HOME = '/home';
+class AppUrls {
+  static const String EMPTY = '/',
+      HOME = '/home',
+      CREATE_STUDENT = '/create_student';
 }

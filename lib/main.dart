@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:record_of_classes/constants/app_urls.dart';
+import 'package:record_of_classes/widgets/pages/create_student_page.dart';
 import 'package:record_of_classes/widgets/pages/start_page.dart';
 
 import 'models/person.dart';
@@ -60,6 +61,7 @@ class _RecordOfClassesApp extends State<RecordOfClassesApp> {
       routes: {
         AppUrls.EMPTY: (context) => const StartPageView(),
         AppUrls.HOME: (context) => const StartPageView(),
+        AppUrls.CREATE_STUDENT: (context) => const CreateStudentPage(),
       },
     );
   }
