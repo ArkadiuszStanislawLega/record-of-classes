@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/models/person.dart';
+import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/objectbox.g.dart';
 
 import '../../main.dart';
@@ -19,7 +20,7 @@ class CreateStudentPage extends StatefulWidget {
 class _CreateStudentPage extends State<CreateStudentPage> {
   late Store _store;
   bool hasBeenInitialized = false;
-  String personName = '', personSurname = '';
+  String personName = '', personSurname = '', personAge = '';
 
   late Stream<List<Person>> _personStream;
 
@@ -53,13 +54,30 @@ class _CreateStudentPage extends State<CreateStudentPage> {
               },
             ),
           ),
+          TextField(
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              hintText: Strings.AGE,
+            ),
+            onChanged: (userInput) => setState(
+                  () {
+                personAge = userInput;
+              },
+            ),
+          ),
           ElevatedButton(
             onPressed: () {
               var person = Person(name: personName, surname: personSurname);
+              var student = Student(age: int.parse(personAge));
+              person.student.target = student;
+
               _store.box<Person>().put(person);
-              // Navigator.pop(
-              //   context,
-              // );
+
+              var len = _store.box<Student>().getAll().length;
+
+              Navigator.pop(
+                context,
+              );
             },
             child: const Text(Strings.CREATE_STUDENT),
           ),
@@ -108,6 +126,8 @@ class _CreateStudentPage extends State<CreateStudentPage> {
   void createNewPerson() {
     var createdPerson = Person(name: personName, surname: personSurname);
     _store.box<Person>().put(createdPerson);
+
+
     setState(() {
       // persons = _store.box<Person>().getAll();
       //persons = _store.box<Person>().query(Person_.id.greaterThan(0)..order(Person_.id, flags: Order.descending)).build();

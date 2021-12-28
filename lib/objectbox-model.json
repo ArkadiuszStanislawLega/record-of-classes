@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "1:6677618309001946823",
-      "lastPropertyId": "3:1532596481634738400",
+      "lastPropertyId": "4:456323340332387829",
       "name": "Person",
       "properties": [
         {
@@ -23,6 +23,14 @@
           "id": "3:1532596481634738400",
           "name": "surname",
           "type": 9
+        },
+        {
+          "id": "4:456323340332387829",
+          "name": "studentId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "14:4895456357721923155",
+          "relationTarget": "Student"
         }
       ],
       "relations": []
@@ -413,7 +421,7 @@
     }
   ],
   "lastEntityId": "12:7751236531251891487",
-  "lastIndexId": "13:321765665195980038",
+  "lastIndexId": "14:4895456357721923155",
   "lastRelationId": "10:7322280606697731102",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

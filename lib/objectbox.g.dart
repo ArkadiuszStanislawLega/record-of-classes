@@ -28,7 +28,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(1, 6677618309001946823),
       name: 'Person',
-      lastPropertyId: const IdUid(3, 1532596481634738400),
+      lastPropertyId: const IdUid(4, 456323340332387829),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -45,7 +45,14 @@ final _entities = <ModelEntity>[
             id: const IdUid(3, 1532596481634738400),
             name: 'surname',
             type: 9,
-            flags: 0)
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 456323340332387829),
+            name: 'studentId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(14, 4895456357721923155),
+            relationTarget: 'Student')
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[]),
@@ -433,7 +440,7 @@ ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
       lastEntityId: const IdUid(12, 7751236531251891487),
-      lastIndexId: const IdUid(13, 321765665195980038),
+      lastIndexId: const IdUid(14, 4895456357721923155),
       lastRelationId: const IdUid(10, 7322280606697731102),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [],
@@ -447,7 +454,7 @@ ModelDefinition getObjectBoxModel() {
   final bindings = <Type, EntityDefinition>{
     Person: EntityDefinition<Person>(
         model: _entities[0],
-        toOneRelations: (Person object) => [],
+        toOneRelations: (Person object) => [object.student],
         toManyRelations: (Person object) => {},
         getId: (Person object) => object.id,
         setId: (Person object, int id) {
@@ -456,10 +463,11 @@ ModelDefinition getObjectBoxModel() {
         objectToFB: (Person object, fb.Builder fbb) {
           final nameOffset = fbb.writeString(object.name);
           final surnameOffset = fbb.writeString(object.surname);
-          fbb.startTable(4);
+          fbb.startTable(5);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, nameOffset);
           fbb.addOffset(2, surnameOffset);
+          fbb.addInt64(3, object.student.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -473,7 +481,9 @@ ModelDefinition getObjectBoxModel() {
                   const fb.StringReader().vTableGet(buffer, rootOffset, 6, ''),
               surname:
                   const fb.StringReader().vTableGet(buffer, rootOffset, 8, ''));
-
+          object.student.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
+          object.student.attach(store);
           return object;
         }),
     Account: EntityDefinition<Account>(
@@ -809,9 +819,9 @@ ModelDefinition getObjectBoxModel() {
           final buffer = fb.BufferContext(fbData);
           final rootOffset = buffer.derefObject(0);
 
-          final object = Student()
-            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
-            ..age = const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+          final object = Student(
+              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
+              age: const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0));
           object.person.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
           object.person.attach(store);
@@ -871,6 +881,10 @@ class Person_ {
   /// see [Person.surname]
   static final surname =
       QueryStringProperty<Person>(_entities[0].properties[2]);
+
+  /// see [Person.student]
+  static final student =
+      QueryRelationToOne<Person, Student>(_entities[0].properties[3]);
 }
 
 /// [Account] entity fields to define ObjectBox queries.

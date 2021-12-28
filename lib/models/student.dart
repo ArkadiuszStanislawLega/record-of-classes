@@ -7,13 +7,15 @@ import 'package:objectbox/objectbox.dart';
 import 'person.dart';
 
 @Entity()
-class Student{
+class Student {
   late int id;
   late int age;
-  late ToOne<Person> person;
-  late ToOne<Account> account;
-  late ToMany<Parent> parents;
-  late ToMany<Student> siblings;
-  late ToMany<Group> groups;
-  late ToMany<Attendance> attendancesList;
+  final person = ToOne<Person>();
+  final account = ToOne<Account>();
+  final parents = ToMany<Parent>();
+  final siblings = ToMany<Student>();
+  final groups = ToMany<Group>();
+  final attendancesList = ToMany<Attendance>();
+
+  Student({this.id = 0, required this.age});
 }
