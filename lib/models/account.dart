@@ -4,8 +4,9 @@ import 'package:record_of_classes/models/student.dart';
 import 'bill.dart';
 
 @Entity()
-class Account{
+class Account {
   late int id;
-  late ToOne<Student> student;
-  late ToMany<Bill> bills;
+  final student = ToOne<Student>();
+  @Backlink()
+  final bills = ToMany<Bill>();
 }

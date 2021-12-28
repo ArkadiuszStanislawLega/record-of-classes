@@ -7,6 +7,6 @@ import 'classes.dart';
 class Bill {
   late int id;
   late bool isPaid;
-  late ToOne<Classes> classes;
-  late ToOne<Account> student;
+  final classes = ToOne<Classes>();
+  final student = ToOne<Account>();
 }
