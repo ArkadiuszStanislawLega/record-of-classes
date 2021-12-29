@@ -30,7 +30,8 @@ class _CreateStudentPage extends State<CreateStudentPage> {
       appBar: AppBar(
         title: const Text('Create student page'),
       ),
-      body:           SingleChildScrollView( child: Column(
+      body: SingleChildScrollView(
+          child: Column(
         children: [
           TextField(
             decoration: const InputDecoration(
@@ -60,7 +61,7 @@ class _CreateStudentPage extends State<CreateStudentPage> {
               hintText: Strings.AGE,
             ),
             onChanged: (userInput) => setState(
-                  () {
+              () {
                 personAge = userInput;
               },
             ),
@@ -74,24 +75,24 @@ class _CreateStudentPage extends State<CreateStudentPage> {
             },
             child: const Text(Strings.CREATE_STUDENT),
           ),
-
-            SizedBox(
-              child: StreamBuilder<List<Student>>(
-                stream: _personStream,
-                builder: (context, snapshot) {
+          SizedBox(
+            child: StreamBuilder<List<Student>>(
+              stream: _personStream,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
                   return DataTable(
                     columns: const [
                       DataColumn(
-                        label: Text('ID'),
+                        label: Text(Strings.ID),
                       ),
                       DataColumn(
-                        label: Text('Imię'),
+                        label: Text(Strings.NAME),
                       ),
                       DataColumn(
-                        label: Text('Nazwisko'),
+                        label: Text(Strings.SURNAME),
                       ),
                       DataColumn(
-                        label: Text('Wiek'),
+                        label: Text(Strings.AGE),
                       ),
                     ],
                     rows: snapshot.data!.map(
@@ -113,13 +114,15 @@ class _CreateStudentPage extends State<CreateStudentPage> {
                       },
                     ).toList(),
                   );
-                },
-              ),
+                } else {
+                  return const Center(child: CircularProgressIndicator());
+                }
+              },
             ),
-          ],)
-        ),
-      );
-
+          ),
+        ],
+      )),
+    );
   }
 
   void createNewPerson() {
@@ -133,11 +136,6 @@ class _CreateStudentPage extends State<CreateStudentPage> {
   void initState() {
     super.initState();
     _store = objectBox.store;
-    var studentList = _store.box<Student>().getAll();
-    print(studentList.length.toString());
-    var person = studentList[studentList.length-1]!.person.target;
-    print('Tutaj patrz => ' + person.toString());
-
     _personStream = _store
         .box<Student>()
         .query()

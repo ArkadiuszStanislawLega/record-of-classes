@@ -4,5 +4,6 @@ class Strings{
   AGE = 'Wiek',
   ADD = 'Dodaj',
   CREATE_STUDENT = 'Utwórz ucznia',
-  DATABASE_NAME = 'objectbox';
+  DATABASE_NAME = 'objectbox',
+  ID = 'ID';
 }

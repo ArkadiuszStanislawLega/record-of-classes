@@ -22,6 +22,6 @@ class Student {
   @override
   String toString() {
 
-    return '$id $age ${person.target.toString()}';
+    return '$id $age ${person.target!.toString()}';
   }
 }
