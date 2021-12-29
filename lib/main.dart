@@ -29,8 +29,8 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   objectBox = await ObjectBox.create();
 
-  objectBox.store.box<Student>().removeAll();
-  objectBox.store.box<Person>().removeAll();
+  // objectBox.store.box<Student>().removeAll();
+  // objectBox.store.box<Person>().removeAll();
   runApp(const RecordOfClassesApp());
 }
 
@@ -46,14 +46,6 @@ class RecordOfClassesApp extends StatefulWidget {
 class _RecordOfClassesApp extends State<RecordOfClassesApp> {
   @override
   Widget build(BuildContext context) {
-    var person = Person(name: 'Test', surname: 'testowy');
-    var student = Student(age: 43);
-    student.person.target = person;
-    objectBox.store.box<Student>().put(student);
-    var list = objectBox.store.box<Student>().getAll();
-    var createdStudent = list[list.length-1];
-    print(createdStudent);
-
     return MaterialApp(
       title: 'Rejestr zajęć',
       theme: ThemeData(primarySwatch: Colors.blueGrey),

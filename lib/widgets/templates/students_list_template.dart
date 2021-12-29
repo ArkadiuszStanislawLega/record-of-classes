@@ -17,13 +17,13 @@ class StudentsListTemplate extends StatefulWidget{
 
 class _StudentsListTemplate extends State<StudentsListTemplate>{
   late Store _store;
-  late Stream<List<Student>> _personStream;
+  late Stream<List<Student>> _studentsStream;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       child: StreamBuilder<List<Student>>(
-        stream: _personStream,
+        stream: _studentsStream,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return DataTable(
@@ -72,7 +72,7 @@ class _StudentsListTemplate extends State<StudentsListTemplate>{
   void initState() {
     super.initState();
     _store = objectBox.store;
-    _personStream = _store
+    _studentsStream = _store
         .box<Student>()
         .query()
         .watch(triggerImmediately: true)
