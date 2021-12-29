@@ -151,7 +151,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(5, 2569973322208561741),
       name: 'Bill',
-      lastPropertyId: const IdUid(4, 3511719454620364937),
+      lastPropertyId: const IdUid(5, 7229044549022485811),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -177,7 +177,12 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(5, 8005409257843509993),
-            relationTarget: 'Account')
+            relationTarget: 'Account'),
+        ModelProperty(
+            id: const IdUid(5, 7229044549022485811),
+            name: 'price',
+            type: 8,
+            flags: 0)
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[]),
@@ -616,11 +621,12 @@ ModelDefinition getObjectBoxModel() {
           object.id = id;
         },
         objectToFB: (Bill object, fb.Builder fbb) {
-          fbb.startTable(5);
+          fbb.startTable(6);
           fbb.addInt64(0, object.id);
           fbb.addBool(1, object.isPaid);
           fbb.addInt64(2, object.classes.targetId);
           fbb.addInt64(3, object.student.targetId);
+          fbb.addFloat64(4, object.price);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -631,7 +637,9 @@ ModelDefinition getObjectBoxModel() {
           final object = Bill()
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
             ..isPaid =
-                const fb.BoolReader().vTableGet(buffer, rootOffset, 6, false);
+                const fb.BoolReader().vTableGet(buffer, rootOffset, 6, false)
+            ..price =
+                const fb.Float64Reader().vTableGet(buffer, rootOffset, 12, 0);
           object.classes.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
           object.classes.attach(store);
@@ -976,6 +984,9 @@ class Bill_ {
   /// see [Bill.student]
   static final student =
       QueryRelationToOne<Bill, Account>(_entities[4].properties[3]);
+
+  /// see [Bill.price]
+  static final price = QueryDoubleProperty<Bill>(_entities[4].properties[4]);
 }
 
 /// [Classes] entity fields to define ObjectBox queries.

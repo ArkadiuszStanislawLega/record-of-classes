@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:record_of_classes/constants/app_urls.dart';
 import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/widgets/templates/accounts_list_template.dart';
 import 'package:record_of_classes/widgets/templates/students_list_template.dart';
 
 class StartPageView extends StatefulWidget {
@@ -31,7 +32,7 @@ class _StartPageViewView extends State<StartPageView> {
             },
             child: const Text(Strings.CREATE_STUDENT),
           ),
-          const StudentsListTemplate()
+          const StudentsListTemplate(),
         ],
       ),
     );

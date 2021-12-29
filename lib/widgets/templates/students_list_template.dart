@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:objectbox/objectbox.dart';
+import 'package:record_of_classes/constants/app_urls.dart';
 import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/student.dart';
@@ -56,7 +57,15 @@ class _StudentsListTemplate extends State<StudentsListTemplate>{
                     DataCell(
                       Text(student.age.toString()),
                     ),
-                  ]);
+                  ], onSelectChanged: (bool? changed){
+                    if (changed == true){
+                      Navigator.pushNamed(
+                        context,
+                        AppUrls.DETAIL_STUDENT,
+                        arguments: student
+                      );
+                    }
+                  });
                 },
               ).toList(),
             );

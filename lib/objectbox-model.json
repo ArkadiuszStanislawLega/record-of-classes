@@ -128,7 +128,7 @@
     },
     {
       "id": "5:2569973322208561741",
-      "lastPropertyId": "4:3511719454620364937",
+      "lastPropertyId": "5:7229044549022485811",
       "name": "Bill",
       "properties": [
         {
@@ -157,6 +157,11 @@
           "flags": 520,
           "indexId": "5:8005409257843509993",
           "relationTarget": "Account"
+        },
+        {
+          "id": "5:7229044549022485811",
+          "name": "price",
+          "type": 8
         }
       ],
       "relations": []
