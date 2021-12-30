@@ -5,74 +5,41 @@ import 'package:record_of_classes/constants/app_urls.dart';
 import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/student.dart';
+import 'package:record_of_classes/widgets/templates/students_list_item_template.dart';
 
-class StudentsListTemplate extends StatefulWidget{
+class StudentsListTemplate extends StatefulWidget {
   const StudentsListTemplate({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
     return _StudentsListTemplate();
   }
-
 }
 
-class _StudentsListTemplate extends State<StudentsListTemplate>{
+class _StudentsListTemplate extends State<StudentsListTemplate> {
   late Store _store;
   late Stream<List<Student>> _studentsStream;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
+      color: Colors.orangeAccent,
       child: StreamBuilder<List<Student>>(
-        stream: _studentsStream,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return DataTable(
-              columns: const [
-                DataColumn(
-                  label: Text(Strings.ID),
-                ),
-                DataColumn(
-                  label: Text(Strings.NAME),
-                ),
-                DataColumn(
-                  label: Text(Strings.SURNAME),
-                ),
-                DataColumn(
-                  label: Text(Strings.AGE),
-                ),
-              ],
-              rows: snapshot.data!.map(
-                    (student) {
-                  return DataRow(cells: [
-                    DataCell(
-                      Text(student.id.toString()),
-                    ),
-                    DataCell(
-                      Text(student.person.target!.name),
-                    ),
-                    DataCell(
-                      Text(student.person.target!.surname),
-                    ),
-                    DataCell(
-                      Text(student.age.toString()),
-                    ),
-                  ], onSelectChanged: (bool? changed){
-                    if (changed == true){
-                      Navigator.pushNamed(
-                        context,
-                        AppUrls.DETAIL_STUDENT,
-                        arguments: student
-                      );
-                    }
-                  });
+          stream: _studentsStream,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return ListView.builder(itemCount: snapshot.data!.length,
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return StudentsListItemTemplate(student: snapshot.data!.elementAt(index));
                 },
-              ).toList(),
-            );
-          } else {
-            return const Center(child: CircularProgressIndicator());
-          }
-        },
+              );
+            } else {
+              return const Center(child: CircularProgressIndicator());
+            }
+          },
+
       ),
     );
   }
@@ -87,5 +54,4 @@ class _StudentsListTemplate extends State<StudentsListTemplate>{
         .watch(triggerImmediately: true)
         .map((query) => query.find());
   }
-
 }
