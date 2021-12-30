@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:objectbox/objectbox.dart';
-import 'package:record_of_classes/constants/app_urls.dart';
-import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/widgets/templates/students_list_item_template.dart';
@@ -23,7 +21,7 @@ class _StudentsListTemplate extends State<StudentsListTemplate> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.orangeAccent,
+      margin: const EdgeInsets.all(5),
       child: StreamBuilder<List<Student>>(
           stream: _studentsStream,
           builder: (context, snapshot) {

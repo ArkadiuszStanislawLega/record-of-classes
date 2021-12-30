@@ -19,25 +19,22 @@ class _StudentDetailPage extends State<StudentDetailPage>{
   @override
   Widget build(BuildContext context) {
     student =  ModalRoute.of(context)!.settings.arguments as Student;
+    var person = student!.person.target;
 
-    var person = student!.person!.target;
-    String name = '';
-    name = person!.name + person!.surname;
     return Scaffold(
       appBar: AppBar(
-        title: Text(name),
+        title: Text('${person!.name}  ${person!.surname}'),
       ),
-      body: Column(
-        children: [
-          Text(person.name),
-          Text(person.surname),
-          Text(student!.age.toString()),
-          AccountListTemplate(account: student!.account)
-        ],
+      body: Container(
+        margin: const EdgeInsets.all(10.0),
+        child: Column(
+          children: [
+            Text('Wiek: ${student!.age.toString()}'),
+            AccountListTemplate(account: student!.account)
+          ],
+        ),
       ),
     );
   }
-
-
 
 }
