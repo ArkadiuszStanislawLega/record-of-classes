@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/account.dart';
+import 'package:record_of_classes/models/address.dart';
 import 'package:record_of_classes/models/bill.dart';
+import 'package:record_of_classes/models/classes.dart';
+import 'package:record_of_classes/models/group.dart';
 
 class AccountListTemplate extends StatefulWidget {
   const AccountListTemplate( {Key? key, required this.account }) : super(key: key);
@@ -12,19 +15,21 @@ class AccountListTemplate extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return _AccountListTemplate(account);
+    return _AccountListTemplate();
   }
 }
 
 class _AccountListTemplate extends State<AccountListTemplate> {
   late Store _store;
   late Stream<List<Bill>> _billsStream;
-  final ToOne<Account>  account;
+  late ToOne<Account>  account;
+  late ToOne<Group> group;
 
-  _AccountListTemplate(this.account);
 
   @override
   Widget build(BuildContext context) {
+    account = widget.account;
+
     return Center(
       child: SizedBox(
         child: StreamBuilder<List<Bill>>(
@@ -48,6 +53,10 @@ class _AccountListTemplate extends State<AccountListTemplate> {
                 ],
                 rows: snapshot.data!.map(
                   (bill) {
+                    Classes classes = bill.classes.target as Classes;
+                    Group group = classes.group.target as Group;
+                    Address address = group.address.target as Address;
+
                     return DataRow(
                       cells: [
                         DataCell(
@@ -57,11 +66,10 @@ class _AccountListTemplate extends State<AccountListTemplate> {
                           Text(bill.isPaid.toString()),
                         ),
                         DataCell(
-                          Text(bill.classes.target!.group!.target!.name),
+                          Text(group.name),
                         ),
                         DataCell(
-                          Text(bill.classes!.target!.group!.target!.address!
-                              .target!.street),
+                          Text(address.street),
                         ),
                       ],
                     );

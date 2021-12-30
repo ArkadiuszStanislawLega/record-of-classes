@@ -32,6 +32,13 @@ Future<void> main() async {
 
   // objectBox.store.box<Student>().removeAll();
   // objectBox.store.box<Person>().removeAll();
+  objectBox.store.box<Person>().getAll().forEach((element) {
+    print(element.toString());
+  });
+  objectBox.store.box<Student>().getAll().forEach((element) {
+    print(element.toString());
+  });
+
   runApp(const RecordOfClassesApp());
 }
 
