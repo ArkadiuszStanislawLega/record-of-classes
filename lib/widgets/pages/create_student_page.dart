@@ -6,7 +6,6 @@ import 'package:record_of_classes/models/account.dart';
 import 'package:record_of_classes/models/person.dart';
 import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/objectbox.g.dart';
-import 'package:record_of_classes/widgets/templates/add_parents_template.dart';
 
 import '../../main.dart';
 
@@ -38,33 +37,21 @@ class _CreateStudentPage extends State<CreateStudentPage> {
                 border: OutlineInputBorder(),
                 hintText: Strings.NAME,
               ),
-              onChanged: (userInput) => setState(
-                () {
-                  personName = userInput;
-                },
-              ),
+              onChanged: (userInput) => personName = userInput
             ),
             TextField(
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 hintText: Strings.SURNAME,
               ),
-              onChanged: (userInput) => setState(
-                () {
-                  personSurname = userInput;
-                },
-              ),
+              onChanged: (userInput) => personSurname = userInput
             ),
             TextField(
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 hintText: Strings.AGE,
               ),
-              onChanged: (userInput) => setState(
-                () {
-                  personAge = userInput;
-                },
-              ),
+              onChanged: (userInput) => personAge = userInput
             ),
             ElevatedButton(
               onPressed: () {
@@ -75,7 +62,6 @@ class _CreateStudentPage extends State<CreateStudentPage> {
               },
               child: const Text(Strings.CREATE_STUDENT),
             ),
-            const AddParentsTemplate()
           ],
         ),
       ),

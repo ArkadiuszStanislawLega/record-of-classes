@@ -22,14 +22,28 @@ class _StartPageViewView extends State<StartPageView> {
       ),
       body: Column(
         children: [
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pushNamed(
-                context,
-                AppUrls.CREATE_STUDENT,
-              );
-            },
-            child: const Text(Strings.CREATE_STUDENT),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(
+                    context,
+                    AppUrls.CREATE_STUDENT,
+                  );
+                },
+                child: const Text(Strings.CREATE_STUDENT),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(
+                    context,
+                    AppUrls.CREATE_PARENT,
+                  );
+                },
+                child: const Text(Strings.CREATE_PARENT),
+              ),
+            ],
           ),
           const StudentsListTemplate(),
         ],
