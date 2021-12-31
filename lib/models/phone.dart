@@ -9,4 +9,9 @@ class Phone {
   final owner = ToOne<Person>();
 
   Phone({this.id = 0, this.number = 0, this.numberName = ''});
+
+  @override
+  String toString() {
+    return 'Nazwa kontaktu: $numberName, numer telefonu: $number';
+  }
 }
