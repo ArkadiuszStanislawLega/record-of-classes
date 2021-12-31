@@ -3,6 +3,7 @@ class Strings{
   SURNAME = 'Nazwisko',
   AGE = 'Wiek',
   ADD = 'Dodaj',
+  CANCEL = 'Anuluj',
   CREATE_STUDENT = 'Utwórz ucznia',
   DELETE = 'Usuń',
   DATABASE_NAME = 'objectbox',

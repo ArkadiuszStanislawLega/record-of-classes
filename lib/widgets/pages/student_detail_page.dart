@@ -19,92 +19,113 @@ class StudentDetailPage extends StatefulWidget {
 
 class _StudentDetailPage extends State<StudentDetailPage> {
   late Store _store;
-  late Student student;
-  late bool isEdited = false;
+  late Student _student;
+  late Person _person;
+  late bool _isEdited = false;
+  String _personAge = '', _personName = '', _personSurname = '';
 
   @override
   Widget build(BuildContext context) {
-    String personAge = '', personName = '', personSurname = '';
-    student = ModalRoute.of(context)!.settings.arguments as Student;
-    Person person = student.person.target as Person;
+    _student = ModalRoute.of(context)!.settings.arguments as Student;
+    _person = _student.person.target as Person;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('${person.name}  ${person.surname}'),
+        title: Text('${_person.name}  ${_person.surname}'),
       ),
       body: Container(
         margin: const EdgeInsets.all(10.0),
         child: Column(
-          children: isEdited
+          children: _isEdited
               ? [
                   TextField(
                     decoration: InputDecoration(
-                      hintText: person.name == '' ? Strings.NAME : person.name,
+                      hintText:
+                          _person.name == '' ? Strings.NAME : _person.name,
                     ),
                     onChanged: (userInput) {
-                      personName = userInput;
+                      _personName = userInput;
                     },
                   ),
                   TextField(
                     decoration: InputDecoration(
-                      hintText: person.surname == ''
+                      hintText: _person.surname == ''
                           ? Strings.SURNAME
-                          : person.surname,
+                          : _person.surname,
                     ),
                     onChanged: (userInput) {
-                      personSurname = userInput;
+                      _personSurname = userInput;
                     },
                   ),
                   TextField(
                       onChanged: (userInput) {
-                        personAge = userInput;
+                        _personAge = userInput;
                       },
                       decoration: InputDecoration(
-                        hintText: student.age == 0
+                        hintText: _student.age == 0
                             ? Strings.AGE
-                            : student.age.toString(),
+                            : _student.age.toString(),
                       ),
                       keyboardType: TextInputType.number,
                       inputFormatters: <TextInputFormatter>[
                         FilteringTextInputFormatter.digitsOnly
                       ]),
-                  TextButton(
-                    onPressed: () {
-                      _store = objectBox.store;
-
-                      if (personName != '') {
-                        student.person.target!.name = personName;
-                      }
-                      if (personSurname != '') {
-                        student.person.target!.surname = personSurname;
-                      }
-                      if (personAge != '') {
-                        student.age = int.parse(personAge);
-                      }
-
-                      _store.box<Student>().put(student);
-
-                      setState(() {
-                        isEdited = false;
-                      });
-                    },
-                    child: const Text(Strings.OK),
-                  )
+                  Center(
+                    child: Row(children: [
+                      TextButton(
+                        onPressed: confirmEditChanges,
+                        child: const Text(Strings.OK),
+                      ),
+                      TextButton(
+                        onPressed: cancelEditChanges,
+                        child: const Text(Strings.CANCEL),
+                      )
+                    ]),
+                  ),
                 ]
               : [
                   TextButton(
                     onPressed: () {
                       setState(() {
-                        isEdited = true;
+                        _isEdited = true;
                       });
                     },
                     child: const Text(Strings.EDIT),
                   ),
-                  Text('${Strings.AGE}: ${student.age.toString()}'),
-                  AccountListTemplate(account: student.account)
+                  Text('${Strings.AGE}: ${_student.age.toString()}'),
+                  AccountListTemplate(account: _student.account)
                 ],
         ),
       ),
     );
   }
+
+  void cancelEditChanges() {
+    _personAge = '';
+    _personName = '';
+    _personSurname = '';
+
+    disableEditMode();
+  }
+
+  void confirmEditChanges() {
+    setNewValues();
+    updateValueInDatabase();
+    disableEditMode();
+  }
+
+  void setNewValues() {
+    if (_personName != '') {
+      _student.person.target!.name = _personName;
+    }
+    if (_personSurname != '') {
+      _student.person.target!.surname = _personSurname;
+    }
+    if (_personAge != '') {
+      _student.age = int.parse(_personAge);
+    }
+  }
+
+  void updateValueInDatabase() => objectBox.store.box<Person>().put(_person);
+  void disableEditMode() => setState(() => _isEdited = false);
 }
