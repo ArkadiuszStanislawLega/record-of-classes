@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/models/account.dart';
-import 'package:record_of_classes/models/person.dart';
 import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/objectbox.g.dart';
+import 'package:record_of_classes/widgets/templates/create_person_template.dart';
 
 import '../../main.dart';
 
@@ -20,8 +20,8 @@ class CreateStudentPage extends StatefulWidget {
 
 class _CreateStudentPage extends State<CreateStudentPage> {
   late Store _store;
-  bool hasBeenInitialized = false;
-  String personName = '', personSurname = '', personAge = '';
+  String _personAge = '';
+  final _createPersonTemplate = CreatePersonTemplate();
 
   @override
   Widget build(BuildContext context) {
@@ -32,26 +32,13 @@ class _CreateStudentPage extends State<CreateStudentPage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            TextField(
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: Strings.NAME,
-              ),
-              onChanged: (userInput) => personName = userInput
-            ),
-            TextField(
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: Strings.SURNAME,
-              ),
-              onChanged: (userInput) => personSurname = userInput
-            ),
+            _createPersonTemplate,
             TextField(
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 hintText: Strings.AGE,
               ),
-              onChanged: (userInput) => personAge = userInput
+              onChanged: (userInput) => _personAge = userInput
             ),
             ElevatedButton(
               onPressed: () {
@@ -69,8 +56,8 @@ class _CreateStudentPage extends State<CreateStudentPage> {
   }
 
   void createNewPerson() {
-    var person = Person(name: personName, surname: personSurname);
-    var student = Student(age: int.parse(personAge));
+    var person = _createPersonTemplate.getPerson();
+    var student = Student(age: int.parse(_personAge));
     var account = Account();
 
     student.person.target = person;
