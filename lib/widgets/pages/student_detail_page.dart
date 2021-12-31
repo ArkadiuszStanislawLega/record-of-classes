@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/person.dart';
 import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/widgets/templates/accounts_list_template.dart';
@@ -16,6 +18,7 @@ class StudentDetailPage extends StatefulWidget {
 }
 
 class _StudentDetailPage extends State<StudentDetailPage> {
+  late Store _store;
   late Student student;
   late bool isEdited = false;
 
@@ -35,34 +38,31 @@ class _StudentDetailPage extends State<StudentDetailPage> {
           children: isEdited
               ? [
                   TextField(
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: Strings.NAME,
+                    decoration: InputDecoration(
+                      hintText: person.name == '' ? Strings.NAME : person.name,
                     ),
-                    onChanged: (userInput) => setState(
-                      () {
-                        personName = userInput;
-                      },
-                    ),
+                    onChanged: (userInput) {
+                      personName = userInput;
+                    },
                   ),
                   TextField(
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: Strings.SURNAME,
+                    decoration: InputDecoration(
+                      hintText: person.surname == ''
+                          ? Strings.SURNAME
+                          : person.surname,
                     ),
-                    onChanged: (userInput) => setState(
-                      () {
-                        personSurname = userInput;
-                      },
-                    ),
+                    onChanged: (userInput) {
+                      personSurname = userInput;
+                    },
                   ),
                   TextField(
-                      onChanged: (value) {
-                        personAge = value;
+                      onChanged: (userInput) {
+                        personAge = userInput;
                       },
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: Strings.AGE,
+                      decoration: InputDecoration(
+                        hintText: student.age == 0
+                            ? Strings.AGE
+                            : student.age.toString(),
                       ),
                       keyboardType: TextInputType.number,
                       inputFormatters: <TextInputFormatter>[
@@ -70,9 +70,22 @@ class _StudentDetailPage extends State<StudentDetailPage> {
                       ]),
                   TextButton(
                     onPressed: () {
+                      _store = objectBox.store;
+
+                      if (personName != '') {
+                        student.person.target!.name = personName;
+                      }
+                      if (personSurname != '') {
+                        student.person.target!.surname = personSurname;
+                      }
+                      if (personAge != '') {
+                        student.age = int.parse(personAge);
+                      }
+
+                      _store.box<Student>().put(student);
+
                       setState(() {
                         isEdited = false;
-
                       });
                     },
                     child: const Text(Strings.OK),
