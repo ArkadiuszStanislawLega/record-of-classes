@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/person.dart';
@@ -18,7 +17,6 @@ class StudentDetailPage extends StatefulWidget {
 }
 
 class _StudentDetailPage extends State<StudentDetailPage> {
-  late Store _store;
   late Student _student;
   late Person _person;
   late bool _isEdited = false;
@@ -85,11 +83,7 @@ class _StudentDetailPage extends State<StudentDetailPage> {
                 ]
               : [
                   TextButton(
-                    onPressed: () {
-                      setState(() {
-                        _isEdited = true;
-                      });
-                    },
+                    onPressed: enableEditMode,
                     child: const Text(Strings.EDIT),
                   ),
                   Text('${Strings.AGE}: ${_student.age.toString()}'),
@@ -127,5 +121,6 @@ class _StudentDetailPage extends State<StudentDetailPage> {
   }
 
   void updateValueInDatabase() => objectBox.store.box<Person>().put(_person);
+  void enableEditMode() => setState(() => _isEdited = true);
   void disableEditMode() => setState(() => _isEdited = false);
 }
