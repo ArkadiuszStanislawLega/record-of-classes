@@ -6,6 +6,7 @@ import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/person.dart';
 import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/widgets/templates/accounts_list_template.dart';
+import 'package:record_of_classes/widgets/templates/parent_list_template.dart';
 
 class StudentDetailPage extends StatefulWidget {
   const StudentDetailPage({Key? key}) : super(key: key);
@@ -34,64 +35,70 @@ class _StudentDetailPage extends State<StudentDetailPage> {
       body: Container(
         margin: const EdgeInsets.all(10.0),
         child: Column(
-          children: _isEdited
-              ? [
-                  TextField(
-                    decoration: InputDecoration(
-                      hintText:
-                          _person.name == '' ? Strings.NAME : _person.name,
-                    ),
-                    onChanged: (userInput) {
-                      _personName = userInput;
-                    },
-                  ),
-                  TextField(
-                    decoration: InputDecoration(
-                      hintText: _person.surname == ''
-                          ? Strings.SURNAME
-                          : _person.surname,
-                    ),
-                    onChanged: (userInput) {
-                      _personSurname = userInput;
-                    },
-                  ),
-                  TextField(
-                      onChanged: (userInput) {
-                        _personAge = userInput;
-                      },
-                      decoration: InputDecoration(
-                        hintText: _student.age == 0
-                            ? Strings.AGE
-                            : _student.age.toString(),
-                      ),
-                      keyboardType: TextInputType.number,
-                      inputFormatters: <TextInputFormatter>[
-                        FilteringTextInputFormatter.digitsOnly
-                      ]),
-                  Center(
-                    child: Row(children: [
-                      TextButton(
-                        onPressed: confirmEditChanges,
-                        child: const Text(Strings.OK),
-                      ),
-                      TextButton(
-                        onPressed: cancelEditChanges,
-                        child: const Text(Strings.CANCEL),
-                      )
-                    ]),
-                  ),
-                ]
-              : [
-                  TextButton(
-                    onPressed: enableEditMode,
-                    child: const Text(Strings.EDIT),
-                  ),
-                  Text('${Strings.AGE}: ${_student.age.toString()}'),
-                  AccountListTemplate(account: _student.account)
-                ],
+          children: _isEdited ? editModeEnabled() : editModeDisabled(),
         ),
       ),
     );
+  }
+
+  List<Widget> editModeDisabled(){
+    return [
+      TextButton(
+        onPressed: enableEditMode,
+        child: const Text(Strings.EDIT),
+      ),
+      Text('${Strings.AGE}: ${_student.age.toString()}'),
+      ParentListTemplate(),
+      AccountListTemplate(account: _student.account)
+    ];
+  }
+
+  List<Widget> editModeEnabled(){
+    return [ TextField(
+      decoration: InputDecoration(
+        hintText:
+        _person.name == '' ? Strings.NAME : _person.name,
+      ),
+      onChanged: (userInput) {
+        _personName = userInput;
+      },
+    ),
+      TextField(
+        decoration: InputDecoration(
+          hintText: _person.surname == ''
+              ? Strings.SURNAME
+              : _person.surname,
+        ),
+        onChanged: (userInput) {
+          _personSurname = userInput;
+        },
+      ),
+      TextField(
+          onChanged: (userInput) {
+            _personAge = userInput;
+          },
+          decoration: InputDecoration(
+            hintText: _student.age == 0
+                ? Strings.AGE
+                : _student.age.toString(),
+          ),
+          keyboardType: TextInputType.number,
+          inputFormatters: <TextInputFormatter>[
+            FilteringTextInputFormatter.digitsOnly
+          ]),
+      Center(
+        child: Row(children: [
+          TextButton(
+            onPressed: confirmEditChanges,
+            child: const Text(Strings.OK),
+          ),
+          TextButton(
+            onPressed: cancelEditChanges,
+            child: const Text(Strings.CANCEL),
+          )
+        ]),
+      ),
+    ];
   }
 
   void cancelEditChanges() {
