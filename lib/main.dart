@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:record_of_classes/constants/app_urls.dart';
+import 'package:record_of_classes/models/parent.dart';
 import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/widgets/pages/create_parent_page.dart';
 import 'package:record_of_classes/widgets/pages/create_student_page.dart';
@@ -8,6 +9,7 @@ import 'package:record_of_classes/widgets/pages/student_detail_page.dart';
 
 import 'models/person.dart';
 
+import 'models/phone.dart';
 import 'objectbox.g.dart';
 
 class ObjectBox {
@@ -33,10 +35,20 @@ Future<void> main() async {
 
   // objectBox.store.box<Student>().removeAll();
   // objectBox.store.box<Person>().removeAll();
+  print('Persons:');
   objectBox.store.box<Person>().getAll().forEach((element) {
     print(element.toString());
   });
+  print('Students:');
   objectBox.store.box<Student>().getAll().forEach((element) {
+    print(element.toString());
+  });
+  print('Parents');
+  objectBox.store.box<Parent>().getAll().forEach((element) {
+    print(element.toString());
+  });
+  print('Phones');
+  objectBox.store.box<Phone>().getAll().forEach((element) {
     print(element.toString());
   });
 

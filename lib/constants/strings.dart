@@ -3,6 +3,7 @@ class Strings{
   SURNAME = 'Nazwisko',
   AGE = 'Wiek',
   ADD = 'Dodaj',
+  ADD_PARENT = 'Dodaj rodzica',
   CANCEL = 'Anuluj',
   CREATE_STUDENT = 'Utwórz ucznia',
   CREATE_PARENT = 'Utwórz rodzica',

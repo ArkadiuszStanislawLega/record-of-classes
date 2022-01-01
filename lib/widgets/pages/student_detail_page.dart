@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:record_of_classes/constants/app_urls.dart';
 import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/person.dart';
@@ -43,10 +44,18 @@ class _StudentDetailPage extends State<StudentDetailPage> {
 
   List<Widget> editModeDisabled(){
     return [
-      TextButton(
-        onPressed: enableEditMode,
-        child: const Text(Strings.EDIT),
-      ),
+      Row(mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+        TextButton(
+          onPressed: enableEditMode,
+          child: const Text(Strings.EDIT),
+        ),
+        TextButton(
+          onPressed: addParent,
+          child: const Text(Strings.ADD_PARENT),
+        ),
+      ]),
+
       Text('${Strings.AGE}: ${_student.age.toString()}'),
       ParentListTemplate(),
       AccountListTemplate(account: _student.account)
@@ -99,6 +108,10 @@ class _StudentDetailPage extends State<StudentDetailPage> {
         ]),
       ),
     ];
+  }
+
+  void addParent(){
+    Navigator.pushNamed(context, AppUrls.CREATE_PARENT, arguments: _student);
   }
 
   void cancelEditChanges() {
