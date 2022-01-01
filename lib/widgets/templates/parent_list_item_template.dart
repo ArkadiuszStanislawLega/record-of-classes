@@ -50,7 +50,7 @@ class _ParentListItemTemplate extends State<ParentListItemTemplate> {
             Text(widget.parent.phone.length.toString())
           ]),
           onTap: () {
-            Navigator.pushNamed(context, AppUrls.DETAIL_STUDENT,
+            Navigator.pushNamed(context, AppUrls.DETAIL_PARENT,
                 arguments: widget.parent);
           },
         ),

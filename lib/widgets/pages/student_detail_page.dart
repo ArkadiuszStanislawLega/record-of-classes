@@ -57,6 +57,7 @@ class _StudentDetailPage extends State<StudentDetailPage> {
       ]),
 
       Text('${Strings.AGE}: ${_student.age.toString()}'),
+      Text('Rodzice:'),
       ParentListTemplate(),
       AccountListTemplate(account: _student.account)
     ];
