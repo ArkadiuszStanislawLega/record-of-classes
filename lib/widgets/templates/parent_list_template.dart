@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/parent.dart';
 import 'package:record_of_classes/models/student.dart';
+import 'package:record_of_classes/objectbox.g.dart';
 import 'package:record_of_classes/widgets/templates/parent_list_item_template.dart';
 
 class ParentListTemplate extends StatefulWidget{
@@ -23,7 +26,7 @@ class _ParentListTemplate extends State<ParentListTemplate>{
 
   @override
   Widget build(BuildContext context) {
-
+    print(widget.children!.parents.toList().length);
     return Container(
       margin: const EdgeInsets.all(5),
       child: StreamBuilder<List<Parent>>(

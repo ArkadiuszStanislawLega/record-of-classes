@@ -36,6 +36,8 @@ Future<void> main() async {
 
   // objectBox.store.box<Student>().removeAll();
   // objectBox.store.box<Person>().removeAll();
+  // objectBox.store.box<Parent>().removeAll();
+  // objectBox.store.box<Phone>().removeAll();
   print('Persons:');
   objectBox.store.box<Person>().getAll().forEach((element) {
     print(element.toString());

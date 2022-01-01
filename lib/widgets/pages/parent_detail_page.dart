@@ -33,12 +33,13 @@ class _ParentDetailPage extends State<ParentDetailPage> {
     );
   }
 
-  List<Widget> editModeEnabled(){
+  List<Widget> editModeEnabled() {
     return [
       TextField(
         decoration: InputDecoration(
           hintText:
-          _parent.person.target!.name == '' ? Strings.NAME : _parent.person.target!.name,
+          _parent.person.target!.name == '' ? Strings.NAME : _parent.person
+              .target!.name,
         ),
         onChanged: (userInput) {
           _parentName = userInput;
@@ -46,7 +47,7 @@ class _ParentDetailPage extends State<ParentDetailPage> {
       ),
       TextField(
         decoration: InputDecoration(
-          hintText:_parent.person.target!.surname == ''
+          hintText: _parent.person.target!.surname == ''
               ? Strings.SURNAME
               : _parent.person.target!.surname,
         ),
@@ -70,7 +71,13 @@ class _ParentDetailPage extends State<ParentDetailPage> {
   }
 
   List<Widget> editModeDisabled(){
-    return [TextButton(onPressed: enableEditMode, child: const Text(Strings.EDIT))];
+    List<Widget> widgets = [];
+    widgets.add(Text('Dzieci:'));
+    for (var child in _parent.children) {widgets.add(Text('${child.person.target!.surname} ${child.person.target!.name}'));}
+    widgets.add(Text('Kontakty:'));
+    for (var element in _parent.phone) {widgets.add(Text(element.toString()));}
+    widgets.add(TextButton(onPressed: enableEditMode, child: const Text(Strings.EDIT)));
+    return widgets;
   }
 
   void cancelEditChanges() {

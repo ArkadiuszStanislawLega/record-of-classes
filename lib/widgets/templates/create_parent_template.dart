@@ -31,9 +31,7 @@ class CreateParentTemplate extends StatelessWidget {
     );
   }
 
-  Parent getParent(){
-    Person person = Person(name:_parentName, surname:_parentSurname);
-    return Parent()
-        ..person.target = person;
+  Person getParent(){
+    return Person(name:_parentName, surname:_parentSurname);
   }
 }

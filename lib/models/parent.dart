@@ -10,4 +10,12 @@ class Parent{
   final person = ToOne<Person>();
   final phone = ToMany<Phone>();
   final children = ToMany<Student>();
+
+  @override
+  String toString() {
+    if (person.target != null){
+      '$id,  ${person.target!.surname} ${person.target!.name}';
+    }
+    return '$id';
+  }
 }
