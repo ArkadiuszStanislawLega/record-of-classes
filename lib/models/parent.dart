@@ -4,6 +4,7 @@ import 'package:record_of_classes/models/student.dart';
 
 import 'person.dart';
 
+//    _parentsStream = _store.box<Parent>().getAll().contains(widget.children!.id) as Stream<List<Parent>>;
 @Entity()
 class Parent{
   late int id = 0;

@@ -9,4 +9,6 @@ class Account {
   final student = ToOne<Student>();
   @Backlink()
   final bills = ToMany<Bill>();
+
+  Account({this.id = 0});
 }

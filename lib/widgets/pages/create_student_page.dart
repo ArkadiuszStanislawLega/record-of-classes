@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/models/account.dart';
+import 'package:record_of_classes/models/person.dart';
 import 'package:record_of_classes/models/student.dart';
-import 'package:record_of_classes/objectbox.g.dart';
-import 'package:record_of_classes/widgets/templates/create_parent_template.dart';
 import 'package:record_of_classes/widgets/templates/create_person_template.dart';
 
 import '../../main.dart';
@@ -61,9 +60,11 @@ class _CreateStudentPage extends State<CreateStudentPage> {
     var student = Student(age: int.parse(_personAge));
     var account = Account();
 
-    student.person.target = person;
     account.student.target = student;
-    _store.box<Student>().put(student);
+    person.student.target = student;
+    student.person.target = person;
+
+    _store.box<Person>().put(person);
   }
 
   @override

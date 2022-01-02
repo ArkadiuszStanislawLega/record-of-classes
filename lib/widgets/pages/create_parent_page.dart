@@ -4,8 +4,6 @@ import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/parent.dart';
-import 'package:record_of_classes/models/person.dart';
-import 'package:record_of_classes/models/phone.dart';
 import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/widgets/templates/create_parent_template.dart';
 import 'package:record_of_classes/widgets/templates/create_phone_template.dart';
@@ -45,11 +43,11 @@ class CreateParentPage extends StatelessWidget {
     var parent = Parent()..person.target = person;
     var phone = _createPhone.getPhone();
 
-    parent.children.add(_student);
     parent.phone.add(phone);
-    phone.owner.target = person;
+    parent.person.target = person;
+    parent.children.add(_student);
+    _student.parents.add(parent);
 
-    _store.box<Parent>().put(parent);
-    _store.box<Phone>().put(phone);
+    _store.box<Student>().put(_student);
   }
 }

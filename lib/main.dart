@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/constants/app_urls.dart';
+import 'package:record_of_classes/models/account.dart';
 import 'package:record_of_classes/models/parent.dart';
 import 'package:record_of_classes/models/student.dart';
+import 'package:record_of_classes/objectbox.g.dart';
 import 'package:record_of_classes/widgets/pages/create_parent_page.dart';
 import 'package:record_of_classes/widgets/pages/create_student_page.dart';
 import 'package:record_of_classes/widgets/pages/parent_detail_page.dart';
@@ -11,7 +14,6 @@ import 'package:record_of_classes/widgets/pages/student_detail_page.dart';
 import 'models/person.dart';
 
 import 'models/phone.dart';
-import 'objectbox.g.dart';
 
 class ObjectBox {
   /// The Store of this app.
@@ -33,27 +35,37 @@ late ObjectBox objectBox;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   objectBox = await ObjectBox.create();
-
-  // objectBox.store.box<Student>().removeAll();
+  //
   // objectBox.store.box<Person>().removeAll();
+  // objectBox.store.box<Student>().removeAll();
   // objectBox.store.box<Parent>().removeAll();
+  // objectBox.store.box<Account>().removeAll();
   // objectBox.store.box<Phone>().removeAll();
+
   print('Persons:');
   objectBox.store.box<Person>().getAll().forEach((element) {
     print(element.toString());
-  });
+
   print('Students:');
   objectBox.store.box<Student>().getAll().forEach((element) {
     print(element.toString());
+    print('rodzice: ${element.parents.length.toString()}');
+    for (var parent in element.parents) { parent.person.target.toString();}});
   });
   print('Parents');
   objectBox.store.box<Parent>().getAll().forEach((element) {
-    print(element.toString());
+    print('${element.toString()} ${element.person.target.toString()}');
+    print('dzieci:');
+    element.children.forEach((children) {
+      print(children.toString());
+    });
+    print('kontakty:');
+    element.phone.forEach((phone) {print(phone.toString()); });
   });
-  print('Phones');
-  objectBox.store.box<Phone>().getAll().forEach((element) {
-    print(element.toString());
-  });
+  // print('Phones');
+  // objectBox.store.box<Phone>().getAll().forEach((element) {
+  //   print('${element.toString()} owner: ${element.owner.target!.id}');
+  // });
 
   runApp(const RecordOfClassesApp());
 }

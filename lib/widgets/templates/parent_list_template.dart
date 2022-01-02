@@ -9,18 +9,18 @@ import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/objectbox.g.dart';
 import 'package:record_of_classes/widgets/templates/parent_list_item_template.dart';
 
-class ParentListTemplate extends StatefulWidget{
+class ParentListTemplate extends StatefulWidget {
   Student? children;
 
   ParentListTemplate({Key? key, this.children}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return _ParentListTemplate();
   }
-
 }
 
-class _ParentListTemplate extends State<ParentListTemplate>{
+class _ParentListTemplate extends State<ParentListTemplate> {
   late Store _store;
   late Stream<List<Parent>> _parentsStream;
 
@@ -29,22 +29,14 @@ class _ParentListTemplate extends State<ParentListTemplate>{
     print(widget.children!.parents.toList().length);
     return Container(
       margin: const EdgeInsets.all(5),
-      child: StreamBuilder<List<Parent>>(
-        stream: _parentsStream,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return ListView.builder(itemCount: snapshot.data!.length,
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                return ParentListItemTemplate(parent: snapshot.data!.elementAt(index));
-              },
-            );
-          } else {
-            return const Center(child: CircularProgressIndicator());
-          }
+      child: ListView.builder(
+        itemCount: widget.children?.parents.length,
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        itemBuilder: (context, index) {
+          return ParentListItemTemplate(
+              parent: widget.children!.parents.elementAt(index));
         },
-
       ),
     );
   }

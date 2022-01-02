@@ -313,7 +313,7 @@ final _entities = <ModelEntity>[
             name: 'phone',
             targetId: const IdUid(10, 8141085108066277363)),
         ModelRelation(
-            id: const IdUid(6, 2098414998713666383),
+            id: const IdUid(15, 7596719649020048181),
             name: 'children',
             targetId: const IdUid(11, 8038409490704286009))
       ],
@@ -382,10 +382,6 @@ final _entities = <ModelEntity>[
       ],
       relations: <ModelRelation>[
         ModelRelation(
-            id: const IdUid(7, 6231248647669863271),
-            name: 'parents',
-            targetId: const IdUid(9, 2140736623696140270)),
-        ModelRelation(
             id: const IdUid(8, 5393923549136057815),
             name: 'siblings',
             targetId: const IdUid(11, 8038409490704286009)),
@@ -396,7 +392,11 @@ final _entities = <ModelEntity>[
         ModelRelation(
             id: const IdUid(12, 5848685589650165534),
             name: 'groups',
-            targetId: const IdUid(8, 5555386999314552904))
+            targetId: const IdUid(8, 5555386999314552904)),
+        ModelRelation(
+            id: const IdUid(14, 5687460142891737685),
+            name: 'parents',
+            targetId: const IdUid(9, 2140736623696140270))
       ],
       backlinks: <ModelBacklink>[]),
   ModelEntity(
@@ -444,7 +444,7 @@ ModelDefinition getObjectBoxModel() {
       entities: _entities,
       lastEntityId: const IdUid(12, 7751236531251891487),
       lastIndexId: const IdUid(15, 1182126131564333134),
-      lastRelationId: const IdUid(12, 5848685589650165534),
+      lastRelationId: const IdUid(15, 7596719649020048181),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [],
       retiredIndexUids: const [],
@@ -454,7 +454,10 @@ ModelDefinition getObjectBoxModel() {
         7162615460766791909,
         539727955104591881,
         9215356480749689848,
-        3217513060367901643
+        3217513060367901643,
+        2098414998713666383,
+        6231248647669863271,
+        1239359132223714330
       ],
       modelVersion: 5,
       modelVersionParserMinimum: 5,
@@ -765,7 +768,7 @@ ModelDefinition getObjectBoxModel() {
         toOneRelations: (Parent object) => [object.person],
         toManyRelations: (Parent object) => {
               RelInfo<Parent>.toMany(5, object.id): object.phone,
-              RelInfo<Parent>.toMany(6, object.id): object.children
+              RelInfo<Parent>.toMany(15, object.id): object.children
             },
         getId: (Parent object) => object.id,
         setId: (Parent object, int id) {
@@ -790,7 +793,7 @@ ModelDefinition getObjectBoxModel() {
           InternalToManyAccess.setRelInfo(object.phone, store,
               RelInfo<Parent>.toMany(5, object.id), store.box<Parent>());
           InternalToManyAccess.setRelInfo(object.children, store,
-              RelInfo<Parent>.toMany(6, object.id), store.box<Parent>());
+              RelInfo<Parent>.toMany(15, object.id), store.box<Parent>());
           return object;
         }),
     Phone: EntityDefinition<Phone>(
@@ -815,12 +818,12 @@ ModelDefinition getObjectBoxModel() {
           final buffer = fb.BufferContext(fbData);
           final rootOffset = buffer.derefObject(0);
 
-          final object = Phone()
-            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
-            ..number =
-                const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0)
-            ..numberName =
-                const fb.StringReader().vTableGet(buffer, rootOffset, 8, '');
+          final object = Phone(
+              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
+              number:
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0),
+              numberName:
+                  const fb.StringReader().vTableGet(buffer, rootOffset, 8, ''));
           object.owner.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
           object.owner.attach(store);
@@ -830,10 +833,10 @@ ModelDefinition getObjectBoxModel() {
         model: _entities[10],
         toOneRelations: (Student object) => [object.person, object.account],
         toManyRelations: (Student object) => {
-              RelInfo<Student>.toMany(7, object.id): object.parents,
               RelInfo<Student>.toMany(8, object.id): object.siblings,
               RelInfo<Student>.toMany(10, object.id): object.attendancesList,
-              RelInfo<Student>.toMany(12, object.id): object.groups
+              RelInfo<Student>.toMany(12, object.id): object.groups,
+              RelInfo<Student>.toMany(14, object.id): object.parents
             },
         getId: (Student object) => object.id,
         setId: (Student object, int id) {
@@ -861,14 +864,14 @@ ModelDefinition getObjectBoxModel() {
           object.account.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
           object.account.attach(store);
-          InternalToManyAccess.setRelInfo(object.parents, store,
-              RelInfo<Student>.toMany(7, object.id), store.box<Student>());
           InternalToManyAccess.setRelInfo(object.siblings, store,
               RelInfo<Student>.toMany(8, object.id), store.box<Student>());
           InternalToManyAccess.setRelInfo(object.attendancesList, store,
               RelInfo<Student>.toMany(10, object.id), store.box<Student>());
           InternalToManyAccess.setRelInfo(object.groups, store,
               RelInfo<Student>.toMany(12, object.id), store.box<Student>());
+          InternalToManyAccess.setRelInfo(object.parents, store,
+              RelInfo<Student>.toMany(14, object.id), store.box<Student>());
           return object;
         }),
     Teacher: EntityDefinition<Teacher>(
@@ -1098,21 +1101,21 @@ class Student_ {
   static final account =
       QueryRelationToOne<Student, Account>(_entities[10].properties[3]);
 
-  /// see [Student.parents]
-  static final parents =
-      QueryRelationToMany<Student, Parent>(_entities[10].relations[0]);
-
   /// see [Student.siblings]
   static final siblings =
-      QueryRelationToMany<Student, Student>(_entities[10].relations[1]);
+      QueryRelationToMany<Student, Student>(_entities[10].relations[0]);
 
   /// see [Student.attendancesList]
   static final attendancesList =
-      QueryRelationToMany<Student, Attendance>(_entities[10].relations[2]);
+      QueryRelationToMany<Student, Attendance>(_entities[10].relations[1]);
 
   /// see [Student.groups]
   static final groups =
-      QueryRelationToMany<Student, Group>(_entities[10].relations[3]);
+      QueryRelationToMany<Student, Group>(_entities[10].relations[2]);
+
+  /// see [Student.parents]
+  static final parents =
+      QueryRelationToMany<Student, Parent>(_entities[10].relations[3]);
 }
 
 /// [Teacher] entity fields to define ObjectBox queries.
