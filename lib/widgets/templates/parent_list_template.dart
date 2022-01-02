@@ -22,6 +22,7 @@ class ParentListTemplate extends StatefulWidget {
 
 class _ParentListTemplate extends State<ParentListTemplate> {
   late Store _store;
+
   late Stream<List<Parent>> _parentsStream;
 
   @override
@@ -29,13 +30,23 @@ class _ParentListTemplate extends State<ParentListTemplate> {
     print(widget.children!.parents.toList().length);
     return Container(
       margin: const EdgeInsets.all(5),
-      child: ListView.builder(
-        itemCount: widget.children?.parents.length,
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        itemBuilder: (context, index) {
-          return ParentListItemTemplate(
-              parent: widget.children!.parents.elementAt(index));
+      child: StreamBuilder<List<Parent>>(
+        stream: _parentsStream,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            widget.children = _store.box<Student>().get(widget.children!.id);
+            return ListView.builder(
+              itemCount: widget.children!.parents.length,
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                return ParentListItemTemplate(
+                    parent: widget.children!.parents.elementAt(index));
+              },
+            );
+          } else {
+            return const Center(child: CircularProgressIndicator());
+          }
         },
       ),
     );
