@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/parent.dart';
 import 'package:record_of_classes/models/person.dart';
+import 'package:record_of_classes/models/phone.dart';
+import 'package:record_of_classes/widgets/templates/create_phone_template.dart';
 
 class ParentDetailPage extends StatefulWidget {
   const ParentDetailPage({Key? key}) : super(key: key);
@@ -17,7 +20,8 @@ class ParentDetailPage extends StatefulWidget {
 
 class _ParentDetailPage extends State<ParentDetailPage> {
   String _parentName = '', _parentSurname = '';
-  bool _isEdited = false;
+  bool _isEdited = false, _isAddContactVisible = false;
+  final CreatePhoneTemplate _createPhoneTemplate = CreatePhoneTemplate();
   late Parent _parent;
   late Store _store;
   late Stream<List<Parent>> _parentStream;
@@ -73,6 +77,33 @@ class _ParentDetailPage extends State<ParentDetailPage> {
     ];
   }
 
+  Widget contactsButtons() {
+    return Row(
+      children: !_isAddContactVisible
+          ? [
+              TextButton(
+                onPressed: enableAddContactMode,
+                child: const Text(Strings.ADD_CONTACT),
+              )
+            ]
+          : [
+              TextButton(
+                  onPressed: disableAddContactMode,
+                  child: const Text(Strings.CANCEL_ADDING_CONTACTS)),
+              TextButton(
+                onPressed: () {
+                  var phone = _createPhoneTemplate.getPhone();
+                  _parent.phone.add(phone);
+                  _store.box<Parent>().put(_parent);
+
+                  disableAddContactMode();
+                },
+                child: const Text(Strings.ADD_CONTACT),
+              )
+            ],
+    );
+  }
+
   List<Widget> _editModeDisabled() {
     List<Widget> widgets = [];
     _parentStream = _store
@@ -81,6 +112,16 @@ class _ParentDetailPage extends State<ParentDetailPage> {
         .watch(triggerImmediately: true)
         .map((query) => query.find());
 
+    widgets.add(
+      Row(
+        children: [
+          TextButton(
+            onPressed: enableEditMode,
+            child: const Text(Strings.EDIT),
+          )
+        ],
+      ),
+    );
     widgets.add(
       StreamBuilder<List<Parent>>(
         stream: _parentStream,
@@ -101,11 +142,15 @@ class _ParentDetailPage extends State<ParentDetailPage> {
         },
       ),
     );
-    widgets.add(TextButton(onPressed: enableEditMode, child: const Text(Strings.EDIT)));
+    widgets.add(contactsButtons());
+    if (_isAddContactVisible) {
+      widgets.add(_createPhoneTemplate);
+    }
+
     return widgets;
   }
 
-  ListView _childrenList(){
+  ListView _childrenList() {
     return ListView.builder(
       itemCount: _parent.children.length,
       scrollDirection: Axis.vertical,
@@ -116,13 +161,13 @@ class _ParentDetailPage extends State<ParentDetailPage> {
     );
   }
 
-  Widget _childrenListItem(int index){
+  Widget _childrenListItem(int index) {
     var childrenPerson = _parent.children.elementAt(index).person.target;
     return Text('${childrenPerson?.surname} ${childrenPerson?.name}');
   }
 
-  ListView _phonesList(){
-    return  ListView.builder(
+  ListView _phonesList() {
+    return ListView.builder(
       itemCount: _parent.phone.length,
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
@@ -132,9 +177,24 @@ class _ParentDetailPage extends State<ParentDetailPage> {
     );
   }
 
-  Widget _phoneListItem(int index){
-    var phone = _parent.phone.elementAt(index);
-    return Text('${phone.numberName}: ${phone.number}');
+  Widget _phoneListItem(int index) {
+    Phone phone = _parent.phone.elementAt(index);
+    return Slidable(
+      actionPane: const SlidableDrawerActionPane(),
+      secondaryActions: [
+        IconSlideAction(
+            caption: Strings.DELETE,
+            color: Colors.red,
+            icon: Icons.delete,
+            onTap: () {
+              setState(() {
+                _parent.phone.remove(phone);
+                _store.box<Phone>().remove(phone.id);
+              });
+            }),
+      ],
+      child: ListTile(title: Text('${phone.numberName}: ${phone.number}')),
+    );
   }
 
   void cancelEditChanges() {
@@ -159,9 +219,13 @@ class _ParentDetailPage extends State<ParentDetailPage> {
     }
   }
 
-  void updateValueInDatabase() => objectBox.store.box<Person>().put(_parent.person.target!);
+  void updateValueInDatabase() =>
+      objectBox.store.box<Person>().put(_parent.person.target!);
+
   void enableEditMode() => setState(() => _isEdited = true);
   void disableEditMode() => setState(() => _isEdited = false);
+  void enableAddContactMode() => setState(() => _isAddContactVisible = true);
+  void disableAddContactMode() => setState(() => _isAddContactVisible = false);
 
   @override
   void initState() {
