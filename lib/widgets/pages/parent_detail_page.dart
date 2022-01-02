@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/parent.dart';
@@ -16,8 +17,10 @@ class ParentDetailPage extends StatefulWidget {
 
 class _ParentDetailPage extends State<ParentDetailPage> {
   String _parentName = '', _parentSurname = '';
-  late Parent _parent;
   bool _isEdited = false;
+  late Parent _parent;
+  late Store _store;
+  late Stream<List<Parent>> _parentStream;
 
   @override
   Widget build(BuildContext context) {
@@ -28,18 +31,18 @@ class _ParentDetailPage extends State<ParentDetailPage> {
             '${_parent.person.target!.surname} ${_parent.person.target!.name}'),
       ),
       body: Column(
-        children: _isEdited ? editModeEnabled() : editModeDisabled(),
+        children: _isEdited ? _editModeEnabled() : _editModeDisabled(),
       ),
     );
   }
 
-  List<Widget> editModeEnabled() {
+  List<Widget> _editModeEnabled() {
     return [
       TextField(
         decoration: InputDecoration(
-          hintText:
-          _parent.person.target!.name == '' ? Strings.NAME : _parent.person
-              .target!.name,
+          hintText: _parent.person.target!.name == ''
+              ? Strings.NAME
+              : _parent.person.target!.name,
         ),
         onChanged: (userInput) {
           _parentName = userInput;
@@ -70,14 +73,68 @@ class _ParentDetailPage extends State<ParentDetailPage> {
     ];
   }
 
-  List<Widget> editModeDisabled(){
+  List<Widget> _editModeDisabled() {
     List<Widget> widgets = [];
-    widgets.add(Text('Dzieci:'));
-    for (var child in _parent.children) {widgets.add(Text('${child.person.target!.surname} ${child.person.target!.name}'));}
-    widgets.add(Text('Kontakty:'));
-    for (var element in _parent.phone) {widgets.add(Text(element.toString()));}
+    _parentStream = _store
+        .box<Parent>()
+        .query()
+        .watch(triggerImmediately: true)
+        .map((query) => query.find());
+
+    widgets.add(
+      StreamBuilder<List<Parent>>(
+        stream: _parentStream,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            _store.box<Parent>().get(_parent.id);
+            return Column(
+              children: [
+                const Text('Dzieci:'),
+                _childrenList(),
+                const Text('Kontakty:'),
+                _phonesList()
+              ],
+            );
+          } else {
+            return const Center(child: CircularProgressIndicator());
+          }
+        },
+      ),
+    );
     widgets.add(TextButton(onPressed: enableEditMode, child: const Text(Strings.EDIT)));
     return widgets;
+  }
+
+  ListView _childrenList(){
+    return ListView.builder(
+      itemCount: _parent.children.length,
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
+      itemBuilder: (context, index) {
+        return _childrenListItem(index);
+      },
+    );
+  }
+
+  Widget _childrenListItem(int index){
+    var childrenPerson = _parent.children.elementAt(index).person.target;
+    return Text('${childrenPerson?.surname} ${childrenPerson?.name}');
+  }
+
+  ListView _phonesList(){
+    return  ListView.builder(
+      itemCount: _parent.phone.length,
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
+      itemBuilder: (context, index) {
+        return _phoneListItem(index);
+      },
+    );
+  }
+
+  Widget _phoneListItem(int index){
+    var phone = _parent.phone.elementAt(index);
+    return Text('${phone.numberName}: ${phone.number}');
   }
 
   void cancelEditChanges() {
@@ -103,8 +160,12 @@ class _ParentDetailPage extends State<ParentDetailPage> {
   }
 
   void updateValueInDatabase() => objectBox.store.box<Person>().put(_parent.person.target!);
-
   void enableEditMode() => setState(() => _isEdited = true);
   void disableEditMode() => setState(() => _isEdited = false);
 
+  @override
+  void initState() {
+    super.initState();
+    _store = objectBox.store;
+  }
 }

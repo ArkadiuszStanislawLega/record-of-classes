@@ -35,22 +35,33 @@ late ObjectBox objectBox;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   objectBox = await ObjectBox.create();
-  //
-  // objectBox.store.box<Person>().removeAll();
-  // objectBox.store.box<Student>().removeAll();
-  // objectBox.store.box<Parent>().removeAll();
-  // objectBox.store.box<Account>().removeAll();
-  // objectBox.store.box<Phone>().removeAll();
 
+  // clearDb();
+  // printDataFromDB();
+
+  runApp(const RecordOfClassesApp());
+}
+
+
+void clearDb(){
+  objectBox.store.box<Person>().removeAll();
+  objectBox.store.box<Student>().removeAll();
+  objectBox.store.box<Parent>().removeAll();
+  objectBox.store.box<Account>().removeAll();
+  objectBox.store.box<Phone>().removeAll();
+}
+
+
+void printDataFromDB(){
   print('Persons:');
   objectBox.store.box<Person>().getAll().forEach((element) {
     print(element.toString());
 
-  print('Students:');
-  objectBox.store.box<Student>().getAll().forEach((element) {
-    print(element.toString());
-    print('rodzice: ${element.parents.length.toString()}');
-    for (var parent in element.parents) { parent.person.target.toString();}});
+    print('Students:');
+    objectBox.store.box<Student>().getAll().forEach((element) {
+      print(element.toString());
+      print('rodzice: ${element.parents.length.toString()}');
+      for (var parent in element.parents) { parent.person.target.toString();}});
   });
   print('Parents');
   objectBox.store.box<Parent>().getAll().forEach((element) {
@@ -62,12 +73,6 @@ Future<void> main() async {
     print('kontakty:');
     element.phone.forEach((phone) {print(phone.toString()); });
   });
-  // print('Phones');
-  // objectBox.store.box<Phone>().getAll().forEach((element) {
-  //   print('${element.toString()} owner: ${element.owner.target!.id}');
-  // });
-
-  runApp(const RecordOfClassesApp());
 }
 
 class RecordOfClassesApp extends StatefulWidget {
