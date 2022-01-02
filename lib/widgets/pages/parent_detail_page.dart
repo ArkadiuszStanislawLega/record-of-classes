@@ -89,9 +89,9 @@ class _ParentDetailPage extends State<ParentDetailPage> {
             _store.box<Parent>().get(_parent.id);
             return Column(
               children: [
-                const Text('Dzieci:'),
+                const Text('${Strings.CHILDREN}:'),
                 _childrenList(),
-                const Text('Kontakty:'),
+                const Text('${Strings.CONTACTS}:'),
                 _phonesList()
               ],
             );
