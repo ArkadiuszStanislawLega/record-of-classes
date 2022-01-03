@@ -35,10 +35,12 @@ class RemoveSiblingListItem extends StatelessWidget {
               box.put(sibling);
               box.put(student);
 
+              var siblingValues = '${sibling.person.target!.surname} ${sibling.person.target!.name}';
+              var studentValues = '${student.person.target!.surname} ${student.person.target!.name}';
+
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text(
-                      '${sibling.person.target!.surname} ${sibling.person.target!.name} i ${student.person.target!.surname} ${student.person.target!.name} nie są już rodzeństwem!'),
+                  content: Text('$siblingValues i $studentValues nie są już rodzeństwem!'),
                   duration: const Duration(milliseconds: 1500),
                   width: 280.0,
                   // Width of the SnackBar.
