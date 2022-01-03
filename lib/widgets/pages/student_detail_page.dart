@@ -45,18 +45,21 @@ class _StudentDetailPage extends State<StudentDetailPage> {
 
   List<Widget> editModeDisabled() {
     return [
-      Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-        TextButton(
-          onPressed: enableEditMode,
-          child: const Text(Strings.EDIT),
-        ),
-        TextButton(
-          onPressed: addParent,
-          child: const Text(Strings.ADD_PARENT),
-        ),
-      ]),
+      TextButton(
+        onPressed: enableEditMode,
+        child: const Text(Strings.EDIT),
+      ),
       Text('${Strings.AGE}: ${_student.age.toString()}'),
-      const Text('${Strings.PARENTS}:'),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const Text('${Strings.PARENTS}:'),
+          TextButton(
+            onPressed: addParent,
+            child: const Text(Strings.ADD_PARENT),
+          ),
+        ],
+      ),
       ParentListTemplate(
         children: _student,
       ),
@@ -64,7 +67,8 @@ class _StudentDetailPage extends State<StudentDetailPage> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           const Text('${Strings.SIBLINGS}:'),
-          TextButton(onPressed: addSibling, child: const Text(Strings.ADD_SIBLING))
+          TextButton(
+              onPressed: addSibling, child: const Text(Strings.ADD_SIBLING))
         ],
       ),
       SiblingsListTemplate(student: _student),
