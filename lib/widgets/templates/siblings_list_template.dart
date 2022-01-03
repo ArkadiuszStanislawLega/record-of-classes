@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/student.dart';
+import 'package:record_of_classes/widgets/templates/remove_sibling_list_item.dart';
 import 'package:record_of_classes/widgets/templates/students_list_item_template.dart';
 
 class SiblingsListTemplate extends StatefulWidget {
@@ -33,8 +34,8 @@ class _SiblingsListTemplate extends State<SiblingsListTemplate> {
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
               itemBuilder: (context, index) {
-                return StudentsListItemTemplate(
-                    student: widget.student.siblings.elementAt(index));
+                return RemoveSiblingListItem(
+                    sibling: widget.student.siblings.elementAt(index), student: widget.student);
               },
             );
           } else {
