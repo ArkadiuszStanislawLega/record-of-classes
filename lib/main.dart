@@ -5,6 +5,7 @@ import 'package:record_of_classes/models/account.dart';
 import 'package:record_of_classes/models/parent.dart';
 import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/objectbox.g.dart';
+import 'package:record_of_classes/widgets/pages/add_siblings_page.dart';
 import 'package:record_of_classes/widgets/pages/create_parent_page.dart';
 import 'package:record_of_classes/widgets/pages/create_student_page.dart';
 import 'package:record_of_classes/widgets/pages/parent_detail_page.dart';
@@ -98,6 +99,7 @@ class _RecordOfClassesApp extends State<RecordOfClassesApp> {
         AppUrls.DETAIL_STUDENT: (context) => const StudentDetailPage(),
         AppUrls.CREATE_PARENT: (context) => CreateParentPage(),
         AppUrls.DETAIL_PARENT: (context) => ParentDetailPage(),
+        AppUrls.ADD_SIBLING: (context) => AddSiblingsPage(),
       },
     );
   }

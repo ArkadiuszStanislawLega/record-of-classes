@@ -8,6 +8,7 @@ import 'package:record_of_classes/models/person.dart';
 import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/widgets/templates/accounts_list_template.dart';
 import 'package:record_of_classes/widgets/templates/parent_list_template.dart';
+import 'package:record_of_classes/widgets/templates/siblings_list_template.dart';
 
 class StudentDetailPage extends StatefulWidget {
   const StudentDetailPage({Key? key}) : super(key: key);
@@ -42,10 +43,9 @@ class _StudentDetailPage extends State<StudentDetailPage> {
     );
   }
 
-  List<Widget> editModeDisabled(){
+  List<Widget> editModeDisabled() {
     return [
-      Row(mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+      Row(mainAxisAlignment: MainAxisAlignment.center, children: [
         TextButton(
           onPressed: enableEditMode,
           child: const Text(Strings.EDIT),
@@ -55,29 +55,36 @@ class _StudentDetailPage extends State<StudentDetailPage> {
           child: const Text(Strings.ADD_PARENT),
         ),
       ]),
-
       Text('${Strings.AGE}: ${_student.age.toString()}'),
-      Text('Rodzice:'),
-      ParentListTemplate(children: _student,),
+      const Text('${Strings.PARENTS}:'),
+      ParentListTemplate(
+        children: _student,
+      ),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const Text('${Strings.SIBLINGS}:'),
+          TextButton(onPressed: addSibling, child: const Text(Strings.ADD_SIBLING))
+        ],
+      ),
+      SiblingsListTemplate(student: _student),
       AccountListTemplate(account: _student.account)
     ];
   }
 
-  List<Widget> editModeEnabled(){
-    return [ TextField(
-      decoration: InputDecoration(
-        hintText:
-        _person.name == '' ? Strings.NAME : _person.name,
-      ),
-      onChanged: (userInput) {
-        _personName = userInput;
-      },
-    ),
+  List<Widget> editModeEnabled() {
+    return [
       TextField(
         decoration: InputDecoration(
-          hintText: _person.surname == ''
-              ? Strings.SURNAME
-              : _person.surname,
+          hintText: _person.name == '' ? Strings.NAME : _person.name,
+        ),
+        onChanged: (userInput) {
+          _personName = userInput;
+        },
+      ),
+      TextField(
+        decoration: InputDecoration(
+          hintText: _person.surname == '' ? Strings.SURNAME : _person.surname,
         ),
         onChanged: (userInput) {
           _personSurname = userInput;
@@ -88,9 +95,7 @@ class _StudentDetailPage extends State<StudentDetailPage> {
             _personAge = userInput;
           },
           decoration: InputDecoration(
-            hintText: _student.age == 0
-                ? Strings.AGE
-                : _student.age.toString(),
+            hintText: _student.age == 0 ? Strings.AGE : _student.age.toString(),
           ),
           keyboardType: TextInputType.number,
           inputFormatters: <TextInputFormatter>[
@@ -111,8 +116,12 @@ class _StudentDetailPage extends State<StudentDetailPage> {
     ];
   }
 
-  void addParent(){
+  void addParent() {
     Navigator.pushNamed(context, AppUrls.CREATE_PARENT, arguments: _student);
+  }
+
+  void addSibling() {
+    Navigator.pushNamed(context, AppUrls.ADD_SIBLING, arguments: _student);
   }
 
   void cancelEditChanges() {
@@ -142,6 +151,8 @@ class _StudentDetailPage extends State<StudentDetailPage> {
   }
 
   void updateValueInDatabase() => objectBox.store.box<Person>().put(_person);
+
   void enableEditMode() => setState(() => _isEdited = true);
+
   void disableEditMode() => setState(() => _isEdited = false);
 }
