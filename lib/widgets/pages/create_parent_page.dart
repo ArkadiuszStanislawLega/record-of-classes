@@ -26,11 +26,15 @@ class _CreateParentPage extends State<CreateParentPage> {
 
   @override
   Widget build(BuildContext context) {
-    _student = ModalRoute.of(context)!.settings.arguments as Student;
+    _student = ModalRoute
+        .of(context)!
+        .settings
+        .arguments as Student;
     return Scaffold(
       appBar: AppBar(
         title: Text(
-            '${Strings.ADD_PARENT} ${_student.person.target!.surname} ${_student.person.target!.name} '),
+            '${Strings.ADD_PARENT} ${_student.person.target!.surname} ${_student
+                .person.target!.name} '),
       ),
       body: Column(
         children: [
@@ -39,18 +43,21 @@ class _CreateParentPage extends State<CreateParentPage> {
           TextButton(
               onPressed: () {
                 createParent();
-                Navigator.pop(context);
               },
               child: const Text(Strings.ADD_PARENT)),
-          ParentListTemplate(),
+          ParentListTemplate(
+            children: _student,
+          ),
         ],
       ),
     );
   }
 
+
   void createParent() {
     var person = _createParentTemplate.getParent();
-    var parent = Parent()..person.target = person;
+    var parent = Parent()
+      ..person.target = person;
     var phone = _createPhone.getPhone();
 
     parent.phone.add(phone);

@@ -38,7 +38,7 @@ class _ParentListTemplate extends State<ParentListTemplate> {
               shrinkWrap: true,
               itemBuilder: (context, index) {
                 return ParentListItemTemplate(
-                    parent: snapshot.data!.elementAt(index));
+                    parent: snapshot.data!.elementAt(index), student: widget.children!,);
               },
             );
           } else {

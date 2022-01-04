@@ -4,7 +4,7 @@ import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/parent.dart';
 import 'package:record_of_classes/models/student.dart';
-import 'package:record_of_classes/widgets/templates/parent_list_item_template.dart';
+import 'package:record_of_classes/widgets/templates/parent_of_student_liste_item_template.dart';
 
 class ParentsOfStudentList extends StatefulWidget {
   ParentsOfStudentList({Key? key, required this.children}) : super(key: key);
@@ -14,7 +14,6 @@ class ParentsOfStudentList extends StatefulWidget {
   State<StatefulWidget> createState() {
     return _ParentsOfStudentList();
   }
-
 }
 
 class _ParentsOfStudentList extends State<ParentsOfStudentList> {
@@ -36,8 +35,8 @@ class _ParentsOfStudentList extends State<ParentsOfStudentList> {
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
               itemBuilder: (context, index) {
-                return ParentListItemTemplate(
-                    parent: widget.children!.parents.elementAt(index));
+                return ParentOfStudentListItemTemplate(
+                    parent: widget.children!.parents.elementAt(index), student: widget.children!,);
               },
             );
           } else {

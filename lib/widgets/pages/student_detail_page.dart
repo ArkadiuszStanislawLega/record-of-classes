@@ -1,13 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/constants/app_urls.dart';
 import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/main.dart';
+import 'package:record_of_classes/models/parent.dart';
 import 'package:record_of_classes/models/person.dart';
 import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/widgets/templates/accounts_list_template.dart';
-import 'package:record_of_classes/widgets/templates/parent_list_template.dart';
 import 'package:record_of_classes/widgets/templates/parents_of_student_list_template.dart';
 import 'package:record_of_classes/widgets/templates/siblings_list_template.dart';
 
@@ -24,6 +25,8 @@ class _StudentDetailPage extends State<StudentDetailPage> {
   late Student _student;
   late Person _person;
   late bool _isEdited = false;
+  late Store _store;
+  late Stream<List<Student>> _parentsStream;
   String _personAge = '', _personName = '', _personSurname = '';
 
   @override
@@ -35,13 +38,33 @@ class _StudentDetailPage extends State<StudentDetailPage> {
       appBar: AppBar(
         title: Text('${_person.name}  ${_person.surname}'),
       ),
-      body: Container(
-        margin: const EdgeInsets.all(10.0),
-        child: Column(
-          children: _isEdited ? editModeEnabled() : editModeDisabled(),
-        ),
+      body: StreamBuilder<List<Student>>(
+        stream: _parentsStream,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return Container(
+              margin: const EdgeInsets.all(10.0),
+              child: Column(
+                children: _isEdited ? editModeEnabled() : editModeDisabled(),
+              ),
+            );
+          } else {
+            return const Center(child: CircularProgressIndicator());
+          }
+        },
       ),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _store = objectBox.store;
+    _parentsStream = _store
+        .box<Student>()
+        .query()
+        .watch(triggerImmediately: true)
+        .map((query) => query.find());
   }
 
   List<Widget> editModeDisabled() {
