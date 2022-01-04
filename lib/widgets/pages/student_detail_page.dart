@@ -8,6 +8,7 @@ import 'package:record_of_classes/models/person.dart';
 import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/widgets/templates/accounts_list_template.dart';
 import 'package:record_of_classes/widgets/templates/parent_list_template.dart';
+import 'package:record_of_classes/widgets/templates/parents_of_student_list_template.dart';
 import 'package:record_of_classes/widgets/templates/siblings_list_template.dart';
 
 class StudentDetailPage extends StatefulWidget {
@@ -60,7 +61,7 @@ class _StudentDetailPage extends State<StudentDetailPage> {
           ),
         ],
       ),
-      ParentListTemplate(
+      ParentsOfStudentList(
         children: _student,
       ),
       Row(
