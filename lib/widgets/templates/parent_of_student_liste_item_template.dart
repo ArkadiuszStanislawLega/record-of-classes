@@ -57,10 +57,14 @@ class ParentOfStudentListItemTemplate extends StatelessWidget{
   }
 
   void removeParent() {
+    var box2 = _store.box<Parent>();
+    parent.children.removeWhere((w) => w.id == student.id);
+    box2.put(parent);
+
+
+    var box = _store.box<Student>();
     student.parents.remove(parent);
-    parent.children.remove(student);
-    _store.box<Student>().put(student);
-    _store.box<Parent>().put(parent);
+    box.put(student);
   }
 
   List<Widget> personData() {

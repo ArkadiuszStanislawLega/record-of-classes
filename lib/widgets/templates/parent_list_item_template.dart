@@ -68,14 +68,17 @@ class _ParentListItemTemplate extends State<ParentListItemTemplate> {
         ),
       ),
     );
-    _store.box<Parent>().remove(widget.parent.id);
-    _store.box<Person>().remove(widget.parent.person.target!.id);
+    var box = _store.box<Parent>();
+
+   box.remove(widget.parent.id);
+   box.remove(widget.parent.person.target!.id);
   }
 
   void addParent() {
     widget.student.parents.add(widget.parent);
     widget.parent.children.add(widget.student);
     _store.box<Student>().put(widget.student);
+    _store.box<Parent>().put(widget.parent);
 
     var parentValues = '${widget.parent.person.target!.surname} ${widget.parent.person.target!.name}';
     var studentValues = '${widget.student.person.target!.surname} ${widget.student.person.target!.name}';
