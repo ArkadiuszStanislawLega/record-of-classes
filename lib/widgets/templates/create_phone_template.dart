@@ -30,7 +30,10 @@ class CreatePhoneTemplate extends StatelessWidget{
   }
 
   Phone getPhone(){
-    return Phone(numberName: _numberName, number: int.parse(_number));
+    try {
+      return Phone(numberName: _numberName, number: int.parse(_number));
+    } on FormatException{
+      return Phone(numberName: _numberName, number: 0);
+    }
   }
-
 }

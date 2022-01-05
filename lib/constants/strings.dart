@@ -17,11 +17,14 @@ class Strings {
       DELETE = 'Usuń',
       DISCONNECT = 'Rozłącz',
       EDIT = 'Edytuj',
+      FAIL_TO_ADD_NEW_PARENT_TO_DATABASE = 'Nie udało się dodać nowego rodzica do bazy danych.',
       ID = 'ID',
       OK = 'OK',
       PARENTS = 'Rodzice',
       PHONE_NUMBER = 'Numer telefonu',
       PHONE_NAME = 'Nazwa kontaktu',
       SIBLINGS = 'Rodzeństwo',
+      SUCCESFULLY_ADDED = 'Pomyślnie dodano',
+      TO_DATABASE = 'do bazy danych',
       THEY_ARENT_SIBLINGS = 'nie są już rodzeństwem!';
 }
