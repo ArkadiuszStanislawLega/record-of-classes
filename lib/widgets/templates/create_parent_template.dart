@@ -7,8 +7,8 @@ class CreateParentTemplate extends StatefulWidget {
   CreateParentTemplate({Key? key}) : super(key: key);
 
   String _parentName = '', _parentSurname = '';
-  final TextEditingController _nameInputController = TextEditingController();
-  final TextEditingController _surnameInputController = TextEditingController();
+  final TextEditingController _nameInputController = TextEditingController(),
+      _surnameInputController = TextEditingController();
 
   Person getParent() {
     return Person(name: _parentName, surname: _parentSurname);

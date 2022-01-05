@@ -48,7 +48,7 @@ class _CreateParentPage extends State<CreateParentPage> {
                         ? {
                             _addToDatabase(),
                             _createParentSuccessfulMessage(),
-                            _createParentTemplate.clearValues()
+                            _clearValues()
                           }
                         : _createParentUnsuccessfulMessage(),
                   },
@@ -87,6 +87,11 @@ class _CreateParentPage extends State<CreateParentPage> {
     var parent = _createParentTemplate.getParent();
     _snackBarInfo(
         '${Strings.SUCCESFULLY_ADDED} ${parent.surname} ${parent.surname} ${Strings.TO_DATABASE}.');
+  }
+
+  void _clearValues(){
+    _createParentTemplate.clearValues();
+    _createPhone.clearValues();
   }
 
   void _createParentUnsuccessfulMessage() =>
