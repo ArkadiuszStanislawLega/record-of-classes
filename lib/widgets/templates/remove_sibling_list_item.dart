@@ -33,20 +33,19 @@ class RemoveSiblingListItem extends StatelessWidget {
           ),
         ],
         child: ListTile(
-          title:
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Text(
-              '${person.surname} ${person.name} ',
-              style: const TextStyle(
-                  color: Colors.blueGrey, fontWeight: FontWeight.bold),
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  '${person.surname} ${person.name} ',
+                  style: const TextStyle(
+                      color: Colors.blueGrey, fontWeight: FontWeight.bold),
+                ),
+                Text(' lat: ${sibling.age.toString()}')
+              ],
             ),
-            Text(' lat: ${sibling.age.toString()}')
-          ]),
-          onTap: () {
-            Navigator.pushNamed(context, AppUrls.DETAIL_STUDENT,
-                arguments: sibling);
-          },
-        ),
+            onTap: () => Navigator.pushNamed(context, AppUrls.DETAIL_STUDENT,
+                arguments: sibling)),
       );
     }
     return const Text('');
@@ -63,15 +62,15 @@ class RemoveSiblingListItem extends StatelessWidget {
   }
 
   void showInfoSnackBar(var context) {
-    var siblingValues =
-        '${sibling.person.target!.surname} ${sibling.person.target!.name}';
-    var studentValues =
-        '${student.person.target!.surname} ${student.person.target!.name}';
+    var siblingPerson = sibling.person.target!;
+    var studentPerson = student.person.target!;
+    var siblingValues = '${siblingPerson.surname} ${siblingPerson.name}';
+    var studentValues = '${studentPerson.surname} ${studentPerson.name}';
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content:
-            Text('$siblingValues i $studentValues nie są już rodzeństwem!'),
+        content: Text(
+            '$siblingValues ${Strings.AND} $studentValues ${Strings.THEY_ARENT_SIBLINGS}'),
         duration: const Duration(milliseconds: 1500),
         width: 280.0,
         // Width of the SnackBar.

@@ -6,6 +6,7 @@ class Strings {
       ADD_PARENT = 'Dodaj rodzica',
       ADD_CONTACT = 'Dodaj kontakt',
       ADD_SIBLING = 'Dodaj rodzeństwo',
+      AND = 'i',
       CANCEL = 'Anuluj',
       CANCEL_ADDING_CONTACTS = 'Anuluj dodawanie kontaktów',
       CONTACTS = 'Kontakty',
@@ -21,5 +22,6 @@ class Strings {
       PARENTS = 'Rodzice',
       PHONE_NUMBER = 'Numer telefonu',
       PHONE_NAME = 'Nazwa kontaktu',
-      SIBLINGS = 'Rodzeństwo';
+      SIBLINGS = 'Rodzeństwo',
+      THEY_ARENT_SIBLINGS = 'nie są już rodzeństwem!';
 }
