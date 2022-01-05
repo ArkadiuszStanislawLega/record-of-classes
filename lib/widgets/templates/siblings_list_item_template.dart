@@ -38,7 +38,7 @@ class SiblingsListItemTemplate extends StatelessWidget{
 
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text('$siblingValues i $studentValues są teraz rodzeństwem!'),
+                  content: Text('$siblingValues ${Strings.AND} $studentValues ${Strings.THEY_ARE_SIBLINGS}!'),
                   duration: const Duration(milliseconds: 1500),
                   width: 280.0,
                   // Width of the SnackBar.
@@ -62,7 +62,7 @@ class SiblingsListItemTemplate extends StatelessWidget{
               style: const TextStyle(
                   color: Colors.blueGrey, fontWeight: FontWeight.bold),
             ),
-            Text(' lat: ${sibling.age.toString()}')
+            Text(' ${Strings.YEARS}: ${sibling.age.toString()}')
           ]),
           onTap: () {
             Navigator.pushNamed(context, AppUrls.DETAIL_STUDENT,

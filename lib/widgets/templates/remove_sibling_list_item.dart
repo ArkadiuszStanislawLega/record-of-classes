@@ -41,7 +41,7 @@ class RemoveSiblingListItem extends StatelessWidget {
                   style: const TextStyle(
                       color: Colors.blueGrey, fontWeight: FontWeight.bold),
                 ),
-                Text(' lat: ${sibling.age.toString()}')
+                Text(' ${Strings.YEARS}: ${sibling.age.toString()}')
               ],
             ),
             onTap: () => Navigator.pushNamed(context, AppUrls.DETAIL_STUDENT,

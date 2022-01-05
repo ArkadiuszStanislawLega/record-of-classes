@@ -45,7 +45,11 @@ class _CreateParentPage extends State<CreateParentPage> {
               onPressed: () => {
                     _getInputValues(),
                     _isInputValuesAreValid()
-                        ? {_addToDatabase(), _createParentSuccessfulMessage()}
+                        ? {
+                            _addToDatabase(),
+                            _createParentSuccessfulMessage(),
+                            _createParentTemplate.clearValues()
+                          }
                         : _createParentUnsuccessfulMessage(),
                   },
               child: const Text(Strings.ADD_PARENT)),

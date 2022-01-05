@@ -38,7 +38,7 @@ Future<void> main() async {
   objectBox = await ObjectBox.create();
 
   // clearDb();
-  printDataFromDB();
+  // printDataFromDB();
 
   runApp(const RecordOfClassesApp());
 }

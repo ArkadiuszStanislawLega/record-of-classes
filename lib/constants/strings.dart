@@ -26,5 +26,7 @@ class Strings {
       SIBLINGS = 'Rodzeństwo',
       SUCCESFULLY_ADDED = 'Pomyślnie dodano',
       TO_DATABASE = 'do bazy danych',
-      THEY_ARENT_SIBLINGS = 'nie są już rodzeństwem!';
+      THEY_ARENT_SIBLINGS = 'nie są już rodzeństwem!',
+      THEY_ARE_SIBLINGS = 'są teraz rodzeństwem',
+      YEARS = 'lat';
 }
