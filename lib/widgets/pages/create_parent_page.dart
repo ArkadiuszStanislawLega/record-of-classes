@@ -21,67 +21,62 @@ class CreateParentPage extends StatefulWidget {
 }
 
 class _CreateParentPage extends State<CreateParentPage> {
-  late Student _student;
+  late Person _inputPerson;
+  late Parent _inputParent;
+  late Phone _inputPhone;
+  late Student _selectedStudent;
   final Store _store = objectBox.store;
   final _createParentTemplate = CreateParentTemplate();
   final _createPhone = CreatePhoneTemplate();
 
   @override
   Widget build(BuildContext context) {
-    _student = ModalRoute.of(context)!.settings.arguments as Student;
+    _selectedStudent = ModalRoute.of(context)!.settings.arguments as Student;
     return Scaffold(
       appBar: AppBar(
         title: Text(
-            '${Strings.ADD_PARENT} ${_student.person.target!.surname} ${_student.person.target!.name} '),
+            '${Strings.ADD_PARENT} ${_selectedStudent.person.target!.surname} ${_selectedStudent.person.target!.name} '),
       ),
       body: Column(
         children: [
           _createParentTemplate,
           _createPhone,
           TextButton(
-              onPressed: () {
-                _createParent()
-                    ? _createParentSuccessfulMessage()
-                    : _createParentUnsuccessfulMessage();
-              },
+              onPressed: () => {
+                    _getInputValues(),
+                    _isInputValuesAreValid()
+                        ? {_addToDatabase(), _createParentSuccessfulMessage()}
+                        : _createParentUnsuccessfulMessage(),
+                  },
               child: const Text(Strings.ADD_PARENT)),
           ParentListTemplate(
-            children: _student,
+            children: _selectedStudent,
           ),
         ],
       ),
     );
   }
 
-  bool _createParent() {
-    var person = _createParentTemplate.getParent();
-    var parent = Parent()..person.target = person;
-    var phone = _createPhone.getPhone();
-
-    if (_validateInputValues(person: person, phone: phone)) {
-      _addToDatabase(parent: parent, person: person, phone: phone);
-      return true;
-    }
-    return false;
+  void _getInputValues() {
+    _inputPerson = _createParentTemplate.getParent();
+    _inputParent = Parent()..person.target = _inputPerson;
+    _inputPhone = _createPhone.getPhone();
   }
 
-  bool _validateInputValues({required Person person, required Phone phone}) =>
-      _validatePerson(person) && _validatePhone(phone);
+  bool _isInputValuesAreValid() => _isPersonValidated() && _isPhoneValidated();
 
-  bool _validatePerson(Person person) =>
-      person.name != '' && person.surname != '';
+  bool _isPersonValidated() =>
+      _inputPerson.name != '' && _inputPerson.surname != '';
 
-  bool _validatePhone(Phone phone) =>
-      phone.numberName != '' && phone.number >= 0;
+  bool _isPhoneValidated() =>
+      _inputPhone.numberName != '' && _inputPhone.number > 0;
 
-  void _addToDatabase(
-      {required Parent parent, required Person person, required Phone phone}) {
-    parent.phone.add(phone);
-    parent.person.target = person;
-    parent.children.add(_student);
-    _student.parents.add(parent);
+  void _addToDatabase() {
+    _inputParent.phone.add(_inputPhone);
+    _inputParent.children.add(_selectedStudent);
+    _selectedStudent.parents.add(_inputParent);
 
-    _store.box<Student>().put(_student);
+    _store.box<Student>().put(_selectedStudent);
   }
 
   void _createParentSuccessfulMessage() {
