@@ -27,32 +27,8 @@ class RemoveSiblingListItem extends StatelessWidget {
             color: Colors.deepOrange,
             icon: Icons.remove,
             onTap: () {
-              student.siblings.remove(sibling);
-              sibling.siblings.remove(student);
-
-              var box = _store.box<Student>();
-
-              box.put(sibling);
-              box.put(student);
-
-              var siblingValues = '${sibling.person.target!.surname} ${sibling.person.target!.name}';
-              var studentValues = '${student.person.target!.surname} ${student.person.target!.name}';
-
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text('$siblingValues i $studentValues nie są już rodzeństwem!'),
-                  duration: const Duration(milliseconds: 1500),
-                  width: 280.0,
-                  // Width of the SnackBar.
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 15.0, // Inner padding for SnackBar content.
-                  ),
-                  behavior: SnackBarBehavior.floating,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                ),
-              );
+              updateDatabase();
+              showInfoSnackBar(context);
             },
           ),
         ],
@@ -74,5 +50,39 @@ class RemoveSiblingListItem extends StatelessWidget {
       );
     }
     return const Text('');
+  }
+
+  void updateDatabase() {
+    student.siblings.removeWhere((s) => s.id == sibling.id);
+    sibling.siblings.removeWhere((s) => s.id == student.id);
+
+    var box = _store.box<Student>();
+
+    box.put(sibling);
+    box.put(student);
+  }
+
+  void showInfoSnackBar(var context) {
+    var siblingValues =
+        '${sibling.person.target!.surname} ${sibling.person.target!.name}';
+    var studentValues =
+        '${student.person.target!.surname} ${student.person.target!.name}';
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content:
+            Text('$siblingValues i $studentValues nie są już rodzeństwem!'),
+        duration: const Duration(milliseconds: 1500),
+        width: 280.0,
+        // Width of the SnackBar.
+        padding: const EdgeInsets.symmetric(
+          horizontal: 15.0, // Inner padding for SnackBar content.
+        ),
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+      ),
+    );
   }
 }
