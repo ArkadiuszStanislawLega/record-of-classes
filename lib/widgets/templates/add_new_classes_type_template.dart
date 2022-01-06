@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/models/classes_type.dart';
 
-class AddNewClassTypeTemplate extends StatefulWidget {
-  AddNewClassTypeTemplate({Key? key}) : super(key: key);
+class AddNewClassesTypeTemplate extends StatefulWidget {
+  AddNewClassesTypeTemplate({Key? key}) : super(key: key);
 
   String _inputPriceForEach = '',
       _inputPriceForMonth = '',
@@ -38,11 +38,11 @@ class AddNewClassTypeTemplate extends StatefulWidget {
   }
 
   @override
-  _AddNewClassTypeTemplateState createState() =>
-      _AddNewClassTypeTemplateState();
+  _AddNewClassesTypeTemplateState createState() =>
+      _AddNewClassesTypeTemplateState();
 }
 
-class _AddNewClassTypeTemplateState extends State<AddNewClassTypeTemplate> {
+class _AddNewClassesTypeTemplateState extends State<AddNewClassesTypeTemplate> {
   @override
   Widget build(BuildContext context) {
     return Column(

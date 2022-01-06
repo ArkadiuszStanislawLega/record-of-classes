@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:record_of_classes/widgets/templates/add_new_class_type_template.dart';
+import 'package:record_of_classes/widgets/templates/add_new_classes_type_template.dart';
 
 class ClassTypeMainPage extends StatefulWidget {
   const ClassTypeMainPage({Key? key}) : super(key: key);
@@ -22,7 +22,7 @@ class _ClassTypeMainPageState extends State<ClassTypeMainPage> {
             onPressed: () {},
             child: Text('Dodaj zajęcia'),
           ),
-          AddNewClassTypeTemplate(),
+          AddNewClassesTypeTemplate(),
         ],
       ),
     );
