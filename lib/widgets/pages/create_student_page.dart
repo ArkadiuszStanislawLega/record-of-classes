@@ -60,7 +60,7 @@ class _CreateStudentPage extends State<CreateStudentPage> {
     var student = Student(age: int.parse(_personAge));
     var account = Account();
 
-    account.student.target = student;
+    student.account.target = account;
     person.student.target = student;
     student.person.target = person;
 

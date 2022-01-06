@@ -39,12 +39,14 @@ Future<void> main() async {
 
   // clearDb();
   // printDataFromDB();
-
+  objectBox.store.box<Account>().getAll().forEach((element) {
+    print(element.id);
+  });
   runApp(const RecordOfClassesApp());
 }
 
 
-void clearDb(){
+void clearDb() {
   objectBox.store.box<Person>().removeAll();
   objectBox.store.box<Student>().removeAll();
   objectBox.store.box<Parent>().removeAll();
@@ -53,7 +55,7 @@ void clearDb(){
 }
 
 
-void printDataFromDB(){
+void printDataFromDB() {
   print('Persons:');
   objectBox.store.box<Person>().getAll().forEach((element) {
     print(element.toString());
@@ -62,7 +64,10 @@ void printDataFromDB(){
     objectBox.store.box<Student>().getAll().forEach((element) {
       print(element.toString());
       print('rodzice: ${element.parents.length.toString()}');
-      for (var parent in element.parents) { parent.person.target.toString();}});
+      for (var parent in element.parents) {
+        parent.person.target.toString();
+      }
+    });
   });
   print('Parents');
   objectBox.store.box<Parent>().getAll().forEach((element) {
@@ -72,7 +77,9 @@ void printDataFromDB(){
       print(children.toString());
     });
     print('kontakty:');
-    element.phone.forEach((phone) {print(phone.toString()); });
+    element.phone.forEach((phone) {
+      print(phone.toString());
+    });
   });
 }
 
