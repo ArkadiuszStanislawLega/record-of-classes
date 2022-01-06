@@ -37,26 +37,28 @@ class _CreateParentPage extends State<CreateParentPage> {
         title: Text(
             '${Strings.ADD_PARENT} ${_selectedStudent.person.target!.surname} ${_selectedStudent.person.target!.name} '),
       ),
-      body: Column(
-        children: [
-          _createParentTemplate,
-          _createPhone,
-          TextButton(
-              onPressed: () => {
-                    _getInputValues(),
-                    _isInputValuesAreValid()
-                        ? {
-                            _addToDatabase(),
-                            _createParentSuccessfulMessage(),
-                            _clearValues()
-                          }
-                        : _createParentUnsuccessfulMessage(),
-                  },
-              child: const Text(Strings.ADD_PARENT)),
-          ParentListTemplate(
-            children: _selectedStudent,
-          ),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            _createParentTemplate,
+            _createPhone,
+            TextButton(
+                onPressed: () => {
+                      _getInputValues(),
+                      _isInputValuesAreValid()
+                          ? {
+                              _addToDatabase(),
+                              _createParentSuccessfulMessage(),
+                              _clearValues()
+                            }
+                          : _createParentUnsuccessfulMessage(),
+                    },
+                child: const Text(Strings.ADD_PARENT)),
+            ParentListTemplate(
+              children: _selectedStudent,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -89,7 +91,7 @@ class _CreateParentPage extends State<CreateParentPage> {
         '${Strings.SUCCESFULLY_ADDED} ${parent.surname} ${parent.surname} ${Strings.TO_DATABASE}.');
   }
 
-  void _clearValues(){
+  void _clearValues() {
     _createParentTemplate.clearValues();
     _createPhone.clearValues();
   }
