@@ -4,6 +4,7 @@ import 'package:record_of_classes/constants/app_urls.dart';
 import 'package:record_of_classes/models/account.dart';
 import 'package:record_of_classes/models/parent.dart';
 import 'package:record_of_classes/models/student.dart';
+import 'package:record_of_classes/models/teacher.dart';
 import 'package:record_of_classes/objectbox.g.dart';
 import 'package:record_of_classes/widgets/pages/add_siblings_page.dart';
 import 'package:record_of_classes/widgets/pages/classes_type_main_page.dart';
@@ -37,13 +38,26 @@ late ObjectBox objectBox;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   objectBox = await ObjectBox.create();
+  _putTeacherToDb();
 
   // clearDb();
   // printDataFromDB();
-  objectBox.store.box<Account>().getAll().forEach((element) {
-    print(element.id);
-  });
+  // objectBox.store.box<Account>().getAll().forEach((element) {
+  //   print(element.id);
+  // });
   runApp(const RecordOfClassesApp());
+}
+
+void _putTeacherToDb(){
+  var teacherObjectBox = objectBox.store.box<Teacher>();
+  var teachers = teacherObjectBox.getAll();
+  if(teachers.isEmpty){
+    var person = Person(name: 'Monika', surname: 'Łęga');
+    var teacher = Teacher()
+      ..person.target = person;
+    teacherObjectBox.put(teacher);
+    print('Dodano nauczyciela ${teacherObjectBox.get(1)}');
+  }
 }
 
 
