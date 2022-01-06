@@ -33,15 +33,17 @@ class _AddSiblingsPage extends State<AddSiblingsPage> {
           stream: _studentsStream,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
+              List<Student> preparedStudentList = prepareData(snapshot.data);
+
               return ListView.builder(
-                itemCount: snapshot.data!.length,
+                itemCount: preparedStudentList.length,
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
-                  return snapshot.data!.elementAt(index).id != student.id
-                      ? SiblingsListItemTemplate(
-                          sibling: snapshot.data!.elementAt(index), student: student,)
-                      : const Text('');
+                  return SiblingsListItemTemplate(
+                          sibling: preparedStudentList.elementAt(index),
+                          student: student,
+                        );
                 },
               );
             } else {
@@ -51,6 +53,17 @@ class _AddSiblingsPage extends State<AddSiblingsPage> {
         ),
       ),
     );
+  }
+
+  List<Student> prepareData(var originalData){
+    List<Student> studentList = [];
+    originalData.sort((Student a, Student b) => a.person.target!.surname
+        .toLowerCase()
+        .compareTo(b.person.target!.surname.toLowerCase()));
+    for (var stud in originalData) {
+      if (stud.id != student.id) studentList.add(stud);
+    }
+    return studentList;
   }
 
   @override
