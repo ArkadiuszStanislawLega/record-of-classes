@@ -34,6 +34,15 @@ class _StartPageViewView extends State<StartPageView> {
                 },
                 child: const Text(Strings.CREATE_STUDENT),
               ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(
+                    context,
+                    AppUrls.CLASS_TYPE_MAIN,
+                  );
+                },
+                child: const Text('Typ zajęć'),
+              ),
             ],
           ),
           const StudentsListTemplate(),

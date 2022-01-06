@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/models/phone.dart';
 
@@ -45,6 +46,10 @@ class _CreatePhoneTemplate extends State<CreatePhoneTemplate> {
             onChanged: (userInput) => widget._numberName = userInput),
         TextField(
             controller: widget._numberInputController,
+            keyboardType: TextInputType.phone,
+            inputFormatters: <TextInputFormatter>[
+              FilteringTextInputFormatter.digitsOnly
+            ],
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
               hintText: Strings.PHONE_NUMBER,
