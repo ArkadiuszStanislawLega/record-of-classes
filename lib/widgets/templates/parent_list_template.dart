@@ -32,6 +32,7 @@ class _ParentListTemplate extends State<ParentListTemplate> {
         stream: _parentsStream,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
+            snapshot.data?.sort((a,b)=> a.person.target!.surname.toLowerCase().compareTo(b.person.target!.surname.toLowerCase()));
             return ListView.builder(
               itemCount: snapshot.data!.length,
               scrollDirection: Axis.vertical,
