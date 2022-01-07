@@ -72,6 +72,13 @@ class _DetailClassesTypeState extends State<DetailClassesType> {
     print(widget._classesType.toString());
   }
 
+  void _setNewValues() {
+    _setNewName();
+    _setNewPriceForEach();
+    _setNewPriceForMonth();
+    _setNewTeacher();
+  }
+
   bool _isNamesAreDifferent() =>
       _updatedClassesType.name != widget._classesType.name;
 
@@ -91,13 +98,13 @@ class _DetailClassesTypeState extends State<DetailClassesType> {
     }
   }
 
-  void _setNewPriceFormEach() {
+  void _setNewPriceForEach() {
     if (_isPriceForEachAreDifferent()) {
       widget._classesType.priceForEach = _updatedClassesType.priceForEach;
     }
   }
 
-  void _setNewPriceFormMonth() {
+  void _setNewPriceForMonth() {
     if (_isPriceForMonthAreDifferent()) {
       widget._classesType.priceForMonth = _updatedClassesType.priceForMonth;
     }
@@ -109,12 +116,6 @@ class _DetailClassesTypeState extends State<DetailClassesType> {
     }
   }
 
-  void _setNewValues() {
-    _setNewName();
-    _setNewPriceFormEach();
-    _setNewPriceFormMonth();
-    _setNewTeacher();
-  }
 
   void _disableEditMode() => setState(() => _isEditModeEnabled = false);
 
