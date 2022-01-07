@@ -15,6 +15,7 @@ class Strings {
       CREATE_STUDENT = 'Utwórz ucznia',
       CREATE_PARENT = 'Utwórz rodzica',
       CHILDREN = 'Dzieci',
+      CURRENCY = 'zl',
       DATABASE_NAME = 'objectbox',
       DELETE = 'Usuń',
       DISCONNECT = 'Rozłącz',

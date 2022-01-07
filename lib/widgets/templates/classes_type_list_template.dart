@@ -24,6 +24,5 @@ class _ClassesTypeListTemplateState extends State<ClassesTypeListTemplate> {
             classesType: widget.classesTypes.elementAt(index));
       },
     );
-    ;
   }
 }

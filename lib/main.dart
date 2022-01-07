@@ -10,6 +10,7 @@ import 'package:record_of_classes/widgets/pages/add_siblings_page.dart';
 import 'package:record_of_classes/widgets/pages/classes_type_main_page.dart';
 import 'package:record_of_classes/widgets/pages/create_parent_page.dart';
 import 'package:record_of_classes/widgets/pages/create_student_page.dart';
+import 'package:record_of_classes/widgets/pages/detail_classes_type_page.dart';
 import 'package:record_of_classes/widgets/pages/parent_detail_page.dart';
 import 'package:record_of_classes/widgets/pages/start_page.dart';
 import 'package:record_of_classes/widgets/pages/student_detail_page.dart';
@@ -123,6 +124,7 @@ class _RecordOfClassesApp extends State<RecordOfClassesApp> {
         AppUrls.DETAIL_PARENT: (context) => ParentDetailPage(),
         AppUrls.ADD_SIBLING: (context) => AddSiblingsPage(),
         AppUrls.CLASS_TYPE_MAIN: (context) => ClassTypeMainPage(),
+        AppUrls.DETAIL_CLASSES_TYPE: (context) => DetailClassesType()
       },
     );
   }
