@@ -17,13 +17,15 @@ class _DetailClassesTypeState extends State<DetailClassesType> {
   bool _isEditModeEnabled = false;
   late Store _store;
   late AddNewClassesTypeTemplate _addNewClassesTypeTemplate;
+  late ClassesType _updatedClassesType;
 
   @override
   Widget build(BuildContext context) {
-
     widget._classesType =
         ModalRoute.of(context)!.settings.arguments as ClassesType;
-    _addNewClassesTypeTemplate = AddNewClassesTypeTemplate(classesType: widget._classesType,);
+    _addNewClassesTypeTemplate = AddNewClassesTypeTemplate(
+      classesType: widget._classesType,
+    );
     return Scaffold(
         appBar: AppBar(
           title: Text(widget._classesType.name),
@@ -40,7 +42,7 @@ class _DetailClassesTypeState extends State<DetailClassesType> {
           children: [
             TextButton(
               onPressed: () {
-                if (_isValuesAreValid()){
+                if (_isValuesAreValid()) {
                   _updateValuesInDb();
                 }
                 _disableEditMode();
@@ -61,23 +63,57 @@ class _DetailClassesTypeState extends State<DetailClassesType> {
   }
 
   bool _isValuesAreValid() => _addNewClassesTypeTemplate.isInputValid();
+
   void _updateValuesInDb() {
-    var updatedClassesType = _addNewClassesTypeTemplate.getClassType();
-    if (updatedClassesType.name != widget._classesType.name){
-      widget._classesType.name = updatedClassesType.name;
-    }
-    if (updatedClassesType.priceForEach != widget._classesType.priceForEach){
-      widget._classesType.priceForEach = updatedClassesType.priceForEach;
-    }
-    if (updatedClassesType.priceForMonth != widget._classesType.priceForMonth){
-      widget._classesType.priceForMonth = updatedClassesType.priceForMonth;
-    }
-    if (updatedClassesType.teacher.targetId != widget._classesType.teacher.targetId){
-      widget._classesType.teacher.target = updatedClassesType.teacher.target;
-    }
+    _updatedClassesType = _addNewClassesTypeTemplate.getClassType();
+    _setNewValues();
     _store.box<ClassesType>().put(widget._classesType);
 
     print(widget._classesType.toString());
+  }
+
+  bool _isNamesAreDifferent() =>
+      _updatedClassesType.name != widget._classesType.name;
+
+  bool _isPriceForEachAreDifferent() =>
+      _updatedClassesType.priceForEach != widget._classesType.priceForEach;
+
+  bool _isPriceForMonthAreDifferent() =>
+      _updatedClassesType.priceForMonth != widget._classesType.priceForMonth;
+
+  bool _isTeachersAreDifferent() =>
+      _updatedClassesType.teacher.targetId !=
+      widget._classesType.teacher.targetId;
+
+  void _setNewName() {
+    if (_isNamesAreDifferent()) {
+      widget._classesType.name = _updatedClassesType.name;
+    }
+  }
+
+  void _setNewPriceFormEach() {
+    if (_isPriceForEachAreDifferent()) {
+      widget._classesType.priceForEach = _updatedClassesType.priceForEach;
+    }
+  }
+
+  void _setNewPriceFormMonth() {
+    if (_isPriceForMonthAreDifferent()) {
+      widget._classesType.priceForMonth = _updatedClassesType.priceForMonth;
+    }
+  }
+
+  void _setNewTeacher() {
+    if (_isTeachersAreDifferent()) {
+      widget._classesType.teacher.target = _updatedClassesType.teacher.target;
+    }
+  }
+
+  void _setNewValues() {
+    _setNewName();
+    _setNewPriceFormEach();
+    _setNewPriceFormMonth();
+    _setNewTeacher();
   }
 
   void _disableEditMode() => setState(() => _isEditModeEnabled = false);
