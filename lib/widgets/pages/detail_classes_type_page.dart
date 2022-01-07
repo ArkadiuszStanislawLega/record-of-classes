@@ -16,13 +16,14 @@ class DetailClassesType extends StatefulWidget {
 class _DetailClassesTypeState extends State<DetailClassesType> {
   bool _isEditModeEnabled = false;
   late Store _store;
-  final AddNewClassesTypeTemplate _addNewClassesTypeTemplate =
-      AddNewClassesTypeTemplate();
+  late AddNewClassesTypeTemplate _addNewClassesTypeTemplate;
 
   @override
   Widget build(BuildContext context) {
+
     widget._classesType =
         ModalRoute.of(context)!.settings.arguments as ClassesType;
+    _addNewClassesTypeTemplate = AddNewClassesTypeTemplate(classesType: widget._classesType,);
     return Scaffold(
         appBar: AppBar(
           title: Text(widget._classesType.name),

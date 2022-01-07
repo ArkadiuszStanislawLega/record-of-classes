@@ -3,7 +3,8 @@ import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/models/classes_type.dart';
 
 class AddNewClassesTypeTemplate extends StatefulWidget {
-  AddNewClassesTypeTemplate({Key? key}) : super(key: key);
+  AddNewClassesTypeTemplate({Key? key, this.classesType}) : super(key: key);
+  ClassesType? classesType;
 
   String _inputPriceForEach = '',
       _inputPriceForMonth = '',
@@ -21,7 +22,7 @@ class AddNewClassesTypeTemplate extends StatefulWidget {
 
   bool isInputValid() => _isPriceForEachIsValid() && _isPriceForMonthIsValid();
 
-  void clearFields(){
+  void clearFields() {
     _inputClassTypeName = '';
     _inputPriceForEach = '';
     _inputPriceForMonth = '';
@@ -49,21 +50,30 @@ class _AddNewClassesTypeTemplateState extends State<AddNewClassesTypeTemplate> {
       children: [
         TextField(
           controller: widget._nameOfClassesController,
-          decoration: const InputDecoration(hintText: Strings.NAME_OF_CLASSES_TYPE),
+          decoration: InputDecoration(
+              hintText: widget.classesType == null
+                  ? Strings.NAME_OF_CLASSES_TYPE
+                  : widget.classesType!.name),
           onChanged: (String str) =>
               str.isNotEmpty ? widget._inputClassTypeName = str : {},
         ),
         TextField(
           controller: widget._priceForEachController,
           keyboardType: TextInputType.number,
-          decoration: const InputDecoration(hintText: Strings.PRICE_FOR_EACH),
+          decoration: InputDecoration(
+              hintText: widget.classesType == null
+                  ? Strings.PRICE_FOR_EACH
+                  : widget.classesType!.priceForEach.toString()),
           onChanged: (String str) =>
               str.isNotEmpty ? widget._inputPriceForEach = str : {},
         ),
         TextField(
           controller: widget._priceForMonthController,
           keyboardType: TextInputType.number,
-          decoration: const InputDecoration(hintText: Strings.PRICE_FOR_MONTH),
+          decoration: InputDecoration(
+              hintText: widget.classesType == null
+                  ? Strings.PRICE_FOR_MONTH
+                  : widget.classesType!.priceForMonth.toString()),
           onChanged: (String str) =>
               str.isNotEmpty ? widget._inputPriceForMonth = str : {},
         ),

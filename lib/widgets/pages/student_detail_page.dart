@@ -5,7 +5,6 @@ import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/constants/app_urls.dart';
 import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/main.dart';
-import 'package:record_of_classes/models/parent.dart';
 import 'package:record_of_classes/models/person.dart';
 import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/widgets/templates/accounts_list_template.dart';
