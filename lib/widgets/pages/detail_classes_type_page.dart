@@ -76,6 +76,8 @@ class _DetailClassesTypeState extends State<DetailClassesType> {
       widget._classesType.teacher.target = updatedClassesType.teacher.target;
     }
     _store.box<ClassesType>().put(widget._classesType);
+
+    print(widget._classesType.toString());
   }
 
   void _disableEditMode() => setState(() => _isEditModeEnabled = false);

@@ -46,6 +46,7 @@ class AddNewClassesTypeTemplate extends StatefulWidget {
 class _AddNewClassesTypeTemplateState extends State<AddNewClassesTypeTemplate> {
   @override
   Widget build(BuildContext context) {
+    _setInitialValues();
     return Column(
       children: [
         TextField(
@@ -79,5 +80,13 @@ class _AddNewClassesTypeTemplateState extends State<AddNewClassesTypeTemplate> {
         ),
       ],
     );
+  }
+
+  void _setInitialValues(){
+    if (widget.classesType != null){
+      widget._inputClassTypeName = widget.classesType!.name;
+      widget._inputPriceForEach = widget.classesType!.priceForEach.toString();
+      widget._inputPriceForMonth = widget.classesType!.priceForMonth.toString();
+    }
   }
 }
