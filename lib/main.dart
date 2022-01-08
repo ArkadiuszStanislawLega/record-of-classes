@@ -7,6 +7,7 @@ import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/models/teacher.dart';
 import 'package:record_of_classes/objectbox.g.dart';
 import 'package:record_of_classes/widgets/pages/add_siblings_page.dart';
+import 'package:record_of_classes/widgets/pages/add_student_to_group_page.dart';
 import 'package:record_of_classes/widgets/pages/classes_type_main_page.dart';
 import 'package:record_of_classes/widgets/pages/create_group_page.dart';
 import 'package:record_of_classes/widgets/pages/create_parent_page.dart';
@@ -128,7 +129,8 @@ class _RecordOfClassesApp extends State<RecordOfClassesApp> {
         AppUrls.CLASS_TYPE_MAIN: (context) => const ClassTypeMainPage(),
         AppUrls.DETAIL_CLASSES_TYPE: (context) => DetailClassesType(),
         AppUrls.CREATE_GROUP: (context) => CreateGroupPage(),
-        AppUrls.DETAIL_GROUP: (context) => DetailGroupPage()
+        AppUrls.DETAIL_GROUP: (context) => DetailGroupPage(),
+        AppUrls.ADD_STUDENT_TO_GROUP: (context) => AddStudentToGroupPage()
       },
     );
   }

@@ -4,7 +4,6 @@ import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/widgets/templates/remove_sibling_list_item.dart';
-import 'package:record_of_classes/widgets/templates/students_list_item_template.dart';
 
 class SiblingsListTemplate extends StatefulWidget {
   SiblingsListTemplate({Key? key, required this.student}) : super(key: key);

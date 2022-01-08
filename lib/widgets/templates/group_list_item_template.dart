@@ -40,7 +40,7 @@ class _GroupListItemTemplateState extends State<GroupListItemTemplate> {
             Text(widget.group.name),
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(widget.group.classes.length.toString()),
+                Text(widget.group.students.length.toString()),
                 Text(widget.group.address.target.toString())
               ],)
           ],

@@ -9,5 +9,6 @@ class AppUrls {
       CLASS_TYPE_MAIN = '/class_type_main',
       DETAIL_CLASSES_TYPE = '/detail_classes_type',
       CREATE_GROUP = '/create_group',
-      DETAIL_GROUP = '/detail_group';
+      DETAIL_GROUP = '/detail_group',
+      ADD_STUDENT_TO_GROUP = '/add_student_to_group';
 }
