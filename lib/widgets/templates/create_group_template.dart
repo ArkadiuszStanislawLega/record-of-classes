@@ -17,9 +17,14 @@ class CreateGroupTemplate extends StatefulWidget {
   void clearFields() {
     _inputName = '';
     _nameController.clear();
+    _createAddressTemplate.clearFields();
   }
 
-  Group getAddress() {
+  bool isInputValuesAreValid(){
+    return _inputName != '';
+  }
+
+  Group getGroup() {
     return Group()
       ..name = _inputName
       ..address.target = _createAddressTemplate.getAddress();
@@ -44,7 +49,6 @@ class _CreateGroupTemplateState extends State<CreateGroupTemplate> {
               str.isNotEmpty ? widget._inputName = str : {},
         ),
         widget._createAddressTemplate,
-        TextButton(onPressed: (){}, child: const Text(Strings.ADD_GROUP))
       ],
     );
   }

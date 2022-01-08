@@ -43,15 +43,17 @@ class _StudentsListItemTemplate extends State<StudentsListItemTemplate> {
           ),
         ],
         child: ListTile(
-          title:
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Text(
-              '${person.surname} ${person.name} ',
-              style: const TextStyle(
-                  color: Colors.blueGrey, fontWeight: FontWeight.bold),
-            ),
-            Text(' lat: ${widget.student.age.toString()}')
-          ]),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                '${person.surname} ${person.name} ',
+                style: const TextStyle(
+                    color: Colors.blueGrey, fontWeight: FontWeight.bold),
+              ),
+              Text(' lat: ${widget.student.age.toString()}')
+            ],
+          ),
           onTap: () {
             Navigator.pushNamed(context, AppUrls.DETAIL_STUDENT,
                 arguments: widget.student);

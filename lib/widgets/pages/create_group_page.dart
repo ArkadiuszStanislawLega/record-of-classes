@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/classes_type.dart';
-import 'package:record_of_classes/models/student.dart';
-import 'package:record_of_classes/widgets/templates/create_address_template.dart';
+import 'package:record_of_classes/models/group.dart';
 import 'package:record_of_classes/widgets/templates/create_group_template.dart';
+import 'package:record_of_classes/widgets/templates/group_list_view_template.dart';
 
 class CreateGroupPage extends StatefulWidget {
   const CreateGroupPage({Key? key}) : super(key: key);
@@ -14,6 +16,8 @@ class CreateGroupPage extends StatefulWidget {
 
 class _CreateGroupPageState extends State<CreateGroupPage> {
   late ClassesType _classesType;
+  late Store _store;
+  late Stream<List<Group>> _groupStream;
   final CreateGroupTemplate _createGroupTemplate = CreateGroupTemplate();
 
   @override
@@ -24,11 +28,42 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
       appBar: AppBar(
         title: Text('${_classesType.name} - ${Strings.ADD_GROUP}'),
       ),
-      body: Column(
-        children: [
-          _createGroupTemplate,
-        ],
+      body: StreamBuilder<List<Group>>(
+        stream: _groupStream,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return Column(
+              children: [
+                _createGroupTemplate,
+                TextButton(
+                  onPressed: () {
+                    if (_createGroupTemplate.isInputValuesAreValid()) {
+                      var group = _createGroupTemplate.getGroup();
+                      _store.box<Group>().put(group);
+                      _createGroupTemplate.clearFields();
+                    }
+                  },
+                  child: const Text(Strings.ADD_GROUP),
+                ),
+                GroupListviewTemplate(groups: snapshot.data!),
+              ],
+            );
+          } else {
+            return const Center(child: CircularProgressIndicator());
+          }
+        },
       ),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _store = objectBox.store;
+    _groupStream = _store
+        .box<Group>()
+        .query()
+        .watch(triggerImmediately: true)
+        .map((query) => query.find());
   }
 }

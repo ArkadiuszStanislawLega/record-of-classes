@@ -11,4 +11,6 @@ class Group {
   final address = ToOne<Address>();
   final classesType = ToOne<ClassesType>();
   final students = ToMany<Student>();
+
+  Group({this.id = 0, this.name = ''});
 }

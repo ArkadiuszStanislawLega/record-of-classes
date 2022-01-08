@@ -12,5 +12,11 @@ class Address {
   @Backlink()
   final groups = ToMany<Group>();
 
+
+  @override
+  String toString() {
+    return '$city, $street $houseNumber${flatNumber == '' ? '' : '/$flatNumber'}';
+  }
+
   Address({this.id = 0, this.street = '', this.houseNumber ='', this.flatNumber ='', this.city = ''});
 }
