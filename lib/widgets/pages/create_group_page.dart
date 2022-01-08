@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/models/classes_type.dart';
 import 'package:record_of_classes/models/student.dart';
+import 'package:record_of_classes/widgets/templates/create_address_template.dart';
 
 class CreateGroupPage extends StatefulWidget {
   const CreateGroupPage({Key? key}) : super(key: key);
@@ -12,6 +13,7 @@ class CreateGroupPage extends StatefulWidget {
 
 class _CreateGroupPageState extends State<CreateGroupPage> {
   late ClassesType _classesType;
+  final CreateAddressTemplate _createAddressTemplate = CreateAddressTemplate();
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,8 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
       ),
       body: Column(
         children: [
-          Text('${_classesType.toString()}'),
+
+          _createAddressTemplate,
         ],
       ),
     );

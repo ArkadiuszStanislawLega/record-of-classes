@@ -11,4 +11,6 @@ class Address {
   late String city;
   @Backlink()
   final groups = ToMany<Group>();
+
+  Address({this.id = 0, this.street = '', this.houseNumber ='', this.flatNumber ='', this.city = ''});
 }
