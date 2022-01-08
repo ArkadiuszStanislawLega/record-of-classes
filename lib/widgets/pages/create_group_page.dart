@@ -39,7 +39,8 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
                   onPressed: () {
                     if (_createGroupTemplate.isInputValuesAreValid()) {
                       var group = _createGroupTemplate.getGroup();
-                      _store.box<Group>().put(group);
+                      _classesType.groups.add(group);
+                      _store.box<ClassesType>().put(_classesType);
                       _createGroupTemplate.clearFields();
                     }
                   },

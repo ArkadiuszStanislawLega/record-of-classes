@@ -25,6 +25,7 @@ class Strings {
       FAIL_TO_ADD_NEW_PARENT_TO_DATABASE = 'Nie udało się dodać nowego rodzica do bazy danych.',
       FLAT_NUMBER = 'Numer mieszkania',
       GROUP_NAME = 'Nazwa grupy',
+      GROUPS = 'Grupy',
       HOUSE_NUMBER = 'Numer domu',
       ID = 'ID',
       NAME_OF_CLASSES_TYPE = 'Nazwa typu zajęć',
