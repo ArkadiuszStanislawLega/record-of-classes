@@ -8,6 +8,8 @@ class Strings {
       ADD_CLASSES_TYPE = 'Dodaj typ zajęć',
       ADD_SIBLING = 'Dodaj rodzeństwo',
       ADD_GROUP = 'Dodaj grupę',
+      CLASSES_ADDRESS = 'Adres zajęć',
+      CLASSES_TYPE = 'Typ zajęć',
       AND = 'i',
       CANCEL = 'Anuluj',
       CANCEL_ADDING_CONTACTS = 'Anuluj dodawanie kontaktów',
@@ -22,7 +24,8 @@ class Strings {
       DELETE = 'Usuń',
       DISCONNECT = 'Rozłącz',
       EDIT = 'Edytuj',
-      FAIL_TO_ADD_NEW_PARENT_TO_DATABASE = 'Nie udało się dodać nowego rodzica do bazy danych.',
+      FAIL_TO_ADD_NEW_PARENT_TO_DATABASE =
+          'Nie udało się dodać nowego rodzica do bazy danych.',
       FLAT_NUMBER = 'Numer mieszkania',
       GROUP_NAME = 'Nazwa grupy',
       GROUPS = 'Grupy',

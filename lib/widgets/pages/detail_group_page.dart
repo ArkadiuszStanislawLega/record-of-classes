@@ -26,11 +26,21 @@ class _DetailGroupPageState extends State<DetailGroupPage> {
   Widget _editModeEnabled() {
     return Column(
       children: [
-        TextButton(
-            onPressed: () {
-              _setEditModeDisable();
-            },
-            child: const Text(Strings.OK))
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            TextButton(
+                onPressed: () {
+                  _setEditModeDisable();
+                },
+                child: const Text(Strings.OK)),
+            TextButton(
+                onPressed: () {
+                  _setEditModeDisable();
+                },
+                child: const Text(Strings.CANCEL))
+          ],
+        ),
       ],
     );
   }
@@ -38,13 +48,10 @@ class _DetailGroupPageState extends State<DetailGroupPage> {
   Widget _editModeDisabled() {
     return Column(
       children: [
-        Text('Typ zajęć: ${group.classesType.target!.name}'),
-        Text('Adres zajęć: ${group.address.target.toString()}'),
+        Text('${Strings.CLASSES_TYPE}: ${group.classesType.target!.name}'),
+        Text('${Strings.CLASSES_ADDRESS}: ${group.address.target.toString()}'),
         TextButton(
-            onPressed: () {
-              _setEditModeEnable();
-            },
-            child: const Text(Strings.EDIT)),
+            onPressed: _setEditModeEnable, child: const Text(Strings.EDIT)),
       ],
     );
   }
