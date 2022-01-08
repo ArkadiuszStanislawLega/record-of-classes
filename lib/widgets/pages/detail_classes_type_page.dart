@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:objectbox/objectbox.dart';
+import 'package:record_of_classes/constants/app_urls.dart';
 import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/classes_type.dart';
@@ -45,6 +46,7 @@ class _DetailClassesTypeState extends State<DetailClassesType> {
                 if (_isValuesAreValid()) {
                   _updateValuesInDb();
                 }
+                _addNewClassesTypeTemplate.clearFields();
                 _disableEditMode();
               },
               child: const Text(Strings.OK),
@@ -68,8 +70,6 @@ class _DetailClassesTypeState extends State<DetailClassesType> {
     _updatedClassesType = _addNewClassesTypeTemplate.getClassType();
     _setNewValues();
     _store.box<ClassesType>().put(widget._classesType);
-
-    print(widget._classesType.toString());
   }
 
   void _setNewValues() {
@@ -116,7 +116,6 @@ class _DetailClassesTypeState extends State<DetailClassesType> {
     }
   }
 
-
   void _disableEditMode() => setState(() => _isEditModeEnabled = false);
 
   void _enableEditMode() => setState(() => _isEditModeEnabled = true);
@@ -124,11 +123,24 @@ class _DetailClassesTypeState extends State<DetailClassesType> {
   Widget _editModeDisabled() {
     return Column(
       children: [
-        TextButton(
-            onPressed: () {
-              _enableEditMode();
-            },
-            child: const Text(Strings.EDIT)),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            TextButton(
+              onPressed: () {
+                _enableEditMode();
+              },
+              child: const Text(Strings.EDIT),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, AppUrls.CREATE_GROUP,
+                    arguments: widget._classesType);
+              },
+              child: const Text(Strings.ADD_GROUP),
+            ),
+          ],
+        ),
         Text(
             '${Strings.PRICE_FOR_MONTH}: ${widget._classesType.priceForMonth.toString()}${Strings.CURRENCY}'),
         Text(

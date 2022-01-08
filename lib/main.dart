@@ -8,6 +8,7 @@ import 'package:record_of_classes/models/teacher.dart';
 import 'package:record_of_classes/objectbox.g.dart';
 import 'package:record_of_classes/widgets/pages/add_siblings_page.dart';
 import 'package:record_of_classes/widgets/pages/classes_type_main_page.dart';
+import 'package:record_of_classes/widgets/pages/create_group_page.dart';
 import 'package:record_of_classes/widgets/pages/create_parent_page.dart';
 import 'package:record_of_classes/widgets/pages/create_student_page.dart';
 import 'package:record_of_classes/widgets/pages/detail_classes_type_page.dart';
@@ -120,11 +121,12 @@ class _RecordOfClassesApp extends State<RecordOfClassesApp> {
         AppUrls.HOME: (context) => const StartPageView(),
         AppUrls.CREATE_STUDENT: (context) => const CreateStudentPage(),
         AppUrls.DETAIL_STUDENT: (context) => const StudentDetailPage(),
-        AppUrls.CREATE_PARENT: (context) => CreateParentPage(),
-        AppUrls.DETAIL_PARENT: (context) => ParentDetailPage(),
+        AppUrls.CREATE_PARENT: (context) => const CreateParentPage(),
+        AppUrls.DETAIL_PARENT: (context) => const ParentDetailPage(),
         AppUrls.ADD_SIBLING: (context) => AddSiblingsPage(),
-        AppUrls.CLASS_TYPE_MAIN: (context) => ClassTypeMainPage(),
-        AppUrls.DETAIL_CLASSES_TYPE: (context) => DetailClassesType()
+        AppUrls.CLASS_TYPE_MAIN: (context) => const ClassTypeMainPage(),
+        AppUrls.DETAIL_CLASSES_TYPE: (context) => DetailClassesType(),
+        AppUrls.CREATE_GROUP: (context) => CreateGroupPage(),
       },
     );
   }

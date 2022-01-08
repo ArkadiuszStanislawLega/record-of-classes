@@ -7,6 +7,7 @@ class Strings {
       ADD_CONTACT = 'Dodaj kontakt',
       ADD_CLASSES_TYPE = 'Dodaj typ zajęć',
       ADD_SIBLING = 'Dodaj rodzeństwo',
+      ADD_GROUP = 'Dodaj grupę',
       AND = 'i',
       CANCEL = 'Anuluj',
       CANCEL_ADDING_CONTACTS = 'Anuluj dodawanie kontaktów',
@@ -34,5 +35,7 @@ class Strings {
       TO_DATABASE = 'do bazy danych',
       THEY_ARENT_SIBLINGS = 'nie są już rodzeństwem!',
       THEY_ARE_SIBLINGS = 'są teraz rodzeństwem',
-      YEARS = 'lat';
+      YEARS = 'lat',
+      CLASSES_TYPE_KEY = 'classes_type',
+      STUDENT_KEY = 'student';
 }

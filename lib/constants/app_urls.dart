@@ -7,5 +7,7 @@ class AppUrls {
       DETAIL_PARENT = '/detail_parent',
       ADD_SIBLING = '/add_sibling',
       CLASS_TYPE_MAIN = '/class_type_main',
-      DETAIL_CLASSES_TYPE = '/detail_classes_type';
+      DETAIL_CLASSES_TYPE = '/detail_classes_type',
+      CREATE_GROUP = '/create_group',
+      DETAIL_GROUP = '/detail_group';
 }
