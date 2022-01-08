@@ -1,4 +1,5 @@
 import 'package:objectbox/objectbox.dart';
+import 'package:record_of_classes/models/classes.dart';
 import 'package:record_of_classes/models/student.dart';
 
 import 'address.dart';
@@ -11,6 +12,7 @@ class Group {
   final address = ToOne<Address>();
   final classesType = ToOne<ClassesType>();
   final students = ToMany<Student>();
+  final classes = ToMany<Classes>();
 
   Group({this.id = 0, this.name = ''});
 }

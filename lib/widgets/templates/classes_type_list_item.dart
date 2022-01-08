@@ -7,8 +7,7 @@ import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/classes_type.dart';
 
 class ClassesTypeListItem extends StatelessWidget {
-  ClassesTypeListItem({Key? key, required this.classesType})
-      : super(key: key);
+  ClassesTypeListItem({Key? key, required this.classesType}) : super(key: key);
   final ClassesType classesType;
   late Store _store;
 
@@ -29,19 +28,23 @@ class ClassesTypeListItem extends StatelessWidget {
         ),
       ],
       child: ListTile(
-        title:
-        Column(
+        title: Column(
           children: [
             Text(classesType.name),
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Za miesiąc: ${classesType.priceForMonth.toString()}zł'),
-                Text('Za zajęcie: ${classesType.priceForEach.toString()}zł')
-              ],)
+                Text(
+                    '${Strings.PRICE_FOR_MONTH}: ${classesType.priceForMonth.toString()}${Strings.CURRENCY}'),
+                Text(
+                    '${Strings.PRICE_FOR_EACH}: ${classesType.priceForEach.toString()}${Strings.CURRENCY}')
+              ],
+            )
           ],
         ),
         onTap: () {
-          Navigator.pushNamed(context, AppUrls.DETAIL_CLASSES_TYPE, arguments: classesType);
+          Navigator.pushNamed(context, AppUrls.DETAIL_CLASSES_TYPE,
+              arguments: classesType);
         },
       ),
     );
@@ -61,6 +64,7 @@ class ClassesTypeListItem extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
-      ),);
+      ),
+    );
   }
 }

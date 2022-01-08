@@ -285,7 +285,11 @@ final _entities = <ModelEntity>[
         ModelRelation(
             id: const IdUid(11, 8516641969030352180),
             name: 'students',
-            targetId: const IdUid(11, 8038409490704286009))
+            targetId: const IdUid(11, 8038409490704286009)),
+        ModelRelation(
+            id: const IdUid(16, 428761453294890279),
+            name: 'classes',
+            targetId: const IdUid(6, 8608907494681874391))
       ],
       backlinks: <ModelBacklink>[]),
   ModelEntity(
@@ -444,7 +448,7 @@ ModelDefinition getObjectBoxModel() {
       entities: _entities,
       lastEntityId: const IdUid(12, 7751236531251891487),
       lastIndexId: const IdUid(15, 1182126131564333134),
-      lastRelationId: const IdUid(15, 7596719649020048181),
+      lastRelationId: const IdUid(16, 428761453294890279),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [],
       retiredIndexUids: const [],
@@ -521,8 +525,8 @@ ModelDefinition getObjectBoxModel() {
           final buffer = fb.BufferContext(fbData);
           final rootOffset = buffer.derefObject(0);
 
-          final object = Account()
-            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final object = Account(
+              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0));
           object.student.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
           object.student.attach(store);
@@ -564,16 +568,16 @@ ModelDefinition getObjectBoxModel() {
           final buffer = fb.BufferContext(fbData);
           final rootOffset = buffer.derefObject(0);
 
-          final object = Address()
-            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
-            ..street =
-                const fb.StringReader().vTableGet(buffer, rootOffset, 6, '')
-            ..houseNumber =
-                const fb.StringReader().vTableGet(buffer, rootOffset, 8, '')
-            ..flatNumber =
-                const fb.StringReader().vTableGet(buffer, rootOffset, 10, '')
-            ..city =
-                const fb.StringReader().vTableGet(buffer, rootOffset, 12, '');
+          final object = Address(
+              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
+              street:
+                  const fb.StringReader().vTableGet(buffer, rootOffset, 6, ''),
+              houseNumber:
+                  const fb.StringReader().vTableGet(buffer, rootOffset, 8, ''),
+              flatNumber:
+                  const fb.StringReader().vTableGet(buffer, rootOffset, 10, ''),
+              city: const fb.StringReader()
+                  .vTableGet(buffer, rootOffset, 12, ''));
           InternalToManyAccess.setRelInfo(
               object.groups,
               store,
@@ -729,8 +733,10 @@ ModelDefinition getObjectBoxModel() {
     Group: EntityDefinition<Group>(
         model: _entities[7],
         toOneRelations: (Group object) => [object.classesType, object.address],
-        toManyRelations: (Group object) =>
-            {RelInfo<Group>.toMany(11, object.id): object.students},
+        toManyRelations: (Group object) => {
+              RelInfo<Group>.toMany(11, object.id): object.students,
+              RelInfo<Group>.toMany(16, object.id): object.classes
+            },
         getId: (Group object) => object.id,
         setId: (Group object, int id) {
           object.id = id;
@@ -749,10 +755,10 @@ ModelDefinition getObjectBoxModel() {
           final buffer = fb.BufferContext(fbData);
           final rootOffset = buffer.derefObject(0);
 
-          final object = Group()
-            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
-            ..name =
-                const fb.StringReader().vTableGet(buffer, rootOffset, 6, '');
+          final object = Group(
+              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
+              name:
+                  const fb.StringReader().vTableGet(buffer, rootOffset, 6, ''));
           object.classesType.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
           object.classesType.attach(store);
@@ -761,6 +767,8 @@ ModelDefinition getObjectBoxModel() {
           object.address.attach(store);
           InternalToManyAccess.setRelInfo(object.students, store,
               RelInfo<Group>.toMany(11, object.id), store.box<Group>());
+          InternalToManyAccess.setRelInfo(object.classes, store,
+              RelInfo<Group>.toMany(16, object.id), store.box<Group>());
           return object;
         }),
     Parent: EntityDefinition<Parent>(
@@ -1048,6 +1056,10 @@ class Group_ {
   /// see [Group.students]
   static final students =
       QueryRelationToMany<Group, Student>(_entities[7].relations[0]);
+
+  /// see [Group.classes]
+  static final classes =
+      QueryRelationToMany<Group, Classes>(_entities[7].relations[1]);
 }
 
 /// [Parent] entity fields to define ObjectBox queries.

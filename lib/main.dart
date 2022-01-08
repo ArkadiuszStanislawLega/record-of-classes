@@ -12,6 +12,7 @@ import 'package:record_of_classes/widgets/pages/create_group_page.dart';
 import 'package:record_of_classes/widgets/pages/create_parent_page.dart';
 import 'package:record_of_classes/widgets/pages/create_student_page.dart';
 import 'package:record_of_classes/widgets/pages/detail_classes_type_page.dart';
+import 'package:record_of_classes/widgets/pages/detail_group_page.dart';
 import 'package:record_of_classes/widgets/pages/parent_detail_page.dart';
 import 'package:record_of_classes/widgets/pages/start_page.dart';
 import 'package:record_of_classes/widgets/pages/student_detail_page.dart';
@@ -127,6 +128,7 @@ class _RecordOfClassesApp extends State<RecordOfClassesApp> {
         AppUrls.CLASS_TYPE_MAIN: (context) => const ClassTypeMainPage(),
         AppUrls.DETAIL_CLASSES_TYPE: (context) => DetailClassesType(),
         AppUrls.CREATE_GROUP: (context) => CreateGroupPage(),
+        AppUrls.DETAIL_GROUP: (context) => DetailGroupPage()
       },
     );
   }

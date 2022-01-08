@@ -268,6 +268,11 @@
           "id": "11:8516641969030352180",
           "name": "students",
           "targetId": "11:8038409490704286009"
+        },
+        {
+          "id": "16:428761453294890279",
+          "name": "classes",
+          "targetId": "6:8608907494681874391"
         }
       ]
     },
@@ -417,7 +422,7 @@
   ],
   "lastEntityId": "12:7751236531251891487",
   "lastIndexId": "15:1182126131564333134",
-  "lastRelationId": "15:7596719649020048181",
+  "lastRelationId": "16:428761453294890279",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
