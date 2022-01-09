@@ -14,4 +14,8 @@ class Person{
   String toString() {
     return '$id. $name $surname';
   }
+
+  String introduceYourself(){
+    return '$surname $name';
+  }
 }

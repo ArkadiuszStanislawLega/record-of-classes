@@ -26,4 +26,6 @@ class Student {
     }
     return '$id $age - null person';
   }
+
+  String introduceYourself () => person.target!.introduceYourself();
 }
