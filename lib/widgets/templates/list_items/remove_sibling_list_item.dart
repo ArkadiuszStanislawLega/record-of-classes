@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:objectbox/objectbox.dart';
-import 'package:record_of_classes/constants/app_urls.dart';
 import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/person.dart';
 import 'package:record_of_classes/models/student.dart';
+import 'package:record_of_classes/widgets/templates/snack_bar_info_template.dart';
+import 'package:record_of_classes/widgets/templates/student_list_tile_template.dart';
 
 class RemoveSiblingListItem extends StatelessWidget {
   RemoveSiblingListItem(
@@ -20,33 +21,21 @@ class RemoveSiblingListItem extends StatelessWidget {
     if (sibling.person.target != null) {
       Person person = sibling.person.target!;
       return Slidable(
-        actionPane: const SlidableDrawerActionPane(),
-        secondaryActions: [
-          IconSlideAction(
-            caption: Strings.DISCONNECT,
-            color: Colors.deepOrange,
-            icon: Icons.remove,
-            onTap: () {
-              updateDatabase();
-              showInfoSnackBar(context);
-            },
-          ),
-        ],
-        child: ListTile(
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  '${person.surname} ${person.name} ',
-                  style: const TextStyle(
-                      color: Colors.blueGrey, fontWeight: FontWeight.bold),
-                ),
-                Text(' ${Strings.YEARS}: ${sibling.age.toString()}')
-              ],
+          actionPane: const SlidableDrawerActionPane(),
+          secondaryActions: [
+            IconSlideAction(
+              caption: Strings.DISCONNECT,
+              color: Colors.deepOrange,
+              icon: Icons.remove,
+              onTap: () {
+                updateDatabase();
+                showInfoSnackBar(context);
+              },
             ),
-            onTap: () => Navigator.pushNamed(context, AppUrls.DETAIL_STUDENT,
-                arguments: sibling)),
-      );
+          ],
+          child: StudentListTileTemplate(
+            student: sibling,
+          ));
     }
     return const Text('');
   }
@@ -61,27 +50,8 @@ class RemoveSiblingListItem extends StatelessWidget {
     box.put(student);
   }
 
-  void showInfoSnackBar(var context) {
-    var siblingPerson = sibling.person.target!;
-    var studentPerson = student.person.target!;
-    var siblingValues = '${siblingPerson.surname} ${siblingPerson.name}';
-    var studentValues = '${studentPerson.surname} ${studentPerson.name}';
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-            '$siblingValues ${Strings.AND} $studentValues ${Strings.THEY_ARENT_SIBLINGS}'),
-        duration: const Duration(milliseconds: 1500),
-        width: 280.0,
-        // Width of the SnackBar.
-        padding: const EdgeInsets.symmetric(
-          horizontal: 15.0, // Inner padding for SnackBar content.
-        ),
-        behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-      ),
-    );
-  }
+  void showInfoSnackBar(var context) => SnackBarInfoTemplate(
+      context: context,
+      message:
+          '${sibling.introduceYourself()} ${Strings.AND} ${student.introduceYourself()} ${Strings.THEY_ARENT_SIBLINGS}');
 }

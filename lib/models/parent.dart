@@ -19,4 +19,8 @@ class Parent{
     }
     return '$id';
   }
+
+  String introduceYourself(){
+    return person.target!.introduceYourself();
+  }
 }

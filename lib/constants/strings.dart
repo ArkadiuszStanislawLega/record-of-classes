@@ -22,6 +22,7 @@ class Strings {
       CURRENCY = 'zl',
       DATABASE_NAME = 'objectbox',
       DELETE = 'Usuń',
+      DELETED_STUDENT = 'Usunięto studenta',
       DISCONNECT = 'Rozłącz',
       EDIT = 'Edytuj',
       FAIL_TO_ADD_NEW_PARENT_TO_DATABASE =
@@ -32,6 +33,7 @@ class Strings {
       HOUSE_NUMBER = 'Numer domu',
       ID = 'ID',
       NAME_OF_CLASSES_TYPE = 'Nazwa typu zajęć',
+      NUMBER_OF_CHILDREN = 'Ilość dzieci',
       OK = 'OK',
       PARENTS = 'Rodzice',
       PERSONS_IN_GROUP = 'Osoby w grupie',
@@ -45,6 +47,7 @@ class Strings {
       TO_DATABASE = 'do bazy danych',
       THEY_ARENT_SIBLINGS = 'nie są już rodzeństwem!',
       THEY_ARE_SIBLINGS = 'są teraz rodzeństwem',
+      THEY_ARENT_FAMILY = 'nie są już rodziną',
       YEARS = 'lat',
       CLASSES_TYPE_KEY = 'classes_type',
       STUDENT_KEY = 'student';
