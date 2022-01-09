@@ -96,7 +96,7 @@ class _StudentDetailPage extends State<StudentDetailPage> {
       ),
       SiblingsListTemplate(student: _student),
       AccountListTemplate(account: _student.account),
-      Text('${Strings.GROUPS}:'),
+      const Text('${Strings.GROUPS}:'),
       StudentGroupListTemplate(student: _student),
     ];
   }

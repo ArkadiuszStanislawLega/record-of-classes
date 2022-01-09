@@ -21,27 +21,23 @@ class _SiblingsListTemplate extends State<SiblingsListTemplate> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.all(5),
-      child: StreamBuilder<List<Student>>(
-        stream: _siblingsStream,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            widget.student = _store.box<Student>().get(widget.student.id)!;
-            return ListView.builder(
-              itemCount: widget.student.siblings.length,
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                return RemoveSiblingListItem(
-                    sibling: widget.student.siblings.elementAt(index), student: widget.student);
-              },
-            );
-          } else {
-            return const Center(child: CircularProgressIndicator());
-          }
-        },
-      ),
+    return StreamBuilder<List<Student>>(
+      stream: _siblingsStream,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return ListView.builder(
+            itemCount: widget.student.siblings.length,
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              return RemoveSiblingListItem(
+                  sibling: widget.student.siblings.elementAt(index), student: widget.student);
+            },
+          );
+        } else {
+          return const Center(child: CircularProgressIndicator());
+        }
+      },
     );
   }
 

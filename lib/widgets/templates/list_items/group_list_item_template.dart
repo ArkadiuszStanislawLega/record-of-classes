@@ -28,8 +28,7 @@ class _GroupListItemTemplateState extends State<GroupListItemTemplate> {
           color: Colors.red,
           icon: Icons.delete,
           onTap: () {
-            _store = objectBox.store;
-            _store.box<Group>().remove(widget.group.id);
+            _updateDatabase();
             _showInfo(context);
           },
         ),
@@ -47,6 +46,11 @@ class _GroupListItemTemplateState extends State<GroupListItemTemplate> {
         onTap: _navigateToGroupProfile
       ),
     );
+  }
+
+  void _updateDatabase(){
+    _store = objectBox.store;
+    _store.box<Group>().remove(widget.group.id);
   }
 
   void _navigateToGroupProfile() => Navigator.pushNamed(context, AppUrls.DETAIL_GROUP,

@@ -3,7 +3,6 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/main.dart';
-import 'package:record_of_classes/models/person.dart';
 import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/widgets/templates/snack_bar_info_template.dart';
 import 'package:record_of_classes/widgets/templates/student_list_tile_template.dart';
@@ -17,9 +16,8 @@ class RemoveSiblingListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _store = objectBox.store;
+
     if (sibling.person.target != null) {
-      Person person = sibling.person.target!;
       return Slidable(
           actionPane: const SlidableDrawerActionPane(),
           secondaryActions: [
@@ -41,6 +39,8 @@ class RemoveSiblingListItem extends StatelessWidget {
   }
 
   void updateDatabase() {
+
+    _store = objectBox.store;
     student.siblings.removeWhere((s) => s.id == sibling.id);
     sibling.siblings.removeWhere((s) => s.id == student.id);
 
@@ -48,7 +48,10 @@ class RemoveSiblingListItem extends StatelessWidget {
 
     box.put(sibling);
     box.put(student);
-  }
+
+    for (var element in box.get(student.id)!.siblings) {
+      print(element.person.target!.introduceYourself());
+    }}
 
   void showInfoSnackBar(var context) => SnackBarInfoTemplate(
       context: context,

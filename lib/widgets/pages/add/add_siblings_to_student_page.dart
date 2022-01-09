@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/constants/strings.dart';
@@ -33,8 +32,7 @@ class _AddSiblingsPage extends State<AddSiblingsToStudentPage> {
           stream: _studentsStream,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              List<Student> preparedStudentList = prepareData(snapshot.data);
-
+              List<Student> preparedStudentList = prepareData(_createUnattachedSiblings(snapshot.data!));
               return ListView.builder(
                 itemCount: preparedStudentList.length,
                 scrollDirection: Axis.vertical,
@@ -54,6 +52,26 @@ class _AddSiblingsPage extends State<AddSiblingsToStudentPage> {
       ),
     );
   }
+
+  List<Student> _createUnattachedSiblings(List<Student> listFromDb){
+    List<Student> notAttachedStudents = [];
+    for (var dbStudent in listFromDb) {
+      if (!_isSiblingsAreConnected(dbStudent)){
+        notAttachedStudents.add(dbStudent);
+      }
+    }
+    return notAttachedStudents;
+  }
+
+  bool _isSiblingsAreConnected(Student student){
+    for (var siblings in student.siblings) {
+      if (student.id == siblings.id){
+        return true;
+      }
+    }
+    return false;
+  }
+
 
   List<Student> prepareData(var originalData){
     List<Student> studentList = [];

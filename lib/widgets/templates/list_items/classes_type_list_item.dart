@@ -5,6 +5,7 @@ import 'package:record_of_classes/constants/app_urls.dart';
 import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/classes_type.dart';
+import 'package:record_of_classes/widgets/templates/snack_bar_info_template.dart';
 
 class ClassesTypeListItem extends StatelessWidget {
   ClassesTypeListItem({Key? key, required this.classesType}) : super(key: key);
@@ -21,8 +22,7 @@ class ClassesTypeListItem extends StatelessWidget {
           color: Colors.red,
           icon: Icons.delete,
           onTap: () {
-            _store = objectBox.store;
-            _store.box<ClassesType>().remove(classesType.id);
+            _updateDatabase();
             _showInfo(context);
           },
         ),
@@ -36,7 +36,8 @@ class ClassesTypeListItem extends StatelessWidget {
               children: [
                 const Text('${Strings.PRICE_FOR_MONTH}:'),
                 Text(
-                    '${classesType.priceForMonth.toString()}${Strings.CURRENCY}')
+                    '${classesType.priceForMonth.toString()}${Strings
+                        .CURRENCY}')
               ],
             ),
             Column(
@@ -48,29 +49,22 @@ class ClassesTypeListItem extends StatelessWidget {
             ),
           ],
         ),
-        onTap: () {
-          Navigator.pushNamed(context, AppUrls.DETAIL_CLASSES_TYPE,
-              arguments: classesType);
-        },
+        onTap: () => _navigateToDetailClassesProfile(context)
       ),
     );
   }
 
-  void _showInfo(var context) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Typ zajęć: ${classesType.name} - usunięty!'),
-        duration: const Duration(milliseconds: 1500),
-        width: 280.0,
-        // Width of the SnackBar.
-        padding: const EdgeInsets.symmetric(
-          horizontal: 15.0, // Inner padding for SnackBar content.
-        ),
-        behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-      ),
-    );
+  void _updateDatabase(){
+    _store = objectBox.store;
+    _store.box<ClassesType>().remove(classesType.id);
   }
+
+  void _navigateToDetailClassesProfile(BuildContext context) => Navigator.pushNamed(context, AppUrls.DETAIL_CLASSES_TYPE,
+      arguments: classesType);
+
+
+  void _showInfo(BuildContext context) =>
+      SnackBarInfoTemplate(context: context,
+          message: '${Strings.CLASSES_TYPE}: ${classesType.name} - ${Strings
+              .REMOVED}!');
 }
