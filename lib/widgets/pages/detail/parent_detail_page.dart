@@ -180,21 +180,23 @@ class _ParentDetailPage extends State<ParentDetailPage> {
   Widget _phoneListItem(int index) {
     Phone phone = _parent.phone.elementAt(index);
     return Slidable(
-      actionPane: const SlidableDrawerActionPane(),
-      secondaryActions: [
-        IconSlideAction(
-            caption: Strings.DELETE,
-            color: Colors.red,
-            icon: Icons.delete,
-            onTap: () {
-              setState(() {
-                _parent.phone.remove(phone);
-                _store.box<Phone>().remove(phone.id);
-              });
-            }),
-      ],
-      child: ListTile(title: Text('${phone.numberName}: ${phone.number}')),
-    );
+        actionPane: const SlidableDrawerActionPane(),
+        secondaryActions: [
+          IconSlideAction(
+              caption: Strings.DELETE,
+              color: Colors.red,
+              icon: Icons.delete,
+              onTap: () {
+                setState(() {
+                  _parent.phone.remove(phone);
+                  _store.box<Phone>().remove(phone.id);
+                });
+              }),
+        ],
+        child: ListTile(
+          title: Text(phone.number.toString()),
+          subtitle: Text(phone.numberName),
+        ));
   }
 
   void cancelEditChanges() {
@@ -223,8 +225,11 @@ class _ParentDetailPage extends State<ParentDetailPage> {
       objectBox.store.box<Person>().put(_parent.person.target!);
 
   void enableEditMode() => setState(() => _isEdited = true);
+
   void disableEditMode() => setState(() => _isEdited = false);
+
   void enableAddContactMode() => setState(() => _isAddContactVisible = true);
+
   void disableAddContactMode() => setState(() => _isAddContactVisible = false);
 
   @override
