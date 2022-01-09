@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:objectbox/objectbox.dart';
@@ -10,6 +9,7 @@ import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/widgets/templates/lists/accounts_list_template.dart';
 import 'package:record_of_classes/widgets/templates/lists/parents_of_student_list_template.dart';
 import 'package:record_of_classes/widgets/templates/lists/siblings_list_template.dart';
+import 'package:record_of_classes/widgets/templates/lists/student_groups_list_template.dart';
 
 class StudentDetailPage extends StatefulWidget {
   const StudentDetailPage({Key? key}) : super(key: key);
@@ -95,7 +95,9 @@ class _StudentDetailPage extends State<StudentDetailPage> {
         ],
       ),
       SiblingsListTemplate(student: _student),
-      AccountListTemplate(account: _student.account)
+      AccountListTemplate(account: _student.account),
+      Text('${Strings.GROUPS}:'),
+      StudentGroupListTemplate(student: _student),
     ];
   }
 

@@ -18,10 +18,10 @@ class _StudentListTileTemplateState extends State<StudentListTileTemplate> {
     return ListTile(
       title: Text(widget.student.introduceYourself()),
       subtitle: Text('${Strings.YEARS}: ${widget.student.age.toString()}'),
-      onTap: () {
-        Navigator.pushNamed(context, AppUrls.DETAIL_STUDENT,
-            arguments: widget.student);
-      },
+      onTap: _navigateToStudentProfile
     );
   }
+
+  void _navigateToStudentProfile() => Navigator.pushNamed(context, AppUrls.DETAIL_STUDENT,
+      arguments: widget.student);
 }

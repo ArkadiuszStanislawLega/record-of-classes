@@ -15,20 +15,15 @@ class BillListItem extends StatefulWidget {
 class _BillListItem extends State<BillListItem> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          children: [
-            Text('${widget.bill.price.toString()}zł'),
-            Icon(
-                widget.bill.isPaid
-                    ? Icons.check
-                    : Icons.check_box_outline_blank,
-                color: widget.bill.isPaid ? Colors.green : Colors.black),
-          ],
-        ),
-        Text(widget.bill.classes.target!.group.target!.name),
-      ],
+    return ListTile(
+      title: Text(widget.bill.classes.target!.group.target!.name),
+      subtitle: Row(
+        children: [
+          Text('${widget.bill.price.toString()}zł'),
+          Icon(widget.bill.isPaid ? Icons.check : Icons.check_box_outline_blank,
+              color: widget.bill.isPaid ? Colors.green : Colors.black),
+        ],
+      ),
     );
   }
 }

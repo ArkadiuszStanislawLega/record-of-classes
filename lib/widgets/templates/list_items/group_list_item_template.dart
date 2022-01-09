@@ -5,6 +5,7 @@ import 'package:record_of_classes/constants/app_urls.dart';
 import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/group.dart';
+import 'package:record_of_classes/widgets/templates/snack_bar_info_template.dart';
 
 class GroupListItemTemplate extends StatefulWidget {
   GroupListItemTemplate({Key? key, required this.group}) : super(key: key);
@@ -38,33 +39,21 @@ class _GroupListItemTemplateState extends State<GroupListItemTemplate> {
         subtitle: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text('${Strings.PERSONS_IN_GROUP}: ${widget.group.students.length.toString()}'),
+            Text(
+                '${Strings.PERSONS_IN_GROUP}: ${widget.group.students.length.toString()}'),
             Text(widget.group.address.target.toString())
           ],
         ),
-        onTap: () {
-          Navigator.pushNamed(context, AppUrls.DETAIL_GROUP,
-              arguments: widget.group);
-        },
+        onTap: _navigateToGroupProfile
       ),
     );
   }
 
-  void _showInfo(var context) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Grupa zajec: ${widget.group.name} - usunięta!'),
-        duration: const Duration(milliseconds: 1500),
-        width: 280.0,
-        // Width of the SnackBar.
-        padding: const EdgeInsets.symmetric(
-          horizontal: 15.0, // Inner padding for SnackBar content.
-        ),
-        behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-      ),
-    );
-  }
+  void _navigateToGroupProfile() => Navigator.pushNamed(context, AppUrls.DETAIL_GROUP,
+      arguments: widget.group);
+
+  void _showInfo(BuildContext context) => SnackBarInfoTemplate(
+      context: context,
+      message:
+          '${Strings.GROUP_OF_CLASSES}: ${widget.group.name} - ${Strings.REMOVED}!');
 }
