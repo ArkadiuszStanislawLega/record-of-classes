@@ -4,8 +4,8 @@ import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/classes_type.dart';
 import 'package:record_of_classes/models/group.dart';
-import 'package:record_of_classes/widgets/templates/create_group_template.dart';
-import 'package:record_of_classes/widgets/templates/group_list_view_template.dart';
+import 'package:record_of_classes/widgets/templates/create/create_group_template.dart';
+import 'package:record_of_classes/widgets/templates/lists/group_list_template.dart';
 
 class CreateGroupPage extends StatefulWidget {
   const CreateGroupPage({Key? key}) : super(key: key);
@@ -46,7 +46,7 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
                   },
                   child: const Text(Strings.ADD_GROUP),
                 ),
-                GroupListviewTemplate(groups: snapshot.data!),
+                GroupListTemplate(groups: snapshot.data!),
               ],
             );
           } else {

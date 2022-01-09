@@ -7,9 +7,9 @@ import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/person.dart';
 import 'package:record_of_classes/models/student.dart';
-import 'package:record_of_classes/widgets/templates/accounts_list_template.dart';
-import 'package:record_of_classes/widgets/templates/parents_of_student_list_template.dart';
-import 'package:record_of_classes/widgets/templates/siblings_list_template.dart';
+import 'package:record_of_classes/widgets/templates/lists/accounts_list_template.dart';
+import 'package:record_of_classes/widgets/templates/lists/parents_of_student_list_template.dart';
+import 'package:record_of_classes/widgets/templates/lists/siblings_list_template.dart';
 
 class StudentDetailPage extends StatefulWidget {
   const StudentDetailPage({Key? key}) : super(key: key);

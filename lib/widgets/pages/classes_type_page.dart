@@ -6,16 +6,16 @@ import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/classes_type.dart';
 import 'package:record_of_classes/models/teacher.dart';
 import 'package:record_of_classes/widgets/templates/add_new_classes_type_template.dart';
-import 'package:record_of_classes/widgets/templates/classes_type_list_template.dart';
+import 'package:record_of_classes/widgets/templates/lists/classes_type_list_template.dart';
 
-class ClassTypeMainPage extends StatefulWidget {
-  const ClassTypeMainPage({Key? key}) : super(key: key);
+class ClassTypePage extends StatefulWidget {
+  const ClassTypePage({Key? key}) : super(key: key);
 
   @override
-  _ClassTypeMainPageState createState() => _ClassTypeMainPageState();
+  _ClassTypePageState createState() => _ClassTypePageState();
 }
 
-class _ClassTypeMainPageState extends State<ClassTypeMainPage> {
+class _ClassTypePageState extends State<ClassTypePage> {
   final AddNewClassesTypeTemplate _addNewClassesTypeTemplate =
       AddNewClassesTypeTemplate();
   late Store _store;

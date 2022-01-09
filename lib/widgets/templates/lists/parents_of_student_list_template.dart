@@ -4,7 +4,7 @@ import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/parent.dart';
 import 'package:record_of_classes/models/student.dart';
-import 'package:record_of_classes/widgets/templates/parent_of_student_liste_item_template.dart';
+import 'package:record_of_classes/widgets/templates/list_items/parent_of_student_list_item_template.dart';
 
 class ParentsOfStudentList extends StatefulWidget {
   ParentsOfStudentList({Key? key, required this.children}) : super(key: key);

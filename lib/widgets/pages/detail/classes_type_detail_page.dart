@@ -5,7 +5,7 @@ import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/classes_type.dart';
 import 'package:record_of_classes/widgets/templates/add_new_classes_type_template.dart';
-import 'package:record_of_classes/widgets/templates/group_list_view_template.dart';
+import 'package:record_of_classes/widgets/templates/lists/group_list_template.dart';
 
 class DetailClassesType extends StatefulWidget {
   DetailClassesType({Key? key}) : super(key: key);
@@ -147,7 +147,7 @@ class _DetailClassesTypeState extends State<DetailClassesType> {
         Text(
             '${Strings.PRICE_FOR_EACH}: ${widget._classesType.priceForEach}${Strings.CURRENCY}'),
         const Text('${Strings.GROUPS}:'),
-        GroupListviewTemplate(groups: widget._classesType.groups,)
+        GroupListTemplate(groups: widget._classesType.groups,)
       ],
     );
   }

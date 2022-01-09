@@ -5,7 +5,7 @@ import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/group.dart';
 import 'package:record_of_classes/models/student.dart';
-import 'package:record_of_classes/widgets/templates/students_in_group_list_template.dart';
+import 'package:record_of_classes/widgets/templates/lists/students_in_group_list_template.dart';
 
 class DetailGroupPage extends StatefulWidget {
   const DetailGroupPage({Key? key}) : super(key: key);

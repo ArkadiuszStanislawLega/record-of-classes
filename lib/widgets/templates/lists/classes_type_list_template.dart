@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:record_of_classes/models/classes_type.dart';
-import 'package:record_of_classes/widgets/templates/classes_type_list_item.dart';
+import 'package:record_of_classes/widgets/templates/list_items/classes_type_list_item.dart';
 
 class ClassesTypeListTemplate extends StatefulWidget {
   ClassesTypeListTemplate({Key? key, required this.classesTypes})

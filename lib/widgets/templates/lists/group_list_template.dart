@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:record_of_classes/models/group.dart';
-import 'package:record_of_classes/widgets/templates/group_list_item_template.dart';
+import 'package:record_of_classes/widgets/templates/list_items/group_list_item_template.dart';
 
-class GroupListviewTemplate extends StatefulWidget {
-  GroupListviewTemplate({Key? key, required this.groups}) : super(key: key);
+class GroupListTemplate extends StatefulWidget {
+  GroupListTemplate({Key? key, required this.groups}) : super(key: key);
 
-  List<Group> groups;
+  late List<Group> groups;
 
   @override
-  _GroupListviewTemplateState createState() => _GroupListviewTemplateState();
+  _GroupListTemplateState createState() => _GroupListTemplateState();
 }
 
-class _GroupListviewTemplateState extends State<GroupListviewTemplate> {
+class _GroupListTemplateState extends State<GroupListTemplate> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(

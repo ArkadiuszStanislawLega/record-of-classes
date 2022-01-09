@@ -5,9 +5,9 @@ import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/models/account.dart';
 import 'package:record_of_classes/models/person.dart';
 import 'package:record_of_classes/models/student.dart';
-import 'package:record_of_classes/widgets/templates/create_person_template.dart';
+import 'package:record_of_classes/widgets/templates/create/create_person_template.dart';
 
-import '../../main.dart';
+import '../../../main.dart';
 
 class CreateStudentPage extends StatefulWidget {
   const CreateStudentPage({Key? key}) : super(key: key);

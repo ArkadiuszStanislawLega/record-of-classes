@@ -4,7 +4,7 @@ import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/account.dart';
 import 'package:record_of_classes/models/bill.dart';
 import 'package:record_of_classes/models/group.dart';
-import 'package:record_of_classes/widgets/templates/bill_list_item.dart';
+import 'package:record_of_classes/widgets/templates/list_items/bill_list_item.dart';
 
 class AccountListTemplate extends StatefulWidget {
   const AccountListTemplate({Key? key, required this.account})

@@ -30,7 +30,7 @@ class _AddStudentToGroupPageState extends State<AddStudentToGroupPage> {
         stream: _studentStream,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return _studentsList(snapshot.data!);
+            return _studentsListView(snapshot.data!);
           } else {
             return const Center(child: CircularProgressIndicator());
           }
@@ -39,7 +39,7 @@ class _AddStudentToGroupPageState extends State<AddStudentToGroupPage> {
     );
   }
 
-  Widget _studentsList(List<Student> listFromDatabase) {
+  Widget _studentsListView(List<Student> listFromDatabase) {
     List<Student> filteredList = _createUnattachedStudentsList(listFromDatabase);
 
     return ListView.builder(

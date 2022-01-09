@@ -1,45 +1,40 @@
-import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/main.dart';
-import 'package:record_of_classes/models/parent.dart';
 import 'package:record_of_classes/models/student.dart';
-import 'package:record_of_classes/objectbox.g.dart';
-import 'package:record_of_classes/widgets/templates/parent_list_item_template.dart';
+import 'package:record_of_classes/widgets/templates/list_items/remove_sibling_list_item.dart';
 
-class ParentListTemplate extends StatefulWidget {
-  Student? children;
-  ParentListTemplate({Key? key, this.children}) : super(key: key);
+class SiblingsListTemplate extends StatefulWidget {
+  SiblingsListTemplate({Key? key, required this.student}) : super(key: key);
+  Student student;
 
   @override
   State<StatefulWidget> createState() {
-    return _ParentListTemplate();
+    return _SiblingsListTemplate();
   }
 }
 
-class _ParentListTemplate extends State<ParentListTemplate> {
+class _SiblingsListTemplate extends State<SiblingsListTemplate> {
   late Store _store;
-
-  late Stream<List<Parent>> _parentsStream;
+  late Stream<List<Student>> _siblingsStream;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.all(5),
-      child: StreamBuilder<List<Parent>>(
-        stream: _parentsStream,
+      child: StreamBuilder<List<Student>>(
+        stream: _siblingsStream,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            snapshot.data?.sort((a,b)=> a.person.target!.surname.toLowerCase().compareTo(b.person.target!.surname.toLowerCase()));
+            widget.student = _store.box<Student>().get(widget.student.id)!;
             return ListView.builder(
-              itemCount: snapshot.data!.length,
+              itemCount: widget.student.siblings.length,
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
               itemBuilder: (context, index) {
-                return ParentListItemTemplate(
-                    parent: snapshot.data!.elementAt(index), student: widget.children!,);
+                return RemoveSiblingListItem(
+                    sibling: widget.student.siblings.elementAt(index), student: widget.student);
               },
             );
           } else {
@@ -54,8 +49,8 @@ class _ParentListTemplate extends State<ParentListTemplate> {
   void initState() {
     super.initState();
     _store = objectBox.store;
-    _parentsStream = _store
-        .box<Parent>()
+    _siblingsStream = _store
+        .box<Student>()
         .query()
         .watch(triggerImmediately: true)
         .map((query) => query.find());

@@ -4,10 +4,10 @@ import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/student.dart';
-import 'package:record_of_classes/widgets/templates/siblings_list_item_template.dart';
+import 'package:record_of_classes/widgets/templates/list_items/siblings_list_item_template.dart';
 
-class AddSiblingsPage extends StatefulWidget {
-  AddSiblingsPage({Key? key}) : super(key: key);
+class AddSiblingsToStudentPage extends StatefulWidget {
+  const AddSiblingsToStudentPage({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -15,7 +15,7 @@ class AddSiblingsPage extends StatefulWidget {
   }
 }
 
-class _AddSiblingsPage extends State<AddSiblingsPage> {
+class _AddSiblingsPage extends State<AddSiblingsToStudentPage> {
   late Student student;
   late Store _store;
   late Stream<List<Student>> _studentsStream;

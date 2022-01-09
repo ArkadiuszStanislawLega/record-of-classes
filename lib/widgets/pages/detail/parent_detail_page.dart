@@ -7,7 +7,7 @@ import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/parent.dart';
 import 'package:record_of_classes/models/person.dart';
 import 'package:record_of_classes/models/phone.dart';
-import 'package:record_of_classes/widgets/templates/create_phone_template.dart';
+import 'package:record_of_classes/widgets/templates/create/create_phone_template.dart';
 
 class ParentDetailPage extends StatefulWidget {
   const ParentDetailPage({Key? key}) : super(key: key);

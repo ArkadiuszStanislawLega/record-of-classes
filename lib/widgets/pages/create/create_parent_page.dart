@@ -7,9 +7,9 @@ import 'package:record_of_classes/models/parent.dart';
 import 'package:record_of_classes/models/person.dart';
 import 'package:record_of_classes/models/phone.dart';
 import 'package:record_of_classes/models/student.dart';
-import 'package:record_of_classes/widgets/templates/create_parent_template.dart';
-import 'package:record_of_classes/widgets/templates/create_phone_template.dart';
-import 'package:record_of_classes/widgets/templates/parent_list_template.dart';
+import 'package:record_of_classes/widgets/templates/create/create_parent_template.dart';
+import 'package:record_of_classes/widgets/templates/create/create_phone_template.dart';
+import 'package:record_of_classes/widgets/templates/lists/parent_list_template.dart';
 
 class CreateParentPage extends StatefulWidget {
   const CreateParentPage({Key? key}) : super(key: key);

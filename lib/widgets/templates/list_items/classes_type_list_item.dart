@@ -28,18 +28,24 @@ class ClassesTypeListItem extends StatelessWidget {
         ),
       ],
       child: ListTile(
-        title: Column(
+        title: Text(classesType.name),
+        subtitle: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(classesType.name),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            Column(
               children: [
+                const Text('${Strings.PRICE_FOR_MONTH}:'),
                 Text(
-                    '${Strings.PRICE_FOR_MONTH}: ${classesType.priceForMonth.toString()}${Strings.CURRENCY}'),
-                Text(
-                    '${Strings.PRICE_FOR_EACH}: ${classesType.priceForEach.toString()}${Strings.CURRENCY}')
+                    '${classesType.priceForMonth.toString()}${Strings.CURRENCY}')
               ],
-            )
+            ),
+            Column(
+              children: [
+                const Text('${Strings.PRICE_FOR_EACH}:'),
+                Text(
+                    '${classesType.priceForEach.toString()}${Strings.CURRENCY}')
+              ],
+            ),
           ],
         ),
         onTap: () {

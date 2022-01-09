@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/models/group.dart';
-import 'package:record_of_classes/widgets/templates/create_address_template.dart';
+import 'package:record_of_classes/widgets/templates/create/create_address_template.dart';
 
 class CreateGroupTemplate extends StatefulWidget {
   CreateGroupTemplate({Key? key, this.group}) : super(key: key);

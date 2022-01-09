@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/student.dart';
-import 'package:record_of_classes/widgets/templates/students_list_item_template.dart';
+import 'package:record_of_classes/widgets/templates/list_items/students_list_item_template.dart';
 
 class StudentsListTemplate extends StatefulWidget {
   const StudentsListTemplate({Key? key}) : super(key: key);

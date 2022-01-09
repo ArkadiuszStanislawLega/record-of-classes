@@ -6,17 +6,17 @@ import 'package:record_of_classes/models/parent.dart';
 import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/models/teacher.dart';
 import 'package:record_of_classes/objectbox.g.dart';
-import 'package:record_of_classes/widgets/pages/add_siblings_page.dart';
-import 'package:record_of_classes/widgets/pages/add_student_to_group_page.dart';
-import 'package:record_of_classes/widgets/pages/classes_type_main_page.dart';
-import 'package:record_of_classes/widgets/pages/create_group_page.dart';
-import 'package:record_of_classes/widgets/pages/create_parent_page.dart';
-import 'package:record_of_classes/widgets/pages/create_student_page.dart';
-import 'package:record_of_classes/widgets/pages/detail_classes_type_page.dart';
-import 'package:record_of_classes/widgets/pages/detail_group_page.dart';
-import 'package:record_of_classes/widgets/pages/parent_detail_page.dart';
+import 'package:record_of_classes/widgets/pages/add/add_siblings_to_student_page.dart';
+import 'package:record_of_classes/widgets/pages/add/add_student_to_group_page.dart';
+import 'package:record_of_classes/widgets/pages/classes_type_page.dart';
+import 'package:record_of_classes/widgets/pages/create/create_group_page.dart';
+import 'package:record_of_classes/widgets/pages/create/create_parent_page.dart';
+import 'package:record_of_classes/widgets/pages/create/create_student_page.dart';
+import 'package:record_of_classes/widgets/pages/detail/classes_type_detail_page.dart';
+import 'package:record_of_classes/widgets/pages/detail/group_detail_page.dart';
+import 'package:record_of_classes/widgets/pages/detail/parent_detail_page.dart';
 import 'package:record_of_classes/widgets/pages/start_page.dart';
-import 'package:record_of_classes/widgets/pages/student_detail_page.dart';
+import 'package:record_of_classes/widgets/pages/detail/student_detail_page.dart';
 
 import 'models/person.dart';
 
@@ -125,8 +125,8 @@ class _RecordOfClassesApp extends State<RecordOfClassesApp> {
         AppUrls.DETAIL_STUDENT: (context) => const StudentDetailPage(),
         AppUrls.CREATE_PARENT: (context) => const CreateParentPage(),
         AppUrls.DETAIL_PARENT: (context) => const ParentDetailPage(),
-        AppUrls.ADD_SIBLING: (context) => AddSiblingsPage(),
-        AppUrls.CLASS_TYPE_MAIN: (context) => const ClassTypeMainPage(),
+        AppUrls.ADD_SIBLING: (context) => AddSiblingsToStudentPage(),
+        AppUrls.CLASS_TYPE_MAIN: (context) => const ClassTypePage(),
         AppUrls.DETAIL_CLASSES_TYPE: (context) => DetailClassesType(),
         AppUrls.CREATE_GROUP: (context) => CreateGroupPage(),
         AppUrls.DETAIL_GROUP: (context) => DetailGroupPage(),

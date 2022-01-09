@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:record_of_classes/models/group.dart';
-import 'package:record_of_classes/widgets/templates/students_in_group_list_item_template.dart';
+import 'package:record_of_classes/widgets/templates/list_items/students_in_group_list_item_template.dart';
 
 class StudentsInGroupListTemplate extends StatefulWidget {
   StudentsInGroupListTemplate({Key? key, required this.group})
