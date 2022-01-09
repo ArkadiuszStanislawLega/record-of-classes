@@ -24,56 +24,54 @@ class _AddSiblingsPage extends State<AddSiblingsToStudentPage> {
     student = ModalRoute.of(context)!.settings.arguments as Student;
     return Scaffold(
       appBar: AppBar(
-          title: Text(
-              '${Strings.ADD_SIBLING} ${student.person.target!.surname} ${student.person.target!.name}')),
-      body: Container(
-        margin: const EdgeInsets.all(5),
-        child: StreamBuilder<List<Student>>(
-          stream: _studentsStream,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              List<Student> preparedStudentList = prepareData(_createUnattachedSiblings(snapshot.data!));
-              return ListView.builder(
-                itemCount: preparedStudentList.length,
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return SiblingsListItemTemplate(
-                          sibling: preparedStudentList.elementAt(index),
-                          student: student,
-                        );
-                },
-              );
-            } else {
-              return const Center(child: CircularProgressIndicator());
-            }
-          },
-        ),
+          title: Text('${Strings.ADD_SIBLING} ${student.introduceYourself()}'),),
+      body: StreamBuilder<List<Student>>(
+        stream: _studentsStream,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return _unattachedSiblingListView(_sortData(_createUnattachedSiblings(snapshot.data!)));
+          } else {
+            return const Center(child: CircularProgressIndicator());
+          }
+        },
       ),
     );
   }
 
-  List<Student> _createUnattachedSiblings(List<Student> listFromDb){
+  Widget _unattachedSiblingListView(List<Student> unattachedSiblings) {
+    return ListView.builder(
+      itemCount: unattachedSiblings.length,
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
+      itemBuilder: (context, index) {
+        return SiblingsListItemTemplate(
+          sibling: unattachedSiblings.elementAt(index),
+          student: student,
+        );
+      },
+    );
+  }
+
+  List<Student> _createUnattachedSiblings(List<Student> listFromDb) {
     List<Student> notAttachedStudents = [];
     for (var dbStudent in listFromDb) {
-      if (!_isSiblingsAreConnected(dbStudent)){
+      if (!_isSiblingsAreConnected(dbStudent)) {
         notAttachedStudents.add(dbStudent);
       }
     }
     return notAttachedStudents;
   }
 
-  bool _isSiblingsAreConnected(Student student){
+  bool _isSiblingsAreConnected(Student dbStudent) {
     for (var siblings in student.siblings) {
-      if (student.id == siblings.id){
+      if (dbStudent.id == siblings.id) {
         return true;
       }
     }
     return false;
   }
 
-
-  List<Student> prepareData(var originalData){
+  List<Student> _sortData(var originalData) {
     List<Student> studentList = [];
     originalData.sort((Student a, Student b) => a.person.target!.surname
         .toLowerCase()

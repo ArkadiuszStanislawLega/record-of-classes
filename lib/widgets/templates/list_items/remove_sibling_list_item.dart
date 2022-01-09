@@ -16,7 +16,6 @@ class RemoveSiblingListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     if (sibling.person.target != null) {
       return Slidable(
           actionPane: const SlidableDrawerActionPane(),
@@ -39,7 +38,6 @@ class RemoveSiblingListItem extends StatelessWidget {
   }
 
   void updateDatabase() {
-
     _store = objectBox.store;
     student.siblings.removeWhere((s) => s.id == sibling.id);
     sibling.siblings.removeWhere((s) => s.id == student.id);
@@ -48,10 +46,7 @@ class RemoveSiblingListItem extends StatelessWidget {
 
     box.put(sibling);
     box.put(student);
-
-    for (var element in box.get(student.id)!.siblings) {
-      print(element.person.target!.introduceYourself());
-    }}
+  }
 
   void showInfoSnackBar(var context) => SnackBarInfoTemplate(
       context: context,
