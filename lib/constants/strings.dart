@@ -34,6 +34,7 @@ class Strings {
       NAME_OF_CLASSES_TYPE = 'Nazwa typu zajęć',
       OK = 'OK',
       PARENTS = 'Rodzice',
+      PERSONS_IN_GROUP = 'Osoby w grupie',
       PHONE_NUMBER = 'Numer telefonu',
       PHONE_NAME = 'Nazwa kontaktu',
       PRICE_FOR_EACH = 'Cena za jedne zajęcia',

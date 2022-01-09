@@ -7,6 +7,7 @@ import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/person.dart';
 import 'package:record_of_classes/models/student.dart';
+import 'package:record_of_classes/widgets/templates/student_list_tile_template.dart';
 
 class StudentsListItemTemplate extends StatefulWidget {
   final Student student;
@@ -42,23 +43,7 @@ class _StudentsListItemTemplate extends State<StudentsListItemTemplate> {
             },
           ),
         ],
-        child: ListTile(
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                '${person.surname} ${person.name} ',
-                style: const TextStyle(
-                    color: Colors.blueGrey, fontWeight: FontWeight.bold),
-              ),
-              Text(' lat: ${widget.student.age.toString()}')
-            ],
-          ),
-          onTap: () {
-            Navigator.pushNamed(context, AppUrls.DETAIL_STUDENT,
-                arguments: widget.student);
-          },
-        ),
+        child: StudentListTileTemplate(student: widget.student)
       );
     }
     return const Text('');

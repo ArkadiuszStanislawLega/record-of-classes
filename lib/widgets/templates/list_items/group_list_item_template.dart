@@ -34,19 +34,17 @@ class _GroupListItemTemplateState extends State<GroupListItemTemplate> {
         ),
       ],
       child: ListTile(
-        title:
-        Column(
+        title: Text(widget.group.name),
+        subtitle: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(widget.group.name),
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(widget.group.students.length.toString()),
-                Text(widget.group.address.target.toString())
-              ],)
+            Text('${Strings.PERSONS_IN_GROUP}: ${widget.group.students.length.toString()}'),
+            Text(widget.group.address.target.toString())
           ],
         ),
         onTap: () {
-          Navigator.pushNamed(context, AppUrls.DETAIL_GROUP, arguments: widget.group);
+          Navigator.pushNamed(context, AppUrls.DETAIL_GROUP,
+              arguments: widget.group);
         },
       ),
     );
@@ -66,6 +64,7 @@ class _GroupListItemTemplateState extends State<GroupListItemTemplate> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
-      ),);
+      ),
+    );
   }
 }
