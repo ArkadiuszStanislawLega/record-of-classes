@@ -6,11 +6,13 @@ import 'package:record_of_classes/constants/app_urls.dart';
 import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/parent.dart';
-import 'package:record_of_classes/models/person.dart';
 import 'package:record_of_classes/models/student.dart';
+import 'package:record_of_classes/widgets/templates/snack_bar_info_template.dart';
 
 class ParentListItemTemplate extends StatefulWidget {
-  ParentListItemTemplate({Key? key, required this.parent, required this.student}) : super(key: key);
+  ParentListItemTemplate(
+      {Key? key, required this.parent, required this.student})
+      : super(key: key);
   Parent parent;
   Student student;
 
@@ -22,6 +24,7 @@ class ParentListItemTemplate extends StatefulWidget {
 
 class _ParentListItemTemplate extends State<ParentListItemTemplate> {
   late Store _store;
+
   @override
   Widget build(BuildContext context) {
     _store = objectBox.store;
@@ -41,7 +44,11 @@ class _ParentListItemTemplate extends State<ParentListItemTemplate> {
               onTap: addParent),
         ],
         child: ListTile(
-            title: Column(children: personData()), onTap: enterParentProfile),
+          title: Text(widget.parent.introduceYourself()),
+          subtitle: Text(widget.parent.phone.isNotEmpty
+              ? widget.parent.phone.elementAt(0).number.toString()
+              : ''),
+        ),
       );
     }
     return const Text('');
@@ -53,61 +60,32 @@ class _ParentListItemTemplate extends State<ParentListItemTemplate> {
   }
 
   void removeParent() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('${widget.parent.person.target!.surname} ${widget.parent.person.target!.name} usuninięto z bazy danych!'),
-        duration: const Duration(milliseconds: 1500),
-        width: 280.0,
-        // Width of the SnackBar.
-        padding: const EdgeInsets.symmetric(
-          horizontal: 15.0, // Inner padding for SnackBar content.
-        ),
-        behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-      ),
-    );
-    var box = _store.box<Parent>();
-
-   box.remove(widget.parent.id);
-   box.remove(widget.parent.person.target!.id);
+    SnackBarInfoTemplate(
+        context: context,
+        message:
+            '${widget.parent.introduceYourself()} ${Strings.REMOVED_FROM_DATABASE}!');
+    _removeParentFromStudentInDatabase();
   }
 
-  void addParent() {
+  void _removeParentFromStudentInDatabase() {
+    var box = _store.box<Parent>();
+
+    box.remove(widget.parent.id);
+    box.remove(widget.parent.person.target!.id);
+  }
+
+  void _addParentToStudentInDatabase() {
     widget.student.parents.add(widget.parent);
     widget.parent.children.add(widget.student);
     _store.box<Student>().put(widget.student);
     _store.box<Parent>().put(widget.parent);
-
-    var parentValues = '${widget.parent.person.target!.surname} ${widget.parent.person.target!.name}';
-    var studentValues = '${widget.student.person.target!.surname} ${widget.student.person.target!.name}';
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('$parentValues i $studentValues są teraz rodziną!'),
-        duration: const Duration(milliseconds: 1500),
-        width: 280.0,
-        // Width of the SnackBar.
-        padding: const EdgeInsets.symmetric(
-          horizontal: 15.0, // Inner padding for SnackBar content.
-        ),
-        behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-      ),
-    );
   }
 
-  List<Widget> personData() {
-    var person = widget.parent.person.target!;
-    return [
-      Text('${person.surname} ${person.name} ',
-        style: const TextStyle(
-            color: Colors.blueGrey, fontWeight: FontWeight.bold),
-      ),
-    ];
+  void addParent() {
+    _addParentToStudentInDatabase();
+    SnackBarInfoTemplate(
+        context: context,
+        message:
+            '${widget.parent.introduceYourself()} ${Strings.AND} ${widget.student.introduceYourself()} ${Strings.THEY_ARE_FAMILY_NOW}!');
   }
-
 }
