@@ -3,6 +3,7 @@ class Strings {
       SURNAME = 'Nazwisko',
       AGE = 'Wiek',
       ADD = 'Dodaj',
+      BILLS = 'Rachunki',
       ADD_PARENT = 'Dodaj rodzica',
       ADD_CONTACT = 'Dodaj kontakt',
       ADD_CLASSES_TYPE = 'Dodaj typ zajęć',

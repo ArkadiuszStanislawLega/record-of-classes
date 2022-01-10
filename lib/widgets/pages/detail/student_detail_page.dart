@@ -33,24 +33,37 @@ class _StudentDetailPage extends State<StudentDetailPage> {
     _student = ModalRoute.of(context)!.settings.arguments as Student;
     _person = _student.person.target as Person;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('${_person.name}  ${_person.surname}'),
-      ),
-      body: StreamBuilder<List<Student>>(
-        stream: _parentsStream,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return Container(
-              margin: const EdgeInsets.all(10.0),
-              child: Column(
-                children: _isEdited ? editModeEnabled() : editModeDisabled(),
-              ),
-            );
-          } else {
-            return const Center(child: CircularProgressIndicator());
-          }
-        },
+    return DefaultTabController(
+      length: 4,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('${_person.name}  ${_person.surname}'),
+          bottom: const TabBar(
+            tabs: [
+              Tab(text: Strings.PARENTS),
+              Tab(text: Strings.SIBLINGS),
+              Tab(text: Strings.BILLS),
+              Tab(text: Strings.GROUPS)
+            ],
+          ),
+        ),
+        body: StreamBuilder<List<Student>>(
+          stream: _parentsStream,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return TabBarView(
+                children: [
+                  _personality(),
+                  _siblings(),
+                  AccountListTemplate(account: _student.account),
+                  StudentGroupListTemplate(student: _student),
+                ],
+              );
+            } else {
+              return const Center(child: CircularProgressIndicator());
+            }
+          },
+        ),
       ),
     );
   }
@@ -66,83 +79,97 @@ class _StudentDetailPage extends State<StudentDetailPage> {
         .map((query) => query.find());
   }
 
-  List<Widget> editModeDisabled() {
-    return [
-      TextButton(
-        onPressed: enableEditMode,
-        child: const Text(Strings.EDIT),
-      ),
-      Text('${Strings.AGE}: ${_student.age.toString()}'),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const Text('${Strings.PARENTS}:'),
-          TextButton(
-            onPressed: addParent,
-            child: const Text(Strings.ADD_PARENT),
-          ),
-        ],
-      ),
-      ParentsOfStudentList(
-        children: _student,
-      ),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const Text('${Strings.SIBLINGS}:'),
-          TextButton(
-              onPressed: addSibling, child: const Text(Strings.ADD_SIBLING))
-        ],
-      ),
-      SiblingsListTemplate(student: _student),
-      AccountListTemplate(account: _student.account),
-      const Text('${Strings.GROUPS}:'),
-      StudentGroupListTemplate(student: _student),
-    ];
+  Widget _siblings(){
+    return  Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text('${Strings.SIBLINGS}:'),
+            TextButton(
+                onPressed: addSibling,
+                child: const Text(Strings.ADD_SIBLING))
+          ],
+        ),
+        SiblingsListTemplate(student: _student),
+      ],
+    );
   }
 
-  List<Widget> editModeEnabled() {
-    return [
-      TextField(
-        decoration: InputDecoration(
-          hintText: _person.name == '' ? Strings.NAME : _person.name,
+  Widget _personality(){
+    return _isEdited ? editModeEnabled() : editModeDisabled();
+  }
+
+  Column editModeDisabled() {
+    return Column(
+      children: [
+        TextButton(
+          onPressed: enableEditMode,
+          child: const Text(Strings.EDIT),
         ),
-        onChanged: (userInput) {
-          _personName = userInput;
-        },
-      ),
-      TextField(
-        decoration: InputDecoration(
-          hintText: _person.surname == '' ? Strings.SURNAME : _person.surname,
+        Text('${Strings.AGE}: ${_student.age.toString()}'),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text('${Strings.PARENTS}:'),
+            TextButton(
+              onPressed: addParent,
+              child: const Text(Strings.ADD_PARENT),
+            ),
+          ],
         ),
-        onChanged: (userInput) {
-          _personSurname = userInput;
-        },
-      ),
-      TextField(
-          onChanged: (userInput) {
-            _personAge = userInput;
-          },
+        ParentsOfStudentList(
+          children: _student,
+        ),
+      ],
+    );
+  }
+
+  Column editModeEnabled() {
+    return Column(
+      children: [
+        TextField(
           decoration: InputDecoration(
-            hintText: _student.age == 0 ? Strings.AGE : _student.age.toString(),
+            hintText: _person.name == '' ? Strings.NAME : _person.name,
           ),
-          keyboardType: TextInputType.number,
-          inputFormatters: <TextInputFormatter>[
-            FilteringTextInputFormatter.digitsOnly
+          onChanged: (userInput) {
+            _personName = userInput;
+          },
+        ),
+        TextField(
+          decoration: InputDecoration(
+            hintText: _person.surname == '' ? Strings.SURNAME : _person.surname,
+          ),
+          onChanged: (userInput) {
+            _personSurname = userInput;
+          },
+        ),
+        TextField(
+            onChanged: (userInput) {
+              _personAge = userInput;
+            },
+            decoration: InputDecoration(
+              hintText:
+                  _student.age == 0 ? Strings.AGE : _student.age.toString(),
+            ),
+            keyboardType: TextInputType.number,
+            inputFormatters: <TextInputFormatter>[
+              FilteringTextInputFormatter.digitsOnly
+            ]),
+        Center(
+          child: Row(children: [
+            TextButton(
+              onPressed: confirmEditChanges,
+              child: const Text(Strings.OK),
+            ),
+            TextButton(
+              onPressed: cancelEditChanges,
+              child: const Text(Strings.CANCEL),
+            )
           ]),
-      Center(
-        child: Row(children: [
-          TextButton(
-            onPressed: confirmEditChanges,
-            child: const Text(Strings.OK),
-          ),
-          TextButton(
-            onPressed: cancelEditChanges,
-            child: const Text(Strings.CANCEL),
-          )
-        ]),
-      ),
-    ];
+        ),
+      ],
+    );
   }
 
   void addParent() {
