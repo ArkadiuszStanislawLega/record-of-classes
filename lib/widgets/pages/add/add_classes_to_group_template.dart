@@ -16,8 +16,7 @@ class AddClassesToGroup extends StatefulWidget {
 }
 
 class _AddClassesToGroup extends State<AddClassesToGroup> {
-  DateTime selectedDate = DateTime.now(),
-  selectedTime = DateTime.now();
+  DateTime selectedDate = DateTime.now(), selectedTime = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -38,12 +37,8 @@ class _AddClassesToGroup extends State<AddClassesToGroup> {
                       minTime: DateTime(2022, 1, 1),
                       maxTime: DateTime(2100, 1, 1), onConfirm: (date) {
                     setState(() {
-                      selectedDate = DateTime(
-                          date.year,
-                          date.month,
-                          date.day,
-                          selectedTime.hour,
-                          selectedTime.minute);
+                      selectedDate = DateTime(date.year, date.month, date.day,
+                          selectedTime.hour, selectedTime.minute);
                     });
                   }, currentTime: DateTime.now(), locale: LocaleType.pl);
                 },
@@ -90,7 +85,8 @@ class _AddClassesToGroup extends State<AddClassesToGroup> {
     Store store = objectBox.store;
     Classes classes = Classes()
       ..group.target = widget._group
-      ..dateTime = selectedDate;
+      ..dateTime = DateTime(selectedDate.year, selectedDate.month,
+          selectedDate.day, selectedTime.hour, selectedTime.minute);
     widget._group.classes.add(classes);
     classes.group.target = widget._group;
     store.box<Group>().put(widget._group);
