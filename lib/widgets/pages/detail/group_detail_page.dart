@@ -5,6 +5,7 @@ import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/group.dart';
 import 'package:record_of_classes/models/student.dart';
+import 'package:record_of_classes/widgets/templates/lists/classes_list_template.dart';
 import 'package:record_of_classes/widgets/templates/lists/students_in_group_list_template.dart';
 
 class DetailGroupPage extends StatefulWidget {
@@ -26,16 +27,15 @@ class _DetailGroupPageState extends State<DetailGroupPage> {
     group = ModalRoute.of(context)!.settings.arguments as Group;
     group = _store.box<Group>().get(group.id)!;
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: Scaffold(
           appBar: AppBar(
             title: Text(group.name),
             bottom: const TabBar(
               tabs: [
-                Tab(text: 'Profil'),
-                Tab(
-                  text: 'Lista',
-                )
+                Tab(text: Strings.DETAILS),
+                Tab(text: '${Strings.LIST} uczestników'),
+                Tab(text: '${Strings.LIST} zajęć')
               ],
             ),
           ),
@@ -49,6 +49,7 @@ class _DetailGroupPageState extends State<DetailGroupPage> {
                         ? _editModeEnabled()
                         : _editModeDisabled(),
                     StudentsInGroupListTemplate(group: group),
+                    ClassesListTemplate(classesList: group.classes),
                   ],
                 );
               } else {
@@ -93,11 +94,12 @@ class _DetailGroupPageState extends State<DetailGroupPage> {
               child: const Text(Strings.EDIT),
             ),
             TextButton(
-              onPressed: () {
-                Navigator.pushNamed(context, AppUrls.ADD_STUDENT_TO_GROUP,
-                    arguments: group);
-              },
-              child: const Text('Dodaj uczestników'),
+              onPressed: _navigateToAddStudent,
+              child: const Text(Strings.ADD_PARTICIPANTS),
+            ),
+            TextButton(
+              onPressed: _navigateToAddClasses,
+              child: const Text(Strings.ADD_CLASSES),
             ),
           ],
         ),
@@ -106,6 +108,12 @@ class _DetailGroupPageState extends State<DetailGroupPage> {
       ],
     );
   }
+
+  void _navigateToAddClasses() => Navigator.pushNamed(context, AppUrls.ADD_CLASSES_TO_GROUP);
+
+  void _navigateToAddStudent() =>
+      Navigator.pushNamed(context, AppUrls.ADD_STUDENT_TO_GROUP,
+          arguments: group);
 
   void _setEditModeEnable() => setState(() => _isEditModeEnabled = true);
 
