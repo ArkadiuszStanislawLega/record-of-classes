@@ -22,6 +22,8 @@ class Strings {
       CREATE_STUDENT = 'Utwórz ucznia',
       CREATE_PARENT = 'Utwórz rodzica',
       CHILDREN = 'Dzieci',
+      CHOSE_DATE = 'Wybierz datę zajęć',
+      CHOSE_TIME = 'Wybierz godzinę',
       CURRENCY = 'zl',
       DATABASE_NAME = 'objectbox',
       DELETE = 'Usuń',

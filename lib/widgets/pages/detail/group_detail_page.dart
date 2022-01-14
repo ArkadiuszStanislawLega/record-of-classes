@@ -109,7 +109,9 @@ class _DetailGroupPageState extends State<DetailGroupPage> {
     );
   }
 
-  void _navigateToAddClasses() => Navigator.pushNamed(context, AppUrls.ADD_CLASSES_TO_GROUP);
+  void _navigateToAddClasses() =>
+      Navigator.pushNamed(context, AppUrls.ADD_CLASSES_TO_GROUP,
+          arguments: group);
 
   void _navigateToAddStudent() =>
       Navigator.pushNamed(context, AppUrls.ADD_STUDENT_TO_GROUP,
