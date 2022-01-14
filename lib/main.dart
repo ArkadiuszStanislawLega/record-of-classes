@@ -23,6 +23,7 @@ import 'package:record_of_classes/widgets/pages/detail/student_detail_page.dart'
 import 'models/person.dart';
 
 import 'models/phone.dart';
+import 'widgets/pages/detail/classes_detail_page.dart';
 
 class ObjectBox {
   /// The Store of this app.
@@ -133,7 +134,8 @@ class _RecordOfClassesApp extends State<RecordOfClassesApp> {
         AppUrls.CREATE_GROUP: (context) => CreateGroupPage(),
         AppUrls.DETAIL_GROUP: (context) => DetailGroupPage(),
         AppUrls.ADD_STUDENT_TO_GROUP: (context) => AddStudentToGroupPage(),
-        AppUrls.ADD_CLASSES_TO_GROUP: (context) => AddClassesToGroup()
+        AppUrls.ADD_CLASSES_TO_GROUP: (context) => AddClassesToGroup(),
+        AppUrls.DETAIL_CLASSES: (context) => ClassesDetailPage()
       },
     );
   }

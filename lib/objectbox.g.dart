@@ -210,7 +210,12 @@ final _entities = <ModelEntity>[
             indexId: const IdUid(6, 4477573794856855013),
             relationTarget: 'Group')
       ],
-      relations: <ModelRelation>[],
+      relations: <ModelRelation>[
+        ModelRelation(
+            id: const IdUid(17, 1060870525215224344),
+            name: 'attendances',
+            targetId: const IdUid(4, 8304019811953848799))
+      ],
       backlinks: <ModelBacklink>[]),
   ModelEntity(
       id: const IdUid(7, 397564380929104183),
@@ -448,7 +453,7 @@ ModelDefinition getObjectBoxModel() {
       entities: _entities,
       lastEntityId: const IdUid(12, 7751236531251891487),
       lastIndexId: const IdUid(15, 1182126131564333134),
-      lastRelationId: const IdUid(16, 428761453294890279),
+      lastRelationId: const IdUid(17, 1060870525215224344),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [],
       retiredIndexUids: const [],
@@ -658,7 +663,8 @@ ModelDefinition getObjectBoxModel() {
     Classes: EntityDefinition<Classes>(
         model: _entities[5],
         toOneRelations: (Classes object) => [object.group],
-        toManyRelations: (Classes object) => {},
+        toManyRelations: (Classes object) =>
+            {RelInfo<Classes>.toMany(17, object.id): object.attendances},
         getId: (Classes object) => object.id,
         setId: (Classes object, int id) {
           object.id = id;
@@ -682,6 +688,8 @@ ModelDefinition getObjectBoxModel() {
           object.group.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
           object.group.attach(store);
+          InternalToManyAccess.setRelInfo(object.attendances, store,
+              RelInfo<Classes>.toMany(17, object.id), store.box<Classes>());
           return object;
         }),
     ClassesType: EntityDefinition<ClassesType>(
@@ -1012,6 +1020,10 @@ class Classes_ {
   /// see [Classes.group]
   static final group =
       QueryRelationToOne<Classes, Group>(_entities[5].properties[2]);
+
+  /// see [Classes.attendances]
+  static final attendances =
+      QueryRelationToMany<Classes, Attendance>(_entities[5].relations[0]);
 }
 
 /// [ClassesType] entity fields to define ObjectBox queries.

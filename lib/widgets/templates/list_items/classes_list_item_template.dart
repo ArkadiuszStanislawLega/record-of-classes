@@ -44,7 +44,7 @@ class ClassesListItemTemplate extends StatelessWidget {
   void _updateDatabase() {}
 
   void _navigateToGroupProfile(BuildContext context) =>
-      Navigator.pushNamed(context, AppUrls.DETAIL_GROUP, arguments: classes);
+      Navigator.pushNamed(context, AppUrls.DETAIL_CLASSES, arguments: classes);
 
   void _showInfo(BuildContext context) => SnackBarInfoTemplate(
       context: context,

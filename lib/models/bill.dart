@@ -5,7 +5,7 @@ import 'classes.dart';
 
 @Entity()
 class Bill {
-  late int id;
+  late int id= 0;
   late bool isPaid;
   late double price;
   final classes = ToOne<Classes>();

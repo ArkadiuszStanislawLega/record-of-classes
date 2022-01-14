@@ -191,7 +191,13 @@
           "relationTarget": "Group"
         }
       ],
-      "relations": []
+      "relations": [
+        {
+          "id": "17:1060870525215224344",
+          "name": "attendances",
+          "targetId": "4:8304019811953848799"
+        }
+      ]
     },
     {
       "id": "7:397564380929104183",
@@ -422,7 +428,7 @@
   ],
   "lastEntityId": "12:7751236531251891487",
   "lastIndexId": "15:1182126131564333134",
-  "lastRelationId": "16:428761453294890279",
+  "lastRelationId": "17:1060870525215224344",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
