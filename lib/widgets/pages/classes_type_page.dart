@@ -23,34 +23,53 @@ class _ClassTypePageState extends State<ClassTypePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(Strings.CLASSES),
-      ),
-      body: Column(
-        children: [
-          _addNewClassesTypeTemplate,
-          TextButton(
-            onPressed: () {
-              if (_addNewClassesTypeTemplate.isInputValid()) {
-                _addClassesTypeToDb(_createClassesType(_getTeacherFromDb()));
-                _addNewClassesTypeTemplate.clearFields();
-              }
-            },
-            child: const Text(Strings.ADD_CLASSES_TYPE),
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text(Strings.CLASSES),
+          bottom: const TabBar(
+            tabs: [
+              Tab(text: 'Nowy typ'),
+              Tab(text: 'Lista typów'),
+            ],
           ),
-          StreamBuilder<List<ClassesType>>(
-            stream: _classesTypesStream,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return ClassesTypeListTemplate(classesTypes: snapshot.data!,);
-              } else {
-                return const Center(child: CircularProgressIndicator());
-              }
-            },
-          ),
-        ],
+        ),
+        body: StreamBuilder<List<ClassesType>>(
+          stream: _classesTypesStream,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return TabBarView(
+                children: [
+                  _createNewClassesType(),
+                  ClassesTypeListTemplate(
+                    classesTypes: snapshot.data!,
+                  )
+                ],
+              );
+            } else {
+              return const Center(child: CircularProgressIndicator());
+            }
+          },
+        ),
       ),
+    );
+  }
+
+  Widget _createNewClassesType() {
+    return Column(
+      children: [
+        _addNewClassesTypeTemplate,
+        TextButton(
+          onPressed: () {
+            if (_addNewClassesTypeTemplate.isInputValid()) {
+              _addClassesTypeToDb(_createClassesType(_getTeacherFromDb()));
+              _addNewClassesTypeTemplate.clearFields();
+            }
+          },
+          child: const Text(Strings.ADD_CLASSES_TYPE),
+        ),
+      ],
     );
   }
 
