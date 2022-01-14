@@ -25,11 +25,38 @@ class _DetailGroupPageState extends State<DetailGroupPage> {
   Widget build(BuildContext context) {
     group = ModalRoute.of(context)!.settings.arguments as Group;
     group = _store.box<Group>().get(group.id)!;
-    return Scaffold(
-        appBar: AppBar(
-          title: Text(group.name),
-        ),
-        body: _isEditModeEnabled ? _editModeEnabled() : _editModeDisabled());
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+          appBar: AppBar(
+            title: Text(group.name),
+            bottom: const TabBar(
+              tabs: [
+                Tab(text: 'Profil'),
+                Tab(
+                  text: 'Lista',
+                )
+              ],
+            ),
+          ),
+          body: StreamBuilder<List<Student>>(
+            stream: _studentsStream,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return TabBarView(
+                  children: [
+                    _isEditModeEnabled
+                        ? _editModeEnabled()
+                        : _editModeDisabled(),
+                    StudentsInGroupListTemplate(group: group),
+                  ],
+                );
+              } else {
+                return const Center(child: CircularProgressIndicator());
+              }
+            },
+          )),
+    );
   }
 
   Widget _editModeEnabled() {
@@ -55,45 +82,33 @@ class _DetailGroupPageState extends State<DetailGroupPage> {
   }
 
   Widget _editModeDisabled() {
-    return StreamBuilder<List<Student>>(
-      stream: _studentsStream,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          group = _store.box<Group>().get(group.id)!;
-          return Column(
-            children: [
-              Text(
-                  '${Strings.CLASSES_TYPE}: ${group.classesType.target!.name}'),
-              Text(
-                  '${Strings.CLASSES_ADDRESS}: ${group.address.target.toString()}'),
-              TextButton(
-                onPressed: _setEditModeEnable,
-                child: const Text(Strings.EDIT),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text('Zapisani uczestnicy:'),
-                  TextButton(
-                      onPressed: () {
-                        Navigator.pushNamed(
-                            context, AppUrls.ADD_STUDENT_TO_GROUP,
-                            arguments: group);
-                      },
-                      child: const Text('Dodaj uczestników')),
-                ],
-              ),
-              StudentsInGroupListTemplate(group: group),
-            ],
-          );
-        } else {
-          return const Center(child: CircularProgressIndicator());
-        }
-      },
+    group = _store.box<Group>().get(group.id)!;
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            TextButton(
+              onPressed: _setEditModeEnable,
+              child: const Text(Strings.EDIT),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, AppUrls.ADD_STUDENT_TO_GROUP,
+                    arguments: group);
+              },
+              child: const Text('Dodaj uczestników'),
+            ),
+          ],
+        ),
+        Text('${Strings.CLASSES_TYPE}: ${group.classesType.target!.name}'),
+        Text('${Strings.CLASSES_ADDRESS}: ${group.address.target.toString()}'),
+      ],
     );
   }
 
   void _setEditModeEnable() => setState(() => _isEditModeEnabled = true);
+
   void _setEditModeDisable() => setState(() => _isEditModeEnabled = false);
 
   @override

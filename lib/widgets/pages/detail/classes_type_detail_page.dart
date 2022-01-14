@@ -4,6 +4,7 @@ import 'package:record_of_classes/constants/app_urls.dart';
 import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/classes_type.dart';
+import 'package:record_of_classes/models/group.dart';
 import 'package:record_of_classes/widgets/templates/add_new_classes_type_template.dart';
 import 'package:record_of_classes/widgets/templates/lists/group_list_template.dart';
 
@@ -20,6 +21,7 @@ class _DetailClassesTypeState extends State<DetailClassesType> {
   late Store _store;
   late AddNewClassesTypeTemplate _addNewClassesTypeTemplate;
   late ClassesType _updatedClassesType;
+  late Stream<List<Group>> _groupsStream;
 
   @override
   Widget build(BuildContext context) {
@@ -28,11 +30,40 @@ class _DetailClassesTypeState extends State<DetailClassesType> {
     _addNewClassesTypeTemplate = AddNewClassesTypeTemplate(
       classesType: widget._classesType,
     );
-    return Scaffold(
-        appBar: AppBar(
-          title: Text(widget._classesType.name),
-        ),
-        body: _isEditModeEnabled ? _editModeEnabled() : _editModeDisabled());
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+          appBar: AppBar(
+            title: Text(widget._classesType.name),
+            bottom: const TabBar(
+              tabs: [
+                Tab(text: "Profil"),
+                Tab(text: "Lista")
+              ],
+            ),
+          ),
+          body: StreamBuilder<List<Group>>(
+            stream: _groupsStream,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return TabBarView(
+                  children: [
+                    _isEditModeEnabled
+                        ? _editModeEnabled()
+                        : _editModeDisabled(),
+                    GroupListTemplate(
+                      groups: widget._classesType.groups,
+                    )
+                  ],
+                );
+              } else {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            },
+          )),
+    );
   }
 
   Widget _editModeEnabled() {
@@ -146,8 +177,6 @@ class _DetailClassesTypeState extends State<DetailClassesType> {
             '${Strings.PRICE_FOR_MONTH}: ${widget._classesType.priceForMonth.toString()}${Strings.CURRENCY}'),
         Text(
             '${Strings.PRICE_FOR_EACH}: ${widget._classesType.priceForEach}${Strings.CURRENCY}'),
-        const Text('${Strings.GROUPS}:'),
-        GroupListTemplate(groups: widget._classesType.groups,)
       ],
     );
   }
@@ -156,5 +185,10 @@ class _DetailClassesTypeState extends State<DetailClassesType> {
   void initState() {
     super.initState();
     _store = objectBox.store;
+    _groupsStream = _store
+        .box<Group>()
+        .query()
+        .watch(triggerImmediately: true)
+        .map((query) => query.find());
   }
 }
