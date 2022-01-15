@@ -3,7 +3,7 @@ import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/classes.dart';
-import 'package:record_of_classes/widgets/templates/lists/all_classes_template.dart';
+import 'package:record_of_classes/widgets/templates/lists/all_classes_list_template.dart';
 
 class ClassesMainPage extends StatefulWidget {
   const ClassesMainPage({Key? key}) : super(key: key);
@@ -27,7 +27,7 @@ class _ClassesMainPageState extends State<ClassesMainPage> {
               child: Column(
                 children: [
                   Text('${Strings.NUMBER_OF_CLASSES}: ${snapshot.data!.length}'),
-                  AllClassesTemplate(classes: snapshot.data!),
+                  AllClassesListTemplate(classes: snapshot.data!),
                 ],
               ),
             );
