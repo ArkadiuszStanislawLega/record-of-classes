@@ -52,10 +52,23 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
                 itemBuilder: (context, index){
-              return Text(widget._classes.attendances.elementAt(index).student.target!.introduceYourself());
+              return _attendanceUneditedItemList(widget._classes.attendances.elementAt(index));
             })
           ],
         ),
+      ),
+    );
+  }
+
+
+  Widget _attendanceUneditedItemList(Attendance attendance){
+    return ListTile(
+      tileColor: attendance.isPresent ? Colors.green : Colors.orange,
+      title: Text(attendance.student.target!.introduceYourself()),
+      subtitle: Row(
+        children: [
+          Text(attendance.student.target!.account.target!.bills.skipWhile((bill) => bill.isPaid).length.toString())
+        ],
       ),
     );
   }
@@ -69,28 +82,32 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
           color: Colors.green,
           icon: Icons.check,
           onTap: () {
-            setState(() {
-              Store store = objectBox.store;
-              Attendance attendance = Attendance()
-                ..student.target = student
-                ..classes.target = widget._classes
-                ..isPresent = true;
-              widget._classes.attendances.add(attendance);
-              Bill bill = Bill()
-              ..student.target = student.account.target
-              ..classes.target = widget._classes
-              ..isPaid = false
-              ..price = widget._classes.group.target!.classesType.target!.priceForEach;
-              student.account.target!.bills.add(bill);
-              store.box<Bill>().put(bill);
-              store.box<Classes>().put(widget._classes);
-              store.box<Attendance>().put(attendance);
-              store.box<Student>().put(student);
-            });
+            _updateDatabase(student);
           },
         ),
       ],
       child: ListTile(title: Text(student.introduceYourself()), onTap: () {}),
     );
+  }
+
+  void _updateDatabase(Student student){
+    setState(() {
+      Store store = objectBox.store;
+      Attendance attendance = Attendance()
+        ..student.target = student
+        ..classes.target = widget._classes
+        ..isPresent = true;
+      widget._classes.attendances.add(attendance);
+      Bill bill = Bill()
+        ..student.target = student.account.target
+        ..classes.target = widget._classes
+        ..isPaid = false
+        ..price = widget._classes.group.target!.classesType.target!.priceForEach;
+      student.account.target!.bills.add(bill);
+      store.box<Bill>().put(bill);
+      store.box<Classes>().put(widget._classes);
+      store.box<Attendance>().put(attendance);
+      store.box<Student>().put(student);
+    });
   }
 }
