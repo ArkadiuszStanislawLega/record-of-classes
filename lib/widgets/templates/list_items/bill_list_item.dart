@@ -34,7 +34,8 @@ class _BillListItem extends State<BillListItem> {
             onTap: _setIsUnpaidInDatabase),
       ],
       child: ListTile(
-        title: Text('${widget.bill.classes.target!.group.target!.name}'),
+        title: Text(
+            widget.bill.student.target!.student.target!.introduceYourself()),
         subtitle: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -42,8 +43,7 @@ class _BillListItem extends State<BillListItem> {
               children: [
                 Text(_formatDate()),
                 Text('${widget.bill.price.toString()}zł'),
-                Text(widget.bill.student.target!.student.target!
-                    .introduceYourself())
+                Text(widget.bill.classes.target!.group.target!.name),
               ],
             ),
             Icon(
@@ -58,21 +58,19 @@ class _BillListItem extends State<BillListItem> {
   }
 
   String _formatDate() {
-    String date = widget.bill.classes.target!.dateTime.day < 10
-        ? '0${widget.bill.classes.target!.dateTime.day}'
-        : widget.bill.classes.target!.dateTime.day.toString();
-    date += '.';
-    date += widget.bill.classes.target!.dateTime.month < 10
-        ? '0${widget.bill.classes.target!.dateTime.month}'
-        : widget.bill.classes.target!.dateTime.month.toString();
-    date += '.';
-    date += widget.bill.classes.target!.dateTime.year.toString();
+    int day = widget.bill.classes.target!.dateTime.day,
+        month = widget.bill.classes.target!.dateTime.month,
+        year = widget.bill.classes.target!.dateTime.year,
+        hour = widget.bill.classes.target!.dateTime.hour,
+        minute = widget.bill.classes.target!.dateTime.minute;
 
-    String time = widget.bill.classes.target!.dateTime.hour.toString();
-    time += ':';
-    time += widget.bill.classes.target!.dateTime.minute.toString();
+    String strDay = day < 10 ? '0$day' : day.toString(),
+        strMonth = month < 10 ? '0$month' : month.toString(),
+        strYear = year.toString(),
+        strHour = hour.toString(),
+        strMinute = minute == 0 ? '${minute}0' : minute.toString();
 
-    return '$date $time';
+    return '$strDay.$strMonth.$strYear $strHour:$strMinute';
   }
 
   void _setIsPaidInDatabase() {
