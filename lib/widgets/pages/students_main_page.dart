@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:record_of_classes/widgets/pages/create/create_student_page.dart';
 import 'package:record_of_classes/widgets/templates/create/create_student_template.dart';
 import 'package:record_of_classes/widgets/templates/lists/students_list_template.dart';
 

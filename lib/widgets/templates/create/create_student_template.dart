@@ -43,12 +43,6 @@ class CreateStudentTemplate extends StatelessWidget {
     _clearFields();
   }
 
-  void _clearFields() {
-    _personAge = '';
-    _ageController.clear();
-    _createPersonTemplate.clearTemplate();
-  }
-
   void _createNewPerson() {
     _createdPerson = _createPersonTemplate.getPerson();
     if (_isValuesAreValid()) {
@@ -62,14 +56,20 @@ class CreateStudentTemplate extends StatelessWidget {
   bool _isValuesAreValid() =>
       int.parse(_personAge) > 0 && _createdPerson.name != '';
 
+  void _addToDatabase() {
+    Store store;
+    store = objectBox.store;
+    store.box<Person>().put(_createdPerson!);
+  }
+
   void _infoCreatedStudent(BuildContext context) => SnackBarInfoTemplate(
       context: context,
       message:
           '${Strings.CREATE_STUDENT}: ${_createdStudent.introduceYourself()}!');
 
-  void _addToDatabase() {
-    Store store;
-    store = objectBox.store;
-    store.box<Person>().put(_createdPerson!);
+  void _clearFields() {
+    _personAge = '';
+    _ageController.clear();
+    _createPersonTemplate.clearTemplate();
   }
 }

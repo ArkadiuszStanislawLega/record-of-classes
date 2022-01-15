@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/constants/strings.dart';
@@ -8,16 +7,16 @@ import 'package:record_of_classes/models/teacher.dart';
 import 'package:record_of_classes/widgets/templates/add_new_classes_type_template.dart';
 import 'package:record_of_classes/widgets/templates/lists/classes_type_list_template.dart';
 
-class ClassTypePage extends StatefulWidget {
-  const ClassTypePage({Key? key}) : super(key: key);
+class ClassesTypeMainPage extends StatefulWidget {
+  const ClassesTypeMainPage({Key? key}) : super(key: key);
 
   @override
-  _ClassTypePageState createState() => _ClassTypePageState();
+  _ClassesTypeMainPageState createState() => _ClassesTypeMainPageState();
 }
 
-class _ClassTypePageState extends State<ClassTypePage> {
+class _ClassesTypeMainPageState extends State<ClassesTypeMainPage> {
   final AddNewClassesTypeTemplate _addNewClassesTypeTemplate =
-      AddNewClassesTypeTemplate();
+  AddNewClassesTypeTemplate();
   late Store _store;
   late Stream<List<ClassesType>> _classesTypesStream;
 

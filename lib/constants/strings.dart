@@ -36,6 +36,7 @@ class Strings {
       FAIL_TO_ADD_NEW_PARENT_TO_DATABASE =
           'Nie udało się dodać nowego rodzica do bazy danych.',
       FLAT_NUMBER = 'Numer mieszkania',
+      FINANCE = 'Finanse',
       GROUP_NAME = 'Nazwa grupy',
       GROUPS = 'Grupy',
       GROUP_OF_CLASSES = 'Grupa zajęć',
@@ -58,6 +59,7 @@ class Strings {
       REMOVED = 'usunięta',
       SIBLINGS = 'Rodzeństwo',
       SUCCESFULLY_ADDED = 'Pomyślnie dodano',
+      STUDENT_MANAGEMENT = 'Zarząrzanie uczniami',
       STREET = 'Ulica',
       TO_DATABASE = 'do bazy danych',
       THEY_ARENT_SIBLINGS = 'nie są już rodzeństwem!',

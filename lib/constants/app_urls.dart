@@ -6,12 +6,15 @@ class AppUrls {
       CREATE_PARENT = '/create_parent',
       DETAIL_PARENT = '/detail_parent',
       ADD_SIBLING = '/add_sibling',
-      CLASS_TYPE_MAIN = '/class_type_main',
       DETAIL_CLASSES_TYPE = '/detail_classes_type',
       CREATE_GROUP = '/create_group',
       DETAIL_GROUP = '/detail_group',
       ADD_STUDENT_TO_GROUP = '/add_student_to_group',
       ADD_CLASSES_TO_GROUP = '/add_classes_to_group',
       DETAIL_CLASSES = '/detail_classes',
-      STUDENS_MAIN_PAGE = '/students_main_page';
+      STUDENS_MAIN_PAGE = '/students_main_page',
+      CLASSES_MAIN_PAGE = '/classes_main_page',
+      CLASSES_TYPE_MAIN_PAGE = '/classes_type_main_page',
+      FINANCE_MAIN_PAGE = '/finance_main_page',
+      GROUPS_MAIN_PAGE = '/groups_main_page';
 }
