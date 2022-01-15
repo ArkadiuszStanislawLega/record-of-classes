@@ -44,6 +44,8 @@ class Strings {
       NUMBER_OF_CHILDREN = 'Ilość dzieci',
       OK = 'OK',
       PARENTS = 'Rodzice',
+      PAID = 'Zapłacono',
+      UNPAID = 'Nie zapłacono',
       PERSONS_IN_GROUP = 'Osoby w grupie',
       PHONE_NUMBER = 'Numer telefonu',
       PHONE_NAME = 'Nazwa kontaktu',
