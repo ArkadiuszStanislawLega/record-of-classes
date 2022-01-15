@@ -33,25 +33,33 @@ class _BillListItem extends State<BillListItem> {
             icon: Icons.close_outlined,
             onTap: _setIsUnpaidInDatabase),
       ],
-      child: ListTile(
-        title: Text(
-            widget.bill.student.target!.student.target!.introduceYourself()),
-        subtitle: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              children: [
-                Text(_formatDate()),
-                Text('${widget.bill.price.toString()}zł'),
-                Text(widget.bill.classes.target!.group.target!.name),
-              ],
-            ),
-            Icon(
-                widget.bill.isPaid
-                    ? Icons.check_box_outlined
-                    : Icons.check_box_outline_blank,
-                color: widget.bill.isPaid ? Colors.green : Colors.black),
-          ],
+      child: Card(
+        shape:  RoundedRectangleBorder(
+          side: const BorderSide(color: Colors.white70, width: 1),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        margin: const EdgeInsets.symmetric(vertical: 8.0),
+        elevation: 7,
+        child: ListTile(
+          title: Text(
+              widget.bill.student.target!.student.target!.introduceYourself()),
+          subtitle: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                children: [
+                  Text(_formatDate()),
+                  Text('${widget.bill.price.toString()}${Strings.CURRENCY}'),
+                  Text(widget.bill.classes.target!.group.target!.name),
+                ],
+              ),
+              Icon(
+                  widget.bill.isPaid
+                      ? Icons.check_box_outlined
+                      : Icons.check_box_outline_blank,
+                  color: widget.bill.isPaid ? Colors.green : Colors.black),
+            ],
+          ),
         ),
       ),
     );

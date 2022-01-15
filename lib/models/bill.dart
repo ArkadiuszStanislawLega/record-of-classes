@@ -10,4 +10,9 @@ class Bill {
   late double price;
   final classes = ToOne<Classes>();
   final student = ToOne<Account>();
+
+  @override
+  String toString() {
+    return 'Bill{id: $id, isPaid: $isPaid, price: $price, classes: $classes, student: $student}';
+  }
 }
