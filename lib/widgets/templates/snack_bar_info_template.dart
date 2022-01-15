@@ -6,7 +6,7 @@ class SnackBarInfoTemplate {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
-        duration: const Duration(milliseconds: 1500),
+        duration: const Duration(milliseconds: 3000),
         width: 280.0,
         // Width of the SnackBar.
         padding: const EdgeInsets.symmetric(
