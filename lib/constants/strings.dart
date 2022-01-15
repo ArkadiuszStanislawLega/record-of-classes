@@ -45,6 +45,7 @@ class Strings {
       LIST = 'Lista',
       NAME_OF_CLASSES_TYPE = 'Nazwa typu zajęć',
       NUMBER_OF_CHILDREN = 'Ilość dzieci',
+      NUMBER_OF_GROUPS = 'Ilość grup',
       OK = 'OK',
       PARENTS = 'Rodzice',
       PAID = 'Zapłacono',

@@ -49,7 +49,7 @@ class _StartPageViewView extends State<StartPageView> {
           ),
           ElevatedButton(
             onPressed: _navigateToTest,
-            child: const Text(Strings.CLASSES),
+            child: const Text('Test'),
           )
         ],
       ),

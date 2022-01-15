@@ -42,9 +42,8 @@ class _BillListItem extends State<BillListItem> {
               children: [
                 Text(_formatDate()),
                 Text('${widget.bill.price.toString()}zł'),
-                //@TODO: Poprawić to poniżej.
-                // Text(widget.bill.student.target!.student.target!
-                //     .introduceYourself())
+                Text(widget.bill.student.target!.student.target!
+                    .introduceYourself())
               ],
             ),
             Icon(

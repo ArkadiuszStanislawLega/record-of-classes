@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/constants/app_urls.dart';
 import 'package:record_of_classes/models/account.dart';
+import 'package:record_of_classes/models/bill.dart';
+import 'package:record_of_classes/models/classes.dart';
+import 'package:record_of_classes/models/classes_type.dart';
+import 'package:record_of_classes/models/group.dart';
 import 'package:record_of_classes/models/parent.dart';
 import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/models/teacher.dart';
@@ -49,7 +53,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   objectBox = await ObjectBox.create();
   _putTeacherToDb();
-  clearDb();
+  // clearDb();
   // clearDb();
   // printDataFromDB();
   // objectBox.store.box<Account>().getAll().forEach((element) {
@@ -75,6 +79,10 @@ void clearDb() {
   objectBox.store.box<Parent>().removeAll();
   objectBox.store.box<Account>().removeAll();
   objectBox.store.box<Phone>().removeAll();
+  objectBox.store.box<Group>().removeAll();
+  objectBox.store.box<Classes>().removeAll();
+  objectBox.store.box<ClassesType>().removeAll();
+  objectBox.store.box<Bill>().removeAll();
 }
 
 void printDataFromDB() {
