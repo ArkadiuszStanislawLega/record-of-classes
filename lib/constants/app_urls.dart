@@ -12,5 +12,6 @@ class AppUrls {
       DETAIL_GROUP = '/detail_group',
       ADD_STUDENT_TO_GROUP = '/add_student_to_group',
       ADD_CLASSES_TO_GROUP = '/add_classes_to_group',
-      DETAIL_CLASSES = '/detail_classes';
+      DETAIL_CLASSES = '/detail_classes',
+      STUDENS_MAIN_PAGE = '/students_main_page';
 }

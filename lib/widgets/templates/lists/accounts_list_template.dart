@@ -28,26 +28,24 @@ class _AccountListTemplate extends State<AccountListTemplate> {
   Widget build(BuildContext context) {
     account = widget.account;
 
-    return Center(
-      child: SizedBox(
-        child: StreamBuilder<List<Bill>>(
-          stream: _billsStream,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              var bills = widget.account.target!.bills;
-              return ListView.builder(
-                itemCount: bills.length,
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return BillListItem(bill: bills.elementAt(index));
-                },
-              );
-            } else {
-              return const Center(child: CircularProgressIndicator());
-            }
-          },
-        ),
+    return SizedBox(
+      child: StreamBuilder<List<Bill>>(
+        stream: _billsStream,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            var bills = widget.account.target!.bills;
+            return ListView.builder(
+              itemCount: bills.length,
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                return BillListItem(bill: bills.elementAt(index));
+              },
+            );
+          } else {
+            return const Center(child: CircularProgressIndicator());
+          }
+        },
       ),
     );
   }

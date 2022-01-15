@@ -19,6 +19,7 @@ import 'package:record_of_classes/widgets/pages/detail/group_detail_page.dart';
 import 'package:record_of_classes/widgets/pages/detail/parent_detail_page.dart';
 import 'package:record_of_classes/widgets/pages/start_page.dart';
 import 'package:record_of_classes/widgets/pages/detail/student_detail_page.dart';
+import 'package:record_of_classes/widgets/pages/students_main_page.dart';
 
 import 'models/person.dart';
 
@@ -135,7 +136,8 @@ class _RecordOfClassesApp extends State<RecordOfClassesApp> {
         AppUrls.DETAIL_GROUP: (context) => DetailGroupPage(),
         AppUrls.ADD_STUDENT_TO_GROUP: (context) => AddStudentToGroupPage(),
         AppUrls.ADD_CLASSES_TO_GROUP: (context) => AddClassesToGroup(),
-        AppUrls.DETAIL_CLASSES: (context) => ClassesDetailPage()
+        AppUrls.DETAIL_CLASSES: (context) => ClassesDetailPage(),
+        AppUrls.STUDENS_MAIN_PAGE: (context) => StudentsMainPage(),
       },
     );
   }

@@ -1,6 +1,7 @@
 class Strings {
   static const String NAME = 'Imię',
       SURNAME = 'Nazwisko',
+      ABSENT = 'Nieobecny',
       AGE = 'Wiek',
       ADD = 'Dodaj',
       BILLS = 'Rachunki',
@@ -11,6 +12,7 @@ class Strings {
       ADD_SIBLING = 'Dodaj rodzeństwo',
       ADD_GROUP = 'Dodaj grupę',
       ADD_PARTICIPANTS = 'Dodaj uczestników',
+      ATTENDANCE_LIST = 'Lista obecności',
       CLASSES_ADDRESS = 'Adres zajęć',
       CLASSES_TYPE = 'Typ zajęć',
       AND = 'i',
@@ -45,6 +47,7 @@ class Strings {
       OK = 'OK',
       PARENTS = 'Rodzice',
       PAID = 'Zapłacono',
+      PRESENT = 'Obecny',
       UNPAID = 'Nie zapłacono',
       PERSONS_IN_GROUP = 'Osoby w grupie',
       PHONE_NUMBER = 'Numer telefonu',
@@ -63,5 +66,6 @@ class Strings {
       THEY_ARENT_FAMILY = 'nie są już rodziną',
       YEARS = 'lat',
       CLASSES_TYPE_KEY = 'classes_type',
-      STUDENT_KEY = 'student';
+      STUDENT_KEY = 'student',
+      WRITTEN = 'Zapisani';
 }

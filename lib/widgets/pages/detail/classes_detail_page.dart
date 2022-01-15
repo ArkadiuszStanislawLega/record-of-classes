@@ -26,7 +26,7 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
         appBar: AppBar(
           title: Text(widget._classes.group.target!.name),
           bottom: const TabBar(
-            tabs: [Tab(text: 'Uczniowie'), Tab(text: 'List obecności')],
+            tabs: [Tab(text: Strings.WRITTEN), Tab(text: Strings.ATTENDANCE_LIST)],
           ),
         ),
         body: TabBarView(
@@ -78,7 +78,7 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
       actionPane: const SlidableDrawerActionPane(),
       secondaryActions: [
         IconSlideAction(
-          caption: Strings.ADD,
+          caption: Strings.PRESENT,
           color: Colors.green,
           icon: Icons.check,
           onTap: () {
