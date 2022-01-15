@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/constants/app_urls.dart';
 import 'package:record_of_classes/models/account.dart';
@@ -14,7 +13,6 @@ import 'package:record_of_classes/widgets/pages/classes_main_page.dart';
 import 'package:record_of_classes/widgets/pages/classes_type_main_page.dart';
 import 'package:record_of_classes/widgets/pages/create/create_group_page.dart';
 import 'package:record_of_classes/widgets/pages/create/create_parent_page.dart';
-import 'package:record_of_classes/widgets/pages/create/create_student_page.dart';
 import 'package:record_of_classes/widgets/pages/detail/classes_type_detail_page.dart';
 import 'package:record_of_classes/widgets/pages/detail/group_detail_page.dart';
 import 'package:record_of_classes/widgets/pages/detail/parent_detail_page.dart';
@@ -23,6 +21,7 @@ import 'package:record_of_classes/widgets/pages/groups_main_page.dart';
 import 'package:record_of_classes/widgets/pages/start_page.dart';
 import 'package:record_of_classes/widgets/pages/detail/student_detail_page.dart';
 import 'package:record_of_classes/widgets/pages/students_main_page.dart';
+import 'package:record_of_classes/widgets/test.dart';
 
 import 'models/person.dart';
 
@@ -50,7 +49,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   objectBox = await ObjectBox.create();
   _putTeacherToDb();
-
+  clearDb();
   // clearDb();
   // printDataFromDB();
   // objectBox.store.box<Account>().getAll().forEach((element) {
@@ -59,18 +58,16 @@ Future<void> main() async {
   runApp(const RecordOfClassesApp());
 }
 
-void _putTeacherToDb(){
+void _putTeacherToDb() {
   var teacherObjectBox = objectBox.store.box<Teacher>();
   var teachers = teacherObjectBox.getAll();
-  if(teachers.isEmpty){
+  if (teachers.isEmpty) {
     var person = Person(name: 'Monika', surname: 'Łęga');
-    var teacher = Teacher()
-      ..person.target = person;
+    var teacher = Teacher()..person.target = person;
     teacherObjectBox.put(teacher);
     print('Dodano nauczyciela ${teacherObjectBox.get(1)}');
   }
 }
-
 
 void clearDb() {
   objectBox.store.box<Person>().removeAll();
@@ -79,7 +76,6 @@ void clearDb() {
   objectBox.store.box<Account>().removeAll();
   objectBox.store.box<Phone>().removeAll();
 }
-
 
 void printDataFromDB() {
   print('Persons:');
@@ -128,22 +124,22 @@ class _RecordOfClassesApp extends State<RecordOfClassesApp> {
       routes: {
         AppUrls.EMPTY: (context) => const StartPageView(),
         AppUrls.HOME: (context) => const StartPageView(),
-        AppUrls.CREATE_STUDENT: (context) => const CreateStudentPage(),
         AppUrls.DETAIL_STUDENT: (context) => const StudentDetailPage(),
         AppUrls.CREATE_PARENT: (context) => const CreateParentPage(),
         AppUrls.DETAIL_PARENT: (context) => const ParentDetailPage(),
-        AppUrls.ADD_SIBLING: (context) => AddSiblingsToStudentPage(),
+        AppUrls.ADD_SIBLING: (context) => const AddSiblingsToStudentPage(),
         AppUrls.DETAIL_CLASSES_TYPE: (context) => DetailClassesType(),
-        AppUrls.CREATE_GROUP: (context) => CreateGroupPage(),
-        AppUrls.DETAIL_GROUP: (context) => DetailGroupPage(),
-        AppUrls.ADD_STUDENT_TO_GROUP: (context) => AddStudentToGroupPage(),
+        AppUrls.CREATE_GROUP: (context) => const CreateGroupPage(),
+        AppUrls.DETAIL_GROUP: (context) => const DetailGroupPage(),
+        AppUrls.ADD_STUDENT_TO_GROUP: (context) => const AddStudentToGroupPage(),
         AppUrls.ADD_CLASSES_TO_GROUP: (context) => AddClassesToGroup(),
         AppUrls.DETAIL_CLASSES: (context) => ClassesDetailPage(),
-        AppUrls.STUDENS_MAIN_PAGE: (context) => StudentsMainPage(),
-        AppUrls.CLASSES_MAIN_PAGE: (context) => ClassesMainPage(),
-        AppUrls.CLASSES_TYPE_MAIN_PAGE: (context) => ClassesTypeMainPage(),
-        AppUrls.FINANCE_MAIN_PAGE: (context) => FinanceMainPage(),
-        AppUrls.GROUPS_MAIN_PAGE: (context) => GroupsMainPage(),
+        AppUrls.STUDENS_MAIN_PAGE: (context) => const StudentsMainPage(),
+        AppUrls.CLASSES_MAIN_PAGE: (context) => const ClassesMainPage(),
+        AppUrls.CLASSES_TYPE_MAIN_PAGE: (context) => const ClassesTypeMainPage(),
+        AppUrls.FINANCE_MAIN_PAGE: (context) => const FinanceMainPage(),
+        AppUrls.GROUPS_MAIN_PAGE: (context) => const GroupsMainPage(),
+        '/test' : (context) => Test()
       },
     );
   }

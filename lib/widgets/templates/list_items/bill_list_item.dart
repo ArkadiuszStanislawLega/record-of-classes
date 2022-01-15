@@ -23,34 +23,60 @@ class _BillListItem extends State<BillListItem> {
       actionPane: const SlidableDrawerActionPane(),
       secondaryActions: [
         IconSlideAction(
-          caption: Strings.PAID,
-          color: Colors.green,
-          icon: Icons.check,
-          onTap: _setIsPaidInDatabase
-        ),
+            caption: Strings.PAID,
+            color: Colors.green,
+            icon: Icons.check,
+            onTap: _setIsPaidInDatabase),
         IconSlideAction(
             caption: Strings.UNPAID,
             color: Colors.orange,
             icon: Icons.close_outlined,
-            onTap: _setIsUnpaidInDatabase
-        ),
+            onTap: _setIsUnpaidInDatabase),
       ],
       child: ListTile(
-        title: Text(widget.bill.classes.target!.group.target!.name),
+        title: Text('${widget.bill.classes.target!.group.target!.name}'),
         subtitle: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text('${widget.bill.price.toString()}zł'),
-            Icon(widget.bill.isPaid ? Icons.check_box_outlined : Icons.check_box_outline_blank,
+            Column(
+              children: [
+                Text(_formatDate()),
+                Text('${widget.bill.price.toString()}zł'),
+                //@TODO: Poprawić to poniżej.
+                // Text(widget.bill.student.target!.student.target!
+                //     .introduceYourself())
+              ],
+            ),
+            Icon(
+                widget.bill.isPaid
+                    ? Icons.check_box_outlined
+                    : Icons.check_box_outline_blank,
                 color: widget.bill.isPaid ? Colors.green : Colors.black),
           ],
         ),
       ),
     );
-
   }
 
-  void _setIsPaidInDatabase(){
+  String _formatDate() {
+    String date = widget.bill.classes.target!.dateTime.day < 10
+        ? '0${widget.bill.classes.target!.dateTime.day}'
+        : widget.bill.classes.target!.dateTime.day.toString();
+    date += '.';
+    date += widget.bill.classes.target!.dateTime.month < 10
+        ? '0${widget.bill.classes.target!.dateTime.month}'
+        : widget.bill.classes.target!.dateTime.month.toString();
+    date += '.';
+    date += widget.bill.classes.target!.dateTime.year.toString();
+
+    String time = widget.bill.classes.target!.dateTime.hour.toString();
+    time += ':';
+    time += widget.bill.classes.target!.dateTime.minute.toString();
+
+    return '$date $time';
+  }
+
+  void _setIsPaidInDatabase() {
     setState(() {
       Store store = objectBox.store;
       widget.bill.isPaid = true;
@@ -58,7 +84,7 @@ class _BillListItem extends State<BillListItem> {
     });
   }
 
-  void _setIsUnpaidInDatabase(){
+  void _setIsUnpaidInDatabase() {
     setState(() {
       Store store = objectBox.store;
       widget.bill.isPaid = false;

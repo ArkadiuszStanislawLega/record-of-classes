@@ -59,7 +59,6 @@ class Strings {
       REMOVED = 'usunięta',
       SIBLINGS = 'Rodzeństwo',
       SUCCESFULLY_ADDED = 'Pomyślnie dodano',
-      STUDENT_MANAGEMENT = 'Zarząrzanie uczniami',
       STREET = 'Ulica',
       TO_DATABASE = 'do bazy danych',
       THEY_ARENT_SIBLINGS = 'nie są już rodzeństwem!',
@@ -69,5 +68,7 @@ class Strings {
       YEARS = 'lat',
       CLASSES_TYPE_KEY = 'classes_type',
       STUDENT_KEY = 'student',
-      WRITTEN = 'Zapisani';
+      STUDENT_MANAGEMENT = 'Zarządzanie uczniami',
+      WRITTEN = 'Zapisani',
+      STUDENTS_LIST = 'Lista uczni';
 }

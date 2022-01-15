@@ -46,11 +46,17 @@ class _StartPageViewView extends State<StartPageView> {
           ElevatedButton(
             onPressed: _navigatorClassesMainPage,
             child: const Text(Strings.CLASSES),
+          ),
+          ElevatedButton(
+            onPressed: _navigateToTest,
+            child: const Text(Strings.CLASSES),
           )
         ],
       ),
     );
   }
+
+  void _navigateToTest() => Navigator.pushNamed(context, '/test');
 
   void _navigateToStudentsMainPage() =>
       Navigator.pushNamed(context, AppUrls.STUDENS_MAIN_PAGE,);

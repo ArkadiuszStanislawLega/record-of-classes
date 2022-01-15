@@ -3,6 +3,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/main.dart';
+import 'package:record_of_classes/models/account.dart';
 import 'package:record_of_classes/models/person.dart';
 import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/widgets/templates/snack_bar_info_template.dart';
@@ -50,9 +51,12 @@ class _StudentsListItemTemplate extends State<StudentsListItemTemplate> {
   }
 
   void _updateDatabase() {
+    _removeAccountFromDb();
     _removeStudentFromDb();
     _removePersonFromDb();
   }
+
+  void _removeAccountFromDb() => widget._store.box<Account>().remove(widget.student.account.targetId);
 
   void _removeStudentFromDb() =>
       widget._store.box<Student>().remove(widget.student.id);

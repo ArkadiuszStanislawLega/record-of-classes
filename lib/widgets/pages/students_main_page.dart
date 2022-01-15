@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/widgets/templates/create/create_student_template.dart';
 import 'package:record_of_classes/widgets/templates/lists/students_list_template.dart';
 
@@ -15,25 +16,18 @@ class _StudentsMainPageState extends State<StudentsMainPage> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        appBar: AppBar(
-            title: Text('List uczniów'),
+          appBar: AppBar(
+            title: const Text(Strings.STUDENT_MANAGEMENT),
             bottom: const TabBar(
               tabs: [
-                Tab(
-                  text: 'Nowy uczeń',
-                ),
-                Tab(
-                  text: 'Lista czuniów',
-                )
+                Tab(text: Strings.CREATE_STUDENT),
+                Tab(text: Strings.STUDENTS_LIST),
               ],
-            )),
-        body: TabBarView(
-          children: [
-            CreateStudentTemplate(),
-            const StudentsListTemplate()
-          ],
-        )
-      ),
+            ),
+          ),
+          body: TabBarView(
+            children: [CreateStudentTemplate(), const StudentsListTemplate()],
+          )),
     );
   }
 }

@@ -13,6 +13,7 @@ class CreateStudentTemplate extends StatelessWidget {
   String _personAge = '';
   late Student _createdStudent;
   late Person _createdPerson;
+  late Account _account;
   final _createPersonTemplate = CreatePersonTemplate();
   final TextEditingController _ageController = TextEditingController();
 
@@ -47,7 +48,9 @@ class CreateStudentTemplate extends StatelessWidget {
     _createdPerson = _createPersonTemplate.getPerson();
     if (_isValuesAreValid()) {
       _createdStudent = Student(age: int.parse(_personAge));
-      _createdStudent.account.target = Account();
+      _account = Account()
+      ..student.target = _createdStudent;
+      _createdStudent.account.target = _account;
       _createdPerson.student.target = _createdStudent;
       _createdStudent.person.target = _createdPerson;
     }
@@ -59,7 +62,7 @@ class CreateStudentTemplate extends StatelessWidget {
   void _addToDatabase() {
     Store store;
     store = objectBox.store;
-    store.box<Person>().put(_createdPerson!);
+    store.box<Person>().put(_createdPerson);
   }
 
   void _infoCreatedStudent(BuildContext context) => SnackBarInfoTemplate(
