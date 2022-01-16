@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:intl/intl.dart';
 import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/main.dart';
@@ -7,6 +8,7 @@ import 'package:record_of_classes/models/attendance.dart';
 import 'package:record_of_classes/models/bill.dart';
 import 'package:record_of_classes/models/classes.dart';
 import 'package:record_of_classes/models/student.dart';
+import 'package:record_of_classes/widgets/templates/one_row_property_template.dart';
 
 class ClassesDetailPage extends StatefulWidget {
   ClassesDetailPage({Key? key}) : super(key: key);
@@ -19,119 +21,169 @@ class ClassesDetailPage extends StatefulWidget {
 class _ClassesDetailPageState extends State<ClassesDetailPage> {
   late Store _store;
   late Stream<List<Classes>> _classesStream;
+  bool _isWrittenOpen = true;
+
+  SliverAppBar _customAppBar() {
+    return SliverAppBar(
+      bottom: PreferredSize(
+        preferredSize: const Size(0, 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            DecoratedBox(
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30)),
+                boxShadow: [
+                  BoxShadow(
+                    spreadRadius: 3,
+                    color: _isWrittenOpen ? Colors.black12 : Colors.transparent,
+                    offset: const Offset(0, -3),
+                    blurRadius: 10,
+                  )
+                ],
+              ),
+              child: TextButton(
+                onPressed: () {
+                  setState(() {
+                    _isWrittenOpen = true;
+                  });
+                },
+                child: const Text(
+                  'Zapisani',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ),
+            DecoratedBox(
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30)),
+                boxShadow: [
+                  BoxShadow(
+                    spreadRadius: 3,
+                    color: !_isWrittenOpen ? Colors.black12: Colors.transparent,
+                    offset: const Offset(0, -3),
+                    blurRadius: 10,
+                  )
+                ],
+              ),
+              child: TextButton(
+                onPressed: () {
+                  setState(() {
+                    _isWrittenOpen = false;
+                  });
+                },
+                child: const Text(
+                  'Obecni',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+      stretch: true,
+      onStretchTrigger: () {
+        // Function callback for stretch
+        return Future<void>.value();
+      },
+      expandedHeight: 200.0,
+      flexibleSpace: FlexibleSpaceBar(
+        stretchModes: const <StretchMode>[
+          StretchMode.zoomBackground,
+          StretchMode.blurBackground,
+          StretchMode.fadeTitle,
+        ],
+        centerTitle: true,
+        background: Stack(
+          fit: StackFit.expand,
+          children: <Widget>[
+            SafeArea(
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 50.0, vertical: 20.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text(
+                        widget._classes.group.target!.name,
+                        style:
+                            const TextStyle(fontSize: 25, color: Colors.white),
+                      ),
+                    ),
+                    OneRowPropertyTemplate(
+                      title: 'Data zajęć:',
+                      value: FormatDate(widget._classes.dateTime),
+                    ),
+                    OneRowPropertyTemplate(
+                      title: 'Ilość uczestników:',
+                      value: widget._classes.attendances.length.toString(),
+                    ),
+                    OneRowPropertyTemplate(
+                        title: 'Obecnych:',
+                        value: widget._classes.attendances.length.toString()),
+                  ],
+                ),
+              ),
+            ),
+            const DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment(0.0, 0.5),
+                  end: Alignment.center,
+                  colors: <Color>[Colors.black12, Colors.transparent],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     widget._classes = ModalRoute.of(context)!.settings.arguments as Classes;
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        body: StreamBuilder<List<Classes>>(
-          stream: _classesStream,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return CustomScrollView(
-                physics: const BouncingScrollPhysics(
-                    parent: AlwaysScrollableScrollPhysics()),
-                slivers: <Widget>[
-                  SliverAppBar(
-                    stretch: true,
-                    onStretchTrigger: () {
-                      // Function callback for stretch
-                      return Future<void>.value();
-                    },
-                    expandedHeight: 200.0,
-                    flexibleSpace: FlexibleSpaceBar(
-                      stretchModes: const <StretchMode>[
-                        StretchMode.zoomBackground,
-                        StretchMode.blurBackground,
-                        StretchMode.fadeTitle,
-                      ],
-                      centerTitle: true,
-                      title: const Text(Strings.FINANCE),
-                      background: Stack(
-                        fit: StackFit.expand,
-                        children: <Widget>[
-                          SafeArea(
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 50.0, vertical: 20.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  _oneRow('${Strings.PAID_CLASSES}:',
-                                      _paid.length.toString()),
-                                  _oneRow('${Strings.UNPAID_CLASSES}:',
-                                      _unpaid.length.toString()),
-                                  _oneRow('${Strings.TOTAL_PAID}:',
-                                      '${_paidPrice.toStringAsFixed(2)} ${Strings.CURRENCY}'),
-                                  _oneRow('${Strings.TOTAL_UNPAID}:',
-                                      '${_unpaidPrice.toStringAsFixed(2)} ${Strings.CURRENCY}'),
-                                ],
-                              ),
-                            ),
+    return StreamBuilder<List<Classes>>(
+      stream: _classesStream,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return DefaultTabController(
+            length: 2,
+            child: Scaffold(
+              body: CustomScrollView(
+                slivers: [
+                  _customAppBar(),
+                  _isWrittenOpen
+                      ? SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                            (BuildContext context, int index) {
+                              return _attendanceItemList(widget
+                                  ._classes.group.target!.students
+                                  .elementAt(index));
+                            },
+                            childCount:
+                                widget._classes.group.target!.students.length,
                           ),
-                          const DecoratedBox(
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                begin: Alignment(0.0, 0.5),
-                                end: Alignment.center,
-                                colors: <Color>[
-                                  Colors.black12,
-                                  Colors.transparent
-                                ],
-                              ),
-                            ),
+                        )
+                      : SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                            (BuildContext context, int index) {
+                              return _attendanceUneditedItemList(
+                                  widget._classes.attendances.elementAt(index));
+                            },
+                            childCount: widget._classes.attendances.length,
                           ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                      (BuildContext context, int index) {
-                        return BillListItem(
-                            bill: _isPaidFilter
-                                ? _paid.elementAt(index)
-                                : _unpaid.elementAt(index));
-                      },
-                      childCount: _isPaidFilter
-                          ? _paid.length
-                          : _unpaid.length, // 1000 list items
-                    ),
-                  ),
+                        ),
                 ],
-              );
-            } else {
-              return const Center(child: CircularProgressIndicator());
-            }
-          },
-        ),
-
-        //
-        //   TabBarView(
-        //     children: [
-        //       ListView.builder(
-        //         itemCount: widget._classes.group.target!.students.length,
-        //         scrollDirection: Axis.vertical,
-        //         shrinkWrap: true,
-        //         itemBuilder: (context, index) {
-        //           return _attendanceItemList(
-        //               widget._classes.group.target!.students.elementAt(index));
-        //         },
-        //       ),
-        //       ListView.builder(
-        //           itemCount: widget._classes.attendances.length,
-        //           scrollDirection: Axis.vertical,
-        //           shrinkWrap: true,
-        //           itemBuilder: (context, index) {
-        //             return _attendanceUneditedItemList(
-        //                 widget._classes.attendances.elementAt(index));
-        //           })
-        //     ],
-        //   ),
-        // ),
-      ),
+              ),
+            ),
+          );
+        } else {
+          return const Center(child: CircularProgressIndicator());
+        }
+      },
     );
   }
 

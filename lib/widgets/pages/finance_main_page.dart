@@ -31,8 +31,7 @@ class _FinanceMainPageState extends State<FinanceMainPage> {
             if (snapshot.hasData) {
               _prepareData(snapshot.data!);
               return CustomScrollView(
-                physics: const BouncingScrollPhysics(
-                    parent: AlwaysScrollableScrollPhysics()),
+                physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
                 slivers: <Widget>[
                   SliverAppBar(
                     actions: [
