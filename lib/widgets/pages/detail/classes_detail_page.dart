@@ -23,6 +23,31 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
   late Stream<List<Classes>> _classesStream;
   bool _isWrittenOpen = true;
 
+  @override
+  Widget build(BuildContext context) {
+    widget._classes = ModalRoute.of(context)!.settings.arguments as Classes;
+    return StreamBuilder<List<Classes>>(
+      stream: _classesStream,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return DefaultTabController(
+            length: 2,
+            child: Scaffold(
+              body: CustomScrollView(
+                slivers: [
+                  _customAppBar(),
+                  _content(),
+                ],
+              ),
+            ),
+          );
+        } else {
+          return const Center(child: CircularProgressIndicator());
+        }
+      },
+    );
+  }
+
   SliverAppBar _customAppBar() {
     return SliverAppBar(
       bottom: PreferredSize(
@@ -30,62 +55,13 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            DecoratedBox(
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30)),
-                boxShadow: [
-                  BoxShadow(
-                    spreadRadius: 3,
-                    color: _isWrittenOpen ? Colors.black12 : Colors.transparent,
-                    offset: const Offset(0, -3),
-                    blurRadius: 10,
-                  )
-                ],
-              ),
-              child: TextButton(
-                onPressed: () {
-                  setState(() {
-                    _isWrittenOpen = true;
-                  });
-                },
-                child: const Text(
-                  'Zapisani',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-            ),
-            DecoratedBox(
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30)),
-                boxShadow: [
-                  BoxShadow(
-                    spreadRadius: 3,
-                    color: !_isWrittenOpen ? Colors.black12: Colors.transparent,
-                    offset: const Offset(0, -3),
-                    blurRadius: 10,
-                  )
-                ],
-              ),
-              child: TextButton(
-                onPressed: () {
-                  setState(() {
-                    _isWrittenOpen = false;
-                  });
-                },
-                child: const Text(
-                  'Obecni',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-            ),
+            _changeListForSignedUpButton(),
+            _changeListForPresentsButton(),
           ],
         ),
       ),
       stretch: true,
-      onStretchTrigger: () {
-        // Function callback for stretch
-        return Future<void>.value();
-      },
+      onStretchTrigger: () => Future<void>.value(),
       expandedHeight: 200.0,
       flexibleSpace: FlexibleSpaceBar(
         stretchModes: const <StretchMode>[
@@ -97,36 +73,7 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
         background: Stack(
           fit: StackFit.expand,
           children: <Widget>[
-            SafeArea(
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 50.0, vertical: 20.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Text(
-                        widget._classes.group.target!.name,
-                        style:
-                            const TextStyle(fontSize: 25, color: Colors.white),
-                      ),
-                    ),
-                    OneRowPropertyTemplate(
-                      title: 'Data zajęć:',
-                      value: FormatDate(widget._classes.dateTime),
-                    ),
-                    OneRowPropertyTemplate(
-                      title: 'Ilość uczestników:',
-                      value: widget._classes.attendances.length.toString(),
-                    ),
-                    OneRowPropertyTemplate(
-                        title: 'Obecnych:',
-                        value: widget._classes.attendances.length.toString()),
-                  ],
-                ),
-              ),
-            ),
+            _propertiesView(),
             const DecoratedBox(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
@@ -142,48 +89,133 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    widget._classes = ModalRoute.of(context)!.settings.arguments as Classes;
-    return StreamBuilder<List<Classes>>(
-      stream: _classesStream,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return DefaultTabController(
-            length: 2,
-            child: Scaffold(
-              body: CustomScrollView(
-                slivers: [
-                  _customAppBar(),
-                  _isWrittenOpen
-                      ? SliverList(
-                          delegate: SliverChildBuilderDelegate(
-                            (BuildContext context, int index) {
-                              return _attendanceItemList(widget
-                                  ._classes.group.target!.students
-                                  .elementAt(index));
-                            },
-                            childCount:
-                                widget._classes.group.target!.students.length,
-                          ),
-                        )
-                      : SliverList(
-                          delegate: SliverChildBuilderDelegate(
-                            (BuildContext context, int index) {
-                              return _attendanceUneditedItemList(
-                                  widget._classes.attendances.elementAt(index));
-                            },
-                            childCount: widget._classes.attendances.length,
-                          ),
-                        ),
-                ],
+  DecoratedBox _changeListForSignedUpButton() {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.only(
+            topRight: Radius.circular(30), topLeft: Radius.circular(30)),
+        boxShadow: [
+          BoxShadow(
+            spreadRadius: 1,
+            color: _isWrittenOpen ? Colors.black12 : Colors.transparent,
+            offset: const Offset(0, -1),
+            blurRadius: 4,
+          )
+        ],
+      ),
+      child: TextButton(
+        onPressed: () {
+          setState(() {
+            _isWrittenOpen = true;
+          });
+        },
+        child: const Text(
+          Strings.SIGNED_UP,
+          style: TextStyle(color: Colors.white),
+        ),
+      ),
+    );
+  }
+
+  DecoratedBox _changeListForPresentsButton() {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.only(
+            topRight: Radius.circular(30), topLeft: Radius.circular(30)),
+        boxShadow: [
+          BoxShadow(
+            spreadRadius: 1,
+            color: !_isWrittenOpen ? Colors.black12 : Colors.transparent,
+            offset: const Offset(0, -1),
+            blurRadius: 4,
+          )
+        ],
+      ),
+      child: TextButton(
+        onPressed: () => setState(() => _isWrittenOpen = false),
+        child: const Text(
+          Strings.PRESENTS,
+          style: TextStyle(color: Colors.white),
+        ),
+      ),
+    );
+  }
+
+  SafeArea _propertiesView() {
+    return SafeArea(
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 50.0, vertical: 20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                widget._classes.group.target!.name,
+                style: const TextStyle(fontSize: 25, color: Colors.white),
               ),
             ),
-          );
-        } else {
-          return const Center(child: CircularProgressIndicator());
+            OneRowPropertyTemplate(
+              title: '${Strings.DATE_OF_CLASSES}:',
+              value: FormatDate(widget._classes.dateTime),
+            ),
+            OneRowPropertyTemplate(
+              title: '${Strings.NUMBER_OF_SIGNED_UP}:',
+              value: widget._classes.attendances.length.toString(),
+            ),
+            OneRowPropertyTemplate(
+                title: '${Strings.PRESENTS}:',
+                value: widget._classes.attendances.length.toString()),
+          ],
+        ),
+      ),
+    );
+  }
+
+  SliverList _content() =>
+      _isWrittenOpen ? _studentsSliverList() : _attendancesSliverList();
+
+  List<Student> _filteredStudentsList() {
+
+    List<Student> studentsList = [];
+    for (var student in widget._classes.group.target!.students) {
+
+
+        bool isInAttendancesList = false;
+        for (var attendances in student.attendancesList) {
+          if (attendances.classes.targetId == widget._classes.id) {
+            isInAttendancesList = true;
+            print('${attendances.classes.targetId} ${widget._classes.id}');
+          }
         }
-      },
+        if (!isInAttendancesList) {
+          studentsList.add(student);
+          print('${student.introduceYourself()}');
+        }
+
+    }
+    return studentsList;
+  }
+
+  SliverList _studentsSliverList() {
+    List<Student> studentsList = _filteredStudentsList();
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+        (BuildContext context, int index) =>
+            _attendanceItemList(studentsList.elementAt(index)),
+        childCount: studentsList.length,
+      ),
+    );
+  }
+
+  SliverList _attendancesSliverList() {
+    List<Attendance> attendancesList = widget._classes.attendances;
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+        (BuildContext context, int index) =>
+            _attendanceUneditedItemList(attendancesList.elementAt(index)),
+        childCount: attendancesList.length,
+      ),
     );
   }
 
@@ -221,7 +253,7 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
         title: Text(student.introduceYourself()),
         onTap: () {},
         subtitle: Text(
-            'Nieopłacone zajęcia: ${_numberOfUnpaidBills(student.account.target!.bills)}'),
+            '${Strings.UNPAID_CLASSES}: ${_numberOfUnpaidBills(student.account.target!.bills)}'),
       ),
     );
   }
@@ -241,6 +273,7 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
         ..price =
             widget._classes.group.target!.classesType.target!.priceForEach;
       student.account.target!.bills.add(bill);
+      student.attendancesList.add(attendance);
       store.box<Bill>().put(bill);
       store.box<Classes>().put(widget._classes);
       store.box<Attendance>().put(attendance);

@@ -6,6 +6,7 @@ import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/person.dart';
 import 'package:record_of_classes/models/student.dart';
+import 'package:record_of_classes/widgets/templates/list_items/student_attendances_list_item_template.dart';
 import 'package:record_of_classes/widgets/templates/lists/accounts_list_template.dart';
 import 'package:record_of_classes/widgets/templates/lists/parents_of_student_list_template.dart';
 import 'package:record_of_classes/widgets/templates/lists/siblings_list_template.dart';
@@ -43,7 +44,7 @@ class _StudentDetailPage extends State<StudentDetailPage> {
               Tab(text: Strings.PARENTS),
               Tab(text: Strings.SIBLINGS),
               Tab(text: Strings.BILLS),
-              Tab(text: Strings.GROUPS)
+              Tab(text: Strings.ATTENDANCES)
             ],
           ),
         ),
@@ -56,7 +57,7 @@ class _StudentDetailPage extends State<StudentDetailPage> {
                   _personality(),
                   _siblings(),
                   AccountListTemplate(account: _student.account),
-                  StudentGroupListTemplate(student: _student),
+                  _attendancesList()
                 ],
               );
             } else {
@@ -79,16 +80,26 @@ class _StudentDetailPage extends State<StudentDetailPage> {
         .map((query) => query.find());
   }
 
-  Widget _siblings(){
-    return  Column(
+  ListView _attendancesList() {
+    return ListView.builder(
+        itemCount: _student.attendancesList.length,
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        itemBuilder: (context, index) {
+          return StudentAttendancesListItemTemplate(
+              attendance: _student.attendancesList.elementAt(index));
+        });
+  }
+
+  Widget _siblings() {
+    return Column(
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const Text('${Strings.SIBLINGS}:'),
             TextButton(
-                onPressed: addSibling,
-                child: const Text(Strings.ADD_SIBLING))
+                onPressed: addSibling, child: const Text(Strings.ADD_SIBLING))
           ],
         ),
         SiblingsListTemplate(student: _student),
@@ -96,7 +107,7 @@ class _StudentDetailPage extends State<StudentDetailPage> {
     );
   }
 
-  Widget _personality(){
+  Widget _personality() {
     return _isEdited ? editModeEnabled() : editModeDisabled();
   }
 
