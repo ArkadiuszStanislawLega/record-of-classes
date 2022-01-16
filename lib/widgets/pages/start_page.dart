@@ -18,7 +18,7 @@ class _StartPageViewView extends State<StartPageView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Start page'),
+        title: const Text('Zarządzanie firmą'),
       ),
       body: GridView.count(
         primary: false,
