@@ -152,3 +152,20 @@ class _RecordOfClassesApp extends State<RecordOfClassesApp> {
     );
   }
 }
+
+
+String FormatDate(DateTime dateTime) {
+  int day = dateTime.day,
+      month = dateTime.month,
+      year = dateTime.year,
+      hour = dateTime.hour,
+      minute = dateTime.minute;
+
+  String strDay = day < 10 ? '0$day' : day.toString(),
+      strMonth = month < 10 ? '0$month' : month.toString(),
+      strYear = year.toString(),
+      strHour = hour.toString(),
+      strMinute = minute == 0 ? '${minute}0' : minute.toString();
+
+  return '$strDay.$strMonth.$strYear $strHour:$strMinute';
+}

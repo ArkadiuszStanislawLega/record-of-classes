@@ -48,7 +48,7 @@ class _BillListItem extends State<BillListItem> {
             children: [
               Column(
                 children: [
-                  Text(_formatDate()),
+                  Text(FormatDate(widget.bill.classes.target!.dateTime)),
                   Text('${widget.bill.price.toString()}${Strings.CURRENCY}'),
                   Text(widget.bill.classes.target!.group.target!.name),
                 ],
@@ -63,22 +63,6 @@ class _BillListItem extends State<BillListItem> {
         ),
       ),
     );
-  }
-
-  String _formatDate() {
-    int day = widget.bill.classes.target!.dateTime.day,
-        month = widget.bill.classes.target!.dateTime.month,
-        year = widget.bill.classes.target!.dateTime.year,
-        hour = widget.bill.classes.target!.dateTime.hour,
-        minute = widget.bill.classes.target!.dateTime.minute;
-
-    String strDay = day < 10 ? '0$day' : day.toString(),
-        strMonth = month < 10 ? '0$month' : month.toString(),
-        strYear = year.toString(),
-        strHour = hour.toString(),
-        strMinute = minute == 0 ? '${minute}0' : minute.toString();
-
-    return '$strDay.$strMonth.$strYear $strHour:$strMinute';
   }
 
   void _setIsPaidInDatabase() {

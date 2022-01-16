@@ -78,5 +78,7 @@ class Strings {
       STUDENT_KEY = 'student',
       STUDENT_MANAGEMENT = 'Zarządzanie uczniami',
       WRITTEN = 'Zapisani',
-      STUDENTS_LIST = 'Lista uczni';
+      STUDENTS_LIST = 'Lista uczni',
+      STATISTICS = 'Statystyki',
+      BILLS_LIST = 'Lista rachunków';
 }
