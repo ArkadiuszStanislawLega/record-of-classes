@@ -165,8 +165,8 @@ class _FinanceMainPageState extends State<FinanceMainPage> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(title, style: TextStyle(color: Colors.white),),
-        Text(value, style: TextStyle(color: Colors.white),),
+        Text(title, style: const TextStyle(color: Colors.white),),
+        Text(value, style: const TextStyle(color: Colors.white),),
       ],
     );
   }

@@ -70,7 +70,7 @@ class _StudentDetailPage extends State<StudentDetailPage> {
                       child: const Icon(Icons.group),
                       label: Strings.ADD_PARENT,
                       backgroundColor: Colors.amberAccent,
-                      onTap: _navigateToCreateParent),
+                      onTap: _navigateToAddParent),
                   SpeedDialChild(
                       child: const Icon(Icons.edit),
                       label: Strings.EDIT,
@@ -93,8 +93,8 @@ class _StudentDetailPage extends State<StudentDetailPage> {
   void _navigateToAddSiblings() =>
       Navigator.pushNamed(context, AppUrls.ADD_SIBLING, arguments: _student);
 
-  void _navigateToCreateParent() =>
-      Navigator.pushNamed(context, AppUrls.CREATE_PARENT, arguments: _student);
+  void _navigateToAddParent() =>
+      Navigator.pushNamed(context, AppUrls.ADD_PARENT, arguments: _student);
 
   SliverAppBar _customAppBar() {
     return SliverAppBar(

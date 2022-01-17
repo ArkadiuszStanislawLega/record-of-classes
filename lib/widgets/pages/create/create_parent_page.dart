@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/constants/strings.dart';
@@ -9,23 +8,16 @@ import 'package:record_of_classes/models/phone.dart';
 import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/widgets/templates/create/create_parent_template.dart';
 import 'package:record_of_classes/widgets/templates/create/create_phone_template.dart';
-import 'package:record_of_classes/widgets/templates/lists/parent_list_template.dart';
+import 'package:record_of_classes/widgets/templates/snack_bar_info_template.dart';
 
-class CreateParentPage extends StatefulWidget {
-  const CreateParentPage({Key? key}) : super(key: key);
-
-  @override
-  State<StatefulWidget> createState() {
-    return _CreateParentPage();
-  }
-}
-
-class _CreateParentPage extends State<CreateParentPage> {
+class CreateParentPage extends StatelessWidget {
+  CreateParentPage({Key? key}) : super(key: key);
+  late Student _selectedStudent;
   late Person _inputPerson;
   late Parent _inputParent;
   late Phone _inputPhone;
-  late Student _selectedStudent;
   final Store _store = objectBox.store;
+
   final _createParentTemplate = CreateParentTemplate();
   final _createPhone = CreatePhoneTemplate();
 
@@ -34,31 +26,15 @@ class _CreateParentPage extends State<CreateParentPage> {
     _selectedStudent = ModalRoute.of(context)!.settings.arguments as Student;
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-            '${Strings.ADD_PARENT} ${_selectedStudent.person.target!.surname} ${_selectedStudent.person.target!.name} '),
+        title: const Text(Strings.ADD_PARENT),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            _createParentTemplate,
-            _createPhone,
-            TextButton(
-                onPressed: () => {
-                      _getInputValues(),
-                      _isInputValuesAreValid()
-                          ? {
-                              _addToDatabase(),
-                              _createParentSuccessfulMessage(),
-                              _clearValues()
-                            }
-                          : _createParentUnsuccessfulMessage(),
-                    },
-                child: const Text(Strings.ADD_PARENT)),
-            ParentListTemplate(
-              children: _selectedStudent,
-            ),
-          ],
-        ),
+      body: Column(
+        children: [
+          _createParentTemplate,
+          _createPhone,
+          TextButton(
+              onPressed: () => _createParent(context), child: const Text(Strings.ADD_PARENT))
+        ],
       ),
     );
   }
@@ -85,10 +61,9 @@ class _CreateParentPage extends State<CreateParentPage> {
     _store.box<Student>().put(_selectedStudent);
   }
 
-  void _createParentSuccessfulMessage() {
+  void _createParentSuccessfulMessage(BuildContext context) {
     var parent = _createParentTemplate.getParent();
-    _snackBarInfo(
-        '${Strings.SUCCESFULLY_ADDED} ${parent.surname} ${parent.surname} ${Strings.TO_DATABASE}.');
+    _snackBarInfo(context, '${Strings.SUCCESFULLY_ADDED} ${parent.surname} ${parent.surname} ${Strings.TO_DATABASE}.');
   }
 
   void _clearValues() {
@@ -96,24 +71,17 @@ class _CreateParentPage extends State<CreateParentPage> {
     _createPhone.clearValues();
   }
 
-  void _createParentUnsuccessfulMessage() =>
-      _snackBarInfo(Strings.FAIL_TO_ADD_NEW_PARENT_TO_DATABASE);
+  void _createParentUnsuccessfulMessage(BuildContext context) =>
+      _snackBarInfo(context , Strings.FAIL_TO_ADD_NEW_PARENT_TO_DATABASE);
 
-  void _snackBarInfo(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        duration: const Duration(milliseconds: 1500),
-        width: 280.0,
-        // Width of the SnackBar.
-        padding: const EdgeInsets.symmetric(
-          horizontal: 15.0, // Inner padding for SnackBar content.
-        ),
-        behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-      ),
-    );
+  void _snackBarInfo(BuildContext context, String message) {
+    SnackBarInfoTemplate(message: message, context: context);
+  }
+
+  void _createParent(BuildContext context) {
+    _getInputValues();
+    _isInputValuesAreValid()
+        ? {_addToDatabase(), _createParentSuccessfulMessage(context), _clearValues()}
+        : _createParentUnsuccessfulMessage(context);
   }
 }

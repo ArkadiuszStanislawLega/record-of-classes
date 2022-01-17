@@ -4,6 +4,7 @@ class AppUrls {
       CREATE_STUDENT = '/create_student',
       EDIT_STUDENT = '/edit_student',
       DETAIL_STUDENT = '/detail_student',
+      ADD_PARENT = '/add_parent',
       CREATE_PARENT = '/create_parent',
       DETAIL_PARENT = '/detail_parent',
       ADD_SIBLING = '/add_sibling',
