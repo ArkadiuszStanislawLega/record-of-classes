@@ -23,6 +23,7 @@ import 'package:record_of_classes/widgets/pages/create/create_student_page.dart'
 import 'package:record_of_classes/widgets/pages/detail/classes_type_detail_page.dart';
 import 'package:record_of_classes/widgets/pages/detail/group_detail_page.dart';
 import 'package:record_of_classes/widgets/pages/detail/parent_detail_page.dart';
+import 'package:record_of_classes/widgets/pages/edit/edit_student_page.dart';
 import 'package:record_of_classes/widgets/pages/finance_main_page.dart';
 import 'package:record_of_classes/widgets/pages/groups_main_page.dart';
 import 'package:record_of_classes/widgets/pages/start_page.dart';
@@ -139,6 +140,7 @@ class _RecordOfClassesApp extends State<RecordOfClassesApp> {
         AppUrls.HOME: (context) => const StartPageView(),
         AppUrls.CREATE_STUDENT: (context) => const CreateStudentPage(),
         AppUrls.DETAIL_STUDENT: (context) => const StudentDetailPage(),
+        AppUrls.EDIT_STUDENT: (context) => EditStudentPage(),
         AppUrls.CREATE_PARENT: (context) => const CreateParentPage(),
         AppUrls.DETAIL_PARENT: (context) => const ParentDetailPage(),
         AppUrls.ADD_SIBLING: (context) => const AddSiblingsToStudentPage(),

@@ -54,6 +54,8 @@ class Strings {
       NUMBER_OF_CLASSES = 'Ilość zajęć',
       NUMBER_OF_SIGNED_UP = 'Ilość zapisanych',
       NUMBER_OF_STUDENTS = 'Ilość ucznów',
+      NUMBER_OF_SIBLINGS = 'Ilość rodzeństwa',
+      NUMBER_OF_ATTENDANCES = 'Ilość obecności',
       OK = 'OK',
       PARENTS = 'Rodzice',
       PAID = 'Zapłacono',
