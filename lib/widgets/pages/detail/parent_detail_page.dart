@@ -8,6 +8,7 @@ import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/parent.dart';
 import 'package:record_of_classes/models/phone.dart';
 import 'package:record_of_classes/widgets/templates/one_row_property_template.dart';
+import 'package:record_of_classes/widgets/templates/student_list_tile_template.dart';
 
 class ParentDetailPage extends StatefulWidget {
   const ParentDetailPage({Key? key}) : super(key: key);
@@ -145,14 +146,28 @@ class _ParentDetailPage extends State<ParentDetailPage> {
   }
 
   SliverList _childrenSliverList() {
+
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) =>
-            Text(_parent.children.elementAt(index).introduceYourself()),
+            Card(
+              shape: RoundedRectangleBorder(
+                side: const BorderSide(color: Colors.white70, width: 1),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              margin: const EdgeInsets.symmetric(vertical: 8.0),
+              elevation: 7,
+              child: ListTile(
+                title: Text(_parent.children.elementAt(index).introduceYourself()),
+                subtitle: Text('${Strings.TO_PAY}: ${_parent.children.elementAt(index).account.target!.countUnpaidBills()}${Strings.CURRENCY}'),
+              ),
+            ),
         childCount: _parent.children.length,
       ),
     );
   }
+
+
 
   SliverList _contactsSliverList() {
     return SliverList(
@@ -166,11 +181,7 @@ class _ParentDetailPage extends State<ParentDetailPage> {
   SafeArea _propertiesView() {
     double toPay = 0.0;
     for (var child in _parent.children) {
-      for (var bill in child.account.target!.bills) {
-        if (!bill.isPaid) {
-          toPay += bill.price;
-        }
-      }
+      toPay += child.account.target!.countUnpaidBills();
     }
 
     return SafeArea(

@@ -11,4 +11,22 @@ class Account {
   final bills = ToMany<Bill>();
 
   Account({this.id = 0});
+
+  double countUnpaidBills(){
+    double unpaid = 0.0;
+    for (var element in bills) {
+      if(!element.isPaid){
+        unpaid += element.price;
+      }
+    }return unpaid;
+  }
+
+  double countPaidBills(){
+    double unpaid = 0.0;
+    for (var element in bills) {
+      if(element.isPaid){
+        unpaid += element.price;
+      }
+    }return unpaid;
+  }
 }
