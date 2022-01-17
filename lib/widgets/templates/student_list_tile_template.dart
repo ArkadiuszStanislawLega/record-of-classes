@@ -15,13 +15,22 @@ class StudentListTileTemplate extends StatefulWidget {
 class _StudentListTileTemplateState extends State<StudentListTileTemplate> {
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(widget.student.introduceYourself()),
-      subtitle: Text('${Strings.YEARS}: ${widget.student.age.toString()}'),
-      onTap: _navigateToStudentProfile
+    return Card(
+      shape: RoundedRectangleBorder(
+        side: const BorderSide(color: Colors.white70, width: 1),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      margin: const EdgeInsets.symmetric(vertical: 8.0),
+      elevation: 7,
+      child: ListTile(
+        title: Text(widget.student.introduceYourself()),
+        subtitle: Text('${Strings.YEARS}: ${widget.student.age.toString()}'),
+        onTap: _navigateToStudentProfile,
+      ),
     );
   }
 
-  void _navigateToStudentProfile() => Navigator.pushNamed(context, AppUrls.DETAIL_STUDENT,
-      arguments: widget.student);
+  void _navigateToStudentProfile() =>
+      Navigator.pushNamed(context, AppUrls.DETAIL_STUDENT,
+          arguments: widget.student);
 }
