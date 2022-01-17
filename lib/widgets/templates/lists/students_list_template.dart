@@ -5,7 +5,9 @@ import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/widgets/templates/list_items/students_list_item_template.dart';
 
 class StudentsListTemplate extends StatefulWidget {
-  const StudentsListTemplate({Key? key}) : super(key: key);
+  StudentsListTemplate({Key? key}) : super(key: key);
+  late Store _store;
+  late Stream<List<Student>> studentsStream;
 
   @override
   State<StatefulWidget> createState() {
@@ -14,15 +16,14 @@ class StudentsListTemplate extends StatefulWidget {
 }
 
 class _StudentsListTemplate extends State<StudentsListTemplate> {
-  late Store _store;
-  late Stream<List<Student>> _studentsStream;
+
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.all(5),
       child: StreamBuilder<List<Student>>(
-          stream: _studentsStream,
+          stream: widget.studentsStream,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return ListView.builder(itemCount: snapshot.data!.length,
@@ -44,8 +45,8 @@ class _StudentsListTemplate extends State<StudentsListTemplate> {
   @override
   void initState() {
     super.initState();
-    _store = objectBox.store;
-    _studentsStream = _store
+    widget._store = objectBox.store;
+    widget.studentsStream = widget._store
         .box<Student>()
         .query()
         .watch(triggerImmediately: true)

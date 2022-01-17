@@ -19,6 +19,7 @@ import 'package:record_of_classes/widgets/pages/classes_main_page.dart';
 import 'package:record_of_classes/widgets/pages/classes_type_main_page.dart';
 import 'package:record_of_classes/widgets/pages/create/create_group_page.dart';
 import 'package:record_of_classes/widgets/pages/create/create_parent_page.dart';
+import 'package:record_of_classes/widgets/pages/create/create_student_page.dart';
 import 'package:record_of_classes/widgets/pages/detail/classes_type_detail_page.dart';
 import 'package:record_of_classes/widgets/pages/detail/group_detail_page.dart';
 import 'package:record_of_classes/widgets/pages/detail/parent_detail_page.dart';
@@ -136,6 +137,7 @@ class _RecordOfClassesApp extends State<RecordOfClassesApp> {
       routes: {
         AppUrls.EMPTY: (context) => const StartPageView(),
         AppUrls.HOME: (context) => const StartPageView(),
+        AppUrls.CREATE_STUDENT: (context) => const CreateStudentPage(),
         AppUrls.DETAIL_STUDENT: (context) => const StudentDetailPage(),
         AppUrls.CREATE_PARENT: (context) => const CreateParentPage(),
         AppUrls.DETAIL_PARENT: (context) => const ParentDetailPage(),
