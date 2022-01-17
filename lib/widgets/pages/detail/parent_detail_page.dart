@@ -146,28 +146,25 @@ class _ParentDetailPage extends State<ParentDetailPage> {
   }
 
   SliverList _childrenSliverList() {
-
     return SliverList(
       delegate: SliverChildBuilderDelegate(
-        (BuildContext context, int index) =>
-            Card(
-              shape: RoundedRectangleBorder(
-                side: const BorderSide(color: Colors.white70, width: 1),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              margin: const EdgeInsets.symmetric(vertical: 8.0),
-              elevation: 7,
-              child: ListTile(
-                title: Text(_parent.children.elementAt(index).introduceYourself()),
-                subtitle: Text('${Strings.TO_PAY}: ${_parent.children.elementAt(index).account.target!.countUnpaidBills()}${Strings.CURRENCY}'),
-              ),
-            ),
+        (BuildContext context, int index) => Card(
+          shape: RoundedRectangleBorder(
+            side: const BorderSide(color: Colors.white70, width: 1),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          margin: const EdgeInsets.symmetric(vertical: 8.0),
+          elevation: 7,
+          child: ListTile(
+            title: Text(_parent.children.elementAt(index).introduceYourself()),
+            subtitle: Text(
+                '${Strings.TO_PAY}: ${_parent.children.elementAt(index).account.target!.countUnpaidBills()}${Strings.CURRENCY}'),
+          ),
+        ),
         childCount: _parent.children.length,
       ),
     );
   }
-
-
 
   SliverList _contactsSliverList() {
     return SliverList(
@@ -213,7 +210,15 @@ class _ParentDetailPage extends State<ParentDetailPage> {
 
   Widget _phoneListItem(int index) {
     Phone phone = _parent.phone.elementAt(index);
-    return Slidable(
+
+    return Card(
+      shape: RoundedRectangleBorder(
+        side: const BorderSide(color: Colors.white70, width: 1),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      margin: const EdgeInsets.symmetric(vertical: 8.0),
+      elevation: 7,
+      child: Slidable(
         actionPane: const SlidableDrawerActionPane(),
         secondaryActions: [
           IconSlideAction(
@@ -230,7 +235,9 @@ class _ParentDetailPage extends State<ParentDetailPage> {
         child: ListTile(
           title: Text(phone.number.toString()),
           subtitle: Text(phone.numberName),
-        ));
+        ),
+      ),
+    );
   }
 
   @override
