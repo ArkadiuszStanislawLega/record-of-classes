@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/constants/app_urls.dart';
 import 'package:record_of_classes/models/account.dart';
+import 'package:record_of_classes/models/address.dart';
+import 'package:record_of_classes/models/attendance.dart';
 import 'package:record_of_classes/models/bill.dart';
 import 'package:record_of_classes/models/classes.dart';
 import 'package:record_of_classes/models/classes_type.dart';
@@ -52,8 +54,8 @@ late ObjectBox objectBox;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   objectBox = await ObjectBox.create();
-  _putTeacherToDb();
   // clearDb();
+  _putTeacherToDb();
   // clearDb();
   // printDataFromDB();
   // objectBox.store.box<Account>().getAll().forEach((element) {
@@ -69,20 +71,22 @@ void _putTeacherToDb() {
     var person = Person(name: 'Monika', surname: 'Łęga');
     var teacher = Teacher()..person.target = person;
     teacherObjectBox.put(teacher);
-    print('Dodano nauczyciela ${teacherObjectBox.get(1)}');
   }
 }
 
 void clearDb() {
-  objectBox.store.box<Person>().removeAll();
-  objectBox.store.box<Student>().removeAll();
-  objectBox.store.box<Parent>().removeAll();
   objectBox.store.box<Account>().removeAll();
-  objectBox.store.box<Phone>().removeAll();
-  objectBox.store.box<Group>().removeAll();
+  objectBox.store.box<Address>().removeAll();
+  objectBox.store.box<Attendance>().removeAll();
+  objectBox.store.box<Bill>().removeAll();
   objectBox.store.box<Classes>().removeAll();
   objectBox.store.box<ClassesType>().removeAll();
-  objectBox.store.box<Bill>().removeAll();
+  objectBox.store.box<Group>().removeAll();
+  objectBox.store.box<Parent>().removeAll();
+  objectBox.store.box<Person>().removeAll();
+  objectBox.store.box<Phone>().removeAll();
+  objectBox.store.box<Student>().removeAll();
+  objectBox.store.box<Teacher>().removeAll();
 }
 
 void printDataFromDB() {

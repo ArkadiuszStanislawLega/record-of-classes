@@ -161,7 +161,7 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
             ),
             OneRowPropertyTemplate(
               title: '${Strings.NUMBER_OF_SIGNED_UP}:',
-              value: widget._classes.attendances.length.toString(),
+              value: widget._classes.group.target!.students.length.toString(),
             ),
             OneRowPropertyTemplate(
                 title: '${Strings.PRESENTS}:',
@@ -176,23 +176,17 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
       _isWrittenOpen ? _studentsSliverList() : _attendancesSliverList();
 
   List<Student> _filteredStudentsList() {
-
     List<Student> studentsList = [];
     for (var student in widget._classes.group.target!.students) {
-
-
-        bool isInAttendancesList = false;
-        for (var attendances in student.attendancesList) {
-          if (attendances.classes.targetId == widget._classes.id) {
-            isInAttendancesList = true;
-            print('${attendances.classes.targetId} ${widget._classes.id}');
-          }
+      bool isInAttendancesList = false;
+      for (var attendances in student.attendancesList) {
+        if (attendances.classes.targetId == widget._classes.id) {
+          isInAttendancesList = true;
         }
-        if (!isInAttendancesList) {
-          studentsList.add(student);
-          print('${student.introduceYourself()}');
-        }
-
+      }
+      if (!isInAttendancesList) {
+        studentsList.add(student);
+      }
     }
     return studentsList;
   }
