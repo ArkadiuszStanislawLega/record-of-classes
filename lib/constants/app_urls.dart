@@ -7,6 +7,7 @@ class AppUrls {
       ADD_PARENT = '/add_parent',
       CREATE_PARENT = '/create_parent',
       DETAIL_PARENT = '/detail_parent',
+      EDIT_PARENT = '/edit_parent',
       ADD_SIBLING = '/add_sibling',
       DETAIL_CLASSES_TYPE = '/detail_classes_type',
       CREATE_GROUP = '/create_group',
@@ -18,5 +19,6 @@ class AppUrls {
       CLASSES_MAIN_PAGE = '/classes_main_page',
       CLASSES_TYPE_MAIN_PAGE = '/classes_type_main_page',
       FINANCE_MAIN_PAGE = '/finance_main_page',
-      GROUPS_MAIN_PAGE = '/groups_main_page';
+      GROUPS_MAIN_PAGE = '/groups_main_page',
+      ADD_PHONE = '/add_phone';
 }

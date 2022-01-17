@@ -13,11 +13,13 @@ class Strings {
       ADD_GROUP = 'Dodaj grupę',
       ADD_PARTICIPANTS = 'Dodaj uczestników',
       ADD_STUDENT = 'Dodaj ucznia',
+      ADDED_NEW_CONTACT = 'Dodano nowy kontakt',
       ATTENDANCE_LIST = 'Lista obecności',
       ATTENDANCES = 'Obecności',
       CLASSES_ADDRESS = 'Adres zajęć',
       CLASSES_TYPE = 'Typ zajęć',
       AND = 'i',
+      TO = 'do',
       CANCEL = 'Anuluj',
       CANCEL_ADDING_CONTACTS = 'Anuluj dodawanie kontaktów',
       CITY = 'Miasto',
@@ -25,6 +27,7 @@ class Strings {
       CONTACTS = 'Kontakty',
       CREATE_STUDENT = 'Utwórz ucznia',
       CREATE_PARENT = 'Utwórz rodzica',
+      CREATE_CONTACT = 'Utwórz kontakt',
       CHILDREN = 'Dzieci',
       CHOSE_DATE = 'Wybierz datę zajęć',
       CHOSE_TIME = 'Wybierz godzinę',
@@ -90,5 +93,6 @@ class Strings {
       WRITTEN = 'Zapisani',
       STUDENTS_LIST = 'Lista uczni',
       STATISTICS = 'Statystyki',
-      BILLS_LIST = 'Lista rachunków';
+      BILLS_LIST = 'Lista rachunków',
+      DATA_HAS_BEEN_UPDATED = 'Zakutalizowano dane';
 }

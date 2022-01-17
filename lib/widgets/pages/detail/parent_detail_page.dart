@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:objectbox/objectbox.dart';
+import 'package:record_of_classes/constants/app_urls.dart';
 import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/parent.dart';
-import 'package:record_of_classes/models/person.dart';
 import 'package:record_of_classes/models/phone.dart';
-import 'package:record_of_classes/widgets/templates/create/create_phone_template.dart';
+import 'package:record_of_classes/widgets/templates/one_row_property_template.dart';
 
 class ParentDetailPage extends StatefulWidget {
   const ParentDetailPage({Key? key}) : super(key: key);
@@ -17,162 +18,185 @@ class ParentDetailPage extends StatefulWidget {
   }
 }
 
+enum Pages { children, contacts }
+
 class _ParentDetailPage extends State<ParentDetailPage> {
-  String _parentName = '', _parentSurname = '';
-  bool _isEdited = false, _isAddContactVisible = false;
-  final CreatePhoneTemplate _createPhoneTemplate = CreatePhoneTemplate();
   late Parent _parent;
   late Store _store;
-  late Stream<List<Parent>> _parentStream;
+  Pages _currentPage = Pages.contacts;
 
   @override
   Widget build(BuildContext context) {
     _parent = ModalRoute.of(context)!.settings.arguments as Parent;
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-            '${_parent.person.target!.surname} ${_parent.person.target!.name}'),
-      ),
-      body: Column(
-        children: _isEdited ? _editModeEnabled() : _editModeDisabled(),
+    _parent = _store.box<Parent>().get(_parent.id)!;
+
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        floatingActionButton: SpeedDial(
+          icon: Icons.add,
+          backgroundColor: Colors.amber,
+          children: [
+            SpeedDialChild(
+                child: const Icon(Icons.phone),
+                label: Strings.ADD_CONTACT,
+                backgroundColor: Colors.amberAccent,
+                onTap: _navigateToAddPhone),
+            SpeedDialChild(
+                child: const Icon(Icons.edit),
+                label: Strings.EDIT,
+                backgroundColor: Colors.amberAccent,
+                onTap: _navigateToEditParent),
+          ],
+        ),
+        body: CustomScrollView(
+          slivers: [
+            _customAppBar(),
+            _content(),
+          ],
+        ),
       ),
     );
   }
 
-  List<Widget> _editModeEnabled() {
-    return [
-      TextField(
-        decoration: InputDecoration(
-          hintText: _parent.person.target!.name == ''
-              ? Strings.NAME
-              : _parent.person.target!.name,
-        ),
-        onChanged: (userInput) {
-          _parentName = userInput;
-        },
-      ),
-      TextField(
-        decoration: InputDecoration(
-          hintText: _parent.person.target!.surname == ''
-              ? Strings.SURNAME
-              : _parent.person.target!.surname,
-        ),
-        onChanged: (userInput) {
-          _parentSurname = userInput;
-        },
-      ),
-      Center(
-        child: Row(children: [
-          TextButton(
-            onPressed: confirmEditChanges,
-            child: const Text(Strings.OK),
-          ),
-          TextButton(
-            onPressed: cancelEditChanges,
-            child: const Text(Strings.CANCEL),
-          )
-        ]),
-      ),
-    ];
-  }
+  void _navigateToEditParent() =>
+      Navigator.pushNamed(context, AppUrls.EDIT_PARENT, arguments: _parent);
 
-  Widget contactsButtons() {
-    return Row(
-      children: !_isAddContactVisible
-          ? [
-              TextButton(
-                onPressed: enableAddContactMode,
-                child: const Text(Strings.ADD_CONTACT),
-              )
-            ]
-          : [
-              TextButton(
-                  onPressed: disableAddContactMode,
-                  child: const Text(Strings.CANCEL_ADDING_CONTACTS)),
-              TextButton(
-                onPressed: () {
-                  var phone = _createPhoneTemplate.getPhone();
-                  _parent.phone.add(phone);
-                  _store.box<Parent>().put(_parent);
+  void _navigateToAddPhone() =>
+      Navigator.pushNamed(context, AppUrls.ADD_PHONE, arguments: _parent);
 
-                  disableAddContactMode();
-                },
-                child: const Text(Strings.ADD_CONTACT),
-              )
-            ],
+  SliverAppBar _customAppBar() {
+    return SliverAppBar(
+      bottom: PreferredSize(
+        preferredSize: const Size(0, 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            _pageNavigationButton(
+                title: Strings.CONTACTS, page: Pages.contacts),
+            _pageNavigationButton(
+                title: Strings.CHILDREN, page: Pages.children),
+          ],
+        ),
+      ),
+      stretch: true,
+      onStretchTrigger: () => Future<void>.value(),
+      expandedHeight: 200.0,
+      flexibleSpace: FlexibleSpaceBar(
+        stretchModes: const <StretchMode>[
+          StretchMode.zoomBackground,
+          StretchMode.blurBackground,
+          StretchMode.fadeTitle,
+        ],
+        centerTitle: true,
+        background: Stack(
+          fit: StackFit.expand,
+          children: <Widget>[
+            _propertiesView(),
+            const DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment(0.0, 0.5),
+                  end: Alignment.center,
+                  colors: <Color>[Colors.black12, Colors.transparent],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
-  List<Widget> _editModeDisabled() {
-    List<Widget> widgets = [];
-    _parentStream = _store
-        .box<Parent>()
-        .query()
-        .watch(triggerImmediately: true)
-        .map((query) => query.find());
-
-    widgets.add(
-      Row(
-        children: [
-          TextButton(
-            onPressed: enableEditMode,
-            child: const Text(Strings.EDIT),
+  DecoratedBox _pageNavigationButton(
+      {required String title, required Pages page}) {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.only(
+            topRight: Radius.circular(30), topLeft: Radius.circular(30)),
+        boxShadow: [
+          BoxShadow(
+            spreadRadius: 1,
+            color: _currentPage == page ? Colors.black12 : Colors.transparent,
+            offset: const Offset(0, -1),
+            blurRadius: 4,
           )
         ],
       ),
-    );
-    widgets.add(
-      StreamBuilder<List<Parent>>(
-        stream: _parentStream,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            _store.box<Parent>().get(_parent.id);
-            return Column(
-              children: [
-                const Text('${Strings.CHILDREN}:'),
-                _childrenList(),
-                const Text('${Strings.CONTACTS}:'),
-                _phonesList()
-              ],
-            );
-          } else {
-            return const Center(child: CircularProgressIndicator());
-          }
-        },
+      child: TextButton(
+        onPressed: () => setState(() => _currentPage = page),
+        child: Text(
+          title,
+          style: const TextStyle(color: Colors.white),
+        ),
       ),
     );
-    widgets.add(contactsButtons());
-    if (_isAddContactVisible) {
-      widgets.add(_createPhoneTemplate);
-    }
-
-    return widgets;
   }
 
-  ListView _childrenList() {
-    return ListView.builder(
-      itemCount: _parent.children.length,
-      scrollDirection: Axis.vertical,
-      shrinkWrap: true,
-      itemBuilder: (context, index) {
-        return _childrenListItem(index);
-      },
+  SliverList _content() => _pageNavigator();
+
+  SliverList _pageNavigator() {
+    switch (_currentPage) {
+      case Pages.children:
+        return _childrenSliverList();
+      case Pages.contacts:
+        return _contactsSliverList();
+    }
+  }
+
+  SliverList _childrenSliverList() {
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+        (BuildContext context, int index) =>
+            Text(_parent.children.elementAt(index).introduceYourself()),
+        childCount: _parent.children.length,
+      ),
     );
   }
 
-  Widget _childrenListItem(int index) {
-    var childrenPerson = _parent.children.elementAt(index).person.target;
-    return Text('${childrenPerson?.surname} ${childrenPerson?.name}');
+  SliverList _contactsSliverList() {
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+        (BuildContext context, int index) => _phoneListItem(index),
+        childCount: _parent.phone.length,
+      ),
+    );
   }
 
-  ListView _phonesList() {
-    return ListView.builder(
-      itemCount: _parent.phone.length,
-      scrollDirection: Axis.vertical,
-      shrinkWrap: true,
-      itemBuilder: (context, index) {
-        return _phoneListItem(index);
-      },
+  SafeArea _propertiesView() {
+    double toPay = 0.0;
+    for (var child in _parent.children) {
+      for (var bill in child.account.target!.bills) {
+        if (!bill.isPaid) {
+          toPay += bill.price;
+        }
+      }
+    }
+
+    return SafeArea(
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 50.0, vertical: 20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _pageTitleContainer(),
+            OneRowPropertyTemplate(
+              title: '${Strings.TO_PAY}:',
+              value: '$toPay${Strings.CURRENCY}',
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Container _pageTitleContainer() {
+    return Container(
+      padding: const EdgeInsets.all(16.0),
+      child: Text(
+        _parent.introduceYourself(),
+        style: const TextStyle(fontSize: 25, color: Colors.white),
+      ),
     );
   }
 
@@ -197,39 +221,6 @@ class _ParentDetailPage extends State<ParentDetailPage> {
           subtitle: Text(phone.numberName),
         ));
   }
-
-  void cancelEditChanges() {
-    _parentName = '';
-    _parentSurname = '';
-
-    disableEditMode();
-  }
-
-  void confirmEditChanges() {
-    setNewValues();
-    updateValueInDatabase();
-    disableEditMode();
-  }
-
-  void setNewValues() {
-    if (_parentName != '') {
-      _parent.person.target!.name = _parentName;
-    }
-    if (_parentSurname != '') {
-      _parent.person.target!.surname = _parentSurname;
-    }
-  }
-
-  void updateValueInDatabase() =>
-      objectBox.store.box<Person>().put(_parent.person.target!);
-
-  void enableEditMode() => setState(() => _isEdited = true);
-
-  void disableEditMode() => setState(() => _isEdited = false);
-
-  void enableAddContactMode() => setState(() => _isAddContactVisible = true);
-
-  void disableAddContactMode() => setState(() => _isAddContactVisible = false);
 
   @override
   void initState() {

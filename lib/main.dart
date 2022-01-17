@@ -20,10 +20,12 @@ import 'package:record_of_classes/widgets/pages/classes_type_main_page.dart';
 import 'package:record_of_classes/widgets/pages/create/create_group_page.dart';
 import 'package:record_of_classes/widgets/pages/add/add_parent_page.dart';
 import 'package:record_of_classes/widgets/pages/create/create_parent_page.dart';
+import 'package:record_of_classes/widgets/pages/create/create_phone_page.dart';
 import 'package:record_of_classes/widgets/pages/create/create_student_page.dart';
 import 'package:record_of_classes/widgets/pages/detail/classes_type_detail_page.dart';
 import 'package:record_of_classes/widgets/pages/detail/group_detail_page.dart';
 import 'package:record_of_classes/widgets/pages/detail/parent_detail_page.dart';
+import 'package:record_of_classes/widgets/pages/edit/edit_parent_page.dart';
 import 'package:record_of_classes/widgets/pages/edit/edit_student_page.dart';
 import 'package:record_of_classes/widgets/pages/finance_main_page.dart';
 import 'package:record_of_classes/widgets/pages/groups_main_page.dart';
@@ -145,6 +147,7 @@ class _RecordOfClassesApp extends State<RecordOfClassesApp> {
         AppUrls.ADD_PARENT: (context) => const AddParentPage(),
         AppUrls.CREATE_PARENT: (context) => CreateParentPage(),
         AppUrls.DETAIL_PARENT: (context) => const ParentDetailPage(),
+        AppUrls.EDIT_PARENT: (context) => const EditParentPage(),
         AppUrls.ADD_SIBLING: (context) => const AddSiblingsToStudentPage(),
         AppUrls.DETAIL_CLASSES_TYPE: (context) => DetailClassesType(),
         AppUrls.CREATE_GROUP: (context) => const CreateGroupPage(),
@@ -157,6 +160,7 @@ class _RecordOfClassesApp extends State<RecordOfClassesApp> {
         AppUrls.CLASSES_TYPE_MAIN_PAGE: (context) => const ClassesTypeMainPage(),
         AppUrls.FINANCE_MAIN_PAGE: (context) => const FinanceMainPage(),
         AppUrls.GROUPS_MAIN_PAGE: (context) => const GroupsMainPage(),
+        AppUrls.ADD_PHONE: (context) => CreatePhonePage(),
         '/test' : (context) => Test()
       },
     );
