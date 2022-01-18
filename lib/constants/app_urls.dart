@@ -10,6 +10,7 @@ class AppUrls {
       EDIT_PARENT = '/edit_parent',
       ADD_SIBLING = '/add_sibling',
       DETAIL_CLASSES_TYPE = '/detail_classes_type',
+      EDIT_CLASSES_TYPE = '/edit_classes_type',
       CREATE_GROUP = '/create_group',
       DETAIL_GROUP = '/detail_group',
       ADD_STUDENT_TO_GROUP = '/add_student_to_group',

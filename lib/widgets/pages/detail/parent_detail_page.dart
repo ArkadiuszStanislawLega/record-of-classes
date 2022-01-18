@@ -8,7 +8,6 @@ import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/parent.dart';
 import 'package:record_of_classes/models/phone.dart';
 import 'package:record_of_classes/widgets/templates/one_row_property_template.dart';
-import 'package:record_of_classes/widgets/templates/student_list_tile_template.dart';
 
 class ParentDetailPage extends StatefulWidget {
   const ParentDetailPage({Key? key}) : super(key: key);
@@ -19,12 +18,12 @@ class ParentDetailPage extends StatefulWidget {
   }
 }
 
-enum Pages { children, contacts }
+enum ListsOnPages { children, contacts }
 
 class _ParentDetailPage extends State<ParentDetailPage> {
   late Parent _parent;
   late Store _store;
-  Pages _currentPage = Pages.contacts;
+  ListsOnPages _currentList = ListsOnPages.contacts;
 
   @override
   Widget build(BuildContext context) {
@@ -74,9 +73,9 @@ class _ParentDetailPage extends State<ParentDetailPage> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             _pageNavigationButton(
-                title: Strings.CONTACTS, page: Pages.contacts),
+                title: Strings.CONTACTS, page: ListsOnPages.contacts),
             _pageNavigationButton(
-                title: Strings.CHILDREN, page: Pages.children),
+                title: Strings.CHILDREN, page: ListsOnPages.children),
           ],
         ),
       ),
@@ -110,7 +109,7 @@ class _ParentDetailPage extends State<ParentDetailPage> {
   }
 
   DecoratedBox _pageNavigationButton(
-      {required String title, required Pages page}) {
+      {required String title, required ListsOnPages page}) {
     return DecoratedBox(
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.only(
@@ -118,14 +117,14 @@ class _ParentDetailPage extends State<ParentDetailPage> {
         boxShadow: [
           BoxShadow(
             spreadRadius: 1,
-            color: _currentPage == page ? Colors.black12 : Colors.transparent,
+            color: _currentList == page ? Colors.black12 : Colors.transparent,
             offset: const Offset(0, -1),
             blurRadius: 4,
           )
         ],
       ),
       child: TextButton(
-        onPressed: () => setState(() => _currentPage = page),
+        onPressed: () => setState(() => _currentList = page),
         child: Text(
           title,
           style: const TextStyle(color: Colors.white),
@@ -137,10 +136,10 @@ class _ParentDetailPage extends State<ParentDetailPage> {
   SliverList _content() => _pageNavigator();
 
   SliverList _pageNavigator() {
-    switch (_currentPage) {
-      case Pages.children:
+    switch (_currentList) {
+      case ListsOnPages.children:
         return _childrenSliverList();
-      case Pages.contacts:
+      case ListsOnPages.contacts:
         return _contactsSliverList();
     }
   }

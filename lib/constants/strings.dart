@@ -24,6 +24,7 @@ class Strings {
       CANCEL_ADDING_CONTACTS = 'Anuluj dodawanie kontaktów',
       CITY = 'Miasto',
       CLASSES = 'Zajęcia',
+      MANAGE_CLASS_TYPES = 'Zarządzanie typami zajęć',
       CONTACTS = 'Kontakty',
       CREATE_STUDENT = 'Utwórz ucznia',
       CREATE_PARENT = 'Utwórz rodzica',
@@ -41,6 +42,8 @@ class Strings {
       DETAILS = 'Szczegóły',
       DISCONNECT = 'Rozłącz',
       EDIT = 'Edytuj',
+      EDITED = 'Edytowano',
+      UPDATED = 'Zaktualizowano',
       FAIL_TO_ADD_NEW_PARENT_TO_DATABASE =
           'Nie udało się dodać nowego rodzica do bazy danych.',
       FLAT_NUMBER = 'Numer mieszkania',
@@ -59,6 +62,7 @@ class Strings {
       NUMBER_OF_STUDENTS = 'Ilość ucznów',
       NUMBER_OF_SIBLINGS = 'Ilość rodzeństwa',
       NUMBER_OF_ATTENDANCES = 'Ilość obecności',
+      NUMBER_OF_CLASS_TYPES = 'Ilość typów zajęć',
       OK = 'OK',
       PARENTS = 'Rodzice',
       PAID = 'Zapłacono',
@@ -76,6 +80,7 @@ class Strings {
       REMOVED = 'usunięta',
       SIBLINGS = 'Rodzeństwo',
       SUCCESFULLY_ADDED = 'Pomyślnie dodano',
+      SUCCESFULLY = 'pomyślnie',
       STREET = 'Ulica',
       SIGNED_UP= 'Zapisani',
       TO_DATABASE = 'do bazy danych',
@@ -94,5 +99,6 @@ class Strings {
       STUDENTS_LIST = 'Lista uczni',
       STATISTICS = 'Statystyki',
       BILLS_LIST = 'Lista rachunków',
-      DATA_HAS_BEEN_UPDATED = 'Zakutalizowano dane';
+      DATA_HAS_BEEN_UPDATED = 'Zakutalizowano dane',
+      ERROR_MESSAGE_CHECK_FIELDS_FILL ='Wystąpił błąd, spradź poprawność wypełnienia pól!';
 }

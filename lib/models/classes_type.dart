@@ -23,4 +23,12 @@ class ClassesType {
   String toString() {
     return 'ClassesType{id: $id, priceForEach: $priceForEach, priceForMonth: $priceForMonth, name: $name}';
   }
+
+  int numberOfStudents() {
+    int numberOfStudents = 0;
+    for (var group in groups) {
+      numberOfStudents += group.students.length;
+    }
+    return numberOfStudents;
+  }
 }
