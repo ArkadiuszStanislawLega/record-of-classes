@@ -17,7 +17,7 @@ class DetailClassesType extends StatefulWidget {
 }
 
 class _DetailClassesTypeState extends State<DetailClassesType> {
-  static const double titleHeight = 150.0;
+  static const double titleHeight = 160.0;
   late ClassesType _classesType;
   late Store _store;
 
@@ -154,6 +154,10 @@ class _DetailClassesTypeState extends State<DetailClassesType> {
         Text(
           _classesType.name,
           style: const TextStyle(fontSize: 25, color: Colors.white),
+        ),
+        Text(
+          Strings.CLASSES_TYPE.toLowerCase(),
+          style: const TextStyle(fontSize: 12, color: Colors.white),
         ),
       ],
     );

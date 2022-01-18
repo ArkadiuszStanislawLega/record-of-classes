@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:objectbox/objectbox.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:record_of_classes/constants/app_urls.dart';
 import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/classes_type.dart';
-import 'package:record_of_classes/models/teacher.dart';
-import 'package:record_of_classes/widgets/templates/add_new_classes_type_template.dart';
-import 'package:record_of_classes/widgets/templates/lists/classes_type_list_template.dart';
+import 'package:record_of_classes/widgets/templates/list_items/classes_type_list_item.dart';
+import 'package:record_of_classes/widgets/templates/one_row_property_template.dart';
 
 class ClassesTypeMainPage extends StatefulWidget {
   const ClassesTypeMainPage({Key? key}) : super(key: key);
@@ -15,79 +15,111 @@ class ClassesTypeMainPage extends StatefulWidget {
 }
 
 class _ClassesTypeMainPageState extends State<ClassesTypeMainPage> {
-  final AddNewClassesTypeTemplate _addNewClassesTypeTemplate =
-  AddNewClassesTypeTemplate();
-  late Store _store;
+  static const double titleHeight = 150.0;
   late Stream<List<ClassesType>> _classesTypesStream;
-
-  @override
-  Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text(Strings.CLASSES),
-          bottom: const TabBar(
-            tabs: [
-              Tab(text: 'Nowy typ'),
-              Tab(text: 'Lista typów'),
-            ],
-          ),
-        ),
-        body: StreamBuilder<List<ClassesType>>(
-          stream: _classesTypesStream,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return TabBarView(
-                children: [
-                  _createNewClassesType(),
-                  ClassesTypeListTemplate(
-                    classesTypes: snapshot.data!,
-                  )
-                ],
-              );
-            } else {
-              return const Center(child: CircularProgressIndicator());
-            }
-          },
-        ),
-      ),
-    );
-  }
-
-  Widget _createNewClassesType() {
-    return Column(
-      children: [
-        _addNewClassesTypeTemplate,
-        TextButton(
-          onPressed: () {
-            if (_addNewClassesTypeTemplate.isInputValid()) {
-              _addClassesTypeToDb(_createClassesType(_getTeacherFromDb()));
-              _addNewClassesTypeTemplate.clearFields();
-            }
-          },
-          child: const Text(Strings.ADD_CLASSES_TYPE),
-        ),
-      ],
-    );
-  }
-
-  Teacher _getTeacherFromDb() => _store.box<Teacher>().getAll().elementAt(0);
-
-  ClassesType _createClassesType(Teacher teacher) =>
-      _addNewClassesTypeTemplate.getClassType()..teacher.target = teacher;
-
-  void _addClassesTypeToDb(ClassesType classesType) =>
-      _store.box<ClassesType>().put(classesType);
+  List<ClassesType> _classesTypes = [];
 
   @override
   void initState() {
     super.initState();
-    _store = objectBox.store;
-    _classesTypesStream = _store
+    _classesTypesStream = objectBox.store
         .box<ClassesType>()
         .query()
         .watch(triggerImmediately: true)
         .map((query) => query.find());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<List<ClassesType>>(
+      stream: _classesTypesStream,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          _classesTypes = snapshot.data!;
+          return DefaultTabController(
+            length: 2,
+            child: Scaffold(
+              floatingActionButton: SpeedDial(
+                icon: Icons.add,
+                backgroundColor: Colors.amber,
+                onPress: _navigateToAddNewClassPage,
+              ),
+              body: CustomScrollView(
+                slivers: [
+                  _customAppBar(),
+                  _content(),
+                ],
+              ),
+            ),
+          );
+        } else {
+          return const Center(child: CircularProgressIndicator());
+        }
+      },
+    );
+  }
+
+  void _navigateToAddNewClassPage() =>
+      Navigator.pushNamed(context, AppUrls.CREATE_CLASSES_TYPE);
+
+  SliverList _content() => _classesTypesSliverList();
+
+  SliverList _classesTypesSliverList() {
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+        (BuildContext context, int index) => ClassesTypeListItem(
+          classesType: _classesTypes.elementAt(index),
+        ),
+        childCount: _classesTypes.length,
+      ),
+    );
+  }
+
+  SliverAppBar _customAppBar() {
+    return SliverAppBar(
+      stretch: true,
+      onStretchTrigger: () => Future<void>.value(),
+      expandedHeight: titleHeight,
+      flexibleSpace: FlexibleSpaceBar(
+        stretchModes: const <StretchMode>[
+          StretchMode.zoomBackground,
+          StretchMode.blurBackground,
+          StretchMode.fadeTitle,
+        ],
+        centerTitle: true,
+        background: Stack(
+          fit: StackFit.expand,
+          children: <Widget>[
+            SafeArea(
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 50.0, vertical: 20.0),
+                child: Column(
+                  children: [
+                    const Text(
+                      Strings.MANAGE_CLASS_TYPES,
+                      style: TextStyle(fontSize: 25, color: Colors.white),
+                    ),
+                    OneRowPropertyTemplate(
+                      title: '${Strings.NUMBER_OF_CLASS_TYPES}:',
+                      value: _classesTypes.length.toString(),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment(0.0, 0.5),
+                  end: Alignment.center,
+                  colors: <Color>[Colors.black12, Colors.transparent],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
