@@ -68,6 +68,7 @@ class Strings {
       NUMBER_OF_CLASS_TYPES = 'Ilość typów zajęć',
       OK = 'OK',
       PARENTS = 'Rodzice',
+      PARTICIPANTS = 'Uczestnicy',
       PAID = 'Zapłacono',
       PAID_CLASSES = 'Zapłaconych zajęć',
       UNPAID_CLASSES = 'Niezapłaconych zajęć',
