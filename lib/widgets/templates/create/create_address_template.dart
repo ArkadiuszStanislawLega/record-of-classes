@@ -42,7 +42,6 @@ class CreateAddressTemplate extends StatefulWidget {
 class _CreateAddressTemplateState extends State<CreateAddressTemplate> {
   @override
   Widget build(BuildContext context) {
-    _setInitialValues();
     return Column(
       children: [
         TextField(
@@ -93,5 +92,11 @@ class _CreateAddressTemplateState extends State<CreateAddressTemplate> {
       widget._inputHouseNumber = widget.address!.houseNumber;
       widget._inputFlatNumber = widget.address!.flatNumber;
     }
+  }
+
+  @override
+  void initState() {
+    _setInitialValues();
+    super.initState();
   }
 }

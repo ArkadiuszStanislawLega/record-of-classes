@@ -8,8 +8,6 @@ import 'package:record_of_classes/models/group.dart';
 import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/widgets/templates/list_items/classes_list_item_template.dart';
 import 'package:record_of_classes/widgets/templates/list_items/students_in_group_list_item_template.dart';
-import 'package:record_of_classes/widgets/templates/lists/classes_list_template.dart';
-import 'package:record_of_classes/widgets/templates/lists/students_in_group_list_template.dart';
 import 'package:record_of_classes/widgets/templates/one_row_property_template.dart';
 
 class DetailGroupPage extends StatefulWidget {
@@ -23,11 +21,12 @@ enum ListOnPage { participants, classes }
 
 class _DetailGroupPageState extends State<DetailGroupPage> {
   late Group group;
-  bool _isEditModeEnabled = false;
   ListOnPage _currentListOnPage = ListOnPage.participants;
 
   late Store _store;
   late Stream<List<Student>> _studentsStream;
+
+  static const double titleHeight = 220.0;
 
   @override
   Widget build(BuildContext context) {
@@ -37,36 +36,33 @@ class _DetailGroupPageState extends State<DetailGroupPage> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           group = _store.box<Group>().get(group.id)!;
-          return DefaultTabController(
-            length: 2,
-            child: Scaffold(
-              body: CustomScrollView(
-                slivers: [
-                  _customAppBar(),
-                  _content(),
-                ],
-              ),
-              floatingActionButton: SpeedDial(
-                icon: Icons.add,
-                backgroundColor: Colors.amber,
-                children: [
-                  SpeedDialChild(
-                      child: const Icon(Icons.person),
-                      label: Strings.ADD_PARTICIPANTS,
-                      backgroundColor: Colors.amberAccent,
-                      onTap: _navigateToAddStudent),
-                  SpeedDialChild(
-                      child: const Icon(Icons.group),
-                      label: Strings.ADD_CLASSES,
-                      backgroundColor: Colors.amberAccent,
-                      onTap: _navigateToAddClasses),
-                  SpeedDialChild(
-                      child: const Icon(Icons.edit),
-                      label: Strings.EDIT,
-                      backgroundColor: Colors.amberAccent,
-                      onTap: () {}),
-                ],
-              ),
+          return Scaffold(
+            body: CustomScrollView(
+              slivers: [
+                _customAppBar(),
+                _content(),
+              ],
+            ),
+            floatingActionButton: SpeedDial(
+              icon: Icons.settings,
+              backgroundColor: Colors.amber,
+              children: [
+                SpeedDialChild(
+                    child: const Icon(Icons.person),
+                    label: Strings.ADD_PARTICIPANTS,
+                    backgroundColor: Colors.amberAccent,
+                    onTap: _navigateToAddStudent),
+                SpeedDialChild(
+                    child: const Icon(Icons.class__outlined),
+                    label: Strings.ADD_CLASSES,
+                    backgroundColor: Colors.amberAccent,
+                    onTap: _navigateToAddClasses),
+                SpeedDialChild(
+                    child: const Icon(Icons.edit),
+                    label: Strings.EDIT,
+                    backgroundColor: Colors.amberAccent,
+                    onTap: _navigateToEditGroupPage),
+              ],
             ),
           );
         } else {
@@ -75,6 +71,17 @@ class _DetailGroupPageState extends State<DetailGroupPage> {
       },
     );
   }
+
+  void _navigateToAddClasses() =>
+      Navigator.pushNamed(context, AppUrls.ADD_CLASSES_TO_GROUP,
+          arguments: group);
+
+  void _navigateToAddStudent() =>
+      Navigator.pushNamed(context, AppUrls.ADD_STUDENT_TO_GROUP,
+          arguments: group);
+
+  _navigateToEditGroupPage() =>
+      Navigator.pushNamed(context, AppUrls.EDIT_GROUP, arguments: group);
 
   SliverAppBar _customAppBar() {
     return SliverAppBar(
@@ -93,7 +100,7 @@ class _DetailGroupPageState extends State<DetailGroupPage> {
       ),
       stretch: true,
       onStretchTrigger: () => Future<void>.value(),
-      expandedHeight: 200.0,
+      expandedHeight: titleHeight,
       flexibleSpace: FlexibleSpaceBar(
         stretchModes: const <StretchMode>[
           StretchMode.zoomBackground,
@@ -185,18 +192,25 @@ class _DetailGroupPageState extends State<DetailGroupPage> {
     return SafeArea(
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 50.0, vertical: 20.0),
-        child: _propertiesNavigator(),
+        child: Column(
+          children: [
+            _pageTitle(),
+            OneRowPropertyTemplate(
+                title: Strings.CLASSES_TYPE,
+                value: group.classesType.target!.name),
+            OneRowPropertyTemplate(
+                title: Strings.CLASSES_ADDRESS,
+                value: group.address.target.toString()),
+            OneRowPropertyTemplate(
+                title: Strings.NUMBER_OF_STUDENTS,
+                value: group.students.length.toString()),
+            OneRowPropertyTemplate(
+                title: Strings.NUMBER_OF_CLASSES,
+                value: group.classes.length.toString()),
+          ],
+        ),
       ),
     );
-  }
-
-  Column _propertiesNavigator() {
-    switch (_currentListOnPage) {
-      case ListOnPage.participants:
-        return _propertiesParticipants();
-      case ListOnPage.classes:
-        return _propertiesClasses();
-    }
   }
 
   Container _pageTitle() {
@@ -216,97 +230,6 @@ class _DetailGroupPageState extends State<DetailGroupPage> {
       ),
     );
   }
-
-  Column _propertiesParticipants() {
-    return Column(
-      children: [
-        _pageTitle(),
-        OneRowPropertyTemplate(
-            title: Strings.CLASSES_TYPE, value: group.classesType.target!.name),
-        OneRowPropertyTemplate(
-            title: Strings.CLASSES_ADDRESS,
-            value: group.address.target.toString()),
-        OneRowPropertyTemplate(
-            title: Strings.NUMBER_OF_STUDENTS,
-            value: group.students.length.toString()),
-      ],
-    );
-  }
-
-  Column _propertiesClasses() {
-    return Column(
-      children: [
-        _pageTitle(),
-        OneRowPropertyTemplate(
-            title: Strings.CLASSES_TYPE, value: group.classesType.target!.name),
-        OneRowPropertyTemplate(
-            title: Strings.CLASSES_ADDRESS,
-            value: group.address.target.toString()),
-        OneRowPropertyTemplate(
-            title: Strings.NUMBER_OF_CLASSES,
-            value: group.classes.length.toString()),
-      ],
-    );
-  }
-
-  Widget _editModeEnabled() {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            TextButton(
-                onPressed: () {
-                  _setEditModeDisable();
-                },
-                child: const Text(Strings.OK)),
-            TextButton(
-                onPressed: () {
-                  _setEditModeDisable();
-                },
-                child: const Text(Strings.CANCEL))
-          ],
-        ),
-      ],
-    );
-  }
-
-  Widget _editModeDisabled() {
-    group = _store.box<Group>().get(group.id)!;
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            TextButton(
-              onPressed: _setEditModeEnable,
-              child: const Text(Strings.EDIT),
-            ),
-            TextButton(
-              onPressed: _navigateToAddStudent,
-              child: const Text(Strings.ADD_PARTICIPANTS),
-            ),
-            TextButton(
-              onPressed: _navigateToAddClasses,
-              child: const Text(Strings.ADD_CLASSES),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-
-  void _navigateToAddClasses() =>
-      Navigator.pushNamed(context, AppUrls.ADD_CLASSES_TO_GROUP,
-          arguments: group);
-
-  void _navigateToAddStudent() =>
-      Navigator.pushNamed(context, AppUrls.ADD_STUDENT_TO_GROUP,
-          arguments: group);
-
-  void _setEditModeEnable() => setState(() => _isEditModeEnabled = true);
-
-  void _setEditModeDisable() => setState(() => _isEditModeEnabled = false);
 
   @override
   void initState() {

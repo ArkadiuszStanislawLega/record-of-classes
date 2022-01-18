@@ -10,7 +10,7 @@ class CreateGroupTemplate extends StatefulWidget {
 
   String _inputName = '';
 
-  late CreateAddressTemplate _createAddressTemplate;
+  CreateAddressTemplate _createAddressTemplate = CreateAddressTemplate();
 
   final TextEditingController _nameController = TextEditingController();
 
@@ -30,11 +30,20 @@ class CreateGroupTemplate extends StatefulWidget {
       ..address.target = _createAddressTemplate.getAddress();
   }
 
+
+
   @override
   _CreateGroupTemplateState createState() => _CreateGroupTemplateState();
 }
 
 class _CreateGroupTemplateState extends State<CreateGroupTemplate> {
+  @override
+  void initState() {
+    widget._createAddressTemplate =
+        CreateAddressTemplate(address: widget.group?.address.target);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -51,12 +60,5 @@ class _CreateGroupTemplateState extends State<CreateGroupTemplate> {
         widget._createAddressTemplate,
       ],
     );
-  }
-
-  @override
-  void initState() {
-    widget._createAddressTemplate =
-        CreateAddressTemplate(address: widget.group?.address.target);
-    super.initState();
   }
 }

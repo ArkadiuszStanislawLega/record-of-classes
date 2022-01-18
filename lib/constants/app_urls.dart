@@ -13,6 +13,7 @@ class AppUrls {
       CREATE_CLASSES_TYPE = '/create_classes_type',
       EDIT_CLASSES_TYPE = '/edit_classes_type',
       CREATE_GROUP = '/create_group',
+      EDIT_GROUP= '/edit_group',
       DETAIL_GROUP = '/detail_group',
       ADD_STUDENT_TO_GROUP = '/add_student_to_group',
       ADD_CLASSES_TO_GROUP = '/add_classes_to_group',
