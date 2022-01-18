@@ -38,7 +38,7 @@ class _EditGroupPageState extends State<EditGroupPage> {
   }
 
   void _createGroupButtonOnClickActions() {
-      _checkValues();
+      _checkIfSomeValuesAreChange();
       _updateDatabase();
 
     SnackBarInfoTemplate(
@@ -47,7 +47,7 @@ class _EditGroupPageState extends State<EditGroupPage> {
     Navigator.pop(context);
   }
 
-  void _checkValues(){
+  void _checkIfSomeValuesAreChange(){
     Group createdGroup = _createGroupTemplate.getGroup();
     Address createdGroupAddress = createdGroup.address.target!;
 

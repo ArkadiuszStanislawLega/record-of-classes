@@ -22,6 +22,8 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
   late Stream<List<Classes>> _classesStream;
   bool _isWrittenOpen = true;
 
+  static const double titleHeight = 250.0;
+
   @override
   Widget build(BuildContext context) {
     widget._classes = ModalRoute.of(context)!.settings.arguments as Classes;
@@ -29,6 +31,7 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
       stream: _classesStream,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
+          widget._classes = objectBox.store.box<Classes>().get(widget._classes.id)!;
           return DefaultTabController(
             length: 2,
             child: Scaffold(
@@ -61,7 +64,7 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
       ),
       stretch: true,
       onStretchTrigger: () => Future<void>.value(),
-      expandedHeight: 200.0,
+      expandedHeight: titleHeight,
       flexibleSpace: FlexibleSpaceBar(
         stretchModes: const <StretchMode>[
           StretchMode.zoomBackground,
@@ -109,7 +112,7 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
           });
         },
         child: const Text(
-          Strings.SIGNED_UP,
+          Strings.SIGNED_UP_FOR_CLASSES,
           style: TextStyle(color: Colors.white),
         ),
       ),
@@ -133,7 +136,7 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
       child: TextButton(
         onPressed: () => setState(() => _isWrittenOpen = false),
         child: const Text(
-          Strings.PRESENTS,
+          Strings.PRESENTS_AT_THE_CLASSSES,
           style: TextStyle(color: Colors.white),
         ),
       ),
@@ -149,10 +152,12 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
           children: [
             Container(
               padding: const EdgeInsets.all(16.0),
-              child: Text(
-                widget._classes.group.target!.name,
-                style: const TextStyle(fontSize: 25, color: Colors.white),
-              ),
+              child: Column(children: [
+                Text(widget._classes.group.target!.name,
+                style: const TextStyle(fontSize: 25, color: Colors.white),),
+                Text(Strings.CLASSES_CONDUCTED.toLowerCase(),
+                  style: const TextStyle(fontSize: 12, color: Colors.white)
+              ),],),
             ),
             OneRowPropertyTemplate(
               title: '${Strings.DATE_OF_CLASSES}:',
@@ -163,7 +168,7 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
               value: widget._classes.group.target!.students.length.toString(),
             ),
             OneRowPropertyTemplate(
-                title: '${Strings.PRESENTS}:',
+                title: '${Strings.PRESENTS_AT_THE_CLASSSES}:',
                 value: widget._classes.attendances.length.toString()),
           ],
         ),

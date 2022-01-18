@@ -21,12 +21,12 @@ enum ListOnPage { participants, classes }
 
 class _DetailGroupPageState extends State<DetailGroupPage> {
   late Group group;
-  ListOnPage _currentListOnPage = ListOnPage.participants;
+  ListOnPage _currentListOnPage = ListOnPage.classes;
 
   late Store _store;
   late Stream<List<Student>> _studentsStream;
 
-  static const double titleHeight = 220.0;
+  static const double titleHeight = 250.0;
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +91,7 @@ class _DetailGroupPageState extends State<DetailGroupPage> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             _pageNavigationButton(
-                title: Strings.CLASSES, listOnPage: ListOnPage.classes),
+                title: Strings.LIST_OF_CLASSES_CONDUCTED, listOnPage: ListOnPage.classes),
             _pageNavigationButton(
                 title: Strings.PARTICIPANTS,
                 listOnPage: ListOnPage.participants),

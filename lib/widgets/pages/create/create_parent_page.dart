@@ -83,5 +83,6 @@ class CreateParentPage extends StatelessWidget {
     _isInputValuesAreValid()
         ? {_addToDatabase(), _createParentSuccessfulMessage(context), _clearValues()}
         : _createParentUnsuccessfulMessage(context);
+    Navigator.pop(context);
   }
 }

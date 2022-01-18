@@ -25,7 +25,14 @@ class ClassesListItemTemplate extends StatelessWidget {
           },
         ),
       ],
-      child: ListTile(
+      child: Card(
+        shape: RoundedRectangleBorder(
+          side: const BorderSide(color: Colors.white70, width: 1),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        margin: const EdgeInsets.symmetric(vertical: 8.0),
+        elevation: 7,
+        child: ListTile(
           title: Text(classes.group.target!.name),
           subtitle: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -37,7 +44,9 @@ class ClassesListItemTemplate extends StatelessWidget {
           ),
           onTap: () {
             _navigateToGroupProfile(context);
-          }),
+          },
+        ),
+      ),
     );
   }
 
