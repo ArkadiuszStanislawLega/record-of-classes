@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:record_of_classes/constants/app_urls.dart';
 import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/main.dart';
@@ -19,6 +20,8 @@ class _StudentsMainPageState extends State<StudentsMainPage> {
   late Stream<List<Student>> _studentsStream;
   late List<Student> _studentsList;
 
+  static const double titleHeight =150.0;
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<Student>>(
@@ -29,6 +32,11 @@ class _StudentsMainPageState extends State<StudentsMainPage> {
           return DefaultTabController(
             length: 2,
             child: Scaffold(
+              floatingActionButton: SpeedDial(
+                icon: Icons.add,
+                backgroundColor: Colors.amber,
+                onPress: _navigateToCreateStudent,
+              ),
               body: CustomScrollView(
                 slivers: [
                   _customAppBar(),
@@ -46,24 +54,9 @@ class _StudentsMainPageState extends State<StudentsMainPage> {
 
   SliverAppBar _customAppBar() {
     return SliverAppBar(
-      bottom: PreferredSize(
-        preferredSize: const Size(0, 10),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            TextButton(
-              onPressed: _navigateToCreateStudent,
-              child: const Text(
-                Strings.ADD_STUDENT,
-                style: TextStyle(color: Colors.white),
-              ),
-            )
-          ],
-        ),
-      ),
       stretch: true,
       onStretchTrigger: () => Future<void>.value(),
-      expandedHeight: 200.0,
+      expandedHeight: titleHeight,
       flexibleSpace: FlexibleSpaceBar(
         stretchModes: const <StretchMode>[
           StretchMode.zoomBackground,
