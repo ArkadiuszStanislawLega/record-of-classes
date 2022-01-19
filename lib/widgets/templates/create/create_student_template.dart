@@ -42,6 +42,7 @@ class CreateStudentTemplate extends StatelessWidget {
     _addToDatabase();
     _infoCreatedStudent(context);
     _clearFields();
+    Navigator.pop(context);
   }
 
   void _createNewPerson() {

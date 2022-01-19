@@ -32,6 +32,7 @@ import 'package:record_of_classes/widgets/pages/edit/edit_parent_page.dart';
 import 'package:record_of_classes/widgets/pages/edit/edit_student_page.dart';
 import 'package:record_of_classes/widgets/pages/finance_main_page.dart';
 import 'package:record_of_classes/widgets/pages/groups_main_page.dart';
+import 'package:record_of_classes/widgets/pages/phone_book_page.dart';
 import 'package:record_of_classes/widgets/pages/start_page.dart';
 import 'package:record_of_classes/widgets/pages/detail/student_detail_page.dart';
 import 'package:record_of_classes/widgets/pages/students_main_page.dart';
@@ -62,9 +63,9 @@ late ObjectBox objectBox;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   objectBox = await ObjectBox.create();
-  // clearDb();
+  clearDb();
   _putTeacherToDb();
-  // clearDb();
+
   // printDataFromDB();
   // objectBox.store.box<Account>().getAll().forEach((element) {
   //   print(element.id);
@@ -167,6 +168,7 @@ class _RecordOfClassesApp extends State<RecordOfClassesApp> {
         AppUrls.FINANCE_MAIN_PAGE: (context) => const FinanceMainPage(),
         AppUrls.GROUPS_MAIN_PAGE: (context) => const GroupsMainPage(),
         AppUrls.ADD_PHONE: (context) => CreatePhonePage(),
+        AppUrls.PHONE_BOOK: (context) => PhoneBookPage(),
         '/test' : (context) => Test()
       },
     );

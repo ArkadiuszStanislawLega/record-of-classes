@@ -23,5 +23,6 @@ class AppUrls {
       CLASSES_TYPE_MAIN_PAGE = '/classes_type_main_page',
       FINANCE_MAIN_PAGE = '/finance_main_page',
       GROUPS_MAIN_PAGE = '/groups_main_page',
-      ADD_PHONE = '/add_phone';
+      ADD_PHONE = '/add_phone',
+      PHONE_BOOK = '/phone_book_page';
 }
