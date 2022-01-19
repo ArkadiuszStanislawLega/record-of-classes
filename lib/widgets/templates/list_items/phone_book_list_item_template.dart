@@ -29,7 +29,10 @@ class _PhoneBookListItemTemplateState extends State<PhoneBookListItemTemplate> {
     );
   }
 
-  void _navigateToParentProfile() =>
-      Navigator.pushNamed(context, AppUrls.DETAIL_PARENT,
-          arguments: widget.phone.owner.target!);
+  void _navigateToParentProfile() {
+    Navigator.pushNamed(context, AppUrls.DETAIL_PARENT,
+        arguments: widget.phone.owner.target!);
+
+  }
+
 }

@@ -5,6 +5,8 @@ import 'package:record_of_classes/constants/app_urls.dart';
 import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/parent.dart';
+import 'package:record_of_classes/models/person.dart';
+import 'package:record_of_classes/models/phone.dart';
 import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/widgets/templates/snack_bar_info_template.dart';
 
@@ -22,11 +24,8 @@ class ParentListItemTemplate extends StatefulWidget {
 }
 
 class _ParentListItemTemplate extends State<ParentListItemTemplate> {
-  late Store _store;
-
   @override
   Widget build(BuildContext context) {
-    _store = objectBox.store;
     if (widget.parent.person.target != null) {
       return Slidable(
         actionPane: const SlidableDrawerActionPane(),
@@ -59,25 +58,40 @@ class _ParentListItemTemplate extends State<ParentListItemTemplate> {
   }
 
   void removeParent() {
+    _removeParentFromStudentInDatabase();
     SnackBarInfoTemplate(
         context: context,
         message:
             '${widget.parent.introduceYourself()} ${Strings.REMOVED_FROM_DATABASE}!');
-    _removeParentFromStudentInDatabase();
   }
 
   void _removeParentFromStudentInDatabase() {
-    var box = _store.box<Parent>();
+    setState(() {
+      var parentBox = objectBox.store.box<Parent>();
+      var personBox = objectBox.store.box<Person>();
+      var phoneBox = objectBox.store.box<Phone>();
 
-    box.remove(widget.parent.id);
-    box.remove(widget.parent.person.target!.id);
+      widget.student.parents
+          .removeWhere((element) => element.id == widget.parent.id);
+      widget.parent.children
+          .removeWhere((element) => element.id == widget.student.id);
+
+      for (var element in widget.parent.phone) {
+        phoneBox.remove(element.id);
+      }
+      widget.parent.phone
+          .removeWhere((element) => element.owner.targetId == widget.parent.id);
+
+      parentBox.remove(widget.parent.id);
+      personBox.remove(widget.parent.person.target!.id);
+    });
   }
 
   void _addParentToStudentInDatabase() {
     widget.student.parents.add(widget.parent);
     widget.parent.children.add(widget.student);
-    _store.box<Student>().put(widget.student);
-    _store.box<Parent>().put(widget.parent);
+    objectBox.store.box<Student>().put(widget.student);
+    objectBox.store.box<Parent>().put(widget.parent);
   }
 
   void addParent() {

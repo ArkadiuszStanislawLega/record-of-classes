@@ -1,8 +1,11 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/phone.dart';
+import 'package:record_of_classes/objectbox.g.dart';
 import 'package:record_of_classes/widgets/templates/list_items/phone_book_list_item_template.dart';
 import 'package:record_of_classes/widgets/templates/one_row_property_template.dart';
 
@@ -21,8 +24,11 @@ enum PhonesFiltering {
 class _PhoneBookPageState extends State<PhoneBookPage> {
   late Stream<List<Phone>> _phonesSteam;
   List<Phone> _phones = [];
+  List<Phone> _filteredPhones = [];
   PhonesFiltering _currentPhonesFiltering =
       PhonesFiltering.alphabeticalAscending;
+
+  static const titleHeight = 200.0;
 
   @override
   void initState() {
@@ -41,6 +47,8 @@ class _PhoneBookPageState extends State<PhoneBookPage> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           _phones = snapshot.data!;
+          _filteringList('');
+          print('init ${_phones.length} ${_filteredPhones.length}');
           return Scaffold(
             body: CustomScrollView(
               slivers: [
@@ -68,6 +76,17 @@ class _PhoneBookPageState extends State<PhoneBookPage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
+            SizedBox(
+              width: MediaQuery.of(context).size.width - 100,
+              child: TextField(
+                onChanged: (input) {
+                  _filteringList(input);
+                },
+                decoration: const InputDecoration(
+                  hintText: Strings.FIND_CONTACT,
+                ),
+              ),
+            ),
             _pageNavigationButton(
                 title: Strings.ALPHABETIC_ASCENDING,
                 filtering: PhonesFiltering.alphabeticalAscending),
@@ -79,7 +98,7 @@ class _PhoneBookPageState extends State<PhoneBookPage> {
       ),
       stretch: true,
       onStretchTrigger: () => Future<void>.value(),
-      expandedHeight: 200.0,
+      expandedHeight: titleHeight,
       flexibleSpace: FlexibleSpaceBar(
         stretchModes: const <StretchMode>[
           StretchMode.zoomBackground,
@@ -106,6 +125,37 @@ class _PhoneBookPageState extends State<PhoneBookPage> {
     );
   }
 
+  void _filteringList(String input) {
+
+      _filteredPhones.clear();
+      print(
+          'filtering ${_phones.length.toString()} ${_filteredPhones.length.toString()} ');
+      if (input != '') {
+        for (var element in _phones) {
+          if (element.owner.target!.surname.contains(input)) {
+            _filteredPhones.add(element);
+          }
+        }
+      } else {
+        for (var element in _phones) {
+          _filteredPhones.add(element);
+        }
+      }
+
+  }
+
+  SliverList _phonesSliverList() {
+    _filterList();
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+            (BuildContext context, int index) => PhoneBookListItemTemplate(
+          phone: _filteredPhones.elementAt(index),
+        ),
+        childCount: _filteredPhones.length,
+      ),
+    );
+  }
+
   DecoratedBox _pageNavigationButton(
       {required String title, required PhonesFiltering filtering}) {
     return DecoratedBox(
@@ -123,12 +173,11 @@ class _PhoneBookPageState extends State<PhoneBookPage> {
           )
         ],
       ),
-      child: TextButton(
+      child: IconButton(
+        icon: Icon(filtering == PhonesFiltering.alphabeticalDescending
+            ? Icons.arrow_drop_down_sharp
+            : Icons.arrow_drop_up_sharp),
         onPressed: () => setState(() => _currentPhonesFiltering = filtering),
-        child: Text(
-          title,
-          style: const TextStyle(color: Colors.white),
-        ),
       ),
     );
   }
@@ -158,23 +207,13 @@ class _PhoneBookPageState extends State<PhoneBookPage> {
 
   SliverList _content() => _phonesSliverList();
 
-  SliverList _phonesSliverList() {
-    _filterList();
-    return SliverList(
-      delegate: SliverChildBuilderDelegate(
-        (BuildContext context, int index) => PhoneBookListItemTemplate(
-          phone: _phones.elementAt(index),
-        ),
-        childCount: _phones.length,
-      ),
-    );
-  }
+
 
   void _filterList() {
-    _phones.sort((phone1, phone2) =>
+    _filteredPhones.sort((phone1, phone2) =>
         phone1.owner.target!.surname.compareTo(phone2.owner.target!.surname));
     if (_currentPhonesFiltering == PhonesFiltering.alphabeticalDescending) {
-      _phones.sort((phone1, phone2) => phone1.owner.target!.surname
+      _filteredPhones.sort((phone1, phone2) => phone1.owner.target!.surname
                   .compareTo(phone2.owner.target!.surname) ==
               1
           ? 0

@@ -56,6 +56,7 @@ class Strings {
           'Nie udało się dodać nowego rodzica do bazy danych.',
       FLAT_NUMBER = 'Numer mieszkania',
       FINANCE = 'Finanse',
+      FIND_CONTACT = 'Szukaj kontaktu',
       GROUP_NAME = 'Nazwa grupy',
       GROUPS = 'Grupy',
       GROUP_OF_CLASSES = 'Grupa zajęć',
