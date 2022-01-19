@@ -26,6 +26,7 @@ class Strings {
       CLASSES = 'Zajęcia',
       CLASSES_CONDUCTED = 'Przeprowadzone zajęcia',
       MANAGE_CLASS_TYPES = 'Zarządzanie typami zajęć',
+      MANAGE_GROUPS = 'Zarządzanie grupami',
       CONTACTS = 'Kontakty',
       CREATE_STUDENT = 'Utwórz ucznia',
       CREATE_PARENT = 'Utwórz rodzica',
