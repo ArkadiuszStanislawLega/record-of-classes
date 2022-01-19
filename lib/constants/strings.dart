@@ -28,6 +28,7 @@ class Strings {
       MANAGE_CLASS_TYPES = 'Zarządzanie typami zajęć',
       MANAGE_GROUPS = 'Zarządzanie grupami',
       MANAGE_CLASSES = 'Zarządzanie przeprowadzonymi zajęciami',
+      MANAGE_FINANCES = 'Zarządzanie finansami',
       CONTACTS = 'Kontakty',
       CREATE_STUDENT = 'Utwórz ucznia',
       CREATE_PARENT = 'Utwórz rodzica',

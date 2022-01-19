@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/main.dart';
@@ -14,6 +15,7 @@ class FinanceMainPage extends StatefulWidget {
 }
 
 class _FinanceMainPageState extends State<FinanceMainPage> {
+  static const double titleHeight = 200.0;
   late Store _store;
   late Stream<List<Bill>> _billsStream;
   bool _isPaidFilter = false;
@@ -21,107 +23,88 @@ class _FinanceMainPageState extends State<FinanceMainPage> {
   double _unpaidPrice = 0.0, _paidPrice = 0.0;
 
   @override
+  void initState() {
+    super.initState();
+    _store = objectBox.store;
+    _billsStream = _store
+        .box<Bill>()
+        .query()
+        .watch(triggerImmediately: true)
+        .map((query) => query.find());
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        body: StreamBuilder<List<Bill>>(
-          stream: _billsStream,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              _prepareData(snapshot.data!);
-              return CustomScrollView(
-                physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-                slivers: <Widget>[
-                  SliverAppBar(
-                    actions: [
-                      IconButton(
-                          onPressed: _onPressChangeFiltering,
-                          icon: const Icon(Icons.filter_alt_outlined)),
-                    ],
-                    stretch: true,
-                    onStretchTrigger: () {
-                      // Function callback for stretch
-                      return Future<void>.value();
-                    },
-                    expandedHeight: 200.0,
-                    flexibleSpace: FlexibleSpaceBar(
-                      stretchModes: const <StretchMode>[
-                        StretchMode.zoomBackground,
-                        StretchMode.blurBackground,
-                        StretchMode.fadeTitle,
-                      ],
-                      centerTitle: true,
-                      title: const Text(Strings.FINANCE),
-                      background: Stack(
-                        fit: StackFit.expand,
-                        children: <Widget>[
-                          SafeArea(
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 50.0, vertical: 20.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  _oneRow('${Strings.PAID_CLASSES}:',
-                                      _paid.length.toString()),
-                                  _oneRow('${Strings.UNPAID_CLASSES}:',
-                                      _unpaid.length.toString()),
-                                  _oneRow('${Strings.TOTAL_PAID}:',
-                                      '${_paidPrice.toStringAsFixed(2)} ${Strings.CURRENCY}'),
-                                  _oneRow('${Strings.TOTAL_UNPAID}:',
-                                      '${_unpaidPrice.toStringAsFixed(2)} ${Strings.CURRENCY}'),
-                                ],
-                              ),
-                            ),
-                          ),
-                          const DecoratedBox(
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                begin: Alignment(0.0, 0.5),
-                                end: Alignment.center,
-                                colors: <Color>[
-                                  Colors.black12,
-                                  Colors.transparent
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                      (BuildContext context, int index) {
-                        return BillListItem(
-                            bill: _isPaidFilter
-                                ? _paid.elementAt(index)
-                                : _unpaid.elementAt(index));
-                      },
-                      childCount: _isPaidFilter
-                          ? _paid.length
-                          : _unpaid.length, // 1000 list items
-                    ),
-                  ),
+    return StreamBuilder<List<Bill>>(
+      stream: _billsStream,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          _prepareData(snapshot.data!);
+          return DefaultTabController(
+            length: 2,
+            child: Scaffold(
+              body: CustomScrollView(
+                slivers: [
+                  _customAppBar(),
+                  _content(),
                 ],
-              );
-            } else {
-              return const Center(child: CircularProgressIndicator());
-            }
-          },
+              ),
+              floatingActionButton: SpeedDial(
+                icon: _isPaidFilter
+                    ? Icons.filter_alt
+                    : Icons.filter_alt_outlined,
+                backgroundColor: Colors.amber,
+                onPress: _onPressChangeFiltering,
+              ),
+            ),
+          );
+        } else {
+          return const Center(child: CircularProgressIndicator());
+        }
+      },
+    );
+  }
+
+  SliverAppBar _customAppBar() {
+    return SliverAppBar(
+      stretch: true,
+      onStretchTrigger: () => Future<void>.value(),
+      expandedHeight: titleHeight,
+      flexibleSpace: FlexibleSpaceBar(
+        stretchModes: const <StretchMode>[
+          StretchMode.zoomBackground,
+          StretchMode.blurBackground,
+          StretchMode.fadeTitle,
+        ],
+        centerTitle: true,
+        background: Stack(
+          fit: StackFit.expand,
+          children: <Widget>[
+            _propertiesView(),
+            const DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment(0.0, 0.5),
+                  end: Alignment.center,
+                  colors: <Color>[Colors.black12, Colors.transparent],
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
 
-  void _prepareData(List<Bill> list) {
+  SliverList _content() => _pageNavigator();
+
+  void _prepareData(List<Bill> bills) {
     _paid.clear();
     _unpaid.clear();
     _paidPrice = 0.0;
     _unpaidPrice = 0.0;
 
-    for (var bill in list) {
+    for (var bill in bills) {
       if (bill.isPaid) {
         _paid.add(bill);
         _paidPrice += bill.price;
@@ -129,35 +112,54 @@ class _FinanceMainPageState extends State<FinanceMainPage> {
         _unpaid.add(bill);
         _unpaidPrice += bill.price;
       }
-      ;
     }
   }
 
-  Widget _view() {
-    return TabBarView(
-      children: [
-        Column(
+  SafeArea _propertiesView() {
+    return SafeArea(
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 50.0, vertical: 20.0),
+        child: Column(
           children: [
             Container(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _oneRow('${Strings.PAID_CLASSES}:', _paid.length.toString()),
-                  _oneRow(
-                      '${Strings.UNPAID_CLASSES}:', _unpaid.length.toString()),
-                  _oneRow('${Strings.TOTAL_PAID}:',
-                      '${_paidPrice.toStringAsFixed(2)} ${Strings.CURRENCY}'),
-                  _oneRow('${Strings.TOTAL_UNPAID}:',
-                      '${_unpaidPrice.toStringAsFixed(2)} ${Strings.CURRENCY}'),
-                ],
+              padding: const EdgeInsets.all(16.0),
+              child: const Text(
+                Strings.MANAGE_FINANCES,
+                style: TextStyle(fontSize: 25, color: Colors.white),
               ),
             ),
+            _oneRow('${Strings.PAID_CLASSES}:', _paid.length.toString()),
+            _oneRow('${Strings.UNPAID_CLASSES}:', _unpaid.length.toString()),
+            _oneRow('${Strings.TOTAL_PAID}:',
+                '${_paidPrice.toStringAsFixed(2)} ${Strings.CURRENCY}'),
+            _oneRow('${Strings.TOTAL_UNPAID}:',
+                '${_unpaidPrice.toStringAsFixed(2)} ${Strings.CURRENCY}'),
           ],
         ),
-        AllUnpaidBillsTemplate(bills: _isPaidFilter ? _paid : _unpaid),
-      ],
+      ),
+    );
+  }
+
+  SliverList _pageNavigator() =>
+      _isPaidFilter ? _unpaidSliverList() : _paidSliverList();
+
+  SliverList _unpaidSliverList() {
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+        (BuildContext context, int index) =>
+            BillListItem(bill: _unpaid.elementAt(index)),
+        childCount: _unpaid.length,
+      ),
+    );
+  }
+
+  SliverList _paidSliverList() {
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+        (BuildContext context, int index) =>
+            BillListItem(bill: _paid.elementAt(index)),
+        childCount: _paid.length,
+      ),
     );
   }
 
@@ -165,8 +167,14 @@ class _FinanceMainPageState extends State<FinanceMainPage> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(title, style: const TextStyle(color: Colors.white),),
-        Text(value, style: const TextStyle(color: Colors.white),),
+        Text(
+          title,
+          style: const TextStyle(color: Colors.white),
+        ),
+        Text(
+          value,
+          style: const TextStyle(color: Colors.white),
+        ),
       ],
     );
   }
@@ -179,16 +187,5 @@ class _FinanceMainPageState extends State<FinanceMainPage> {
         _isPaidFilter = true;
       }
     });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _store = objectBox.store;
-    _billsStream = _store
-        .box<Bill>()
-        .query()
-        .watch(triggerImmediately: true)
-        .map((query) => query.find());
   }
 }
