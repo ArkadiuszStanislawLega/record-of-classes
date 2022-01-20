@@ -108,6 +108,7 @@ class Strings {
       SIBLINGS = 'Rodzeństwo',
       SUCCESFULLY_ADDED = 'Pomyślnie dodano',
       SUCCESFULLY = 'pomyślnie',
+      SUCCESFULLY_UPDATED_STUDENT = 'Pomyślnie edyowano ucznia',
       STREET = 'Ulica',
       SIGNED_UP_FOR_CLASSES= 'Zapisani na zajęcia',
       TO_DATABASE = 'do bazy danych',

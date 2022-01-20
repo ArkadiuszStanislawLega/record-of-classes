@@ -4,10 +4,10 @@ import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/person.dart';
 import 'package:record_of_classes/models/student.dart';
+import 'package:record_of_classes/widgets/templates/snack_bar_info_template.dart';
 
 class EditStudentPage extends StatefulWidget {
   EditStudentPage({Key? key}) : super(key: key);
-
 
   @override
   State<StatefulWidget> createState() {
@@ -15,22 +15,15 @@ class EditStudentPage extends StatefulWidget {
   }
 }
 
-
 class _EditStudentPage extends State<EditStudentPage> {
-
   late Student _student;
   late Person _person;
 
-  String _personAge = '',
-      _personName = '',
-      _personSurname = '';
+  String _personAge = '', _personName = '', _personSurname = '';
 
   @override
   Widget build(BuildContext context) {
-    _student = ModalRoute
-        .of(context)!
-        .settings
-        .arguments as Student;
+    _student = ModalRoute.of(context)!.settings.arguments as Student;
     _person = _student.person.target!;
     return Scaffold(
       appBar: AppBar(
@@ -38,49 +31,49 @@ class _EditStudentPage extends State<EditStudentPage> {
           _student.introduceYourself(),
         ),
       ),
-      body: Column(
-        children: [
-          TextField(
-            decoration: InputDecoration(
-              hintText: _person.name == '' ? Strings.NAME : _person.name,
-            ),
-            onChanged: (userInput) {
-              _personName = userInput;
-            },
+      body: _content()
+    );
+  }
+
+  Widget _content(){
+    return Column(
+      children: [
+        TextField(
+          decoration: InputDecoration(
+            hintText: _person.name == '' ? Strings.NAME : _person.name,
           ),
-          TextField(
+          onChanged: (userInput) {
+            _personName = userInput;
+          },
+        ),
+        TextField(
+          decoration: InputDecoration(
+            hintText:
+            _person.surname == '' ? Strings.SURNAME : _person.surname,
+          ),
+          onChanged: (userInput) {
+            _personSurname = userInput;
+          },
+        ),
+        TextField(
+            onChanged: (userInput) {
+              _personAge = userInput;
+            },
             decoration: InputDecoration(
               hintText:
-              _person.surname == '' ? Strings.SURNAME : _person.surname,
+              _student.age == 0 ? Strings.AGE : _student.age.toString(),
             ),
-            onChanged: (userInput) {
-              _personSurname = userInput;
-            },
+            keyboardType: TextInputType.number,
+            inputFormatters: <TextInputFormatter>[
+              FilteringTextInputFormatter.digitsOnly
+            ]),
+        Center(
+          child: TextButton(
+            onPressed: confirmEditChanges,
+            child: const Text(Strings.OK),
           ),
-          TextField(
-              onChanged: (userInput) {
-                _personAge = userInput;
-              },
-              decoration: InputDecoration(
-                hintText:
-                _student.age == 0 ? Strings.AGE : _student.age.toString(),
-              ),
-              keyboardType: TextInputType.number,
-              inputFormatters: <TextInputFormatter>[
-                FilteringTextInputFormatter.digitsOnly
-              ]),
-          Center(
-            child: Row(
-              children: [
-                TextButton(
-                  onPressed: confirmEditChanges,
-                  child: const Text(Strings.OK),
-                )
-              ],
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -101,8 +94,13 @@ class _EditStudentPage extends State<EditStudentPage> {
   void confirmEditChanges() {
     setNewValues();
     updateValueInDatabase();
+    SnackBarInfoTemplate(
+        context: context,
+        message:
+            '${Strings.SUCCESFULLY_UPDATED_STUDENT} ${_student.introduceYourself()}');
     Navigator.pop(context);
   }
 
-  void updateValueInDatabase() =>  setState(() => objectBox.store.box<Person>().put(_person));
+  void updateValueInDatabase() =>
+      setState(() => objectBox.store.box<Person>().put(_person));
 }

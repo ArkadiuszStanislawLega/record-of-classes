@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/constants/app_urls.dart';
 import 'package:record_of_classes/constants/strings.dart';
-import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/attendance.dart';
 import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/widgets/templates/list_items/bill_list_item.dart';
@@ -26,71 +24,47 @@ enum Pages { parents, siblings, account, attendance, phones }
 
 class _StudentDetailPage extends State<StudentDetailPage> {
   late Student _student;
-  late Store _store;
-  late Stream<List<Student>> _parentsStream;
   Pages _currentPage = Pages.parents;
 
   @override
-  void initState() {
-    super.initState();
-    _store = objectBox.store;
-    _parentsStream = _store
-        .box<Student>()
-        .query()
-        .watch(triggerImmediately: true)
-        .map((query) => query.find());
-  }
-
-  @override
   Widget build(BuildContext context) {
-    _student = ModalRoute.of(context)!.settings.arguments as Student;
-    return StreamBuilder<List<Student>>(
-      stream: _parentsStream,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          _student = objectBox.store.box<Student>().get(_student.id)!;
-          return DefaultTabController(
-            length: 2,
-            child: Scaffold(
-              body: CustomScrollView(
-                slivers: [
-                  _customAppBar(),
-                  _content(),
-                ],
-              ),
-              floatingActionButton: SpeedDial(
-                icon: Icons.settings,
-                backgroundColor: Colors.amber,
-                children: [
-                  SpeedDialChild(
-                      child: const Icon(Icons.person),
-                      label: Strings.ADD_SIBLING,
-                      backgroundColor: Colors.amberAccent,
-                      onTap: _navigateToAddSiblings),
-                  SpeedDialChild(
-                      child: const Icon(Icons.group),
-                      label: Strings.ADD_PARENT,
-                      backgroundColor: Colors.amberAccent,
-                      onTap: _navigateToAddParent),
-                  SpeedDialChild(
-                      child: const Icon(Icons.add_call),
-                      label: Strings.ADD_CONTACT,
-                      backgroundColor: Colors.amberAccent,
-                      onTap: _navigateToAddContact),
-                  SpeedDialChild(
-                      child: const Icon(Icons.edit),
-                      label: Strings.EDIT,
-                      backgroundColor: Colors.amberAccent,
-                      onTap: _navigateToEditStudent),
-
-                ],
-              ),
-            ),
-          );
-        } else {
-          return const Center(child: CircularProgressIndicator());
-        }
-      },
+    _student = ModalRoute
+        .of(context)!
+        .settings
+        .arguments as Student;
+    return Scaffold(
+      body: CustomScrollView(
+        slivers: [
+          _customAppBar(),
+          _content(),
+        ],
+      ),
+      floatingActionButton: SpeedDial(
+        icon: Icons.settings,
+        backgroundColor: Colors.amber,
+        children: [
+          SpeedDialChild(
+              child: const Icon(Icons.person),
+              label: Strings.ADD_SIBLING,
+              backgroundColor: Colors.amberAccent,
+              onTap: _navigateToAddSiblings),
+          SpeedDialChild(
+              child: const Icon(Icons.group),
+              label: Strings.ADD_PARENT,
+              backgroundColor: Colors.amberAccent,
+              onTap: _navigateToAddParent),
+          SpeedDialChild(
+              child: const Icon(Icons.add_call),
+              label: Strings.ADD_CONTACT,
+              backgroundColor: Colors.amberAccent,
+              onTap: _navigateToAddContact),
+          SpeedDialChild(
+              child: const Icon(Icons.edit),
+              label: Strings.EDIT,
+              backgroundColor: Colors.amberAccent,
+              onTap: _navigateToEditStudent),
+        ],
+      ),
     );
   }
 
