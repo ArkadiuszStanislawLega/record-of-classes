@@ -34,7 +34,8 @@ class CreateParentPage extends StatelessWidget {
           _createParentTemplate,
           _createPhone,
           TextButton(
-              onPressed: () => _createParent(context), child: const Text(Strings.ADD_PARENT))
+              onPressed: () => _createParent(context),
+              child: const Text(Strings.ADD_PARENT))
         ],
       ),
     );
@@ -55,18 +56,49 @@ class CreateParentPage extends StatelessWidget {
       _inputPhone.numberName != '' && _inputPhone.number > 0;
 
   void _addToDatabase() {
-    _inputParent.person.target!.phones.add(_inputPhone);
-    _inputParent.person.target!.dbPersonType=PersonType.parent.index;
-    _inputParent.children.add(_selectedStudent);
-    _inputParent.person.target!.parent.target = _inputParent;
-    _selectedStudent.parents.add(_inputParent);
-    _inputPhone.owner.target = _inputParent.person.target;
-    _store.box<Student>().put(_selectedStudent);
+    _setPersonsValues();
+    _connectPhoneWithOwner();
+    _connectParentAndChildren();
+    _pushChangesToDb();
+  }
+
+  void _addPhoneOwner() =>
+      _inputPhone.owner.target = _inputParent.person.target;
+
+  void _addPhoneToParent() =>
+      _inputParent.person.target!.phones.add(_inputPhone);
+
+  void _setPersonType() =>
+      _inputParent.person.target!.dbPersonType = PersonType.parent.index;
+
+  void _addChildrenToParent() => _inputParent.children.add(_selectedStudent);
+
+  void _addParentToPerson() =>
+      _inputParent.person.target!.parent.target = _inputParent;
+
+  void _addParentToChildren() => _selectedStudent.parents.add(_inputParent);
+
+  void _pushChangesToDb() => _store.box<Student>().put(_selectedStudent);
+
+  void _setPersonsValues() {
+    _setPersonType();
+    _addParentToPerson();
+  }
+
+  void _connectPhoneWithOwner() {
+    _addPhoneOwner();
+    _addPhoneToParent();
+  }
+
+  void _connectParentAndChildren() {
+    _addChildrenToParent();
+    _addParentToChildren();
   }
 
   void _createParentSuccessfulMessage(BuildContext context) {
     var parent = _createParentTemplate.getParent();
-    _snackBarInfo(context, '${Strings.SUCCESFULLY_ADDED} ${parent.surname} ${parent.surname} ${Strings.TO_DATABASE}.');
+    _snackBarInfo(context,
+        '${Strings.SUCCESFULLY_ADDED} ${parent.surname} ${parent.surname} ${Strings.TO_DATABASE}.');
   }
 
   void _clearValues() {
@@ -75,7 +107,7 @@ class CreateParentPage extends StatelessWidget {
   }
 
   void _createParentUnsuccessfulMessage(BuildContext context) =>
-      _snackBarInfo(context , Strings.FAIL_TO_ADD_NEW_PARENT_TO_DATABASE);
+      _snackBarInfo(context, Strings.FAIL_TO_ADD_NEW_PARENT_TO_DATABASE);
 
   void _snackBarInfo(BuildContext context, String message) {
     SnackBarInfoTemplate(message: message, context: context);
@@ -84,7 +116,11 @@ class CreateParentPage extends StatelessWidget {
   void _createParent(BuildContext context) {
     _getInputValues();
     _isInputValuesAreValid()
-        ? {_addToDatabase(), _createParentSuccessfulMessage(context), _clearValues()}
+        ? {
+            _addToDatabase(),
+            _createParentSuccessfulMessage(context),
+            _clearValues()
+          }
         : _createParentUnsuccessfulMessage(context);
     Navigator.pop(context);
   }
