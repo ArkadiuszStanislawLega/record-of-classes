@@ -33,6 +33,8 @@ class Strings {
       MANAGE_GROUPS = 'Zarządzanie grupami',
       MANAGE_CLASSES = 'Zarządzanie przeprowadzonymi zajęciami',
       MANAGE_FINANCES = 'Zarządzanie finansami',
+      NUMBER_OF_STUDENTS_CONTACTS = 'Ilość numerów uczniów',
+      NUMBER_OF_PARENTS_CONTACTS = 'Ilość numerów rodziców',
       CONTACTS = 'Kontakty',
       CONTACT = 'Kontakt',
       CREATE_STUDENT = 'Utwórz ucznia',

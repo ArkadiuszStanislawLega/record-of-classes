@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/bill.dart';
 import 'package:record_of_classes/widgets/templates/list_items/bill_list_item.dart';
-import 'package:record_of_classes/widgets/templates/lists/all_unpaid_bills_list_template.dart';
 
 class FinanceMainPage extends StatefulWidget {
   const FinanceMainPage({Key? key}) : super(key: key);
@@ -16,17 +14,16 @@ class FinanceMainPage extends StatefulWidget {
 
 class _FinanceMainPageState extends State<FinanceMainPage> {
   static const double titleHeight = 200.0;
-  late Store _store;
   late Stream<List<Bill>> _billsStream;
-  bool _isPaidFilter = false;
+
   final List<Bill> _unpaid = [], _paid = [];
   double _unpaidPrice = 0.0, _paidPrice = 0.0;
+  bool _isNotPaidFilter = true;
 
   @override
   void initState() {
     super.initState();
-    _store = objectBox.store;
-    _billsStream = _store
+    _billsStream = objectBox.store
         .box<Bill>()
         .query()
         .watch(triggerImmediately: true)
@@ -50,9 +47,9 @@ class _FinanceMainPageState extends State<FinanceMainPage> {
                 ],
               ),
               floatingActionButton: SpeedDial(
-                icon: _isPaidFilter
-                    ? Icons.filter_alt
-                    : Icons.filter_alt_outlined,
+                icon: _isNotPaidFilter
+                    ? Icons.filter_alt_outlined
+                    : Icons.filter_alt,
                 backgroundColor: Colors.amber,
                 onPress: _onPressChangeFiltering,
               ),
@@ -141,7 +138,7 @@ class _FinanceMainPageState extends State<FinanceMainPage> {
   }
 
   SliverList _pageNavigator() =>
-      _isPaidFilter ? _unpaidSliverList() : _paidSliverList();
+      _isNotPaidFilter ? _unpaidSliverList() : _paidSliverList();
 
   SliverList _unpaidSliverList() {
     return SliverList(
@@ -181,10 +178,10 @@ class _FinanceMainPageState extends State<FinanceMainPage> {
 
   void _onPressChangeFiltering() {
     setState(() {
-      if (_isPaidFilter) {
-        _isPaidFilter = false;
+      if (_isNotPaidFilter) {
+        _isNotPaidFilter = false;
       } else {
-        _isPaidFilter = true;
+        _isNotPaidFilter = true;
       }
     });
   }

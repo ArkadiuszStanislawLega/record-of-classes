@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/enumerators/PersonType.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/phone.dart';
 import 'package:record_of_classes/widgets/templates/list_items/phone_book_list_item_template.dart';
@@ -203,10 +204,38 @@ class _PhoneBookPageState extends State<PhoneBookPage> {
               title: '${Strings.NUMBER_OF_PHONES}:',
               value: '${_phones.length}',
             ),
+            OneRowPropertyTemplate(
+              title: '${Strings.NUMBER_OF_STUDENTS_CONTACTS}:',
+              value: '${_numberOfStudentsContacts()}',
+            ),
+            OneRowPropertyTemplate(
+              title: '${Strings.NUMBER_OF_PARENTS_CONTACTS}:',
+              value: '${_numberOfParentsContacts()}',
+            ),
           ],
         ),
       ),
     );
+  }
+
+  int _numberOfStudentsContacts() {
+    int number = 0;
+    for (var element in _phones) {
+      if (element.owner.target!.type == PersonType.student) {
+        number++;
+      }
+    }
+    return number;
+  }
+
+  int _numberOfParentsContacts() {
+    int number = 0;
+    for (var element in _phones) {
+      if (element.owner.target!.type == PersonType.parent) {
+        number++;
+      }
+    }
+    return number;
   }
 
   SliverList _content() => _phonesSliverList();
