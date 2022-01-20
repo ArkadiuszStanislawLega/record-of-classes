@@ -25,5 +25,6 @@ class AppUrls {
       FINANCE_MAIN_PAGE = '/finance_main_page',
       GROUPS_MAIN_PAGE = '/groups_main_page',
       ADD_PHONE = '/add_phone',
+      EDIT_PHONE = '/edit_phone',
       PHONE_BOOK = '/phone_book_page';
 }

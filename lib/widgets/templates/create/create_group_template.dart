@@ -30,8 +30,6 @@ class CreateGroupTemplate extends StatefulWidget {
       ..address.target = _createAddressTemplate.getAddress();
   }
 
-
-
   @override
   _CreateGroupTemplateState createState() => _CreateGroupTemplateState();
 }

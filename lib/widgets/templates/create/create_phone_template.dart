@@ -5,7 +5,8 @@ import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/models/phone.dart';
 
 class CreatePhoneTemplate extends StatefulWidget {
-  CreatePhoneTemplate({Key? key}) : super(key: key);
+  CreatePhoneTemplate({Key? key, this.phone}) : super(key: key);
+  Phone? phone;
   String _number = '', _numberName = '';
 
   final TextEditingController _numberInputController = TextEditingController(),
@@ -13,11 +14,63 @@ class CreatePhoneTemplate extends StatefulWidget {
 
   Phone getPhone() {
     try {
-      return Phone(numberName: _numberName, number: int.parse(_number));
+      if (phone == null) {
+        return Phone(numberName: _numberName, number: int.parse(_number));
+      }
+      _checkInput();
+      return phone!;
     } on FormatException {
       return Phone(numberName: _numberName, number: 0);
     }
   }
+
+  void _checkInput() {
+    _checkIfNumberNameIsChange();
+    _checkIfPhoneNumberIsChange();
+  }
+
+  void _checkIfNumberNameIsChange() {
+    if (phone!.numberName != _numberName && _isPhoneNameValid()) {
+      phone!.numberName = _numberName;
+    }
+  }
+
+  void _checkIfPhoneNumberIsChange() {
+    if (phone!.number != int.parse(_number) && _number != '') {
+      phone!.number = int.parse(_number);
+    }
+  }
+
+  bool isEditedInputValid() =>
+      _isEditedPhoneNameValid() && _isEditedPhoneNumberValid();
+
+  bool _isEditedPhoneNameValid() =>
+      phone!.numberName != _numberName && _isPhoneNameValid();
+
+  bool _isEditedPhoneNumberValid() {
+    try {
+      int number = int.parse(_number);
+      return phone!.number != number  && number > 0;
+    }on FormatException {
+      return false;
+    }
+  }
+
+
+  bool isInputValid() {
+    try {
+      if (_isPhoneNameValid() && _isPhoneNumberValid()) {
+        return true;
+      }
+      return false;
+    } on FormatException {
+      return false;
+    }
+  }
+
+  bool _isPhoneNameValid() => _numberName != '';
+
+  bool _isPhoneNumberValid() => _number != '' && int.parse(_number) > 0;
 
   void clearValues() {
     _number = '';
@@ -38,23 +91,27 @@ class _CreatePhoneTemplate extends State<CreatePhoneTemplate> {
     return Column(
       children: [
         TextField(
-            controller: widget._nameNumberInputController,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: Strings.PHONE_NAME,
-            ),
-            onChanged: (userInput) => widget._numberName = userInput),
-        TextField(
             controller: widget._numberInputController,
             keyboardType: TextInputType.phone,
             inputFormatters: <TextInputFormatter>[
               FilteringTextInputFormatter.digitsOnly
             ],
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: Strings.PHONE_NUMBER,
+            decoration: InputDecoration(
+              border: const OutlineInputBorder(),
+              hintText: widget.phone == null
+                  ? Strings.PHONE_NUMBER
+                  : widget.phone!.number.toString(),
             ),
             onChanged: (userInput) => widget._number = userInput),
+        TextField(
+            controller: widget._nameNumberInputController,
+            decoration: InputDecoration(
+              border: const OutlineInputBorder(),
+              hintText: widget.phone == null
+                  ? Strings.PHONE_NAME
+                  : widget.phone!.numberName,
+            ),
+            onChanged: (userInput) => widget._numberName = userInput),
       ],
     );
   }

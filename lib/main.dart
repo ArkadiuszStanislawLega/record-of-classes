@@ -31,6 +31,7 @@ import 'package:record_of_classes/widgets/pages/detail/parent_detail_page.dart';
 import 'package:record_of_classes/widgets/pages/edit/edit_classes_type_page.dart';
 import 'package:record_of_classes/widgets/pages/edit/edit_group_page.dart';
 import 'package:record_of_classes/widgets/pages/edit/edit_parent_page.dart';
+import 'package:record_of_classes/widgets/pages/edit/edit_phone_page.dart';
 import 'package:record_of_classes/widgets/pages/edit/edit_student_page.dart';
 import 'package:record_of_classes/widgets/pages/finance_main_page.dart';
 import 'package:record_of_classes/widgets/pages/groups_main_page.dart';
@@ -173,6 +174,7 @@ class _RecordOfClassesApp extends State<RecordOfClassesApp> {
         AppUrls.FINANCE_MAIN_PAGE: (context) => const FinanceMainPage(),
         AppUrls.GROUPS_MAIN_PAGE: (context) => const GroupsMainPage(),
         AppUrls.ADD_PHONE: (context) => CreatePhonePage(),
+        AppUrls.EDIT_PHONE: (context) => EditPhonePage(),
         AppUrls.PHONE_BOOK: (context) => PhoneBookPage(),
         '/test' : (context) => Test()
       },
