@@ -59,7 +59,7 @@ class _StudentDetailPage extends State<StudentDetailPage> {
                 ],
               ),
               floatingActionButton: SpeedDial(
-                icon: Icons.add,
+                icon: Icons.settings,
                 backgroundColor: Colors.amber,
                 children: [
                   SpeedDialChild(
@@ -73,15 +73,16 @@ class _StudentDetailPage extends State<StudentDetailPage> {
                       backgroundColor: Colors.amberAccent,
                       onTap: _navigateToAddParent),
                   SpeedDialChild(
-                      child: const Icon(Icons.edit),
-                      label: Strings.EDIT,
-                      backgroundColor: Colors.amberAccent,
-                      onTap: _navigateToEditStudent),
-                  SpeedDialChild(
                       child: const Icon(Icons.add_call),
                       label: Strings.ADD_CONTACT,
                       backgroundColor: Colors.amberAccent,
                       onTap: _navigateToAddContact),
+                  SpeedDialChild(
+                      child: const Icon(Icons.edit),
+                      label: Strings.EDIT,
+                      backgroundColor: Colors.amberAccent,
+                      onTap: _navigateToEditStudent),
+
                 ],
               ),
             ),
