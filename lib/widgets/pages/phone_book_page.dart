@@ -1,11 +1,8 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/phone.dart';
-import 'package:record_of_classes/objectbox.g.dart';
 import 'package:record_of_classes/widgets/templates/list_items/phone_book_list_item_template.dart';
 import 'package:record_of_classes/widgets/templates/one_row_property_template.dart';
 
@@ -28,6 +25,8 @@ class _PhoneBookPageState extends State<PhoneBookPage> {
   PhonesFiltering _currentPhonesFiltering =
       PhonesFiltering.alphabeticalAscending;
 
+  bool _wasNotInitialized = true;
+
   static const titleHeight = 200.0;
 
   @override
@@ -47,8 +46,8 @@ class _PhoneBookPageState extends State<PhoneBookPage> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           _phones = snapshot.data!;
-          _filteringList('');
-          print('init ${_phones.length} ${_filteredPhones.length}');
+          if (_wasNotInitialized) _filteringList('');
+
           return Scaffold(
             body: CustomScrollView(
               slivers: [
@@ -126,29 +125,34 @@ class _PhoneBookPageState extends State<PhoneBookPage> {
   }
 
   void _filteringList(String input) {
-
-      _filteredPhones.clear();
-      print(
-          'filtering ${_phones.length.toString()} ${_filteredPhones.length.toString()} ');
-      if (input != '') {
-        for (var element in _phones) {
-          if (element.owner.target!.surname.contains(input)) {
+    if (_wasNotInitialized) {
+      for (var element in _phones) {
+        _filteredPhones.add(element);
+      }
+      _wasNotInitialized = false;
+    } else {
+      setState(() {
+        _filteredPhones.clear();
+        if (input != '') {
+          for (var element in _phones) {
+            if (element.owner.target!.surname.contains(input)) {
+              _filteredPhones.add(element);
+            }
+          }
+        } else {
+          for (var element in _phones) {
             _filteredPhones.add(element);
           }
         }
-      } else {
-        for (var element in _phones) {
-          _filteredPhones.add(element);
-        }
-      }
-
+      });
+    }
   }
 
   SliverList _phonesSliverList() {
     _filterList();
     return SliverList(
       delegate: SliverChildBuilderDelegate(
-            (BuildContext context, int index) => PhoneBookListItemTemplate(
+        (BuildContext context, int index) => PhoneBookListItemTemplate(
           phone: _filteredPhones.elementAt(index),
         ),
         childCount: _filteredPhones.length,
@@ -206,8 +210,6 @@ class _PhoneBookPageState extends State<PhoneBookPage> {
   }
 
   SliverList _content() => _phonesSliverList();
-
-
 
   void _filterList() {
     _filteredPhones.sort((phone1, phone2) =>

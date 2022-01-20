@@ -63,10 +63,10 @@ late ObjectBox objectBox;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   objectBox = await ObjectBox.create();
-  clearDb();
+  // clearDb();
   _putTeacherToDb();
 
-  // printDataFromDB();
+  printDataFromDB();
   // objectBox.store.box<Account>().getAll().forEach((element) {
   //   print(element.id);
   // });
@@ -118,10 +118,6 @@ void printDataFromDB() {
     print('dzieci:');
     element.children.forEach((children) {
       print(children.toString());
-    });
-    print('kontakty:');
-    element.phone.forEach((phone) {
-      print(phone.toString());
     });
   });
 }

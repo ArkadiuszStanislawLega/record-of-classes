@@ -52,7 +52,7 @@ class _CreatePhonePage extends State<CreatePhonePage> {
     setState(() {
       Phone phone = _createPhoneTemplate.getPhone();
       phone.owner.target = _parent.person.target!;
-      _parent.phone.add(phone);
+      _parent.person.target!.phones.add(phone);
       objectBox.store.box<Parent>().put(_parent);
     });
   }

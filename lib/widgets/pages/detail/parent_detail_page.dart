@@ -169,7 +169,7 @@ class _ParentDetailPage extends State<ParentDetailPage> {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) => _phoneListItem(index),
-        childCount: _parent.phone.length,
+        childCount: _parent.person.target!.phones.length,
       ),
     );
   }
@@ -208,7 +208,7 @@ class _ParentDetailPage extends State<ParentDetailPage> {
   }
 
   Widget _phoneListItem(int index) {
-    Phone phone = _parent.phone.elementAt(index);
+    Phone phone = _parent.person.target!.phones.elementAt(index);
 
     return Card(
       shape: RoundedRectangleBorder(
@@ -226,7 +226,7 @@ class _ParentDetailPage extends State<ParentDetailPage> {
               icon: Icons.delete,
               onTap: () {
                 setState(() {
-                  _parent.phone.remove(phone);
+                  _parent.person.target!.phones.remove(phone);
                   _store.box<Phone>().remove(phone.id);
                 });
               }),

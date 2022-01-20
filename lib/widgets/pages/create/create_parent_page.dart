@@ -54,7 +54,7 @@ class CreateParentPage extends StatelessWidget {
       _inputPhone.numberName != '' && _inputPhone.number > 0;
 
   void _addToDatabase() {
-    _inputParent.phone.add(_inputPhone);
+    _inputParent.person.target!.phones.add(_inputPhone);
     _inputParent.children.add(_selectedStudent);
     _selectedStudent.parents.add(_inputParent);
     _inputPhone.owner.target = _inputParent.person.target;

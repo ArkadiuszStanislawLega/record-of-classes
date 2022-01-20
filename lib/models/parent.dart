@@ -9,7 +9,6 @@ import 'person.dart';
 class Parent{
   late int id = 0;
   final person = ToOne<Person>();
-  final phone = ToMany<Phone>();
   final children = ToMany<Student>();
 
   @override

@@ -43,8 +43,8 @@ class _ParentListItemTemplate extends State<ParentListItemTemplate> {
         ],
         child: ListTile(
           title: Text(widget.parent.introduceYourself()),
-          subtitle: Text(widget.parent.phone.isNotEmpty
-              ? widget.parent.phone.elementAt(0).number.toString()
+          subtitle: Text(widget.parent.person.target!.phones.isNotEmpty
+              ? widget.parent.person.target!.phones.elementAt(0).number.toString()
               : ''),
         ),
       );
@@ -76,10 +76,10 @@ class _ParentListItemTemplate extends State<ParentListItemTemplate> {
       widget.parent.children
           .removeWhere((element) => element.id == widget.student.id);
 
-      for (var element in widget.parent.phone) {
+      for (var element in widget.parent.person.target!.phones) {
         phoneBox.remove(element.id);
       }
-      widget.parent.phone
+      widget.parent.person.target!.phones
           .removeWhere((element) => element.owner.targetId == widget.parent.id);
 
       parentBox.remove(widget.parent.id);

@@ -54,7 +54,12 @@ final _entities = <ModelEntity>[
             indexId: const IdUid(14, 4895456357721923155),
             relationTarget: 'Student')
       ],
-      relations: <ModelRelation>[],
+      relations: <ModelRelation>[
+        ModelRelation(
+            id: const IdUid(18, 3962742370877392650),
+            name: 'phones',
+            targetId: const IdUid(10, 8141085108066277363))
+      ],
       backlinks: <ModelBacklink>[]),
   ModelEntity(
       id: const IdUid(2, 7867667170132954701),
@@ -318,10 +323,6 @@ final _entities = <ModelEntity>[
       ],
       relations: <ModelRelation>[
         ModelRelation(
-            id: const IdUid(5, 2990737891109516731),
-            name: 'phone',
-            targetId: const IdUid(10, 8141085108066277363)),
-        ModelRelation(
             id: const IdUid(15, 7596719649020048181),
             name: 'children',
             targetId: const IdUid(11, 8038409490704286009))
@@ -453,7 +454,7 @@ ModelDefinition getObjectBoxModel() {
       entities: _entities,
       lastEntityId: const IdUid(12, 7751236531251891487),
       lastIndexId: const IdUid(15, 1182126131564333134),
-      lastRelationId: const IdUid(17, 1060870525215224344),
+      lastRelationId: const IdUid(18, 3962742370877392650),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [],
       retiredIndexUids: const [],
@@ -466,7 +467,8 @@ ModelDefinition getObjectBoxModel() {
         3217513060367901643,
         2098414998713666383,
         6231248647669863271,
-        1239359132223714330
+        1239359132223714330,
+        2990737891109516731
       ],
       modelVersion: 5,
       modelVersionParserMinimum: 5,
@@ -476,7 +478,8 @@ ModelDefinition getObjectBoxModel() {
     Person: EntityDefinition<Person>(
         model: _entities[0],
         toOneRelations: (Person object) => [object.student],
-        toManyRelations: (Person object) => {},
+        toManyRelations: (Person object) =>
+            {RelInfo<Person>.toMany(18, object.id): object.phones},
         getId: (Person object) => object.id,
         setId: (Person object, int id) {
           object.id = id;
@@ -505,6 +508,8 @@ ModelDefinition getObjectBoxModel() {
           object.student.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
           object.student.attach(store);
+          InternalToManyAccess.setRelInfo(object.phones, store,
+              RelInfo<Person>.toMany(18, object.id), store.box<Person>());
           return object;
         }),
     Account: EntityDefinition<Account>(
@@ -782,10 +787,8 @@ ModelDefinition getObjectBoxModel() {
     Parent: EntityDefinition<Parent>(
         model: _entities[8],
         toOneRelations: (Parent object) => [object.person],
-        toManyRelations: (Parent object) => {
-              RelInfo<Parent>.toMany(5, object.id): object.phone,
-              RelInfo<Parent>.toMany(15, object.id): object.children
-            },
+        toManyRelations: (Parent object) =>
+            {RelInfo<Parent>.toMany(15, object.id): object.children},
         getId: (Parent object) => object.id,
         setId: (Parent object, int id) {
           object.id = id;
@@ -806,8 +809,6 @@ ModelDefinition getObjectBoxModel() {
           object.person.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
           object.person.attach(store);
-          InternalToManyAccess.setRelInfo(object.phone, store,
-              RelInfo<Parent>.toMany(5, object.id), store.box<Parent>());
           InternalToManyAccess.setRelInfo(object.children, store,
               RelInfo<Parent>.toMany(15, object.id), store.box<Parent>());
           return object;
@@ -936,6 +937,10 @@ class Person_ {
   /// see [Person.student]
   static final student =
       QueryRelationToOne<Person, Student>(_entities[0].properties[3]);
+
+  /// see [Person.phones]
+  static final phones =
+      QueryRelationToMany<Person, Phone>(_entities[0].relations[0]);
 }
 
 /// [Account] entity fields to define ObjectBox queries.
@@ -1083,13 +1088,9 @@ class Parent_ {
   static final person =
       QueryRelationToOne<Parent, Person>(_entities[8].properties[1]);
 
-  /// see [Parent.phone]
-  static final phone =
-      QueryRelationToMany<Parent, Phone>(_entities[8].relations[0]);
-
   /// see [Parent.children]
   static final children =
-      QueryRelationToMany<Parent, Student>(_entities[8].relations[1]);
+      QueryRelationToMany<Parent, Student>(_entities[8].relations[0]);
 }
 
 /// [Phone] entity fields to define ObjectBox queries.
