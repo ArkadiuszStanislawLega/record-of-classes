@@ -27,45 +27,74 @@ class _StartPageViewView extends State<StartPageView> {
         mainAxisSpacing: 10,
         crossAxisCount: 3,
         children: <Widget>[
-          ElevatedButton(
+          _button(
             onPressed: _navigateToStudentsMainPage,
-            child: const Text(Strings.STUDENT_MANAGEMENT),
+            title: Strings.STUDENTS_LIST.toLowerCase(),
+            icon: const Icon(Icons.person),
           ),
-          ElevatedButton(
-            onPressed: _navigateFinanceMainPage,
-            child: const Text(Strings.FINANCE),
-          ),
-          ElevatedButton(
-            onPressed: _navigatorClassesTypeMainPage,
-            child: const Text(Strings.CLASSES_TYPE),
-          ),
-          ElevatedButton(
-            onPressed: _navigateGroupsMainPage,
-            child: const Text(Strings.GROUPS),
-          ),
-          ElevatedButton(
-            onPressed: _navigatorClassesMainPage,
-            child: const Text(Strings.CLASSES),
-          ),
-          ElevatedButton(
-            onPressed: _navigateToPhoneBook,
-            child: const Text(Strings.PHONE_BOOK),
-          ),
-          ElevatedButton(
-            onPressed: _navigateToTest,
-            child: const Text('Test'),
-          ),
+          _button(
+              onPressed: _navigateFinanceMainPage,
+              title: Strings.FINANCE.toLowerCase(),
+              icon: const Icon(Icons.monetization_on)),
+          _button(
+              onPressed: _navigatorClassesTypeMainPage,
+              title: Strings.CLASSES_TYPE.toLowerCase(),
+              icon: const Icon(Icons.title)),
+          _button(
+              onPressed: _navigateGroupsMainPage,
+              title: Strings.GROUPS.toLowerCase(),
+              icon: const Icon(Icons.group)),
+          _button(
+              onPressed: _navigatorClassesMainPage,
+              title: Strings.CLASSES.toLowerCase(),
+              icon: const Icon(Icons.developer_board)),
+          _button(
+              onPressed: _navigateToPhoneBook,
+              title: Strings.PHONES.toLowerCase(),
+              icon: const Icon(Icons.book))
         ],
       ),
     );
   }
 
-  void _navigateToTest() => Navigator.pushNamed(context, '/test');
+  Widget _button(
+      {required Icon icon, required String title, Function()? onPressed}) {
+    return Container(
+        decoration: const BoxDecoration(
+          color: Colors.grey,
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            IconButton(
+              color: Colors.white,
+              iconSize: 45,
+              onPressed: onPressed,
+              icon: icon,
+            ),
+            Container(
+              padding: const EdgeInsets.all(15.0),
+              child: Text(
+                title,
+                style: const TextStyle(
+                    color: Colors.white,
+                    fontFamily: 'Arial',
+                    fontWeight: FontWeight.bold),
+              ),
+            )
+          ],
+        ));
+  }
 
-  void _navigateToPhoneBook() => Navigator.pushNamed(context, AppUrls.PHONE_BOOK);
+  void _navigateToPhoneBook() =>
+      Navigator.pushNamed(context, AppUrls.PHONE_BOOK);
 
-  void _navigateToStudentsMainPage() =>
-      Navigator.pushNamed(context, AppUrls.STUDENS_MAIN_PAGE,);
+  void _navigateToStudentsMainPage() => Navigator.pushNamed(
+        context,
+        AppUrls.STUDENS_MAIN_PAGE,
+      );
 
   void _navigateFinanceMainPage() =>
       Navigator.pushNamed(context, AppUrls.FINANCE_MAIN_PAGE);
