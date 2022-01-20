@@ -73,6 +73,7 @@ class Strings {
       LIST_OF_CLASSES_CONDUCTED = 'Lista przeprowadzonych zajęć',
       NAME_OF_CLASSES_TYPE = 'Nazwa typu zajęć',
       NEW_TYPE = 'Nowy typ',
+      NEW_GROUP = 'nową grupę',
       NUMBER_OF_CHILDREN = 'Ilość dzieci',
       NUMBER_OF_GROUPS = 'Ilość grup',
       NUMBER_OF_CLASSES = 'Ilość zajęć',
