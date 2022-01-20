@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:record_of_classes/constants/app_urls.dart';
 import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/main.dart';
@@ -19,6 +20,8 @@ class _CreateParentPage extends State<AddParentPage> {
   late Student _selectedStudent;
   late Stream<List<Parent>> _parentsStream;
   List<Parent> _parentsList = [];
+
+  static const titleHeight = 100.0;
 
   @override
   void initState() {
@@ -41,6 +44,11 @@ class _CreateParentPage extends State<AddParentPage> {
           return DefaultTabController(
             length: 2,
             child: Scaffold(
+              floatingActionButton: SpeedDial(
+                icon: Icons.add,
+                backgroundColor: Colors.amber,
+                onPress: _navigateToCreateParentPage,
+              ),
               body: CustomScrollView(
                 slivers: [
                   _customAppBar(),
@@ -58,19 +66,9 @@ class _CreateParentPage extends State<AddParentPage> {
 
   SliverAppBar _customAppBar() {
     return SliverAppBar(
-      bottom: PreferredSize(
-        preferredSize: const Size(0, 10),
-        child: TextButton(
-          onPressed: _navigateToCreateParentPage,
-          child: const Text(
-            Strings.ADD_PARENT,
-            style: TextStyle(color: Colors.white),
-          ),
-        ),
-      ),
       stretch: true,
       onStretchTrigger: () => Future<void>.value(),
-      expandedHeight: 200.0,
+      expandedHeight: titleHeight,
       flexibleSpace: FlexibleSpaceBar(
         stretchModes: const <StretchMode>[
           StretchMode.zoomBackground,
