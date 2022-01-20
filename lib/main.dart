@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/constants/app_urls.dart';
+import 'package:record_of_classes/enumerators/PersonType.dart';
 import 'package:record_of_classes/models/account.dart';
 import 'package:record_of_classes/models/address.dart';
 import 'package:record_of_classes/models/attendance.dart';
@@ -13,6 +14,7 @@ import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/models/teacher.dart';
 import 'package:record_of_classes/objectbox.g.dart';
 import 'package:record_of_classes/widgets/pages/add/add_classes_to_group_template.dart';
+import 'package:record_of_classes/widgets/pages/add/add_phone_to_student.dart';
 import 'package:record_of_classes/widgets/pages/add/add_siblings_to_student_page.dart';
 import 'package:record_of_classes/widgets/pages/add/add_student_to_group_page.dart';
 import 'package:record_of_classes/widgets/pages/classes_main_page.dart';
@@ -66,7 +68,7 @@ Future<void> main() async {
   // clearDb();
   _putTeacherToDb();
 
-  printDataFromDB();
+  // printDataFromDB();
   // objectBox.store.box<Account>().getAll().forEach((element) {
   //   print(element.id);
   // });
@@ -77,7 +79,8 @@ void _putTeacherToDb() {
   var teacherObjectBox = objectBox.store.box<Teacher>();
   var teachers = teacherObjectBox.getAll();
   if (teachers.isEmpty) {
-    var person = Person(name: 'Monika', surname: 'Łęga');
+    var person = Person(name: 'Monika', surname: 'Łęga')
+      ..dbPersonType=PersonType.teacher.index;
     var teacher = Teacher()..person.target = person;
     teacherObjectBox.put(teacher);
   }
@@ -120,6 +123,11 @@ void printDataFromDB() {
       print(children.toString());
     });
   });
+
+  print('Phones');
+  objectBox.store.box<Phone>().getAll().forEach((element) {
+    print('${element.owner.target!.introduceYourself()} ${element.numberName} ${element.number}');
+  });
 }
 
 class RecordOfClassesApp extends StatefulWidget {
@@ -157,6 +165,7 @@ class _RecordOfClassesApp extends State<RecordOfClassesApp> {
         AppUrls.DETAIL_GROUP: (context) => const DetailGroupPage(),
         AppUrls.ADD_STUDENT_TO_GROUP: (context) => const AddStudentToGroupPage(),
         AppUrls.ADD_CLASSES_TO_GROUP: (context) => AddClassesToGroup(),
+        AppUrls.ADD_CONTACT_TO_STUDENT: (context) => AddPhoneToStudentPage(),
         AppUrls.DETAIL_CLASSES: (context) => ClassesDetailPage(),
         AppUrls.STUDENS_MAIN_PAGE: (context) => const StudentsMainPage(),
         AppUrls.CLASSES_MAIN_PAGE: (context) => const ClassesMainPage(),

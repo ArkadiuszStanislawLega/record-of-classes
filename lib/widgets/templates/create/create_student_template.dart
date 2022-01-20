@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/enumerators/PersonType.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/account.dart';
 import 'package:record_of_classes/models/person.dart';
@@ -52,6 +53,7 @@ class CreateStudentTemplate extends StatelessWidget {
       _account = Account()
       ..student.target = _createdStudent;
       _createdStudent.account.target = _account;
+      _createdPerson.dbPersonType = PersonType.student.index;
       _createdPerson.student.target = _createdStudent;
       _createdStudent.person.target = _createdPerson;
     }

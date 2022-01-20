@@ -8,6 +8,7 @@ import 'package:record_of_classes/models/attendance.dart';
 import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/widgets/templates/list_items/bill_list_item.dart';
 import 'package:record_of_classes/widgets/templates/list_items/parent_of_student_list_item_template.dart';
+import 'package:record_of_classes/widgets/templates/list_items/phone_book_list_item_template.dart';
 import 'package:record_of_classes/widgets/templates/list_items/remove_sibling_list_item.dart';
 import 'package:record_of_classes/widgets/templates/list_items/student_attendances_list_item_template.dart';
 import 'package:record_of_classes/widgets/templates/one_row_property_template.dart';
@@ -21,7 +22,7 @@ class StudentDetailPage extends StatefulWidget {
   }
 }
 
-enum Pages { parents, siblings, account, attendance }
+enum Pages { parents, siblings, account, attendance, phones }
 
 class _StudentDetailPage extends State<StudentDetailPage> {
   late Student _student;
@@ -76,6 +77,11 @@ class _StudentDetailPage extends State<StudentDetailPage> {
                       label: Strings.EDIT,
                       backgroundColor: Colors.amberAccent,
                       onTap: _navigateToEditStudent),
+                  SpeedDialChild(
+                      child: const Icon(Icons.add_call),
+                      label: Strings.ADD_CONTACT,
+                      backgroundColor: Colors.amberAccent,
+                      onTap: _navigateToAddContact),
                 ],
               ),
             ),
@@ -96,6 +102,11 @@ class _StudentDetailPage extends State<StudentDetailPage> {
   void _navigateToAddParent() =>
       Navigator.pushNamed(context, AppUrls.ADD_PARENT, arguments: _student);
 
+  void _navigateToAddContact() => {
+        Navigator.pushNamed(context, AppUrls.ADD_CONTACT_TO_STUDENT,
+            arguments: _student)
+      };
+
   SliverAppBar _customAppBar() {
     return SliverAppBar(
       bottom: PreferredSize(
@@ -106,9 +117,18 @@ class _StudentDetailPage extends State<StudentDetailPage> {
             _pageNavigationButton(title: Strings.PARENTS, page: Pages.parents),
             _pageNavigationButton(
                 title: Strings.SIBLINGS, page: Pages.siblings),
-            _pageNavigationButton(title: Strings.BILLS, page: Pages.account),
-            _pageNavigationButton(
-                title: Strings.ATTENDANCES, page: Pages.attendance),
+            _pageNavigationIconButton(
+                icon: const Icon(
+                  Icons.monetization_on,
+                  color: Colors.white,
+                ),
+                page: Pages.account),
+            _pageNavigationIconButton(
+                icon: const Icon(Icons.check_box_rounded, color: Colors.white),
+                page: Pages.attendance),
+            _pageNavigationIconButton(
+                icon: const Icon(Icons.phone, color: Colors.white),
+                page: Pages.phones),
           ],
         ),
       ),
@@ -137,6 +157,28 @@ class _StudentDetailPage extends State<StudentDetailPage> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  DecoratedBox _pageNavigationIconButton(
+      {required Icon icon, required Pages page}) {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.only(
+            topRight: Radius.circular(30), topLeft: Radius.circular(30)),
+        boxShadow: [
+          BoxShadow(
+            spreadRadius: 1,
+            color: _currentPage == page ? Colors.black12 : Colors.transparent,
+            offset: const Offset(0, -1),
+            blurRadius: 4,
+          )
+        ],
+      ),
+      child: IconButton(
+        icon: icon,
+        onPressed: () => setState(() => _currentPage = page),
       ),
     );
   }
@@ -178,7 +220,19 @@ class _StudentDetailPage extends State<StudentDetailPage> {
         return _siblingsSliverList();
       case Pages.attendance:
         return _attendancesSliverList();
+      case Pages.phones:
+        return _phonesSliverList();
     }
+  }
+
+  SliverList _phonesSliverList() {
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+        (BuildContext context, int index) => PhoneBookListItemTemplate(
+            phone: _student.person.target!.phones.elementAt(index)),
+        childCount: _student.person.target!.phones.length,
+      ),
+    );
   }
 
   SliverList _parentsSliverList() {
@@ -242,6 +296,8 @@ class _StudentDetailPage extends State<StudentDetailPage> {
         return _propertiesSiblings();
       case Pages.attendance:
         return _propertiesAttendances();
+      case Pages.phones:
+        return _propertiesParents();
     }
   }
 

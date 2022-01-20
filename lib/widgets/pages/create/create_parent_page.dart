@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/enumerators/PersonType.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/parent.dart';
 import 'package:record_of_classes/models/person.dart';
@@ -55,7 +56,9 @@ class CreateParentPage extends StatelessWidget {
 
   void _addToDatabase() {
     _inputParent.person.target!.phones.add(_inputPhone);
+    _inputParent.person.target!.dbPersonType=PersonType.parent.index;
     _inputParent.children.add(_selectedStudent);
+    _inputParent.person.target!.parent.target = _inputParent;
     _selectedStudent.parents.add(_inputParent);
     _inputPhone.owner.target = _inputParent.person.target;
     _store.box<Student>().put(_selectedStudent);

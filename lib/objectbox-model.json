@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "1:6677618309001946823",
-      "lastPropertyId": "4:456323340332387829",
+      "lastPropertyId": "8:5176376838380402083",
       "name": "Person",
       "properties": [
         {
@@ -31,6 +31,32 @@
           "flags": 520,
           "indexId": "14:4895456357721923155",
           "relationTarget": "Student"
+        },
+        {
+          "id": "5:3413805852116716376",
+          "name": "personType",
+          "type": 6
+        },
+        {
+          "id": "6:8950949768443332787",
+          "name": "dbPersonType",
+          "type": 6
+        },
+        {
+          "id": "7:5826451391507035300",
+          "name": "parentId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "16:115344520173770922",
+          "relationTarget": "Parent"
+        },
+        {
+          "id": "8:5176376838380402083",
+          "name": "teacherId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "17:3246867036266486352",
+          "relationTarget": "Teacher"
         }
       ],
       "relations": [
@@ -428,7 +454,7 @@
     }
   ],
   "lastEntityId": "12:7751236531251891487",
-  "lastIndexId": "15:1182126131564333134",
+  "lastIndexId": "17:3246867036266486352",
   "lastRelationId": "18:3962742370877392650",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

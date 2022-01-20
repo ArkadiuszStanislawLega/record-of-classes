@@ -28,7 +28,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(1, 6677618309001946823),
       name: 'Person',
-      lastPropertyId: const IdUid(4, 456323340332387829),
+      lastPropertyId: const IdUid(8, 5176376838380402083),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -52,7 +52,31 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(14, 4895456357721923155),
-            relationTarget: 'Student')
+            relationTarget: 'Student'),
+        ModelProperty(
+            id: const IdUid(5, 3413805852116716376),
+            name: 'personType',
+            type: 6,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(6, 8950949768443332787),
+            name: 'dbPersonType',
+            type: 6,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(7, 5826451391507035300),
+            name: 'parentId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(16, 115344520173770922),
+            relationTarget: 'Parent'),
+        ModelProperty(
+            id: const IdUid(8, 5176376838380402083),
+            name: 'teacherId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(17, 3246867036266486352),
+            relationTarget: 'Teacher')
       ],
       relations: <ModelRelation>[
         ModelRelation(
@@ -453,7 +477,7 @@ ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
       lastEntityId: const IdUid(12, 7751236531251891487),
-      lastIndexId: const IdUid(15, 1182126131564333134),
+      lastIndexId: const IdUid(17, 3246867036266486352),
       lastRelationId: const IdUid(18, 3962742370877392650),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [],
@@ -477,7 +501,8 @@ ModelDefinition getObjectBoxModel() {
   final bindings = <Type, EntityDefinition>{
     Person: EntityDefinition<Person>(
         model: _entities[0],
-        toOneRelations: (Person object) => [object.student],
+        toOneRelations: (Person object) =>
+            [object.student, object.parent, object.teacher],
         toManyRelations: (Person object) =>
             {RelInfo<Person>.toMany(18, object.id): object.phones},
         getId: (Person object) => object.id,
@@ -487,11 +512,15 @@ ModelDefinition getObjectBoxModel() {
         objectToFB: (Person object, fb.Builder fbb) {
           final nameOffset = fbb.writeString(object.name);
           final surnameOffset = fbb.writeString(object.surname);
-          fbb.startTable(5);
+          fbb.startTable(9);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, nameOffset);
           fbb.addOffset(2, surnameOffset);
           fbb.addInt64(3, object.student.targetId);
+          fbb.addInt64(4, object.personType);
+          fbb.addInt64(5, object.dbPersonType);
+          fbb.addInt64(6, object.parent.targetId);
+          fbb.addInt64(7, object.teacher.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -504,10 +533,20 @@ ModelDefinition getObjectBoxModel() {
               name:
                   const fb.StringReader().vTableGet(buffer, rootOffset, 6, ''),
               surname:
-                  const fb.StringReader().vTableGet(buffer, rootOffset, 8, ''));
+                  const fb.StringReader().vTableGet(buffer, rootOffset, 8, ''),
+              personType:
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0))
+            ..dbPersonType =
+                const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0);
           object.student.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
           object.student.attach(store);
+          object.parent.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0);
+          object.parent.attach(store);
+          object.teacher.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0);
+          object.teacher.attach(store);
           InternalToManyAccess.setRelInfo(object.phones, store,
               RelInfo<Person>.toMany(18, object.id), store.box<Person>());
           return object;
@@ -937,6 +976,22 @@ class Person_ {
   /// see [Person.student]
   static final student =
       QueryRelationToOne<Person, Student>(_entities[0].properties[3]);
+
+  /// see [Person.personType]
+  static final personType =
+      QueryIntegerProperty<Person>(_entities[0].properties[4]);
+
+  /// see [Person.dbPersonType]
+  static final dbPersonType =
+      QueryIntegerProperty<Person>(_entities[0].properties[5]);
+
+  /// see [Person.parent]
+  static final parent =
+      QueryRelationToOne<Person, Parent>(_entities[0].properties[6]);
+
+  /// see [Person.teacher]
+  static final teacher =
+      QueryRelationToOne<Person, Teacher>(_entities[0].properties[7]);
 
   /// see [Person.phones]
   static final phones =
