@@ -13,6 +13,7 @@ import 'package:record_of_classes/models/parent.dart';
 import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/models/teacher.dart';
 import 'package:record_of_classes/objectbox.g.dart';
+import 'package:record_of_classes/widgets/pages/about_page.dart';
 import 'package:record_of_classes/widgets/pages/add/add_classes_to_group_template.dart';
 import 'package:record_of_classes/widgets/pages/add/add_phone_to_student.dart';
 import 'package:record_of_classes/widgets/pages/add/add_siblings_to_student_page.dart';
@@ -150,6 +151,7 @@ class _RecordOfClassesApp extends State<RecordOfClassesApp> {
       routes: {
         AppUrls.EMPTY: (context) => const StartPageView(),
         AppUrls.HOME: (context) => const StartPageView(),
+        AppUrls.ABOUT: (context) => const AboutPage(),
         AppUrls.CREATE_STUDENT: (context) => const CreateStudentPage(),
         AppUrls.DETAIL_STUDENT: (context) => const StudentDetailPage(),
         AppUrls.EDIT_STUDENT: (context) => EditStudentPage(),

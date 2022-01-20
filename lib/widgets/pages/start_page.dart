@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:record_of_classes/constants/app_urls.dart';
 import 'package:record_of_classes/constants/strings.dart';
-import 'package:record_of_classes/widgets/templates/lists/students_list_template.dart';
 
 class StartPageView extends StatefulWidget {
   const StartPageView({Key? key}) : super(key: key);
@@ -54,8 +53,39 @@ class _StartPageViewView extends State<StartPageView> {
               icon: const Icon(Icons.book))
         ],
       ),
+      drawer: _mainMenu(),
     );
   }
+
+  Widget _mainMenu() {
+    return Container(
+      color: Colors.blueGrey,
+      width: 200,
+      child: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              children: [
+                TextButton(
+                    onPressed:  _navigateToAboutPage,
+                    child: const Text(
+                      Strings.ABOUT,
+                      style: TextStyle(color: Colors.white),
+                    )),
+              ],
+            ),
+            const Text(
+              'v.1.0.0',
+              style: TextStyle(color: Colors.white),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _navigateToAboutPage() => Navigator.pushNamed(context, AppUrls.ABOUT);
 
   Widget _button(
       {required Icon icon, required String title, Function()? onPressed}) {

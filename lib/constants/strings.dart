@@ -3,6 +3,7 @@ class Strings {
       SURNAME = 'Nazwisko',
       ALPHABETIC_ASCENDING = 'Alfabetycznie rosnąco',
       ALPHABETIC_DESCENDING = 'Alfabetycznie malejąco',
+      ABOUT = 'O programie',
       ABSENT = 'Nieobecny',
       AGE = 'Wiek',
       ADD = 'Dodaj',
