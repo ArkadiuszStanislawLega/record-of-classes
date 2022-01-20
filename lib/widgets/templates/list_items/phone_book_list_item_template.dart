@@ -3,7 +3,9 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:record_of_classes/constants/app_urls.dart';
 import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/enumerators/PersonType.dart';
+import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/phone.dart';
+import 'package:record_of_classes/widgets/templates/snack_bar_info_template.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PhoneBookListItemTemplate extends StatefulWidget {
@@ -102,7 +104,18 @@ class _PhoneBookListItemTemplateState extends State<PhoneBookListItemTemplate> {
   void _navigateToEditContact() =>
       Navigator.pushNamed(context, AppUrls.EDIT_PHONE, arguments: widget.phone);
 
-  void _navigateToRemoveContact() {}
+  void _navigateToRemoveContact() => _removePhoneFromDb();
+
+  void _removePhoneFromDb() {
+    setState(() {
+      widget.phone.owner.target!.phones
+          .removeWhere((element) => element.id == widget.phone.id);
+      objectBox.store.box<Phone>().remove(widget.phone.id);
+    });
+    SnackBarInfoTemplate(
+        context: context,
+        message: '${Strings.REMOVED_FROM_DATABASE} ${Strings.CONTACT}');
+  }
 
   Color _colorDependsOnOwnerType() {
     switch (widget.phone.owner.target!.type) {

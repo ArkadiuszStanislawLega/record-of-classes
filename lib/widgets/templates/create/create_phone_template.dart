@@ -89,7 +89,15 @@ class _CreatePhoneTemplate extends State<CreatePhoneTemplate> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [
+      children: [   TextField(
+          controller: widget._nameNumberInputController,
+          decoration: InputDecoration(
+            border: const OutlineInputBorder(),
+            hintText: widget.phone == null
+                ? Strings.PHONE_NAME
+                : widget.phone!.numberName,
+          ),
+          onChanged: (userInput) => widget._numberName = userInput),
         TextField(
             controller: widget._numberInputController,
             keyboardType: TextInputType.phone,
@@ -103,15 +111,7 @@ class _CreatePhoneTemplate extends State<CreatePhoneTemplate> {
                   : widget.phone!.number.toString(),
             ),
             onChanged: (userInput) => widget._number = userInput),
-        TextField(
-            controller: widget._nameNumberInputController,
-            decoration: InputDecoration(
-              border: const OutlineInputBorder(),
-              hintText: widget.phone == null
-                  ? Strings.PHONE_NAME
-                  : widget.phone!.numberName,
-            ),
-            onChanged: (userInput) => widget._numberName = userInput),
+
       ],
     );
   }
