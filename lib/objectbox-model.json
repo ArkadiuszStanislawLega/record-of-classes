@@ -130,7 +130,7 @@
     },
     {
       "id": "4:8304019811953848799",
-      "lastPropertyId": "4:6357736263001832829",
+      "lastPropertyId": "7:8963886267189147825",
       "name": "Attendance",
       "properties": [
         {
@@ -145,27 +145,35 @@
           "type": 1
         },
         {
-          "id": "3:3706186507634068022",
-          "name": "classesId",
-          "type": 11,
-          "flags": 520,
-          "indexId": "2:6773675177352282519",
-          "relationTarget": "Classes"
-        },
-        {
           "id": "4:6357736263001832829",
           "name": "studentId",
           "type": 11,
           "flags": 520,
           "indexId": "3:3876153227275489020",
           "relationTarget": "Student"
+        },
+        {
+          "id": "6:1803403615449377813",
+          "name": "classesId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "20:9194954344031976896",
+          "relationTarget": "Classes"
+        },
+        {
+          "id": "7:8963886267189147825",
+          "name": "billId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "21:6802194698348453078",
+          "relationTarget": "Bill"
         }
       ],
       "relations": []
     },
     {
       "id": "5:2569973322208561741",
-      "lastPropertyId": "5:7229044549022485811",
+      "lastPropertyId": "6:8353523723444352271",
       "name": "Bill",
       "properties": [
         {
@@ -180,14 +188,6 @@
           "type": 1
         },
         {
-          "id": "3:4785750695672916933",
-          "name": "classesId",
-          "type": 11,
-          "flags": 520,
-          "indexId": "4:4134753230374124452",
-          "relationTarget": "Classes"
-        },
-        {
           "id": "4:3511719454620364937",
           "name": "studentId",
           "type": 11,
@@ -199,6 +199,14 @@
           "id": "5:7229044549022485811",
           "name": "price",
           "type": 8
+        },
+        {
+          "id": "6:8353523723444352271",
+          "name": "attendanceId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "19:431181199142401744",
+          "relationTarget": "Attendance"
         }
       ],
       "relations": []
@@ -459,14 +467,22 @@
     }
   ],
   "lastEntityId": "12:7751236531251891487",
-  "lastIndexId": "17:3246867036266486352",
+  "lastIndexId": "21:6802194698348453078",
   "lastRelationId": "18:3962742370877392650",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
   "retiredEntityUids": [],
-  "retiredIndexUids": [],
-  "retiredPropertyUids": [],
+  "retiredIndexUids": [
+    6773675177352282519,
+    4134753230374124452,
+    842982707630914193
+  ],
+  "retiredPropertyUids": [
+    3706186507634068022,
+    4785750695672916933,
+    7851124295830647492
+  ],
   "retiredRelationUids": [
     1221970440210856162,
     7162615460766791909,

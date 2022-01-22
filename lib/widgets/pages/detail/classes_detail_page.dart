@@ -183,8 +183,8 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
     List<Student> studentsList = [];
     for (var student in widget._classes.group.target!.students) {
       bool isInAttendancesList = false;
-      for (var attendances in student.attendancesList) {
-        if (attendances.classes.targetId == widget._classes.id) {
+      for (var attendance in student.attendancesList) {
+        if (attendance.classes.targetId == widget._classes.id) {
           isInAttendancesList = true;
         }
       }
@@ -266,10 +266,11 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
       widget._classes.attendances.add(attendance);
       Bill bill = Bill()
         ..student.target = student.account.target
-        ..classes.target = widget._classes
+        ..attendance.target = attendance
         ..isPaid = false
         ..price =
             widget._classes.group.target!.classesType.target!.priceForEach;
+      attendance.bill.target = bill;
       student.account.target!.bills.add(bill);
       student.attendancesList.add(attendance);
       store.box<Bill>().put(bill);

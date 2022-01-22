@@ -48,9 +48,9 @@ class _BillListItem extends State<BillListItem> {
             children: [
               Column(
                 children: [
-                  Text(FormatDate(widget.bill.classes.target!.dateTime)),
+                  Text(FormatDate(widget.bill.attendance.target!.classes.target!.dateTime)),
                   Text('${widget.bill.price.toString()}${Strings.CURRENCY}'),
-                  Text(widget.bill.classes.target!.group.target!.name),
+                  Text(widget.bill.attendance.target!.classes.target!.group.target!.name),
                 ],
               ),
               Icon(

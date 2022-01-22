@@ -152,7 +152,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(4, 8304019811953848799),
       name: 'Attendance',
-      lastPropertyId: const IdUid(4, 6357736263001832829),
+      lastPropertyId: const IdUid(7, 8963886267189147825),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -166,26 +166,33 @@ final _entities = <ModelEntity>[
             type: 1,
             flags: 0),
         ModelProperty(
-            id: const IdUid(3, 3706186507634068022),
-            name: 'classesId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(2, 6773675177352282519),
-            relationTarget: 'Classes'),
-        ModelProperty(
             id: const IdUid(4, 6357736263001832829),
             name: 'studentId',
             type: 11,
             flags: 520,
             indexId: const IdUid(3, 3876153227275489020),
-            relationTarget: 'Student')
+            relationTarget: 'Student'),
+        ModelProperty(
+            id: const IdUid(6, 1803403615449377813),
+            name: 'classesId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(20, 9194954344031976896),
+            relationTarget: 'Classes'),
+        ModelProperty(
+            id: const IdUid(7, 8963886267189147825),
+            name: 'billId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(21, 6802194698348453078),
+            relationTarget: 'Bill')
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[]),
   ModelEntity(
       id: const IdUid(5, 2569973322208561741),
       name: 'Bill',
-      lastPropertyId: const IdUid(5, 7229044549022485811),
+      lastPropertyId: const IdUid(6, 8353523723444352271),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -199,13 +206,6 @@ final _entities = <ModelEntity>[
             type: 1,
             flags: 0),
         ModelProperty(
-            id: const IdUid(3, 4785750695672916933),
-            name: 'classesId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(4, 4134753230374124452),
-            relationTarget: 'Classes'),
-        ModelProperty(
             id: const IdUid(4, 3511719454620364937),
             name: 'studentId',
             type: 11,
@@ -216,7 +216,14 @@ final _entities = <ModelEntity>[
             id: const IdUid(5, 7229044549022485811),
             name: 'price',
             type: 8,
-            flags: 0)
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(6, 8353523723444352271),
+            name: 'attendanceId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(19, 431181199142401744),
+            relationTarget: 'Attendance')
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[]),
@@ -482,12 +489,20 @@ ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
       lastEntityId: const IdUid(12, 7751236531251891487),
-      lastIndexId: const IdUid(17, 3246867036266486352),
+      lastIndexId: const IdUid(21, 6802194698348453078),
       lastRelationId: const IdUid(18, 3962742370877392650),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [],
-      retiredIndexUids: const [],
-      retiredPropertyUids: const [],
+      retiredIndexUids: const [
+        6773675177352282519,
+        4134753230374124452,
+        842982707630914193
+      ],
+      retiredPropertyUids: const [
+        3706186507634068022,
+        4785750695672916933,
+        7851124295830647492
+      ],
       retiredRelationUids: const [
         1221970440210856162,
         7162615460766791909,
@@ -581,9 +596,9 @@ ModelDefinition getObjectBoxModel() {
           final rootOffset = buffer.derefObject(0);
 
           final object = Account(
-              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0))
-            ..balance =
-                const fb.Float64Reader().vTableGet(buffer, rootOffset, 8, 0);
+              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
+              balance:
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 8, 0));
           object.student.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
           object.student.attach(store);
@@ -645,18 +660,20 @@ ModelDefinition getObjectBoxModel() {
         }),
     Attendance: EntityDefinition<Attendance>(
         model: _entities[3],
-        toOneRelations: (Attendance object) => [object.classes, object.student],
+        toOneRelations: (Attendance object) =>
+            [object.student, object.classes, object.bill],
         toManyRelations: (Attendance object) => {},
         getId: (Attendance object) => object.id,
         setId: (Attendance object, int id) {
           object.id = id;
         },
         objectToFB: (Attendance object, fb.Builder fbb) {
-          fbb.startTable(5);
+          fbb.startTable(8);
           fbb.addInt64(0, object.id);
           fbb.addBool(1, object.isPresent);
-          fbb.addInt64(2, object.classes.targetId);
           fbb.addInt64(3, object.student.targetId);
+          fbb.addInt64(5, object.classes.targetId);
+          fbb.addInt64(6, object.bill.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -664,33 +681,36 @@ ModelDefinition getObjectBoxModel() {
           final buffer = fb.BufferContext(fbData);
           final rootOffset = buffer.derefObject(0);
 
-          final object = Attendance()
-            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
-            ..isPresent =
-                const fb.BoolReader().vTableGet(buffer, rootOffset, 6, false);
-          object.classes.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
-          object.classes.attach(store);
+          final object = Attendance(
+              isPresent:
+                  const fb.BoolReader().vTableGet(buffer, rootOffset, 6, false))
+            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
           object.student.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
           object.student.attach(store);
+          object.classes.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0);
+          object.classes.attach(store);
+          object.bill.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0);
+          object.bill.attach(store);
           return object;
         }),
     Bill: EntityDefinition<Bill>(
         model: _entities[4],
-        toOneRelations: (Bill object) => [object.classes, object.student],
+        toOneRelations: (Bill object) => [object.student, object.attendance],
         toManyRelations: (Bill object) => {},
         getId: (Bill object) => object.id,
         setId: (Bill object, int id) {
           object.id = id;
         },
         objectToFB: (Bill object, fb.Builder fbb) {
-          fbb.startTable(6);
+          fbb.startTable(7);
           fbb.addInt64(0, object.id);
           fbb.addBool(1, object.isPaid);
-          fbb.addInt64(2, object.classes.targetId);
           fbb.addInt64(3, object.student.targetId);
           fbb.addFloat64(4, object.price);
+          fbb.addInt64(5, object.attendance.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -704,12 +724,12 @@ ModelDefinition getObjectBoxModel() {
                 const fb.BoolReader().vTableGet(buffer, rootOffset, 6, false)
             ..price =
                 const fb.Float64Reader().vTableGet(buffer, rootOffset, 12, 0);
-          object.classes.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
-          object.classes.attach(store);
           object.student.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
           object.student.attach(store);
+          object.attendance.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0);
+          object.attendance.attach(store);
           return object;
         }),
     Classes: EntityDefinition<Classes>(
@@ -1051,13 +1071,17 @@ class Attendance_ {
   static final isPresent =
       QueryBooleanProperty<Attendance>(_entities[3].properties[1]);
 
-  /// see [Attendance.classes]
-  static final classes =
-      QueryRelationToOne<Attendance, Classes>(_entities[3].properties[2]);
-
   /// see [Attendance.student]
   static final student =
-      QueryRelationToOne<Attendance, Student>(_entities[3].properties[3]);
+      QueryRelationToOne<Attendance, Student>(_entities[3].properties[2]);
+
+  /// see [Attendance.classes]
+  static final classes =
+      QueryRelationToOne<Attendance, Classes>(_entities[3].properties[3]);
+
+  /// see [Attendance.bill]
+  static final bill =
+      QueryRelationToOne<Attendance, Bill>(_entities[3].properties[4]);
 }
 
 /// [Bill] entity fields to define ObjectBox queries.
@@ -1068,16 +1092,16 @@ class Bill_ {
   /// see [Bill.isPaid]
   static final isPaid = QueryBooleanProperty<Bill>(_entities[4].properties[1]);
 
-  /// see [Bill.classes]
-  static final classes =
-      QueryRelationToOne<Bill, Classes>(_entities[4].properties[2]);
-
   /// see [Bill.student]
   static final student =
-      QueryRelationToOne<Bill, Account>(_entities[4].properties[3]);
+      QueryRelationToOne<Bill, Account>(_entities[4].properties[2]);
 
   /// see [Bill.price]
-  static final price = QueryDoubleProperty<Bill>(_entities[4].properties[4]);
+  static final price = QueryDoubleProperty<Bill>(_entities[4].properties[3]);
+
+  /// see [Bill.attendance]
+  static final attendance =
+      QueryRelationToOne<Bill, Attendance>(_entities[4].properties[4]);
 }
 
 /// [Classes] entity fields to define ObjectBox queries.
