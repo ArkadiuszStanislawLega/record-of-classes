@@ -192,7 +192,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(5, 2569973322208561741),
       name: 'Bill',
-      lastPropertyId: const IdUid(6, 8353523723444352271),
+      lastPropertyId: const IdUid(7, 2337492479634072274),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -206,13 +206,6 @@ final _entities = <ModelEntity>[
             type: 1,
             flags: 0),
         ModelProperty(
-            id: const IdUid(4, 3511719454620364937),
-            name: 'studentId',
-            type: 11,
-            flags: 520,
-            indexId: const IdUid(5, 8005409257843509993),
-            relationTarget: 'Account'),
-        ModelProperty(
             id: const IdUid(5, 7229044549022485811),
             name: 'price',
             type: 8,
@@ -223,7 +216,14 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(19, 431181199142401744),
-            relationTarget: 'Attendance')
+            relationTarget: 'Attendance'),
+        ModelProperty(
+            id: const IdUid(7, 2337492479634072274),
+            name: 'studentAccountId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(22, 6364611693031497144),
+            relationTarget: 'Account')
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[]),
@@ -489,19 +489,21 @@ ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
       lastEntityId: const IdUid(12, 7751236531251891487),
-      lastIndexId: const IdUid(21, 6802194698348453078),
+      lastIndexId: const IdUid(22, 6364611693031497144),
       lastRelationId: const IdUid(18, 3962742370877392650),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [],
       retiredIndexUids: const [
         6773675177352282519,
         4134753230374124452,
-        842982707630914193
+        842982707630914193,
+        8005409257843509993
       ],
       retiredPropertyUids: const [
         3706186507634068022,
         4785750695672916933,
-        7851124295830647492
+        7851124295830647492,
+        3511719454620364937
       ],
       retiredRelationUids: const [
         1221970440210856162,
@@ -575,9 +577,8 @@ ModelDefinition getObjectBoxModel() {
         model: _entities[1],
         toOneRelations: (Account object) => [object.student],
         toManyRelations: (Account object) => {
-              RelInfo<Bill>.toOneBacklink(
-                      4, object.id, (Bill srcObject) => srcObject.student):
-                  object.bills
+              RelInfo<Bill>.toOneBacklink(7, object.id,
+                  (Bill srcObject) => srcObject.studentAccount): object.bills
             },
         getId: (Account object) => object.id,
         setId: (Account object, int id) {
@@ -606,7 +607,7 @@ ModelDefinition getObjectBoxModel() {
               object.bills,
               store,
               RelInfo<Bill>.toOneBacklink(
-                  4, object.id, (Bill srcObject) => srcObject.student),
+                  7, object.id, (Bill srcObject) => srcObject.studentAccount),
               store.box<Account>());
           return object;
         }),
@@ -698,19 +699,20 @@ ModelDefinition getObjectBoxModel() {
         }),
     Bill: EntityDefinition<Bill>(
         model: _entities[4],
-        toOneRelations: (Bill object) => [object.student, object.attendance],
+        toOneRelations: (Bill object) =>
+            [object.attendance, object.studentAccount],
         toManyRelations: (Bill object) => {},
         getId: (Bill object) => object.id,
         setId: (Bill object, int id) {
           object.id = id;
         },
         objectToFB: (Bill object, fb.Builder fbb) {
-          fbb.startTable(7);
+          fbb.startTable(8);
           fbb.addInt64(0, object.id);
           fbb.addBool(1, object.isPaid);
-          fbb.addInt64(3, object.student.targetId);
           fbb.addFloat64(4, object.price);
           fbb.addInt64(5, object.attendance.targetId);
+          fbb.addInt64(6, object.studentAccount.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -724,12 +726,12 @@ ModelDefinition getObjectBoxModel() {
                 const fb.BoolReader().vTableGet(buffer, rootOffset, 6, false)
             ..price =
                 const fb.Float64Reader().vTableGet(buffer, rootOffset, 12, 0);
-          object.student.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
-          object.student.attach(store);
           object.attendance.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0);
           object.attendance.attach(store);
+          object.studentAccount.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0);
+          object.studentAccount.attach(store);
           return object;
         }),
     Classes: EntityDefinition<Classes>(
@@ -1092,16 +1094,16 @@ class Bill_ {
   /// see [Bill.isPaid]
   static final isPaid = QueryBooleanProperty<Bill>(_entities[4].properties[1]);
 
-  /// see [Bill.student]
-  static final student =
-      QueryRelationToOne<Bill, Account>(_entities[4].properties[2]);
-
   /// see [Bill.price]
-  static final price = QueryDoubleProperty<Bill>(_entities[4].properties[3]);
+  static final price = QueryDoubleProperty<Bill>(_entities[4].properties[2]);
 
   /// see [Bill.attendance]
   static final attendance =
-      QueryRelationToOne<Bill, Attendance>(_entities[4].properties[4]);
+      QueryRelationToOne<Bill, Attendance>(_entities[4].properties[3]);
+
+  /// see [Bill.studentAccount]
+  static final studentAccount =
+      QueryRelationToOne<Bill, Account>(_entities[4].properties[4]);
 }
 
 /// [Classes] entity fields to define ObjectBox queries.

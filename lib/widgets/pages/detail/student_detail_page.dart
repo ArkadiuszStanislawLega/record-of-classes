@@ -28,10 +28,7 @@ class _StudentDetailPage extends State<StudentDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    _student = ModalRoute
-        .of(context)!
-        .settings
-        .arguments as Student;
+    _student = ModalRoute.of(context)!.settings.arguments as Student;
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -43,6 +40,11 @@ class _StudentDetailPage extends State<StudentDetailPage> {
         icon: Icons.settings,
         backgroundColor: Colors.amber,
         children: [
+          SpeedDialChild(
+              child: const Icon(Icons.monetization_on),
+              label: Strings.FUND_ACCOUNT,
+              backgroundColor: Colors.amberAccent,
+              onTap: _navigateToFundAccount),
           SpeedDialChild(
               child: const Icon(Icons.person),
               label: Strings.ADD_SIBLING,
@@ -77,10 +79,12 @@ class _StudentDetailPage extends State<StudentDetailPage> {
   void _navigateToAddParent() =>
       Navigator.pushNamed(context, AppUrls.ADD_PARENT, arguments: _student);
 
-  void _navigateToAddContact() => {
-        Navigator.pushNamed(context, AppUrls.ADD_CONTACT_TO_STUDENT,
-            arguments: _student)
-      };
+  void _navigateToAddContact() =>
+      Navigator.pushNamed(context, AppUrls.ADD_CONTACT_TO_STUDENT,
+          arguments: _student);
+
+  void _navigateToFundAccount() =>
+      Navigator.pushNamed(context, AppUrls.FUND_ACCOUNT, arguments: _student);
 
   SliverAppBar _customAppBar() {
     return SliverAppBar(
@@ -331,7 +335,7 @@ class _StudentDetailPage extends State<StudentDetailPage> {
         ),
         OneRowPropertyTemplate(
           title: '${Strings.BILANCE}:',
-          value: '${_student.account.target!.balance}${Strings.CURRENCY}',
+          value: '${_student.account.target!.balance.toStringAsFixed(2)}${Strings.CURRENCY}',
         ),
         OneRowPropertyTemplate(
           title: '${Strings.TO_PAY}:',

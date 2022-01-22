@@ -35,6 +35,7 @@ import 'package:record_of_classes/widgets/pages/edit/edit_parent_page.dart';
 import 'package:record_of_classes/widgets/pages/edit/edit_phone_page.dart';
 import 'package:record_of_classes/widgets/pages/edit/edit_student_page.dart';
 import 'package:record_of_classes/widgets/pages/finance_main_page.dart';
+import 'package:record_of_classes/widgets/pages/fund_account_page.dart';
 import 'package:record_of_classes/widgets/pages/groups_main_page.dart';
 import 'package:record_of_classes/widgets/pages/phone_book_page.dart';
 import 'package:record_of_classes/widgets/pages/start_page.dart';
@@ -89,18 +90,18 @@ void _putTeacherToDb() {
 }
 
 void clearDb() {
-  // objectBox.store.box<Account>().removeAll();
+  objectBox.store.box<Account>().removeAll();
   objectBox.store.box<Address>().removeAll();
   objectBox.store.box<Attendance>().removeAll();
   objectBox.store.box<Bill>().removeAll();
   objectBox.store.box<Classes>().removeAll();
   objectBox.store.box<ClassesType>().removeAll();
   objectBox.store.box<Group>().removeAll();
-  // objectBox.store.box<Parent>().removeAll();
-  // objectBox.store.box<Person>().removeAll();
-  // objectBox.store.box<Phone>().removeAll();
-  // objectBox.store.box<Student>().removeAll();
-  // objectBox.store.box<Teacher>().removeAll();
+  objectBox.store.box<Parent>().removeAll();
+  objectBox.store.box<Person>().removeAll();
+  objectBox.store.box<Phone>().removeAll();
+  objectBox.store.box<Student>().removeAll();
+  objectBox.store.box<Teacher>().removeAll();
 }
 
 void printDataFromDB() {
@@ -178,6 +179,7 @@ class _RecordOfClassesApp extends State<RecordOfClassesApp> {
         AppUrls.ADD_PHONE: (context) => CreatePhonePage(),
         AppUrls.EDIT_PHONE: (context) => EditPhonePage(),
         AppUrls.PHONE_BOOK: (context) => PhoneBookPage(),
+        AppUrls.FUND_ACCOUNT: (context) => FundAccountPage(),
         '/test' : (context) => Test()
       },
     );

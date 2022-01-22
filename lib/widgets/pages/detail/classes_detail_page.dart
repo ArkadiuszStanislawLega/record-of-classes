@@ -31,7 +31,8 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
       stream: _classesStream,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          widget._classes = objectBox.store.box<Classes>().get(widget._classes.id)!;
+          widget._classes =
+              objectBox.store.box<Classes>().get(widget._classes.id)!;
           return DefaultTabController(
             length: 2,
             child: Scaffold(
@@ -152,12 +153,17 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
           children: [
             Container(
               padding: const EdgeInsets.all(16.0),
-              child: Column(children: [
-                Text(widget._classes.group.target!.name,
-                style: const TextStyle(fontSize: 25, color: Colors.white),),
-                Text(Strings.CLASSES_CONDUCTED.toLowerCase(),
-                  style: const TextStyle(fontSize: 12, color: Colors.white)
-              ),],),
+              child: Column(
+                children: [
+                  Text(
+                    widget._classes.group.target!.name,
+                    style: const TextStyle(fontSize: 25, color: Colors.white),
+                  ),
+                  Text(Strings.CLASSES_CONDUCTED.toLowerCase(),
+                      style:
+                          const TextStyle(fontSize: 12, color: Colors.white)),
+                ],
+              ),
             ),
             OneRowPropertyTemplate(
               title: '${Strings.DATE_OF_CLASSES}:',
@@ -218,9 +224,29 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
   }
 
   Widget _attendanceUneditedItemList(Attendance attendance) {
-    return ListTile(
-      tileColor: attendance.isPresent ? Colors.green : Colors.orange,
-      title: Text(attendance.student.target!.introduceYourself()),
+    return Slidable(
+      actionPane: const SlidableDrawerActionPane(),
+      secondaryActions: [
+        IconSlideAction(
+          caption: attendance.isPresent ? Strings.ABSENT : Strings.ABSENT,
+          color: attendance.isPresent ? Colors.orange : Colors.green,
+          icon: attendance.isPresent
+              ? Icons.check_box_outline_blank
+              : Icons.check,
+          onTap: () {
+            attendance.isPresent
+                ? _setAbsentUpdateDb(attendance)
+                : _setPresentUpdateDatabase(attendance.student.target!);
+          },
+        ),
+      ],
+      child: ListTile(
+        tileColor: attendance.isPresent ? Colors.orange : Colors.grey,
+        title: Text(attendance.student.target!.introduceYourself()),
+        onTap: () {},
+        subtitle: Text(
+            '${Strings.UNPAID_CLASSES}: ${_numberOfUnpaidBills(attendance.student.target!.account.target!.bills)}'),
+      ),
     );
   }
 
@@ -243,7 +269,7 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
           color: Colors.green,
           icon: Icons.check,
           onTap: () {
-            _updateDatabase(student);
+            _setPresentUpdateDatabase(student);
           },
         ),
       ],
@@ -256,28 +282,60 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
     );
   }
 
-  void _updateDatabase(Student student) {
+  void _setAbsentUpdateDb(Attendance attendance) {
     setState(() {
       Store store = objectBox.store;
-      Attendance attendance = Attendance()
-        ..student.target = student
-        ..classes.target = widget._classes
-        ..isPresent = true;
-      widget._classes.attendances.add(attendance);
-      Bill bill = Bill()
-        ..student.target = student.account.target
-        ..attendance.target = attendance
-        ..isPaid = false
-        ..price =
-            widget._classes.group.target!.classesType.target!.priceForEach;
-      attendance.bill.target = bill;
-      student.account.target!.bills.add(bill);
-      student.attendancesList.add(attendance);
-      store.box<Bill>().put(bill);
-      store.box<Classes>().put(widget._classes);
+      attendance.isPresent = false;
+
+      store.box<Bill>().remove(attendance.bill.target!.id);
       store.box<Attendance>().put(attendance);
-      store.box<Student>().put(student);
+
+      var tt = store.box<Attendance>().get(attendance.id);
+      print(tt?.bill.target);
     });
+  }
+
+  void _setPresentUpdateDatabase(Student student) {
+    setState(() {
+      if (student.attendancesList.isNotEmpty) {
+        for (var element in student.attendancesList) {
+          if (element.classes.targetId == widget._classes.id) {
+            element.isPresent = true;
+            _addBillToAttendanceInDb(attendance: element, student: student);
+          }
+        }
+      }
+      _addBillToAttendanceInDb(attendance: Attendance(), student: student);
+    });
+  }
+
+  void _addBillToAttendanceInDb(
+      {required Attendance attendance, required Student student}) {
+    attendance.isPresent = true;
+
+    if (attendance.id == 0) {
+      attendance
+        ..student.target = student
+        ..classes.target = widget._classes;
+      widget._classes.attendances.add(attendance);
+    }
+
+    Bill bill = Bill()
+      ..studentAccount.target = student.account.target
+      ..attendance.target = attendance
+      ..isPaid = false
+      ..price = widget._classes.group.target!.classesType.target!.priceForEach;
+
+    attendance.bill.target = bill;
+    student.account.target!.balance -= bill.price;
+    student.account.target!.bills.add(bill);
+    student.attendancesList.add(attendance);
+
+    Store store = objectBox.store;
+    store.box<Bill>().put(bill);
+    store.box<Classes>().put(widget._classes);
+    store.box<Attendance>().put(attendance);
+    store.box<Student>().put(student);
   }
 
   @override

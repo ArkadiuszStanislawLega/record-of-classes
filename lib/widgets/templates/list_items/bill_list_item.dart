@@ -4,6 +4,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/main.dart';
+import 'package:record_of_classes/models/account.dart';
 import 'package:record_of_classes/models/bill.dart';
 
 class BillListItem extends StatefulWidget {
@@ -34,23 +35,25 @@ class _BillListItem extends State<BillListItem> {
             onTap: _setIsUnpaidInDatabase),
       ],
       child: Card(
-        shape:  RoundedRectangleBorder(
+        shape: RoundedRectangleBorder(
           side: const BorderSide(color: Colors.white70, width: 1),
           borderRadius: BorderRadius.circular(10),
         ),
         margin: const EdgeInsets.symmetric(vertical: 8.0),
         elevation: 7,
         child: ListTile(
-          title: Text(
-              widget.bill.student.target!.student.target!.introduceYourself()),
+          title: Text(widget.bill.studentAccount.target!.student.target!
+              .introduceYourself()),
           subtitle: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Column(
                 children: [
-                  Text(FormatDate(widget.bill.attendance.target!.classes.target!.dateTime)),
+                  Text(FormatDate(
+                      widget.bill.attendance.target!.classes.target!.dateTime)),
                   Text('${widget.bill.price.toString()}${Strings.CURRENCY}'),
-                  Text(widget.bill.attendance.target!.classes.target!.group.target!.name),
+                  Text(widget.bill.attendance.target!.classes.target!.group
+                      .target!.name),
                 ],
               ),
               Icon(
@@ -67,17 +70,23 @@ class _BillListItem extends State<BillListItem> {
 
   void _setIsPaidInDatabase() {
     setState(() {
-      Store store = objectBox.store;
       widget.bill.isPaid = true;
-      store.box<Bill>().put(widget.bill);
+      widget.bill.studentAccount.target!.balance -= widget.bill.price;
+      _commitChanges();
     });
   }
 
   void _setIsUnpaidInDatabase() {
     setState(() {
-      Store store = objectBox.store;
       widget.bill.isPaid = false;
-      store.box<Bill>().put(widget.bill);
+      widget.bill.studentAccount.target!.balance += widget.bill.price;
+      _commitChanges();
     });
+  }
+
+  void _commitChanges() {
+    Store store = objectBox.store;
+    store.box<Bill>().put(widget.bill);
+    store.box<Account>().put(widget.bill.studentAccount.target!);
   }
 }

@@ -8,11 +8,11 @@ class Bill {
   late int id= 0;
   late bool isPaid;
   late double price;
-  final student = ToOne<Account>();
+  final studentAccount = ToOne<Account>();
   final attendance = ToOne<Attendance>();
 
   @override
   String toString() {
-    return 'Bill{id: $id, isPaid: $isPaid, price: $price, attendance: $attendance, student: $student}';
+    return 'Bill{id: $id, isPaid: $isPaid, price: $price, attendance: $attendance, student: $studentAccount}';
   }
 }

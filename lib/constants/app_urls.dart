@@ -27,5 +27,6 @@ class AppUrls {
       GROUPS_MAIN_PAGE = '/groups_main_page',
       ADD_PHONE = '/add_phone',
       EDIT_PHONE = '/edit_phone',
-      PHONE_BOOK = '/phone_book_page';
+      PHONE_BOOK = '/phone_book_page',
+      FUND_ACCOUNT = '/fund_account';
 }
