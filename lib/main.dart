@@ -89,18 +89,18 @@ void _putTeacherToDb() {
 }
 
 void clearDb() {
-  objectBox.store.box<Account>().removeAll();
+  // objectBox.store.box<Account>().removeAll();
   objectBox.store.box<Address>().removeAll();
   objectBox.store.box<Attendance>().removeAll();
   objectBox.store.box<Bill>().removeAll();
   objectBox.store.box<Classes>().removeAll();
   objectBox.store.box<ClassesType>().removeAll();
   objectBox.store.box<Group>().removeAll();
-  objectBox.store.box<Parent>().removeAll();
-  objectBox.store.box<Person>().removeAll();
-  objectBox.store.box<Phone>().removeAll();
-  objectBox.store.box<Student>().removeAll();
-  objectBox.store.box<Teacher>().removeAll();
+  // objectBox.store.box<Parent>().removeAll();
+  // objectBox.store.box<Person>().removeAll();
+  // objectBox.store.box<Phone>().removeAll();
+  // objectBox.store.box<Student>().removeAll();
+  // objectBox.store.box<Teacher>().removeAll();
 }
 
 void printDataFromDB() {

@@ -330,6 +330,10 @@ class _StudentDetailPage extends State<StudentDetailPage> {
           child: _pageTitle(),
         ),
         OneRowPropertyTemplate(
+          title: '${Strings.BILANCE}:',
+          value: '${_student.account.target!.balance}${Strings.CURRENCY}',
+        ),
+        OneRowPropertyTemplate(
           title: '${Strings.TO_PAY}:',
           value: '$_toPay${Strings.CURRENCY}',
         ),

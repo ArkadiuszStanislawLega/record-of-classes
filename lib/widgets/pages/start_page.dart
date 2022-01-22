@@ -68,7 +68,7 @@ class _StartPageViewView extends State<StartPageView> {
             Column(
               children: [
                 TextButton(
-                    onPressed:  _navigateToAboutPage,
+                    onPressed: _navigateToAboutPage,
                     child: const Text(
                       Strings.ABOUT,
                       style: TextStyle(color: Colors.white),
@@ -89,33 +89,30 @@ class _StartPageViewView extends State<StartPageView> {
 
   Widget _button(
       {required Icon icon, required String title, Function()? onPressed}) {
-    return Container(
-        decoration: const BoxDecoration(
-          color: Colors.grey,
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            IconButton(
-              color: Colors.white,
-              iconSize: 45,
-              onPressed: onPressed,
-              icon: icon,
+    return ElevatedButton(
+      onPressed: onPressed,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          IconButton(
+            color: Colors.white,
+            iconSize: 45,
+            onPressed: onPressed,
+            icon: icon,
+          ),
+          Container(
+            padding: const EdgeInsets.all(5.0),
+            child: Text(
+              title,
+              style: const TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'Arial',
+                  fontWeight: FontWeight.bold),
             ),
-            Container(
-              padding: const EdgeInsets.all(15.0),
-              child: Text(
-                title,
-                style: const TextStyle(
-                    color: Colors.white,
-                    fontFamily: 'Arial',
-                    fontWeight: FontWeight.bold),
-              ),
-            )
-          ],
-        ));
+          )
+        ],
+      ),
+    );
   }
 
   void _navigateToPhoneBook() =>

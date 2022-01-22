@@ -102,5 +102,5 @@ class _EditStudentPage extends State<EditStudentPage> {
   }
 
   void updateValueInDatabase() =>
-      setState(() => objectBox.store.box<Person>().put(_person));
+      setState(() => objectBox.store.box<Student>().put(_student));
 }

@@ -69,7 +69,7 @@
     },
     {
       "id": "2:7867667170132954701",
-      "lastPropertyId": "2:948463750746831861",
+      "lastPropertyId": "3:1047344440864601148",
       "name": "Account",
       "properties": [
         {
@@ -85,6 +85,11 @@
           "flags": 520,
           "indexId": "1:2683096897271273148",
           "relationTarget": "Student"
+        },
+        {
+          "id": "3:1047344440864601148",
+          "name": "balance",
+          "type": 8
         }
       ],
       "relations": []

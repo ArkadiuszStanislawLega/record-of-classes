@@ -88,7 +88,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(2, 7867667170132954701),
       name: 'Account',
-      lastPropertyId: const IdUid(2, 948463750746831861),
+      lastPropertyId: const IdUid(3, 1047344440864601148),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -102,7 +102,12 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(1, 2683096897271273148),
-            relationTarget: 'Student')
+            relationTarget: 'Student'),
+        ModelProperty(
+            id: const IdUid(3, 1047344440864601148),
+            name: 'balance',
+            type: 8,
+            flags: 0)
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[
@@ -564,9 +569,10 @@ ModelDefinition getObjectBoxModel() {
           object.id = id;
         },
         objectToFB: (Account object, fb.Builder fbb) {
-          fbb.startTable(3);
+          fbb.startTable(4);
           fbb.addInt64(0, object.id);
           fbb.addInt64(1, object.student.targetId);
+          fbb.addFloat64(2, object.balance);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -575,7 +581,9 @@ ModelDefinition getObjectBoxModel() {
           final rootOffset = buffer.derefObject(0);
 
           final object = Account(
-              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0));
+              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0))
+            ..balance =
+                const fb.Float64Reader().vTableGet(buffer, rootOffset, 8, 0);
           object.student.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
           object.student.attach(store);
@@ -1006,6 +1014,10 @@ class Account_ {
   /// see [Account.student]
   static final student =
       QueryRelationToOne<Account, Student>(_entities[1].properties[1]);
+
+  /// see [Account.balance]
+  static final balance =
+      QueryDoubleProperty<Account>(_entities[1].properties[2]);
 }
 
 /// [Address] entity fields to define ObjectBox queries.

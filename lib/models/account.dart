@@ -6,11 +6,12 @@ import 'bill.dart';
 @Entity()
 class Account {
   late int id;
+  late double balance;
   final student = ToOne<Student>();
   @Backlink()
   final bills = ToMany<Bill>();
 
-  Account({this.id = 0});
+  Account({this.id = 0, this.balance = 0.0});
 
   double countUnpaidBills(){
     double unpaid = 0.0;
