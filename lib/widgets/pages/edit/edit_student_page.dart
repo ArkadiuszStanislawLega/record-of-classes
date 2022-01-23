@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:record_of_classes/constants/strings.dart';
-import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/person.dart';
 import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/widgets/templates/snack_bar_info_template.dart';
@@ -18,24 +17,27 @@ class EditStudentPage extends StatefulWidget {
 class _EditStudentPage extends State<EditStudentPage> {
   late Student _student;
   late Person _person;
+  late Function _updateStudentInDb;
+  late Map _args;
 
   String _personAge = '', _personName = '', _personSurname = '';
 
   @override
   Widget build(BuildContext context) {
-    _student = ModalRoute.of(context)!.settings.arguments as Student;
+    _args = ModalRoute.of(context)!.settings.arguments as Map;
+    _student = _args[Strings.STUDENT];
+    _updateStudentInDb = _args[Strings.FUNCTION];
     _person = _student.person.target!;
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          _student.introduceYourself(),
+        appBar: AppBar(
+          title: Text(
+            _student.introduceYourself(),
+          ),
         ),
-      ),
-      body: _content()
-    );
+        body: _content());
   }
 
-  Widget _content(){
+  Widget _content() {
     return Column(
       children: [
         TextField(
@@ -48,8 +50,7 @@ class _EditStudentPage extends State<EditStudentPage> {
         ),
         TextField(
           decoration: InputDecoration(
-            hintText:
-            _person.surname == '' ? Strings.SURNAME : _person.surname,
+            hintText: _person.surname == '' ? Strings.SURNAME : _person.surname,
           ),
           onChanged: (userInput) {
             _personSurname = userInput;
@@ -61,7 +62,7 @@ class _EditStudentPage extends State<EditStudentPage> {
             },
             decoration: InputDecoration(
               hintText:
-              _student.age == 0 ? Strings.AGE : _student.age.toString(),
+                  _student.age == 0 ? Strings.AGE : _student.age.toString(),
             ),
             keyboardType: TextInputType.number,
             inputFormatters: <TextInputFormatter>[
@@ -77,30 +78,40 @@ class _EditStudentPage extends State<EditStudentPage> {
     );
   }
 
-  void setNewValues() {
-    setState(() {
-      if (_personName != '') {
-        _student.person.target!.name = _personName;
-      }
-      if (_personSurname != '') {
-        _student.person.target!.surname = _personSurname;
-      }
-      if (_personAge != '') {
-        _student.age = int.parse(_personAge);
-      }
-    });
+  bool _isInputValid() => _isNameValid() && _isSurnameValid() && _isAgeValid();
+
+  bool _isNameValid() => _personName != '';
+
+  bool _isSurnameValid() => _personSurname != '';
+
+  bool _isAgeValid() {
+    if (_personAge == '') {
+      return false;
+    }
+    if (int.tryParse(_personAge) == 0) {
+      return false;
+    }
+    if (int.parse(_personAge) > 0) {
+      return true;
+    }
+
+    return false;
   }
 
   void confirmEditChanges() {
-    setNewValues();
-    updateValueInDatabase();
-    SnackBarInfoTemplate(
-        context: context,
-        message:
-            '${Strings.SUCCESFULLY_UPDATED_STUDENT} ${_student.introduceYourself()}');
-    Navigator.pop(context);
+    if (_isInputValid()) {
+      _updateStudentInDb(
+          name: _personName,
+          surname: _personSurname,
+          age: int.parse(_personAge));
+      SnackBarInfoTemplate(
+          context: context,
+          message:
+              '${Strings.SUCCESFULLY_UPDATED_STUDENT} ${_student.introduceYourself()}');
+      Navigator.pop(context);
+    } else {
+      SnackBarInfoTemplate(
+          context: context, message: Strings.ERROR_MESSAGE_CHECK_FIELDS_FILL);
+    }
   }
-
-  void updateValueInDatabase() =>
-      setState(() => objectBox.store.box<Student>().put(_student));
 }

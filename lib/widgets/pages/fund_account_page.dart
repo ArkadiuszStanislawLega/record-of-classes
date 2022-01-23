@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:record_of_classes/constants/strings.dart';
-import 'package:record_of_classes/main.dart';
-import 'package:record_of_classes/models/account.dart';
 import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/widgets/templates/snack_bar_info_template.dart';
 
@@ -15,11 +13,16 @@ class FundAccountPage extends StatefulWidget {
 
 class _FundAccountPageState extends State<FundAccountPage> {
   late Student _student;
-  double _inputedAmount = 0.0;
+  late Function? _fundAccountUpdateDb;
+  late Map args;
+  double _input = 0.0;
 
   @override
   Widget build(BuildContext context) {
-    _student= ModalRoute.of(context)!.settings.arguments as Student;
+   args = ModalRoute.of(context)!.settings.arguments as Map;
+   _student = args[Strings.STUDENT];
+   _fundAccountUpdateDb = args[Strings.FUNCTION];
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(Strings.FUND_ACCOUNT),
@@ -34,7 +37,7 @@ class _FundAccountPageState extends State<FundAccountPage> {
               border: OutlineInputBorder(),
               hintText: Strings.ENTER_AMOUNT,
             ),
-            onChanged: (userInput) => _inputedAmount = double.parse(userInput),
+            onChanged: (userInput) => _input= double.parse(userInput),
           ),
           TextButton(
             onPressed: _updateDatabase,
@@ -45,12 +48,9 @@ class _FundAccountPageState extends State<FundAccountPage> {
     );
   }
   void _updateDatabase(){
-    setState(() {
-      _student.account.target!.balance += _inputedAmount;
-      objectBox.store.box<Account>().put(_student.account.target!);
-    });
+    _fundAccountUpdateDb!(value: _input);
 
-    SnackBarInfoTemplate(context: context, message: '${Strings.FUNDED_ACCOUNT} ${_student.introduceYourself()} ${Strings.AMOUNT} $_inputedAmount${Strings.CURRENCY}');
+    SnackBarInfoTemplate(context: context, message: '${Strings.FUNDED_ACCOUNT} ${_student.introduceYourself()} ${Strings.AMOUNT} $_input${Strings.CURRENCY}');
     Navigator.pop(context);
   }
 }

@@ -2,19 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:record_of_classes/constants/app_urls.dart';
 import 'package:record_of_classes/constants/strings.dart';
-import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/parent.dart';
-import 'package:record_of_classes/models/person.dart';
-import 'package:record_of_classes/models/phone.dart';
 import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/widgets/templates/snack_bar_info_template.dart';
 
 class ParentListItemTemplate extends StatefulWidget {
   ParentListItemTemplate(
-      {Key? key, required this.parent, required this.student})
+      {Key? key,
+      required this.parent,
+      required this.student,
+      required this.addFunction,
+      required this.removeFunction})
       : super(key: key);
   Parent parent;
   Student student;
+  Function addFunction, removeFunction;
 
   @override
   State<StatefulWidget> createState() {
@@ -43,7 +45,10 @@ class _ParentListItemTemplate extends State<ParentListItemTemplate> {
         child: ListTile(
           title: Text(widget.parent.introduceYourself()),
           subtitle: Text(widget.parent.person.target!.phones.isNotEmpty
-              ? widget.parent.person.target!.phones.elementAt(0).number.toString()
+              ? widget.parent.person.target!.phones
+                  .elementAt(0)
+                  .number
+                  .toString()
               : ''),
         ),
       );
@@ -57,44 +62,15 @@ class _ParentListItemTemplate extends State<ParentListItemTemplate> {
   }
 
   void removeParent() {
-    _removeParentFromStudentInDatabase();
+    widget.removeFunction(widget.parent);
     SnackBarInfoTemplate(
         context: context,
         message:
             '${widget.parent.introduceYourself()} ${Strings.REMOVED_FROM_DATABASE}!');
   }
 
-  void _removeParentFromStudentInDatabase() {
-    setState(() {
-      var parentBox = objectBox.store.box<Parent>();
-      var personBox = objectBox.store.box<Person>();
-      var phoneBox = objectBox.store.box<Phone>();
-
-      widget.student.parents
-          .removeWhere((element) => element.id == widget.parent.id);
-      widget.parent.children
-          .removeWhere((element) => element.id == widget.student.id);
-
-      for (var element in widget.parent.person.target!.phones) {
-        phoneBox.remove(element.id);
-      }
-      widget.parent.person.target!.phones
-          .removeWhere((element) => element.owner.targetId == widget.parent.id);
-
-      parentBox.remove(widget.parent.id);
-      personBox.remove(widget.parent.person.target!.id);
-    });
-  }
-
-  void _addParentToStudentInDatabase() {
-    widget.student.parents.add(widget.parent);
-    widget.parent.children.add(widget.student);
-    objectBox.store.box<Student>().put(widget.student);
-    objectBox.store.box<Parent>().put(widget.parent);
-  }
-
   void addParent() {
-    _addParentToStudentInDatabase();
+    widget.addFunction(widget.parent);
     SnackBarInfoTemplate(
         context: context,
         message:

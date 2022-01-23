@@ -187,7 +187,7 @@ class _RecordOfClassesApp extends State<RecordOfClassesApp> {
 }
 
 
-String FormatDate(DateTime dateTime) {
+String formatDate(DateTime dateTime) {
   int day = dateTime.day,
       month = dateTime.month,
       year = dateTime.year,

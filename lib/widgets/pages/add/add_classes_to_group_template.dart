@@ -103,7 +103,7 @@ class _AddClassesToGroup extends State<AddClassesToGroup> {
       SnackBarInfoTemplate(
           context: context,
           message:
-          '${Strings.CREATED_NEW_CLASSES} ${Strings.IN_DAY} ${FormatDate(classes.dateTime)}');
+          '${Strings.CREATED_NEW_CLASSES} ${Strings.IN_DAY} ${formatDate(classes.dateTime)}');
     });
     Navigator.pop(context);
   }

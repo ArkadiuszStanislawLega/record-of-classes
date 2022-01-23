@@ -9,14 +9,13 @@ import 'package:record_of_classes/widgets/templates/student_list_tile_template.d
 
 class SiblingsListItemTemplate extends StatelessWidget {
   SiblingsListItemTemplate(
-      {Key? key, required this.sibling, required this.student})
+      {Key? key, required this.sibling, required this.student, required this.addSiblingToDb})
       : super(key: key);
   Student sibling, student;
-  late Store _store;
+  Function addSiblingToDb;
 
   @override
   Widget build(BuildContext context) {
-    _store = objectBox.store;
     if (sibling.person.target != null) {
       return Slidable(
           actionPane: const SlidableDrawerActionPane(),
@@ -36,13 +35,8 @@ class SiblingsListItemTemplate extends StatelessWidget {
     return const Text('');
   }
 
-  void updateDatabase() {
-    student.siblings.add(sibling);
-    sibling.siblings.add(student);
-    var box = _store.box<Student>();
-    box.put(student);
-    box.put(sibling);
-  }
+  void updateDatabase() => addSiblingToDb(sibling: sibling);
+
 
   void showInfo(var context) {
     var siblingValues = sibling.person.target!.introduceYourself();

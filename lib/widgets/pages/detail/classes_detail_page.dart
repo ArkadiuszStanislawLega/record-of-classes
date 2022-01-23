@@ -167,7 +167,7 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
             ),
             OneRowPropertyTemplate(
               title: '${Strings.DATE_OF_CLASSES}:',
-              value: FormatDate(widget._classes.dateTime),
+              value: formatDate(widget._classes.dateTime),
             ),
             OneRowPropertyTemplate(
               title: '${Strings.NUMBER_OF_SIGNED_UP}:',

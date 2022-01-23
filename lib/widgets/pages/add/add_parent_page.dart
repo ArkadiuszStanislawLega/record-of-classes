@@ -20,6 +20,8 @@ class _CreateParentPage extends State<AddParentPage> {
   late Student _selectedStudent;
   late Stream<List<Parent>> _parentsStream;
   List<Parent> _parentsList = [];
+  late Function _addFunction, _removeFunction;
+  late Map _args;
 
   static const titleHeight = 100.0;
 
@@ -35,7 +37,11 @@ class _CreateParentPage extends State<AddParentPage> {
 
   @override
   Widget build(BuildContext context) {
-    _selectedStudent = ModalRoute.of(context)!.settings.arguments as Student;
+    _args = ModalRoute.of(context)!.settings.arguments as Map;
+    _selectedStudent = _args[Strings.STUDENT];
+    _addFunction = _args[Strings.ADD_FUNCTION];
+    _removeFunction = _args[Strings.REMOVE_FUNCTION];
+
     return StreamBuilder<List<Parent>>(
       stream: _parentsStream,
       builder: (context, snapshot) {
@@ -107,6 +113,8 @@ class _CreateParentPage extends State<AddParentPage> {
         (BuildContext context, int index) => ParentListItemTemplate(
           parent: _parentsList.elementAt(index),
           student: _selectedStudent,
+          addFunction: _addFunction,
+          removeFunction: _removeFunction,
         ),
         childCount: _parentsList.length,
       ),

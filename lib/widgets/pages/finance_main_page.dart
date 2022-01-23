@@ -143,18 +143,36 @@ class _FinanceMainPageState extends State<FinanceMainPage> {
   SliverList _unpaidSliverList() {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
-        (BuildContext context, int index) =>
-            BillListItem(bill: _unpaid.elementAt(index)),
+        (BuildContext context, int index) => BillListItem(
+          bill: _unpaid.elementAt(index),
+          payBill: _payTheBill,
+          withdrawThePaymentOfTheBill: _withdrawTheBill,
+        ),
         childCount: _unpaid.length,
       ),
     );
   }
 
+  void _payTheBill(Bill bill) {
+    setState(() {
+      bill.setIsPaidInDatabase();
+    });
+  }
+
+  void _withdrawTheBill(Bill bill) {
+    setState(() {
+      bill.setIsUnpaidInDatabase();
+    });
+  }
+
   SliverList _paidSliverList() {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
-        (BuildContext context, int index) =>
-            BillListItem(bill: _paid.elementAt(index)),
+        (BuildContext context, int index) => BillListItem(
+          bill: _paid.elementAt(index),
+          payBill: _payTheBill,
+          withdrawThePaymentOfTheBill: _withdrawTheBill,
+        ),
         childCount: _paid.length,
       ),
     );

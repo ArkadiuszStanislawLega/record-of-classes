@@ -2,7 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:record_of_classes/constants/app_urls.dart';
 import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/main.dart';
+import 'package:record_of_classes/models/account.dart';
 import 'package:record_of_classes/models/attendance.dart';
+import 'package:record_of_classes/models/bill.dart';
+import 'package:record_of_classes/models/parent.dart';
+import 'package:record_of_classes/models/person.dart';
+import 'package:record_of_classes/models/phone.dart';
 import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/widgets/templates/list_items/bill_list_item.dart';
 import 'package:record_of_classes/widgets/templates/list_items/parent_of_student_list_item_template.dart';
@@ -25,6 +31,7 @@ enum Pages { parents, siblings, account, attendance, phones }
 class _StudentDetailPage extends State<StudentDetailPage> {
   late Student _student;
   Pages _currentPage = Pages.parents;
+  double _inputedBalance = 0.0;
 
   @override
   Widget build(BuildContext context) {
@@ -71,20 +78,92 @@ class _StudentDetailPage extends State<StudentDetailPage> {
   }
 
   void _navigateToEditStudent() =>
-      Navigator.pushNamed(context, AppUrls.EDIT_STUDENT, arguments: _student);
+      Navigator.pushNamed(context, AppUrls.EDIT_STUDENT, arguments: {
+        Strings.STUDENT: _student,
+        Strings.FUNCTION: _updateStudentInDbAfterEditing
+      });
+
+  void _updateStudentInDbAfterEditing(
+      {required String name, required String surname, required int age}) {
+    _setNewValues(name, surname, age);
+    _updatePersonInDatabase();
+  }
+
+  void _setNewValues(String name, String surname, int age) {
+    setState(() {
+      if (_student.person.target!.name != name) {
+        _student.person.target!.name = name;
+      }
+      if (_student.person.target!.surname != surname) {
+        _student.person.target!.surname = surname;
+      }
+      if (_student.age != age) {
+        _student.age = age;
+      }
+    });
+  }
+
+  void _updatePersonInDatabase() => setState(
+      () => objectBox.store.box<Person>().put(_student.person.target!));
 
   void _navigateToAddSiblings() =>
-      Navigator.pushNamed(context, AppUrls.ADD_SIBLING, arguments: _student);
+      Navigator.pushNamed(context, AppUrls.ADD_SIBLING, arguments: {
+        Strings.STUDENT: _student,
+        Strings.FUNCTION: _addSiblingToDb
+      });
 
   void _navigateToAddParent() =>
-      Navigator.pushNamed(context, AppUrls.ADD_PARENT, arguments: _student);
+      Navigator.pushNamed(context, AppUrls.ADD_PARENT, arguments: {
+        Strings.STUDENT: _student,
+        Strings.ADD_FUNCTION: _addParentToStudentInDatabase,
+        Strings.REMOVE_FUNCTION: _removeParentFromStudentInDatabase
+      });
+
+  void _removeParentFromStudentInDatabase(Parent parent) {
+    setState(() {
+      var parentBox = objectBox.store.box<Parent>();
+      var personBox = objectBox.store.box<Person>();
+      var phoneBox = objectBox.store.box<Phone>();
+
+      _student.parents.removeWhere((element) => element.id == parent.id);
+      parent.children.removeWhere((element) => element.id == _student.id);
+
+      for (var element in parent.person.target!.phones) {
+        phoneBox.remove(element.id);
+      }
+      parent.person.target!.phones
+          .removeWhere((element) => element.owner.targetId == parent.id);
+
+      parentBox.remove(parent.id);
+      personBox.remove(parent.person.target!.id);
+    });
+  }
+
+  void _addParentToStudentInDatabase(Parent parent) {
+    setState(() {
+      _student.parents.add(parent);
+      parent.children.add(_student);
+      objectBox.store.box<Student>().put(_student);
+      objectBox.store.box<Parent>().put(parent);
+    });
+  }
 
   void _navigateToAddContact() =>
       Navigator.pushNamed(context, AppUrls.ADD_CONTACT_TO_STUDENT,
           arguments: _student);
 
   void _navigateToFundAccount() =>
-      Navigator.pushNamed(context, AppUrls.FUND_ACCOUNT, arguments: _student);
+      Navigator.pushNamed(context, AppUrls.FUND_ACCOUNT, arguments: {
+        Strings.STUDENT: _student,
+        Strings.FUNCTION: _fundAccountUpdateDb
+      });
+
+  void _fundAccountUpdateDb({required double value}) {
+    setState(() {
+      _student.account.target!.balance += value;
+      objectBox.store.box<Account>().put(_student.account.target!);
+    });
+  }
 
   SliverAppBar _customAppBar() {
     return SliverAppBar(
@@ -239,11 +318,26 @@ class _StudentDetailPage extends State<StudentDetailPage> {
   SliverList _accountSliverList() {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
-        (BuildContext context, int index) =>
-            BillListItem(bill: _student.account.target!.bills.elementAt(index)),
+        (BuildContext context, int index) => BillListItem(
+          bill: _student.account.target!.bills.elementAt(index),
+          payBill: _payTheBill,
+          withdrawThePaymentOfTheBill: _withdrawTheBill,
+        ),
         childCount: _student.account.target!.bills.length,
       ),
     );
+  }
+
+  void _payTheBill(Bill bill) {
+    setState(() {
+      bill.setIsPaidInDatabase();
+    });
+  }
+
+  void _withdrawTheBill(Bill bill) {
+    setState(() {
+      bill.setIsUnpaidInDatabase();
+    });
   }
 
   SliverList _attendancesSliverList() {
@@ -335,7 +429,8 @@ class _StudentDetailPage extends State<StudentDetailPage> {
         ),
         OneRowPropertyTemplate(
           title: '${Strings.BILANCE}:',
-          value: '${_student.account.target!.balance.toStringAsFixed(2)}${Strings.CURRENCY}',
+          value:
+              '${_student.account.target!.balance.toStringAsFixed(2)}${Strings.CURRENCY}',
         ),
         OneRowPropertyTemplate(
           title: '${Strings.TO_PAY}:',
@@ -375,7 +470,15 @@ class _StudentDetailPage extends State<StudentDetailPage> {
     Navigator.pushNamed(context, AppUrls.CREATE_PARENT, arguments: _student);
   }
 
-  void addSibling() {
-    Navigator.pushNamed(context, AppUrls.ADD_SIBLING, arguments: _student);
+  /// Function to send children.
+  /// Updating siblings in database.
+  void _addSiblingToDb({required Student sibling}) {
+    setState(() {
+      _student.siblings.add(sibling);
+      sibling.siblings.add(_student);
+      var box = objectBox.store.box<Student>();
+      box.put(_student);
+      box.put(sibling);
+    });
   }
 }

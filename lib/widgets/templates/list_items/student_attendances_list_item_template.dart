@@ -9,7 +9,7 @@ class StudentAttendancesListItemTemplate extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(attendance.classes.target!.group.target!.name),
-      subtitle: Text(FormatDate(attendance.classes.target!.dateTime)),
+      subtitle: Text(formatDate(attendance.classes.target!.dateTime)),
     );
   }
 }

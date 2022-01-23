@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/student.dart';
@@ -15,16 +14,20 @@ class AddSiblingsToStudentPage extends StatefulWidget {
 }
 
 class _AddSiblingsPage extends State<AddSiblingsToStudentPage> {
-  late Student student;
-  late Store _store;
+  late Student _student;
   late Stream<List<Student>> _studentsStream;
+  late Function _addSiblingsToDb;
+  late Map _args;
 
   @override
   Widget build(BuildContext context) {
-    student = ModalRoute.of(context)!.settings.arguments as Student;
+    _args =  ModalRoute.of(context)!.settings.arguments as Map;
+    _student = _args[Strings.STUDENT];
+    _addSiblingsToDb = _args[Strings.FUNCTION];
+
     return Scaffold(
       appBar: AppBar(
-          title: Text('${Strings.ADD_SIBLING} ${student.introduceYourself()}'),),
+          title: Text('${Strings.ADD_SIBLING} ${_student.introduceYourself()}'),),
       body: StreamBuilder<List<Student>>(
         stream: _studentsStream,
         builder: (context, snapshot) {
@@ -46,7 +49,8 @@ class _AddSiblingsPage extends State<AddSiblingsToStudentPage> {
       itemBuilder: (context, index) {
         return SiblingsListItemTemplate(
           sibling: unattachedSiblings.elementAt(index),
-          student: student,
+          student: _student,
+          addSiblingToDb: _addSiblingsToDb,
         );
       },
     );
@@ -63,7 +67,7 @@ class _AddSiblingsPage extends State<AddSiblingsToStudentPage> {
   }
 
   bool _isSiblingsAreConnected(Student dbStudent) {
-    for (var siblings in student.siblings) {
+    for (var siblings in _student.siblings) {
       if (dbStudent.id == siblings.id) {
         return true;
       }
@@ -77,7 +81,7 @@ class _AddSiblingsPage extends State<AddSiblingsToStudentPage> {
         .toLowerCase()
         .compareTo(b.person.target!.surname.toLowerCase()));
     for (var stud in originalData) {
-      if (stud.id != student.id) studentList.add(stud);
+      if (stud.id != _student.id) studentList.add(stud);
     }
     return studentList;
   }
@@ -85,8 +89,7 @@ class _AddSiblingsPage extends State<AddSiblingsToStudentPage> {
   @override
   void initState() {
     super.initState();
-    _store = objectBox.store;
-    _studentsStream = _store
+    _studentsStream = objectBox.store
         .box<Student>()
         .query()
         .watch(triggerImmediately: true)

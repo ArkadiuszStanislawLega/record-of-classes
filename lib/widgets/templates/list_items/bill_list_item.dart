@@ -1,15 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/main.dart';
-import 'package:record_of_classes/models/account.dart';
 import 'package:record_of_classes/models/bill.dart';
 
 class BillListItem extends StatefulWidget {
-  const BillListItem({Key? key, required this.bill}) : super(key: key);
-  final Bill bill;
+  BillListItem(
+      {Key? key,
+      required this.bill,
+      required this.payBill,
+      required this.withdrawThePaymentOfTheBill})
+      : super(key: key);
+  final Bill bill;//withdraw
+  late Function payBill, withdrawThePaymentOfTheBill;
 
   @override
   State<StatefulWidget> createState() {
@@ -49,7 +53,7 @@ class _BillListItem extends State<BillListItem> {
             children: [
               Column(
                 children: [
-                  Text(FormatDate(
+                  Text(formatDate(
                       widget.bill.attendance.target!.classes.target!.dateTime)),
                   Text('${widget.bill.price.toString()}${Strings.CURRENCY}'),
                   Text(widget.bill.attendance.target!.classes.target!.group
@@ -68,25 +72,7 @@ class _BillListItem extends State<BillListItem> {
     );
   }
 
-  void _setIsPaidInDatabase() {
-    setState(() {
-      widget.bill.isPaid = true;
-      widget.bill.studentAccount.target!.balance -= widget.bill.price;
-      _commitChanges();
-    });
-  }
+  void _setIsPaidInDatabase() => widget.payBill(widget.bill);
 
-  void _setIsUnpaidInDatabase() {
-    setState(() {
-      widget.bill.isPaid = false;
-      widget.bill.studentAccount.target!.balance += widget.bill.price;
-      _commitChanges();
-    });
-  }
-
-  void _commitChanges() {
-    Store store = objectBox.store;
-    store.box<Bill>().put(widget.bill);
-    store.box<Account>().put(widget.bill.studentAccount.target!);
-  }
+  void _setIsUnpaidInDatabase() => widget.withdrawThePaymentOfTheBill(widget.bill);
 }
