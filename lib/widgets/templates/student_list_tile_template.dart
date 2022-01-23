@@ -4,8 +4,9 @@ import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/models/student.dart';
 
 class StudentListTileTemplate extends StatefulWidget {
-  StudentListTileTemplate({Key? key, required this.student}) : super(key: key);
+  StudentListTileTemplate({Key? key, required this.student, this.updatingFunction}) : super(key: key);
   late Student student;
+  late Function? updatingFunction;
 
   @override
   _StudentListTileTemplateState createState() =>
@@ -32,5 +33,6 @@ class _StudentListTileTemplateState extends State<StudentListTileTemplate> {
 
   void _navigateToStudentProfile() =>
       Navigator.pushNamed(context, AppUrls.DETAIL_STUDENT,
-          arguments: widget.student);
+          arguments: {Strings.STUDENT : widget.student,
+          Strings.FUNCTION : widget.updatingFunction});
 }

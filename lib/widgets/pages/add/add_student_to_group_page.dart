@@ -93,7 +93,7 @@ class _AddStudentToGroupPageState extends State<AddStudentToGroupPage> {
       onTap: () => Navigator.pushNamed(
         context,
         AppUrls.DETAIL_STUDENT,
-        arguments: student,
+        arguments: {Strings.STUDENT: student},
       ),
     );
   }

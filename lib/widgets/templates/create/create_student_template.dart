@@ -30,50 +30,25 @@ class CreateStudentTemplate extends StatelessWidget {
               hintText: Strings.AGE,
             ),
             onChanged: (userInput) => _personAge = userInput),
-        ElevatedButton(
-          onPressed: () => _onPressCreateButtonEvent(context),
-          child: const Text(Strings.CREATE_STUDENT),
-        ),
       ],
     );
   }
 
-  void _onPressCreateButtonEvent(BuildContext context) {
-    _createNewPerson();
-    _addToDatabase();
-    _infoCreatedStudent(context);
-    _clearFields();
-    Navigator.pop(context);
-  }
-
-  void _createNewPerson() {
+  Student getStudent() {
     _createdPerson = _createPersonTemplate.getPerson();
-    if (_isValuesAreValid()) {
-      _createdStudent = Student(age: int.parse(_personAge));
-      _account = Account()
-      ..student.target = _createdStudent;
-      _createdStudent.account.target = _account;
-      _createdPerson.dbPersonType = PersonType.student.index;
-      _createdPerson.student.target = _createdStudent;
-      _createdStudent.person.target = _createdPerson;
-    }
+    _createdStudent = Student(age: int.parse(_personAge));
+    _account = Account()..student.target = _createdStudent;
+    _createdStudent.account.target = _account;
+    _createdPerson.dbPersonType = PersonType.student.index;
+    _createdPerson.student.target = _createdStudent;
+    _createdStudent.person.target = _createdPerson;
+    return _createdStudent;
   }
 
-  bool _isValuesAreValid() =>
+  bool isValuesAreValid() =>
       int.parse(_personAge) > 0 && _createdPerson.name != '';
 
-  void _addToDatabase() {
-    Store store;
-    store = objectBox.store;
-    store.box<Person>().put(_createdPerson);
-  }
-
-  void _infoCreatedStudent(BuildContext context) => SnackBarInfoTemplate(
-      context: context,
-      message:
-          '${Strings.CREATE_STUDENT}: ${_createdStudent.introduceYourself()}!');
-
-  void _clearFields() {
+  void clearFields() {
     _personAge = '';
     _ageController.clear();
     _createPersonTemplate.clearTemplate();

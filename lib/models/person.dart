@@ -1,12 +1,13 @@
 import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/enumerators/PersonType.dart';
+import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/parent.dart';
 import 'package:record_of_classes/models/phone.dart';
 import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/models/teacher.dart';
 
 @Entity()
-class Person{
+class Person {
   late int id;
   late String name;
   late String surname;
@@ -17,20 +18,31 @@ class Person{
   final teacher = ToOne<Teacher>();
   final phones = ToMany<Phone>();
 
-  Person({this.id = 0, this.name = '', this.surname = '', this.personType = 0, this.type = PersonType.none});
+  Person(
+      {this.id = 0,
+      this.name = '',
+      this.surname = '',
+      this.personType = 0,
+      this.type = PersonType.none});
 
   @override
   String toString() {
     return '$id. $name $surname $dbPersonType $type';
   }
 
-  String introduceYourself(){
+  String introduceYourself() {
     return '$surname $name';
   }
 
   int get dbPersonType {
     _ensureStableEnumValues();
     return type.index;
+  }
+
+  void updateValues(Person person) {
+    name = person.name;
+    surname = person.surname;
+    objectBox.store.box<Person>().put(this);
   }
 
   set dbPersonType(int value) {
@@ -49,5 +61,19 @@ class Person{
     assert(PersonType.student.index == 2);
     assert(PersonType.parent.index == 3);
   }
-}
 
+  void removeAllPhonesDb() {
+    var phoneBox = objectBox.store.box<Phone>();
+    var personBox = objectBox.store.box<Person>();
+    for (var element in phones) {
+      phoneBox.remove(element.id);
+    }
+    phones.removeWhere((element) => element.owner.targetId == id);
+    personBox.put(this);
+  }
+
+  void removeFromDb() {
+    removeAllPhonesDb();
+    objectBox.store.box<Person>().remove(id);
+  }
+}

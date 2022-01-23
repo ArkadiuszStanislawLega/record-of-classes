@@ -14,4 +14,5 @@ class Phone {
   String toString() {
     return 'Nazwa kontaktu: $numberName, numer telefonu: $number';
   }
+
 }

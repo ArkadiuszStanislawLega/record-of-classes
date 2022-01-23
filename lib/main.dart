@@ -70,8 +70,7 @@ Future<void> main() async {
   objectBox = await ObjectBox.create();
   // clearDb();
   _putTeacherToDb();
-
-  // printDataFromDB();
+  printDataFromDB();
   // objectBox.store.box<Account>().getAll().forEach((element) {
   //   print(element.id);
   // });
@@ -131,6 +130,11 @@ void printDataFromDB() {
   objectBox.store.box<Phone>().getAll().forEach((element) {
     print('${element.owner.target!.introduceYourself()} ${element.numberName} ${element.number}');
   });
+
+  print('Accounts');
+  objectBox.store.box<Account>().getAll().forEach((element) {
+    print(element.toString());
+  });
 }
 
 class RecordOfClassesApp extends StatefulWidget {
@@ -153,7 +157,7 @@ class _RecordOfClassesApp extends State<RecordOfClassesApp> {
         AppUrls.EMPTY: (context) => const StartPageView(),
         AppUrls.HOME: (context) => const StartPageView(),
         AppUrls.ABOUT: (context) => const AboutPage(),
-        AppUrls.CREATE_STUDENT: (context) => const CreateStudentPage(),
+        AppUrls.CREATE_STUDENT: (context) => CreateStudentPage(),
         AppUrls.DETAIL_STUDENT: (context) => const StudentDetailPage(),
         AppUrls.EDIT_STUDENT: (context) => EditStudentPage(),
         AppUrls.ADD_PARENT: (context) => const AddParentPage(),

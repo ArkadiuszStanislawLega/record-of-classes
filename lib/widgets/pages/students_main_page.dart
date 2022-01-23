@@ -3,6 +3,7 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:record_of_classes/constants/app_urls.dart';
 import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/main.dart';
+import 'package:record_of_classes/models/person.dart';
 import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/objectbox.g.dart';
 import 'package:record_of_classes/widgets/templates/list_items/students_list_item_template.dart';
@@ -20,7 +21,7 @@ class _StudentsMainPageState extends State<StudentsMainPage> {
   late Stream<List<Student>> _studentsStream;
   late List<Student> _studentsList;
 
-  static const double titleHeight =150.0;
+  static const double titleHeight = 150.0;
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +84,15 @@ class _StudentsMainPageState extends State<StudentsMainPage> {
     );
   }
 
-  void _navigateToCreateStudent() => Navigator.pushNamed(context, AppUrls.CREATE_STUDENT);
+  void _navigateToCreateStudent() =>
+      Navigator.pushNamed(context, AppUrls.CREATE_STUDENT,
+          arguments: _addStudentToDb);
+
+  void _addStudentToDb(Student student) {
+    setState(() {
+      objectBox.store.box<Student>().put(student);
+    });
+  }
 
   SafeArea _propertiesView() {
     return SafeArea(
@@ -112,11 +121,26 @@ class _StudentsMainPageState extends State<StudentsMainPage> {
   SliverList _content() {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
-        (BuildContext context, int index) =>
-            StudentsListItemTemplate(student: _studentsList.elementAt(index)),
+        (BuildContext context, int index) => StudentsListItemTemplate(
+          student: _studentsList.elementAt(index),
+          removeFromDb: _removeStudentFromDb,
+          updateInDb: _updateStudent,
+        ),
         childCount: _studentsList.length,
       ),
     );
+  }
+
+  void _removeStudentFromDb(Student student) {
+    setState(() {
+      student.removeFromDb();
+    });
+  }
+
+  void _updateStudent(Student student, Student updatingValues){
+    setState(() {
+      student.updateValues(updatingValues);
+    });
   }
 
   @override

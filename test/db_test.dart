@@ -1,29 +1,21 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:record_of_classes/main.dart';
-import 'package:record_of_classes/models/account.dart';
 import 'package:record_of_classes/models/person.dart';
-import 'package:record_of_classes/models/student.dart';
+import 'package:record_of_classes/objectbox.g.dart';
 
-void main() {
+Future<void> main() async {
+  final store = await openStore(directory: 'test');
 
   test("Add persson to db", () async {
-    ObjectBox objectBox = await ObjectBox.create();
+    var personBox = store.box<Person>();
 
-    var person = Person(name: 'TestPerson name', surname: 'TestPerson surname');
-    var student = Student(age: 12);
-    var account = Account();
+    Person person  = Person()
+      ..surname = 'personSurname'
+      ..name = 'parsonName';
 
-    student.account.target = account;
-    person.student.target = student;
+    personBox.put(person);
 
-    objectBox.store.box<Person>().put(person);
-    var persons = objectBox.store.box<Person>().getAll();
 
-    expect(persons.length, 1);
-    expect(persons.elementAt(0).id, 1);
-
-    var personDb = objectBox.store.box<Person>().get(1);
-
-    expect(personDb!.student.target!.account.target!.id, 1);
+    expect(personBox.getAll().length, 1);
   });
 }

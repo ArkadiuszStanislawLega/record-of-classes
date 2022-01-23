@@ -1,4 +1,5 @@
 import 'package:objectbox/objectbox.dart';
+import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/student.dart';
 
 import 'bill.dart';
@@ -29,5 +30,16 @@ class Account {
         unpaid += element.price;
       }
     }return unpaid;
+  }
+
+  void removeFromDb(){
+    for (var bill in bills) {
+      bill.removeFromDb();
+    }
+    bills.clear();
+    student.target = null;
+    var box = objectBox.store.box<Account>();
+    box.put(this);
+    box.remove(id);
   }
 }
