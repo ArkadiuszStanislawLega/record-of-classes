@@ -27,11 +27,11 @@ class _BillListItem extends State<BillListItem> {
     return Slidable(
       actionPane: const SlidableDrawerActionPane(),
       secondaryActions: [
-        IconSlideAction(
+        !widget.bill.isPaid ? IconSlideAction(
             caption: Strings.PAID,
             color: Colors.green,
             icon: Icons.check,
-            onTap: _setIsPaidInDatabase),
+            onTap: _setIsPaidInDatabase) :
         IconSlideAction(
             caption: Strings.UNPAID,
             color: Colors.orange,

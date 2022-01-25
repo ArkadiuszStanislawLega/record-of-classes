@@ -42,4 +42,9 @@ class Account {
     box.put(this);
     box.remove(id);
   }
+
+  void addValueToBalance(double value){
+    balance += value;
+    objectBox.store.box<Account>().put(this);
+  }
 }

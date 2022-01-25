@@ -320,13 +320,19 @@ class _StudentDetailPage extends State<StudentDetailPage> {
 
   void _payTheBill(Bill bill) {
     setState(() {
-      bill.setIsPaidInDatabase();
+      if (!bill.isPaid) {
+        bill.setIsPaidInDb();
+        _student.account.target!.addValueToBalance(-bill.price);
+      }
     });
   }
 
   void _withdrawTheBill(Bill bill) {
     setState(() {
-      bill.setIsUnpaidInDatabase();
+      if (bill.isPaid) {
+        bill.setIsUnpaidInDb();
+        _student.account.target!.addValueToBalance(bill.price);
+      }
     });
   }
 

@@ -17,22 +17,14 @@ class Bill {
     return 'Bill{id: $id, isPaid: $isPaid, price: $price, attendance: $attendance, student: $studentAccount}';
   }
 
-  void setIsPaidInDatabase() {
+  void setIsPaidInDb() {
     isPaid = true;
-    studentAccount.target!.balance -= price;
-    _commitChanges();
+    objectBox.store.box<Bill>().put(this);
   }
 
-  void setIsUnpaidInDatabase() {
+  void setIsUnpaidInDb() {
     isPaid = false;
-    studentAccount.target!.balance += price;
-    _commitChanges();
-  }
-
-  void _commitChanges() {
-    Store store = objectBox.store;
-    store.box<Bill>().put(this);
-    store.box<Account>().put(studentAccount.target!);
+    objectBox.store.box<Bill>().put(this);
   }
 
   void removeFromDb() {
