@@ -45,7 +45,7 @@ class _DetailClassesTypeState extends State<DetailClassesType> {
             length: 2,
             child: Scaffold(
               floatingActionButton: SpeedDial(
-                icon: Icons.add,
+                icon: Icons.settings,
                 backgroundColor: Colors.amber,
                 children: [
                   SpeedDialChild(

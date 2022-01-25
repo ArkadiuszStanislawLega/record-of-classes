@@ -201,12 +201,14 @@ class _FinanceMainPageState extends State<FinanceMainPage> {
   }
 
   void _onPressChangeFiltering() {
-    setState(() {
-      if (_isNotPaidFilter) {
-        _isNotPaidFilter = false;
-      } else {
-        _isNotPaidFilter = true;
-      }
-    });
+    setState(
+      () {
+        if (_isNotPaidFilter) {
+          _isNotPaidFilter = false;
+        } else {
+          _isNotPaidFilter = true;
+        }
+      },
+    );
   }
 }

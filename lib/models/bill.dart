@@ -19,13 +19,11 @@ class Bill {
 
   void setIsPaidInDb() {
     isPaid = true;
-    studentAccount.target!.addValueToBalance(price);
     objectBox.store.box<Bill>().put(this);
   }
 
   void setIsUnpaidInDb() {
     isPaid = false;
-    studentAccount.target!.addValueToBalance(-price);
     objectBox.store.box<Bill>().put(this);
   }
 

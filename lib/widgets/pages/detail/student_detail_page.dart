@@ -139,11 +139,12 @@ class _StudentDetailPage extends State<StudentDetailPage> {
     });
   }
 
-  void _navigateToFundAccount() =>
-      Navigator.pushNamed(context, AppUrls.FUND_ACCOUNT, arguments: {
-        Strings.STUDENT: _student,
-        Strings.FUNCTION: _fundAccountUpdateDb
-      });
+  void _navigateToFundAccount() {
+    Navigator.pushNamed(context, AppUrls.FUND_ACCOUNT, arguments: {
+      Strings.STUDENT: _student,
+      Strings.FUNCTION: _fundAccountUpdateDb
+    });
+  }
 
   void _fundAccountUpdateDb({required double value}) {
     setState(() {
