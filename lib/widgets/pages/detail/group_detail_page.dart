@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/constants/app_urls.dart';
 import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/main.dart';
+import 'package:record_of_classes/models/classes.dart';
 import 'package:record_of_classes/models/group.dart';
 import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/widgets/templates/list_items/classes_list_item_template.dart';
@@ -23,7 +23,6 @@ class _DetailGroupPageState extends State<DetailGroupPage> {
   late Group group;
   ListOnPage _currentListOnPage = ListOnPage.classes;
 
-  late Store _store;
   late Stream<List<Student>> _studentsStream;
 
   static const double titleHeight = 250.0;
@@ -35,7 +34,7 @@ class _DetailGroupPageState extends State<DetailGroupPage> {
       stream: _studentsStream,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          group = _store.box<Group>().get(group.id)!;
+          group = objectBox.store.box<Group>().get(group.id)!;
           return Scaffold(
             body: CustomScrollView(
               slivers: [
@@ -72,9 +71,15 @@ class _DetailGroupPageState extends State<DetailGroupPage> {
     );
   }
 
-  void _navigateToAddClasses() =>
-      Navigator.pushNamed(context, AppUrls.ADD_CLASSES_TO_GROUP,
-          arguments: group);
+  void _navigateToAddClasses() => Navigator.pushNamed(
+      context, AppUrls.ADD_CLASSES_TO_GROUP,
+      arguments: {Strings.GROUP: group, Strings.FUNCTION: _addClassesToGroup});
+
+  void _addClassesToGroup(Classes classes) {
+    setState(() {
+      group.addClasses(classes);
+    });
+  }
 
   void _navigateToAddStudent() =>
       Navigator.pushNamed(context, AppUrls.ADD_STUDENT_TO_GROUP,
@@ -91,7 +96,8 @@ class _DetailGroupPageState extends State<DetailGroupPage> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             _pageNavigationButton(
-                title: Strings.LIST_OF_CLASSES_CONDUCTED, listOnPage: ListOnPage.classes),
+                title: Strings.LIST_OF_CLASSES_CONDUCTED,
+                listOnPage: ListOnPage.classes),
             _pageNavigationButton(
                 title: Strings.PARTICIPANTS,
                 listOnPage: ListOnPage.participants),
@@ -234,8 +240,7 @@ class _DetailGroupPageState extends State<DetailGroupPage> {
   @override
   void initState() {
     super.initState();
-    _store = objectBox.store;
-    _studentsStream = _store
+    _studentsStream = objectBox.store
         .box<Student>()
         .query()
         .watch(triggerImmediately: true)

@@ -73,6 +73,7 @@ class Strings {
       REMOVE_FUNCTION = 'remove function',
       FIND_CONTACT = 'Szukaj kontaktu',
       GROUP_NAME = 'Nazwa grupy',
+      GROUP = 'Grupa',
       GROUPS = 'Grupy',
       GROUP_OF_CLASSES = 'Grupa zajęć',
       HOUSE_NUMBER = 'Numer domu',

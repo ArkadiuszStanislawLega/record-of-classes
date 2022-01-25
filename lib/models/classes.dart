@@ -1,4 +1,5 @@
 import 'package:objectbox/objectbox.dart';
+import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/attendance.dart';
 import 'package:record_of_classes/models/group.dart';
 
@@ -9,4 +10,8 @@ class Classes {
   final group = ToOne<Group>();
   final attendances = ToMany<Attendance>();
 
+
+  void addClassesToDb(){
+    objectBox.store.box<Classes>().put(this);
+  }
 }
