@@ -20,7 +20,6 @@ class _ParentsOfStudentList extends State<ParentsOfStudentList> {
   late Store _store;
   late Stream<List<Parent>> _parentsStream;
 
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -36,7 +35,10 @@ class _ParentsOfStudentList extends State<ParentsOfStudentList> {
               shrinkWrap: true,
               itemBuilder: (context, index) {
                 return ParentOfStudentListItemTemplate(
-                    parent: widget.children!.parents.elementAt(index), student: widget.children!,);
+                  parent: widget.children!.parents.elementAt(index),
+                  student: widget.children!,
+                  removeFunction: _removeRelationWithParent,
+                );
               },
             );
           } else {
@@ -45,6 +47,14 @@ class _ParentsOfStudentList extends State<ParentsOfStudentList> {
         },
       ),
     );
+  }
+
+  void _removeRelationWithParent(Parent parent) {
+    setState(() {
+      if(widget.children != null) {
+        widget.children?.removeSelectedParentRelation(parent);
+      }
+    });
   }
 
   @override
