@@ -10,15 +10,14 @@ import 'package:record_of_classes/widgets/templates/snack_bar_info_template.dart
 
 class ParentOfStudentListItemTemplate extends StatelessWidget {
   ParentOfStudentListItemTemplate(
-      {Key? key, required this.parent, required this.student})
+      {Key? key, required this.parent, required this.student, required this.removeFunction})
       : super(key: key);
   late Parent parent;
   late Student student;
-  late Store _store;
+  late Function removeFunction;
 
   @override
   Widget build(BuildContext context) {
-    _store = objectBox.store;
     if (parent.person.target != null) {
       return Slidable(
         actionPane: const SlidableDrawerActionPane(),
@@ -28,7 +27,7 @@ class ParentOfStudentListItemTemplate extends StatelessWidget {
               color: Colors.deepOrange,
               icon: Icons.remove,
               onTap: () {
-                removeParent();
+                removeFunction(parent);
                 showInformationSnackBar(context);
               }),
         ],
@@ -58,11 +57,4 @@ class ParentOfStudentListItemTemplate extends StatelessWidget {
       context: context,
       message:
           '${parent.introduceYourself()} ${Strings.AND} ${student.introduceYourself()} ${Strings.THEY_ARENT_FAMILY}');
-
-  void removeParent() {
-    parent.children.removeWhere((s) => s.id == student.id);
-    student.parents.removeWhere((p) => p.id == parent.id);
-    _store.box<Parent>().put(parent);
-    _store.box<Student>().put(student);
-  }
 }

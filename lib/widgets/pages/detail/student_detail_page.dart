@@ -280,10 +280,17 @@ class _StudentDetailPage extends State<StudentDetailPage> {
             ParentOfStudentListItemTemplate(
               parent: _student.parents.elementAt(index),
               student: _student,
+              removeFunction: _removeConnectionsWithParent,
             ),
         childCount: _student.parents.length,
       ),
     );
+  }
+
+  void _removeConnectionsWithParent(Parent parent){
+    setState(() {
+      _student.removeSelectedParentRelation(parent);
+    });
   }
 
   SliverList _siblingsSliverList() {

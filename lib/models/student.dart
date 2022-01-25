@@ -61,6 +61,13 @@ class Student {
     objectBox.store.box<Account>().put(account.target!);
   }
 
+  void removeSelectedParentRelation(Parent parent){
+    parent.children.removeWhere((s) => s.id == id);
+    parents.removeWhere((p) => p.id == parent.id);
+    objectBox.store.box<Parent>().put(parent);
+    objectBox.store.box<Student>().put(this);
+  }
+
   void _removeAllParentRelations(){
     parents.clear();
   }
