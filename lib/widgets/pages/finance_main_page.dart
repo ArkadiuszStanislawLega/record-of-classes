@@ -155,13 +155,19 @@ class _FinanceMainPageState extends State<FinanceMainPage> {
 
   void _payTheBill(Bill bill) {
     setState(() {
-      bill.setIsPaidInDb();
+      if (!bill.isPaid) {
+        bill.setIsPaidInDb();
+        bill.studentAccount.target!.addValueToBalance(-bill.price);
+      }
     });
   }
 
   void _withdrawTheBill(Bill bill) {
     setState(() {
-      bill.setIsUnpaidInDb();
+      if (bill.isPaid) {
+        bill.setIsUnpaidInDb();
+        bill.studentAccount.target!.addValueToBalance(bill.price);
+      }
     });
   }
 

@@ -130,7 +130,14 @@ class _StudentDetailPage extends State<StudentDetailPage> {
 
   void _navigateToAddContact() =>
       Navigator.pushNamed(context, AppUrls.ADD_CONTACT_TO_STUDENT,
-          arguments: _student);
+          arguments: {Strings.STUDENT : _student,
+          Strings.FUNCTION : _addContact});
+
+  void _addContact(Phone contact){
+    setState(() {
+      _student.person.target!.addPhoneDb(contact);
+    });
+  }
 
   void _navigateToFundAccount() =>
       Navigator.pushNamed(context, AppUrls.FUND_ACCOUNT, arguments: {
@@ -267,11 +274,12 @@ class _StudentDetailPage extends State<StudentDetailPage> {
       delegate: SliverChildBuilderDelegate(
             (BuildContext context, int index) =>
             PhoneBookListItemTemplate(
-                phone: _student.person.target!.phones.elementAt(index)),
+                phone: _student.person.target!.phones.elementAt(index),),
         childCount: _student.person.target!.phones.length,
       ),
     );
   }
+
 
   SliverList _parentsSliverList() {
     return SliverList(

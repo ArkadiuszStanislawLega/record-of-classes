@@ -62,6 +62,13 @@ class Person {
     assert(PersonType.parent.index == 3);
   }
 
+  void addPhoneDb(Phone phone){
+    phone.owner.target = this;
+    phones.add(phone);
+    objectBox.store.box<Phone>().put(phone);
+    objectBox.store.box<Person>().put(this);
+  }
+
   void removeAllPhonesDb() {
     var phoneBox = objectBox.store.box<Phone>();
     var personBox = objectBox.store.box<Person>();

@@ -73,8 +73,9 @@ class _PhoneBookListItemTemplateState extends State<PhoneBookListItemTemplate> {
       case PersonType.none:
         break;
       case PersonType.student:
-        Navigator.pushNamed(context, AppUrls.DETAIL_STUDENT,
-            arguments: widget.phone.owner.target!.student.target);
+        Navigator.pushNamed(context, AppUrls.DETAIL_STUDENT, arguments: {
+          Strings.STUDENT: widget.phone.owner.target!.student.target
+        });
         break;
       case PersonType.parent:
         Navigator.pushNamed(context, AppUrls.DETAIL_PARENT,

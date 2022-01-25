@@ -10,11 +10,15 @@ import 'package:record_of_classes/widgets/templates/snack_bar_info_template.dart
 class AddPhoneToStudentPage extends StatelessWidget {
   AddPhoneToStudentPage({Key? key}) : super(key: key);
   late Student _student;
+  late Function _addContactFunction;
+  Map _args = {};
   final CreatePhoneTemplate _createPhoneTemplate = CreatePhoneTemplate();
 
   @override
   Widget build(BuildContext context) {
-    _student = ModalRoute.of(context)!.settings.arguments as Student;
+    _args = ModalRoute.of(context)!.settings.arguments as Map;
+    _student = _args[Strings.STUDENT];
+    _addContactFunction = _args[Strings.FUNCTION];
     return Scaffold(
       appBar: AppBar(
         title: const Text(Strings.ADD_CONTACT),
@@ -29,11 +33,12 @@ class AddPhoneToStudentPage extends StatelessWidget {
   }
 
   void _addNewContactToDatabase(BuildContext context){
-    Phone phone = _createPhoneTemplate.getPhone();
-    phone.owner.target = _student.person.target;
-    _student.person.target!.phones.add(phone);
-    objectBox.store.box<Phone>().put(phone);
-    objectBox.store.box<Person>().put(_student.person.target!);
+    // Phone phone = _createPhoneTemplate.getPhone();
+    // phone.owner.target = _student.person.target;
+    // _student.person.target!.phones.add(phone);
+    // objectBox.store.box<Phone>().put(phone);
+    // objectBox.store.box<Person>().put(_student.person.target!);
+    _addContactFunction(_createPhoneTemplate.getPhone());
     SnackBarInfoTemplate(context: context, message: '${Strings.ADDED_NEW_CONTACT}: ${_student.introduceYourself()}');
     Navigator.pop(context);
   }
