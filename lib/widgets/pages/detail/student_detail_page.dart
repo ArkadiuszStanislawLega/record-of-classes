@@ -112,36 +112,19 @@ class _StudentDetailPage extends State<StudentDetailPage> {
   void _navigateToAddParent() =>
       Navigator.pushNamed(context, AppUrls.ADD_PARENT, arguments: {
         Strings.STUDENT: _student,
-        Strings.ADD_FUNCTION: _addParentToStudentInDatabase,
-        Strings.REMOVE_FUNCTION: _removeParentFromStudentInDatabase
+        Strings.ADD_FUNCTION: _addParentToStudentInDb,
+        Strings.REMOVE_FUNCTION: _removeParentFromDb
       });
 
-  void _removeParentFromStudentInDatabase(Parent parent) {
+  void _removeParentFromDb(Parent parent) {
     setState(() {
-      var parentBox = objectBox.store.box<Parent>();
-      var personBox = objectBox.store.box<Person>();
-      var phoneBox = objectBox.store.box<Phone>();
-
-      _student.parents.removeWhere((element) => element.id == parent.id);
-      parent.children.removeWhere((element) => element.id == _student.id);
-
-      for (var element in parent.person.target!.phones) {
-        phoneBox.remove(element.id);
-      }
-
-      parent.person.target!.phones
-          .removeWhere((element) => element.owner.targetId == parent.id);
-      parentBox.remove(parent.id);
-      personBox.remove(parent.person.target!.id);
+      _student.removeParentFromDb(parent);
     });
   }
 
-  void _addParentToStudentInDatabase(Parent parent) {
+  void _addParentToStudentInDb(Parent parent) {
     setState(() {
-      _student.parents.add(parent);
-      parent.children.add(_student);
-      objectBox.store.box<Student>().put(_student);
-      objectBox.store.box<Parent>().put(parent);
+      _student.addParentToDb(parent);
     });
   }
 

@@ -4,6 +4,7 @@ import 'package:record_of_classes/models/attendance.dart';
 import 'package:record_of_classes/models/group.dart';
 import 'package:record_of_classes/models/parent.dart';
 import 'package:objectbox/objectbox.dart';
+import 'package:record_of_classes/models/phone.dart';
 
 import 'person.dart';
 
@@ -30,23 +31,29 @@ class Student {
 
   String introduceYourself () => person.target!.introduceYourself();
 
+  void addParentToDb(Parent parent){
+    parents.add(parent);
+    parent.children.add(this);
+    objectBox.store.box<Student>().put(this);
+    objectBox.store.box<Parent>().put(parent);
+  }
+
   void removeParentFromDb(Parent parent){
-    // var parentBox = objectBox.store.box<Parent>();
-    // var personBox = objectBox.store.box<Person>();
-    // var phoneBox = objectBox.store.box<Phone>();
-    //
-    // parents.removeWhere((element) => element.id == parent.id);
-    // parent.children.removeWhere((element) => element.id == id);
-    //
-    // for (var element in parent.person.target!.phones) {
-    //   phoneBox.remove(element.id);
-    //   element.owner.target!.removeAllPhonesDb()
-    // }
-    // parent.person.target!.phones
-    //     .removeWhere((element) => element.owner.targetId == parent.id);
-    //
-    // parentBox.remove(parent.id);
-    // personBox.remove(parent.person.target!.id);
+    var parentBox = objectBox.store.box<Parent>();
+    var personBox = objectBox.store.box<Person>();
+    var phoneBox = objectBox.store.box<Phone>();
+
+    parents.removeWhere((studentsParent) => studentsParent.id == parent.id);
+    parent.children.removeWhere((children) => children.id == id);
+
+    for (var element in parent.person.target!.phones) {
+      phoneBox.remove(element.id);
+    }
+
+    parent.person.target!.phones
+        .removeWhere((element) => element.owner.targetId == parent.id);
+    parentBox.remove(parent.id);
+    personBox.remove(parent.person.target!.id);
   }
 
   void fundAccountDb(double value){

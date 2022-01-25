@@ -46,21 +46,18 @@ class _CreateParentPage extends State<AddParentPage> {
       stream: _parentsStream,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          _parentsList = snapshot.data!;
-          return DefaultTabController(
-            length: 2,
-            child: Scaffold(
-              floatingActionButton: SpeedDial(
-                icon: Icons.add,
-                backgroundColor: Colors.amber,
-                onPress: _navigateToCreateParentPage,
-              ),
-              body: CustomScrollView(
-                slivers: [
-                  _customAppBar(),
-                  _content(),
-                ],
-              ),
+          _parentsList = _removeConnectedParents(snapshot.data!);
+          return Scaffold(
+            floatingActionButton: SpeedDial(
+              icon: Icons.add,
+              backgroundColor: Colors.amber,
+              onPress: _navigateToCreateParentPage,
+            ),
+            body: CustomScrollView(
+              slivers: [
+                _customAppBar(),
+                _content(),
+              ],
             ),
           );
         } else {
@@ -68,6 +65,23 @@ class _CreateParentPage extends State<AddParentPage> {
         }
       },
     );
+  }
+
+  List<Parent> _removeConnectedParents(List<Parent> parentsList) {
+    List<Parent> filteredList = [];
+    for (var parent in parentsList) {
+      bool isConnected = false;
+
+      for (var studentParent in _selectedStudent.parents) {
+        if (studentParent.id == parent.id) {
+          isConnected = true;
+        }
+      }
+      if (!isConnected) {
+        filteredList.add(parent);
+      }
+    }
+    return filteredList;
   }
 
   SliverAppBar _customAppBar() {
