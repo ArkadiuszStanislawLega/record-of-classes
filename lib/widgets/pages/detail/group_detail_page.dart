@@ -176,10 +176,17 @@ class _DetailGroupPageState extends State<DetailGroupPage> {
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) => ClassesListItemTemplate(
           classes: group.classes.elementAt(index),
+          removeFromDbFunction: _removeClassesFromDb,
         ),
         childCount: group.classes.length,
       ),
     );
+  }
+
+  void _removeClassesFromDb(Classes classes){
+    setState(() {
+      classes.removeFromDb();
+    });
   }
 
   SliverList _participantsSliverList() {
@@ -188,6 +195,7 @@ class _DetailGroupPageState extends State<DetailGroupPage> {
         (BuildContext context, int index) => StudentsInGroupListItemTemplate(
           group: group,
           student: group.students.elementAt(index),
+
         ),
         childCount: group.students.length,
       ),
