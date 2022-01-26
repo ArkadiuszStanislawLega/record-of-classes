@@ -27,27 +27,14 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
   @override
   Widget build(BuildContext context) {
     widget._classes = ModalRoute.of(context)!.settings.arguments as Classes;
-    return StreamBuilder<List<Classes>>(
-      stream: _classesStream,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          widget._classes =
-              objectBox.store.box<Classes>().get(widget._classes.id)!;
-          return DefaultTabController(
-            length: 2,
-            child: Scaffold(
-              body: CustomScrollView(
-                slivers: [
-                  _customAppBar(),
-                  _content(),
-                ],
-              ),
-            ),
-          );
-        } else {
-          return const Center(child: CircularProgressIndicator());
-        }
-      },
+
+    return Scaffold(
+      body: CustomScrollView(
+        slivers: [
+          _customAppBar(),
+          _content(),
+        ],
+      ),
     );
   }
 
@@ -175,7 +162,7 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
             ),
             OneRowPropertyTemplate(
                 title: '${Strings.PRESENTS_AT_THE_CLASSSES}:',
-                value: widget._classes.attendances.length.toString()),
+                value: widget._classes.attendances.skipWhile((element) => !element.isPresent).length.toString()),
           ],
         ),
       ),
@@ -234,9 +221,11 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
               ? Icons.check_box_outline_blank
               : Icons.check,
           onTap: () {
-            attendance.isPresent
-                ? _setAbsentUpdateDb(attendance)
-                : _setPresentUpdateDatabase(attendance.student.target!);
+            setState(() {
+              attendance.isPresent
+                  ? attendance.removeFromDb()
+                  : _setPresentUpdateDatabase(attendance.student.target!);
+            });
           },
         ),
       ],
@@ -282,18 +271,6 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
     );
   }
 
-  void _setAbsentUpdateDb(Attendance attendance) {
-    setState(() {
-      Store store = objectBox.store;
-      attendance.isPresent = false;
-
-      store.box<Bill>().remove(attendance.bill.target!.id);
-      store.box<Attendance>().put(attendance);
-
-      var tt = store.box<Attendance>().get(attendance.id);
-      print(tt?.bill.target);
-    });
-  }
 
   void _setPresentUpdateDatabase(Student student) {
     setState(() {

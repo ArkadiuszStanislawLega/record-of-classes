@@ -21,4 +21,6 @@ class Attendance {
     student.target!.attendancesList.removeWhere((attendance) => attendance.id == id);
     objectBox.store.box<Attendance>().remove(id);
   }
+
+
 }
