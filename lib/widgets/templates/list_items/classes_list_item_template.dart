@@ -8,8 +8,13 @@ import 'package:record_of_classes/models/classes.dart';
 import 'package:record_of_classes/widgets/templates/snack_bar_info_template.dart';
 
 class ClassesListItemTemplate extends StatelessWidget {
-  ClassesListItemTemplate({Key? key, required this.classes}) : super(key: key);
-  Classes classes;
+  ClassesListItemTemplate(
+      {Key? key, required this.classes, this.removeFromDbFunction})
+      : super(key: key);
+
+
+  late Classes classes;
+  late Function? removeFromDbFunction;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +26,7 @@ class ClassesListItemTemplate extends StatelessWidget {
           color: Colors.red,
           icon: Icons.delete,
           onTap: () {
-            _updateDatabase();
+            removeFromDbFunction!(classes);
             _showInfo(context);
           },
         ),
@@ -50,8 +55,6 @@ class ClassesListItemTemplate extends StatelessWidget {
       ),
     );
   }
-
-  void _updateDatabase() {}
 
   void _navigateToGroupProfile(BuildContext context) =>
       Navigator.pushNamed(context, AppUrls.DETAIL_CLASSES, arguments: classes);

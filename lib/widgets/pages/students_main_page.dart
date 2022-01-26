@@ -3,7 +3,6 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:record_of_classes/constants/app_urls.dart';
 import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/main.dart';
-import 'package:record_of_classes/models/person.dart';
 import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/objectbox.g.dart';
 import 'package:record_of_classes/widgets/templates/list_items/students_list_item_template.dart';

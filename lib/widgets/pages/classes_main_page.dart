@@ -17,6 +17,7 @@ class _ClassesMainPageState extends State<ClassesMainPage> {
   late Store _store;
   late Stream<List<Classes>> _classesStream;
   List<Classes> _classesList = [];
+  static const double titleHeight = 200.0;
 
   @override
   void initState() {
@@ -36,15 +37,12 @@ class _ClassesMainPageState extends State<ClassesMainPage> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           _classesList = objectBox.store.box<Classes>().getAll();
-          return DefaultTabController(
-            length: 2,
-            child: Scaffold(
-              body: CustomScrollView(
-                slivers: [
-                  _customAppBar(),
-                  _content(),
-                ],
-              ),
+          return Scaffold(
+            body: CustomScrollView(
+              slivers: [
+                _customAppBar(),
+                _content(),
+              ],
             ),
           );
         } else {
@@ -58,7 +56,7 @@ class _ClassesMainPageState extends State<ClassesMainPage> {
     return SliverAppBar(
       stretch: true,
       onStretchTrigger: () => Future<void>.value(),
-      expandedHeight: 200.0,
+      expandedHeight: titleHeight,
       flexibleSpace: FlexibleSpaceBar(
         stretchModes: const <StretchMode>[
           StretchMode.zoomBackground,
@@ -92,10 +90,17 @@ class _ClassesMainPageState extends State<ClassesMainPage> {
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) => ClassesListItemTemplate(
           classes: _classesList.elementAt(index),
+          removeFromDbFunction: _removeClassesFromDb,
         ),
         childCount: _classesList.length,
       ),
     );
+  }
+
+  void _removeClassesFromDb(Classes classes){
+    setState(() {
+      classes.removeFromDb();
+    });
   }
 
   SafeArea _propertiesView() {
