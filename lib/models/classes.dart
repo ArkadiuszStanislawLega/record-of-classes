@@ -14,4 +14,12 @@ class Classes {
   void addClassesToDb(){
     objectBox.store.box<Classes>().put(this);
   }
+
+  void removeFromDb(){
+    group.target!.classes.removeWhere((classes) => classes.id == id);
+    for (var attendance in attendances) {
+      attendance.removeFromDb();
+    }
+    objectBox.store.box<Classes>().remove(id);
+  }
 }

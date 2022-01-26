@@ -3,6 +3,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 import 'package:record_of_classes/constants/app_urls.dart';
 import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/classes.dart';
 import 'package:record_of_classes/widgets/templates/snack_bar_info_template.dart';
 
@@ -58,5 +59,5 @@ class ClassesListItemTemplate extends StatelessWidget {
   void _showInfo(BuildContext context) => SnackBarInfoTemplate(
       context: context,
       message:
-          '${Strings.GROUPS}: ${classes.group.target!.name} ${DateFormat.yQQQQ(classes.dateTime)} - ${Strings.REMOVED}!');
+          '${Strings.GROUPS}: ${classes.group.target!.name} ${formatDate(classes.dateTime)} - ${Strings.REMOVED}!');
 }

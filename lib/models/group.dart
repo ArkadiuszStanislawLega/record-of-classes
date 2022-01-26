@@ -17,10 +17,22 @@ class Group {
 
   Group({this.id = 0, this.name = ''});
 
-  void addClasses(Classes classesToAdd){
+  void addClasses(Classes classesToAdd) {
     classesToAdd.group.target = this;
     classes.add(classesToAdd);
     classesToAdd.addClassesToDb();
     objectBox.store.box<Group>().put(this);
+  }
+
+  void removeFromDb() {
+    address.target!.groups.removeWhere((group) => group.id == id);
+    classesType.target!.groups.removeWhere((group) => group.id == id);
+    for (var student in students) {
+      student.groups.removeWhere((element) => element.id == id);
+    }
+    for (var element in classes) {
+      element.removeFromDb();
+    }
+    objectBox.store.box<Group>().remove(id);
   }
 }

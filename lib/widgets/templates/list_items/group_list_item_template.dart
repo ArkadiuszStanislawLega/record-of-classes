@@ -49,8 +49,9 @@ class _GroupListItemTemplateState extends State<GroupListItemTemplate> {
   }
 
   void _updateDatabase(){
-    _store = objectBox.store;
-    _store.box<Group>().remove(widget.group.id);
+    setState(() {
+      widget.group.removeFromDb();
+    });
   }
 
   void _navigateToGroupProfile() => Navigator.pushNamed(context, AppUrls.DETAIL_GROUP,

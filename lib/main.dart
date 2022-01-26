@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/constants/app_urls.dart';
 import 'package:record_of_classes/enumerators/PersonType.dart';
@@ -66,6 +67,7 @@ class ObjectBox {
 late ObjectBox objectBox;
 
 Future<void> main() async {
+  initializeDateFormatting('pl-PL');
   WidgetsFlutterBinding.ensureInitialized();
   objectBox = await ObjectBox.create();
   // clearDb();
