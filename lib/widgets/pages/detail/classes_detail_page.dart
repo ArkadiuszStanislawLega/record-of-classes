@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/main.dart';
+import 'package:record_of_classes/models/account.dart';
 import 'package:record_of_classes/models/attendance.dart';
 import 'package:record_of_classes/models/bill.dart';
 import 'package:record_of_classes/models/classes.dart';
+import 'package:record_of_classes/models/classes_type.dart';
 import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/widgets/templates/one_row_property_template.dart';
 
@@ -18,8 +19,6 @@ class ClassesDetailPage extends StatefulWidget {
 }
 
 class _ClassesDetailPageState extends State<ClassesDetailPage> {
-  late Store _store;
-  late Stream<List<Classes>> _classesStream;
   bool _isWrittenOpen = true;
 
   static const double titleHeight = 250.0;
@@ -162,7 +161,10 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
             ),
             OneRowPropertyTemplate(
                 title: '${Strings.PRESENTS_AT_THE_CLASSSES}:',
-                value: widget._classes.attendances.skipWhile((element) => !element.isPresent).length.toString()),
+                value: widget._classes.attendances
+                    .skipWhile((element) => !element.isPresent)
+                    .length
+                    .toString()),
           ],
         ),
       ),
@@ -224,7 +226,7 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
             setState(() {
               attendance.isPresent
                   ? attendance.removeFromDb()
-                  : _setPresentUpdateDatabase(attendance.student.target!);
+                  : _makeAttendancesInClasses(attendance.student.target!);
             });
           },
         ),
@@ -258,7 +260,9 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
           color: Colors.green,
           icon: Icons.check,
           onTap: () {
-            _setPresentUpdateDatabase(student);
+            setState(() {
+              _makeAttendancesInClasses(student);
+            });
           },
         ),
       ],
@@ -271,58 +275,53 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
     );
   }
 
+  void _makeAttendancesInClasses(Student student) {
+    Account studentAccount = student.account.target!;
+    Classes currentClasses = widget._classes;
+    ClassesType currentClassesType =
+        currentClasses.group.target!.classesType.target!;
 
-  void _setPresentUpdateDatabase(Student student) {
-    setState(() {
-      if (student.attendancesList.isNotEmpty) {
-        for (var element in student.attendancesList) {
-          if (element.classes.targetId == widget._classes.id) {
-            element.isPresent = true;
-            _addBillToAttendanceInDb(attendance: element, student: student);
-          }
-        }
-      }
-      _addBillToAttendanceInDb(attendance: Attendance(), student: student);
-    });
+    Attendance attendance = _createAttendance(student);
+    Bill bill = _createBill(
+        account: studentAccount,
+        attendance: attendance,
+        price: currentClassesType.priceForEach);
+
+    attendance.setBill(bill);
+
+    _makeRelationsOfAttendances(
+        student: student,
+        attendance: attendance,
+        currentClasses: currentClasses);
   }
 
-  void _addBillToAttendanceInDb(
-      {required Attendance attendance, required Student student}) {
-    attendance.isPresent = true;
+  Attendance _createAttendance(Student student) {
+    Attendance attendance = Attendance()
+      ..isPresent = true
+      ..student.target = student
+      ..classes.target = widget._classes;
+    attendance.addToDb();
+    return attendance;
+  }
 
-    if (attendance.id == 0) {
-      attendance
-        ..student.target = student
-        ..classes.target = widget._classes;
-      widget._classes.attendances.add(attendance);
-    }
-
+  Bill _createBill(
+      {required account,
+      required Attendance attendance,
+      required double price}) {
     Bill bill = Bill()
-      ..studentAccount.target = student.account.target
+      ..studentAccount.target = account
       ..attendance.target = attendance
       ..isPaid = false
-      ..price = widget._classes.group.target!.classesType.target!.priceForEach;
-
-    attendance.bill.target = bill;
-    student.account.target!.balance -= bill.price;
-    student.account.target!.bills.add(bill);
-    student.attendancesList.add(attendance);
-
-    Store store = objectBox.store;
-    store.box<Bill>().put(bill);
-    store.box<Classes>().put(widget._classes);
-    store.box<Attendance>().put(attendance);
-    store.box<Student>().put(student);
+      ..price = price;
+    bill.addToDb();
+    return bill;
   }
 
-  @override
-  void initState() {
-    super.initState();
-    _store = objectBox.store;
-    _classesStream = _store
-        .box<Classes>()
-        .query()
-        .watch(triggerImmediately: true)
-        .map((query) => query.find());
+  void _makeRelationsOfAttendances(
+      {required student,
+      required Attendance attendance,
+      required Classes currentClasses}) {
+    student.addAttendance(attendance);
+    currentClasses.addAttendance(attendance);
   }
 }

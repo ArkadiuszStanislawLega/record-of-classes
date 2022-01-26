@@ -29,6 +29,8 @@ class Student {
     return '$id $age - null person';
   }
 
+  void addToDb() => objectBox.store.box<Student>().put(this);
+
   String introduceYourself () => person.target!.introduceYourself();
 
   void addParentToDb(Parent parent){
@@ -70,6 +72,17 @@ class Student {
 
   void _removeAllParentRelations(){
     parents.clear();
+  }
+
+
+  void removeAttendance(int id){
+    attendancesList.removeWhere((attendance) => attendance.id == id);
+    objectBox.store.box<Student>().put(this);
+  }
+
+  void addAttendance(Attendance attendance){
+    attendancesList.add(attendance);
+    objectBox.store.box<Student>().put(this);
   }
 
   void updateValues(Student student){

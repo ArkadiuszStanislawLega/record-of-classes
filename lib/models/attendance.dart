@@ -15,12 +15,19 @@ class Attendance {
 
   Attendance({this.isPresent = false});
 
-  void removeFromDb(){
+  void removeFromDb() {
     bill.target!.removeFromDb();
-    classes.target!.attendances.removeWhere((attendance) => attendance.id == id);
-    student.target!.attendancesList.removeWhere((attendance) => attendance.id == id);
+    classes.target!.removeClasses(id);
+    student.target!.removeAttendance(id);
     objectBox.store.box<Attendance>().remove(id);
   }
 
+  void addToDb() => objectBox.store.box<Attendance>().put(this);
 
+  void setBill(Bill createdBill) {
+    bill.target = createdBill;
+    _commitChanges();
+  }
+
+  void _commitChanges() => objectBox.store.box<Attendance>().put(this);
 }

@@ -17,6 +17,8 @@ class Bill {
     return 'Bill{id: $id, isPaid: $isPaid, price: $price, attendance: $attendance, student: $studentAccount}';
   }
 
+  void addToDb() => objectBox.store.box<Bill>().put(this);
+
   void setIsPaidInDb() {
     isPaid = true;
     objectBox.store.box<Bill>().put(this);

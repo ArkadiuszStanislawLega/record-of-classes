@@ -47,4 +47,9 @@ class Account {
     balance += value;
     objectBox.store.box<Account>().put(this);
   }
+
+  void addBill(Bill bill){
+    bills.add(bill);
+    objectBox.store.box<Account>().put(this);
+  }
 }

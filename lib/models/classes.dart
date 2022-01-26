@@ -11,9 +11,8 @@ class Classes {
   final attendances = ToMany<Attendance>();
 
 
-  void addClassesToDb(){
-    objectBox.store.box<Classes>().put(this);
-  }
+  void addToDb() => objectBox.store.box<Classes>().put(this);
+
 
   void removeFromDb(){
     group.target!.classes.removeWhere((classes) => classes.id == id);
@@ -21,5 +20,15 @@ class Classes {
       attendance.removeFromDb();
     }
     objectBox.store.box<Classes>().remove(id);
+  }
+
+  void addAttendance(Attendance attendance){
+    attendances.add(attendance);
+    objectBox.store.box<Classes>().put(this);
+  }
+
+  void removeClasses(int id){
+    attendances.removeWhere((attendance) => attendance.id == id);
+    objectBox.store.box<Classes>().put(this);
   }
 }

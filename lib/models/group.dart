@@ -20,7 +20,7 @@ class Group {
   void addClasses(Classes classesToAdd) {
     classesToAdd.group.target = this;
     classes.add(classesToAdd);
-    classesToAdd.addClassesToDb();
+    classesToAdd.addToDb();
     objectBox.store.box<Group>().put(this);
   }
 
