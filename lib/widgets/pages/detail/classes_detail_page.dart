@@ -236,7 +236,7 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
         title: Text(attendance.student.target!.introduceYourself()),
         onTap: () {},
         subtitle: Text(
-            '${Strings.UNPAID_CLASSES}: ${_numberOfUnpaidBills(attendance.student.target!.account.target!.bills)}'),
+            '${Strings.UNPAID_CLASSES}: ${attendance.student.target!.account.target!.countUnpaidBills()}'),
       ),
     );
   }

@@ -14,11 +14,20 @@ class Account {
 
   Account({this.id = 0, this.balance = 0.0});
 
-  double countUnpaidBills(){
+  double countUnpaidBillsPrice(){
     double unpaid = 0.0;
     for (var element in bills) {
       if(!element.isPaid){
         unpaid += element.price;
+      }
+    }return unpaid;
+  }
+
+  int countUnpaidBills(){
+    int unpaid = 0;
+    for (var element in bills) {
+      if(!element.isPaid){
+        unpaid++;
       }
     }return unpaid;
   }

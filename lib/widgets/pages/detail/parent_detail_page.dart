@@ -157,7 +157,7 @@ class _ParentDetailPage extends State<ParentDetailPage> {
           child: ListTile(
             title: Text(_parent.children.elementAt(index).introduceYourself()),
             subtitle: Text(
-                '${Strings.TO_PAY}: ${_parent.children.elementAt(index).account.target!.countUnpaidBills()}${Strings.CURRENCY}'),
+                '${Strings.TO_PAY}: ${_parent.children.elementAt(index).account.target!.countUnpaidBillsPrice()}${Strings.CURRENCY}'),
           ),
         ),
         childCount: _parent.children.length,
@@ -177,7 +177,7 @@ class _ParentDetailPage extends State<ParentDetailPage> {
   SafeArea _propertiesView() {
     double toPay = 0.0;
     for (var child in _parent.children) {
-      toPay += child.account.target!.countUnpaidBills();
+      toPay += child.account.target!.countUnpaidBillsPrice();
     }
 
     return SafeArea(
