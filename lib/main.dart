@@ -25,6 +25,7 @@ import 'package:record_of_classes/widgets/pages/add/add_parent_page.dart';
 import 'package:record_of_classes/widgets/pages/create/create_parent_page.dart';
 import 'package:record_of_classes/widgets/pages/create/create_phone_page.dart';
 import 'package:record_of_classes/widgets/pages/create/create_student_page.dart';
+import 'package:record_of_classes/widgets/pages/create_classes_new_version_page.dart';
 import 'package:record_of_classes/widgets/pages/detail/classes_type_detail_page.dart';
 import 'package:record_of_classes/widgets/pages/detail/group_detail_page.dart';
 import 'package:record_of_classes/widgets/pages/detail/parent_detail_page.dart';
@@ -81,7 +82,7 @@ void _putTeacherToDb() {
   var teachers = teacherObjectBox.getAll();
   if (teachers.isEmpty) {
     var person = Person(name: 'Monika', surname: 'Łęga')
-      ..dbPersonType=PersonType.teacher.index;
+      ..dbPersonType = PersonType.teacher.index;
     var teacher = Teacher()..person.target = person;
     teacherObjectBox.put(teacher);
   }
@@ -127,7 +128,8 @@ void printDataFromDB() {
 
   print('Phones');
   objectBox.store.box<Phone>().getAll().forEach((element) {
-    print('${element.owner.target!.introduceYourself()} ${element.numberName} ${element.number}');
+    print(
+        '${element.owner.target!.introduceYourself()} ${element.numberName} ${element.number}');
   });
 
   print('Accounts');
@@ -170,27 +172,38 @@ class _RecordOfClassesApp extends State<RecordOfClassesApp> {
         AppUrls.CREATE_GROUP: (context) => const CreateGroupPage(),
         AppUrls.EDIT_GROUP: (context) => const EditGroupPage(),
         AppUrls.DETAIL_GROUP: (context) => const DetailGroupPage(),
-        AppUrls.ADD_STUDENT_TO_GROUP: (context) => const AddStudentToGroupPage(),
+        AppUrls.ADD_STUDENT_TO_GROUP: (context) =>
+            const AddStudentToGroupPage(),
         AppUrls.ADD_CLASSES_TO_GROUP: (context) => AddClassesToGroup(),
         AppUrls.ADD_CONTACT_TO_STUDENT: (context) => AddPhoneToStudentPage(),
         AppUrls.DETAIL_CLASSES: (context) => ClassesDetailPage(),
         AppUrls.STUDENS_MAIN_PAGE: (context) => const StudentsMainPage(),
         AppUrls.CLASSES_MAIN_PAGE: (context) => const ClassesMainPage(),
-        AppUrls.CLASSES_TYPE_MAIN_PAGE: (context) => const ClassesTypeMainPage(),
+        AppUrls.CLASSES_TYPE_MAIN_PAGE: (context) =>
+            const ClassesTypeMainPage(),
         AppUrls.FINANCE_MAIN_PAGE: (context) => const FinanceMainPage(),
         AppUrls.GROUPS_MAIN_PAGE: (context) => const GroupsMainPage(),
         AppUrls.ADD_PHONE: (context) => CreatePhonePage(),
         AppUrls.EDIT_PHONE: (context) => EditPhonePage(),
         AppUrls.PHONE_BOOK: (context) => PhoneBookPage(),
         AppUrls.FUND_ACCOUNT: (context) => FundAccountPage(),
-        '/test' : (context) => Test()
+        AppUrls.CREATE_CLASSES_NEW_VERSION: (context) =>
+            CreateClassesNewVersionPage(),
+        '/test': (context) => Test()
       },
     );
   }
 }
 
+String formatTime(DateTime dateTime) {
+  int hour = dateTime.hour,
+      minutes = dateTime.minute,
+      seconds = dateTime.second;
 
-String formatDate(DateTime dateTime) {
+  return '${hour < 10 ? '0${hour}' : hour} :${minutes < 10 ? '0${minutes}' : minutes}';
+}
+
+String formatDate(DateTime dateTime,{bool isTimeOn = false}) {
   int day = dateTime.day,
       month = dateTime.month,
       year = dateTime.year,
@@ -203,5 +216,7 @@ String formatDate(DateTime dateTime) {
       strHour = hour.toString(),
       strMinute = minute == 0 ? '${minute}0' : minute.toString();
 
-  return '$strDay.$strMonth.$strYear $strHour:$strMinute';
+  return isTimeOn
+      ? '$strDay.$strMonth.$strYear $strHour:$strMinute'
+      : '$strDay.$strMonth.$strYear';
 }

@@ -29,20 +29,17 @@ class _StudentsMainPageState extends State<StudentsMainPage> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           _studentsList = snapshot.data!;
-          return DefaultTabController(
-            length: 2,
-            child: Scaffold(
-              floatingActionButton: SpeedDial(
-                icon: Icons.add,
-                backgroundColor: Colors.amber,
-                onPress: _navigateToCreateStudent,
-              ),
-              body: CustomScrollView(
-                slivers: [
-                  _customAppBar(),
-                  _content(),
-                ],
-              ),
+          return Scaffold(
+            floatingActionButton: SpeedDial(
+              icon: Icons.add,
+              backgroundColor: Colors.amber,
+              onPress: _navigateToCreateStudent,
+            ),
+            body: CustomScrollView(
+              slivers: [
+                _customAppBar(),
+                _content(),
+              ],
             ),
           );
         } else {

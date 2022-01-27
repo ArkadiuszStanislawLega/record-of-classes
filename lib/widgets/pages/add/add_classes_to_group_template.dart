@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:intl/intl.dart';
-import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/classes.dart';
@@ -90,7 +88,7 @@ class _AddClassesToGroup extends State<AddClassesToGroup> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Text("${widget.selectedDate.toLocal()}".split(' ')[0]),
-                Text(DateFormat.Hm().format(widget.selectedTime))
+                Text(widget.selectedTime.toString())
               ],
             ),
             TextButton(

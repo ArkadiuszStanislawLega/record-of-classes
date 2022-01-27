@@ -50,11 +50,19 @@ class _StartPageViewView extends State<StartPageView> {
           _button(
               onPressed: _navigateToPhoneBook,
               title: Strings.PHONES.toLowerCase(),
-              icon: const Icon(Icons.book))
+              icon: const Icon(Icons.book)),
+          _button(
+              onPressed: _navigateToCreateClassesNewVersion,
+              title: 'nowa wesja',
+              icon: const Icon(Icons.create))
         ],
       ),
       drawer: _mainMenu(),
     );
+  }
+
+  _navigateToCreateClassesNewVersion(){
+    Navigator.pushNamed(context, AppUrls.CREATE_CLASSES_NEW_VERSION);
   }
 
   Widget _mainMenu() {

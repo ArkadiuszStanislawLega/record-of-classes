@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:intl/intl.dart';
 import 'package:record_of_classes/constants/app_urls.dart';
 import 'package:record_of_classes/constants/strings.dart';
 import 'package:record_of_classes/main.dart';
@@ -45,7 +44,7 @@ class ClassesListItemTemplate extends StatelessWidget {
             children: [
               Text(
                   '${classes.dateTime.day}.${classes.dateTime.month < 10 ? '0${classes.dateTime.month}' : classes.dateTime.month}.${classes.dateTime.year}'),
-              Text(DateFormat.Hm().format(classes.dateTime))
+              Text(classes.dateTime.toString())
             ],
           ),
           onTap: () {
