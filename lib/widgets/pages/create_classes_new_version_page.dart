@@ -69,7 +69,9 @@ class _CreateClassesNewVersionPageState
 
   void _prepareClassesNode(TreeNodeData parent){
     if(parent.object is Group) {
-      for (var classes in parent.object!.classes) {
+      var group = parent.object as Group;
+      group.classes.sort((item, item2) => item.dateTime.compareTo(item2.dateTime));
+      for (var classes in group.classes.reversed) {
         parent.addChild(
             TreeNodeData(label: formatDate(classes.dateTime), object: classes));
       }
