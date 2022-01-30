@@ -8,12 +8,7 @@ import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/classes.dart';
 import 'package:record_of_classes/models/classes_type.dart';
 import 'package:record_of_classes/models/group.dart';
-import 'package:record_of_classes/widgets/pages/add/add_classes_to_group_template.dart';
-import 'package:record_of_classes/widgets/pages/add/add_student_to_group_page.dart';
-import 'package:record_of_classes/widgets/templates/add_new_classes_type_template.dart';
-import 'package:record_of_classes/widgets/templates/create/create_group_template.dart';
-import 'package:record_of_classes/widgets/templates/list_items/classes_list_item_template.dart';
-import 'package:record_of_classes/widgets/templates/list_items/classes_type_list_item.dart';
+import 'package:record_of_classes/models/student.dart';
 
 class CreateClassesNewVersionPage extends StatefulWidget {
   const CreateClassesNewVersionPage({Key? key}) : super(key: key);
@@ -29,9 +24,11 @@ class _CreateClassesNewVersionPageState
   DateTime selectedDate = DateTime.now(), selectedTime = DateTime.now();
   late Stream<List<ClassesType>> _classesType;
   List<TreeNodeData> _elements = [];
+  List<Student> _studentsList = [];
 
   @override
   Widget build(BuildContext context) {
+    _studentsList = objectBox.store.box<Student>().getAll();
     return Scaffold(
       appBar: AppBar(
         title: const Text(Strings.CREATED_NEW_CLASSES),
@@ -40,20 +37,7 @@ class _CreateClassesNewVersionPageState
         stream: _classesType,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            for (var classesType in snapshot.data!) {
-              TreeNodeData classesTypeNode =
-                  TreeNodeData(property1: classesType.name);
-              for (var group in classesType.groups) {
-                TreeNodeData groupNode = TreeNodeData(property1: group.name);
-                classesTypeNode.addChild(groupNode);
-                for (var classes in group.classes) {
-                  groupNode.addChild(TreeNodeData(
-                      property1: formatDate(classes.dateTime),
-                      classes: classes));
-                }
-              }
-              _elements.add(classesTypeNode);
-            }
+            _prepareData(snapshot.data!);
             _controller.treeData(_elements);
             return _treeView();
           } else {
@@ -62,6 +46,34 @@ class _CreateClassesNewVersionPageState
         },
       ),
     );
+  }
+
+  void _prepareData(List<ClassesType> data) {
+    for (var classesType in data) {
+      TreeNodeData classesTypeNode =
+          TreeNodeData(label: classesType.name, object: classesType);
+      _prepareGroupNode(classesTypeNode);
+      _elements.add(classesTypeNode);
+    }
+  }
+
+  void _prepareGroupNode(TreeNodeData parent){
+    if (parent.object is ClassesType) {
+      for (var group in parent.object!.groups) {
+        TreeNodeData groupNode = TreeNodeData(label: group.name, object: group);
+        _prepareClassesNode(groupNode);
+        parent.addChild(groupNode);
+      }
+    }
+  }
+
+  void _prepareClassesNode(TreeNodeData parent){
+    if(parent.object is Group) {
+      for (var classes in parent.object!.classes) {
+        parent.addChild(
+            TreeNodeData(label: formatDate(classes.dateTime), object: classes));
+      }
+    }
   }
 
   Widget _treeView() {
@@ -87,48 +99,7 @@ class _CreateClassesNewVersionPageState
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Column(
-                        children: [
-                          item.classes != null
-                              ? Container(
-                                  width: 270,
-                                  child: Slidable(
-                                    actionPane: const SlidableDrawerActionPane(),
-                                    secondaryActions: [
-                                      IconSlideAction(
-                                        caption: Strings.DELETE,
-                                        color: Colors.red,
-                                        icon: Icons.delete,
-                                        onTap: () {
-                                          // removeFromDbFunction!(classes);
-                                          // _showInfo(context);
-                                        },
-                                      ),
-                                    ],
-                                    child: Card(
-                                      shape: RoundedRectangleBorder(
-                                        side: const BorderSide(color: Colors.white70, width: 1),
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      margin: const EdgeInsets.symmetric(vertical: 8.0),
-                                      elevation: 7,
-                                      child: ListTile(
-                                        title: Text(item.classes!.group.target!.name),
-                                        subtitle: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(formatDate(item.classes!.dateTime)),
-                                            Text(formatTime(item.classes!.dateTime))
-                                          ],
-                                        ),
-                                        onTap: () {
-                                          // _navigateToGroupProfile(context);
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              : Text(item.property1),
-                        ],
+                        children: [_getItem(item)],
                       ),
                       const SizedBox(
                         width: 10,
@@ -155,8 +126,12 @@ class _CreateClassesNewVersionPageState
       },
       onTap: (NodeData data) {
         var treeNodeData = data as TreeNodeData;
-        ClassesListItemTemplate(classes: treeNodeData.classes!);
-        print('index = ${data.index}');
+        if (treeNodeData.object != null) {
+          _getItem(treeNodeData);
+        } else {
+          Text(treeNodeData.label);
+        }
+        // print('index = ${data.index}');
       },
       onLongPress: (data) {
         delete(data);
@@ -165,15 +140,90 @@ class _CreateClassesNewVersionPageState
     );
   }
 
-  void add(TreeNodeData dataNode) {
-    int r = 100;
-    int g = 200;
-    int b = 10;
+  Widget _classesTypeItem(ClassesType classesType) {
+    return Container(color: Colors.blueGrey, child: Text(classesType.name));
+  }
 
+  Widget _classesItem(Classes classes) {
+    return SizedBox(
+      width: 270,
+      child: Slidable(
+        actionPane: const SlidableDrawerActionPane(),
+        secondaryActions: [
+          IconSlideAction(
+            caption: Strings.DELETE,
+            color: Colors.red,
+            icon: Icons.delete,
+            onTap: () {
+              // removeFromDbFunction!(classes);
+              // _showInfo(context);
+            },
+          ),
+        ],
+        child: Card(
+          shape: RoundedRectangleBorder(
+            side: const BorderSide(color: Colors.white70, width: 1),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          margin: const EdgeInsets.symmetric(vertical: 8.0),
+          elevation: 7,
+          child: ListTile(
+            title: Text(classes.group.target!.name),
+            subtitle: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(formatDate(classes.dateTime)),
+                Text(formatTime(classes.dateTime))
+              ],
+            ),
+            onTap: () {
+              // _navigateToGroupProfile(context);
+            },
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _groupItem(Group group) {
+    return Slidable(
+        actionPane: const SlidableDrawerActionPane(),
+        secondaryActions: [
+          IconSlideAction(
+            caption: Strings.DELETE,
+            color: Colors.red,
+            icon: Icons.delete,
+            onTap: () {
+              // removeFromDbFunction!(classes);
+              // _showInfo(context);
+            },
+          ),
+        ],
+        child: Card(
+          color: Colors.orangeAccent,
+          child: Text(group.name),
+        ));
+  }
+
+  Widget _getItem(TreeNodeData data) {
+    if (data.object != null) {
+      if (data.object is Classes) {
+        return _classesItem(data.object);
+      }
+      if (data.object is Group) {
+        return _groupItem(data.object);
+      }
+      if (data.object is ClassesType) {
+        return _classesTypeItem(data.object);
+      }
+    }
+    return Text(data.label);
+  }
+
+  void add(TreeNodeData dataNode) {
     var newNode = TreeNodeData(
-        label: 'rgb($r,$g,$b)',
-        color: Color.fromARGB(255, r, g, b),
-        property1: '');
+      label: dataNode.label,
+    );
 
     _controller.insertAtFront(dataNode, newNode);
 //    _controller.insertAtRear(dataNode, newNode);
@@ -205,16 +255,7 @@ class _CreateClassesNewVersionPageState
 }
 
 class TreeNodeData extends NodeData {
-  TreeNodeData(
-      {this.label,
-      this.color = Colors.black,
-      required this.property1,
-      this.classes})
-      : super();
-  final String? label;
-  final Color? color;
-  late String property1;
-  late String property2;
-  late String property3;
-  late Classes? classes;
+  TreeNodeData({required this.label, this.object}) : super();
+  final String label;
+  late var object;
 }
