@@ -27,9 +27,23 @@ class _CreateClassesNewVersionPageState
 
   DateTime selectedDate = DateTime.now(), selectedTime = DateTime.now();
 
+  final Map _colorsOfTheMonth = {
+    1: Colors.red.shade200,
+    2: Colors.blue.shade200,
+    3: Colors.green.shade200,
+    4: Colors.yellow.shade200,
+    5: Colors.orange.shade200,
+    6: Colors.indigo.shade200,
+    7: Colors.blueGrey.shade200,
+    8: Colors.cyan.shade200,
+    9: Colors.lightGreen.shade200,
+    10: Colors.amber.shade200,
+    11: Colors.deepPurple.shade200,
+    12: Colors.teal.shade200
+  };
+
   final Color _classesTypeBackground = Colors.blueGrey.shade400,
       _groupBackground = Colors.blueGrey.shade200,
-      _classesBackground = Colors.blueGrey.shade50,
       _borderColor = Colors.grey,
       _addButtonBackground = Colors.green.shade500,
       _removeButtonBackground = Colors.red,
@@ -311,7 +325,7 @@ class _CreateClassesNewVersionPageState
       );
     }
     return Card(
-      color: _colorDependsOnDate(classes.dateTime),
+      color: _colorsOfTheMonth[classes.dateTime.month],
       shape: RoundedRectangleBorder(
         side: BorderSide(color: _borderColor, width: _borderWidth),
         borderRadius: BorderRadius.circular(_cornerEdges),
@@ -344,37 +358,7 @@ class _CreateClassesNewVersionPageState
     );
   }
 
-  Color _colorDependsOnDate(DateTime dateTime){
-    switch(dateTime.month)
-    {
-      case 1:
-        return Colors.red.shade200;
-      case 2:
-        return Colors.blue.shade200;
-      case 3:
-        return Colors.green.shade200;
-      case 4:
-        return Colors.yellow.shade200;
-      case 5:
-        return Colors.orange.shade200;
-      case 6:
-        return Colors.indigo.shade200;
-      case 7:
-        return Colors.blueGrey.shade200;
-      case 8:
-        return Colors.cyan.shade200;
-      case 9:
-        return Colors.lightGreen.shade200;
-      case 10:
-        return Colors.amber.shade200;
-      case 11:
-        return Colors.deepPurple.shade200;
-      case 12:
-        return Colors.teal.shade200;
-      default:
-        return Colors.red;
-    }
-  }
+
 
   Widget _getItem(TreeNodeData data, {bool isExpanded = false}) {
     if (data.object != null) {
