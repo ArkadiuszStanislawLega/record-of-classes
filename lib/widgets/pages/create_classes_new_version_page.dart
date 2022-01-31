@@ -57,7 +57,7 @@ class _CreateClassesNewVersionPageState
     }
   }
 
-  void _prepareGroupNode(TreeNodeData parent){
+  void _prepareGroupNode(TreeNodeData parent) {
     if (parent.object is ClassesType) {
       for (var group in parent.object!.groups) {
         TreeNodeData groupNode = TreeNodeData(label: group.name, object: group);
@@ -67,10 +67,11 @@ class _CreateClassesNewVersionPageState
     }
   }
 
-  void _prepareClassesNode(TreeNodeData parent){
-    if(parent.object is Group) {
+  void _prepareClassesNode(TreeNodeData parent) {
+    if (parent.object is Group) {
       var group = parent.object as Group;
-      group.classes.sort((item, item2) => item.dateTime.compareTo(item2.dateTime));
+      group.classes
+          .sort((item, item2) => item.dateTime.compareTo(item2.dateTime));
       for (var classes in group.classes.reversed) {
         parent.addChild(
             TreeNodeData(label: formatDate(classes.dateTime), object: classes));
@@ -111,17 +112,31 @@ class _CreateClassesNewVersionPageState
                 ),
               ),
               Visibility(
-                visible: item.isExpand,
-                child: InkWell(
-                  onTap: () {
-                    add(item);
-                  },
-                  child: const Icon(
-                    Icons.add,
-                    size: 30,
-                  ),
-                ),
-              )
+                  visible: item.isExpand,
+                  child: Row(
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          add(item);
+                          //TODO: Baza daynch
+                        },
+                        child: const Icon(
+                          Icons.add,
+                          size: 30,
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          delete(item);
+                          //TODO: Baza daynch
+                        },
+                        child: const Icon(
+                          Icons.remove,
+                          size: 30,
+                        ),
+                      ),
+                    ],
+                  ))
             ],
           ),
         );
