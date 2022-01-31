@@ -13,6 +13,17 @@ class Classes {
 
   void addToDb() => objectBox.store.box<Classes>().put(this);
 
+  String get name => group.target!.name;
+
+  int get presentStudentsNum {
+    int value = 0;
+    for (var element in attendances) {
+      if (element.isPresent) {
+        value++;
+      }
+    }
+    return value;
+  }
 
   void removeFromDb(){
     group.target!.classes.removeWhere((classes) => classes.id == id);

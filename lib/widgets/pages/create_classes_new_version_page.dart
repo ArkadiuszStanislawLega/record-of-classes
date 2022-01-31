@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:list_treeview/tree/controller/tree_controller.dart';
 import 'package:list_treeview/tree/node/tree_node.dart';
 import 'package:list_treeview/tree/tree_view.dart';
@@ -21,10 +20,34 @@ class CreateClassesNewVersionPage extends StatefulWidget {
 class _CreateClassesNewVersionPageState
     extends State<CreateClassesNewVersionPage> {
   late TreeViewController _controller;
-  DateTime selectedDate = DateTime.now(), selectedTime = DateTime.now();
   late Stream<List<ClassesType>> _classesType;
+
   List<TreeNodeData> _elements = [];
   List<Student> _studentsList = [];
+
+  DateTime selectedDate = DateTime.now(), selectedTime = DateTime.now();
+
+  final Color _classesTypeBackground = Colors.blueGrey.shade400,
+      _groupBackground = Colors.blueGrey.shade200,
+      _classesBackground = Colors.blueGrey.shade50,
+      _borderColor = Colors.grey,
+      _addButtonBackground = Colors.green.shade500,
+      _removeButtonBackground = Colors.red,
+      _iconForegroundColor = Colors.white;
+
+  final double _itemsOffset = 15.0,
+      _borderWidth = 1.0,
+      _classesTypeWidth = 80.0,
+      _groupWidth = 95.0,
+      _classesWidth = 100.0,
+      _margins = 10.0,
+      _paddings = 5.0,
+      _cornerEdges = 10.0,
+      _titleFontSize = 16,
+      _classesTypeElevation = 9.0,
+      _groupElevation = 6.0,
+      _classesElevation = 3.0,
+      _iconSize = 30.0;
 
   @override
   Widget build(BuildContext context) {
@@ -82,73 +105,43 @@ class _CreateClassesNewVersionPageState
   Widget _treeView() {
     return ListTreeView(
       shrinkWrap: false,
-      padding: const EdgeInsets.all(0),
       itemBuilder: (BuildContext context, NodeData data) {
         TreeNodeData item = data as TreeNodeData;
-//              double width = MediaQuery.of(context).size.width;
-        double offsetX = item.level * 16.0;
+        double offsetX = item.level * _itemsOffset;
+
         return Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          decoration: const BoxDecoration(
-              border: Border(bottom: BorderSide(width: 1, color: Colors.grey))),
+          padding: EdgeInsets.symmetric(horizontal: _paddings),
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(width: _borderWidth, color: _borderColor),
+            ),
+          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
+            children: [
               Expanded(
                 child: Padding(
-                  padding: EdgeInsets.only(left: offsetX, top: 10),
+                  padding: EdgeInsets.only(left: offsetX),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
+                    children: [
                       Column(
-                        children: [_getItem(item)],
-                      ),
-                      const SizedBox(
-                        width: 10,
+                        children: [_getItem(item, isExpanded: item.isExpand)],
                       ),
                     ],
                   ),
                 ),
               ),
               Visibility(
-                  visible: item.isExpand,
-                  child: Row(
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          add(item);
-                          //TODO: Baza daynch
-                        },
-                        child: const Icon(
-                          Icons.add,
-                          size: 30,
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          delete(item);
-                          //TODO: Baza daynch
-                        },
-                        child: const Icon(
-                          Icons.remove,
-                          size: 30,
-                        ),
-                      ),
-                    ],
-                  ))
+                  visible: item.isExpand, child: _addAndRemoveButtons(item))
             ],
           ),
         );
       },
       onTap: (NodeData data) {
         var treeNodeData = data as TreeNodeData;
-        if (treeNodeData.object != null) {
-          _getItem(treeNodeData);
-        } else {
-          Text(treeNodeData.label);
-        }
-        // print('index = ${data.index}');
+        _getItem(treeNodeData, isExpanded: data.isExpand);
       },
       onLongPress: (data) {
         delete(data);
@@ -157,81 +150,246 @@ class _CreateClassesNewVersionPageState
     );
   }
 
-  Widget _classesTypeItem(ClassesType classesType) {
-    return Container(color: Colors.blueGrey, child: Text(classesType.name));
+  Widget _addAndRemoveButtons(TreeNodeData item) {
+    return Column(
+      children: [_removeButton(item), _addButton(item)],
+    );
   }
 
-  Widget _classesItem(Classes classes) {
-    return SizedBox(
-      width: 270,
-      child: Slidable(
-        actionPane: const SlidableDrawerActionPane(),
-        secondaryActions: [
-          IconSlideAction(
-            caption: Strings.DELETE,
-            color: Colors.red,
-            icon: Icons.delete,
+  Widget _addButton(TreeNodeData item) {
+    bool isObjectInstanceOfClasses = item.object is Classes;
+    return !isObjectInstanceOfClasses
+        ? InkWell(
             onTap: () {
-              // removeFromDbFunction!(classes);
-              // _showInfo(context);
+              add(item);
+              //TODO: Baza daynch
             },
-          ),
-        ],
-        child: Card(
-          shape: RoundedRectangleBorder(
-            side: const BorderSide(color: Colors.white70, width: 1),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          margin: const EdgeInsets.symmetric(vertical: 8.0),
-          elevation: 7,
-          child: ListTile(
-            title: Text(classes.group.target!.name),
-            subtitle: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(formatDate(classes.dateTime)),
-                Text(formatTime(classes.dateTime))
-              ],
+            child: _icon(Icons.add, _addButtonBackground),
+          )
+        : const SizedBox();
+  }
+
+  Card _icon(IconData icon, Color background) {
+    return Card(
+      color: background,
+      child: Icon(
+        icon,
+        color: _iconForegroundColor,
+        size: _iconSize,
+      ),
+    );
+  }
+
+  Widget _removeButton(TreeNodeData item) {
+    return InkWell(
+        onTap: () {
+          delete(item);
+          //TODO: Baza daynch
+        },
+        child: _icon(Icons.delete, _removeButtonBackground));
+  }
+
+  Widget _classesTypeItem(ClassesType classesType) {
+    return _classesTypeCard(Text(
+      classesType.name,
+      style: TextStyle(fontSize: _titleFontSize, fontWeight: FontWeight.w500),
+    ));
+  }
+
+  Widget _classesTypeItemExpanded(ClassesType classesType) {
+    return _classesTypeCard(
+      Column(
+        children: [
+          Container(
+            alignment: Alignment.center,
+            padding: EdgeInsets.only(top: _paddings, bottom: _paddings),
+            child: Text(
+              classesType.name,
+              style: TextStyle(
+                  fontWeight: FontWeight.bold, fontSize: _titleFontSize),
             ),
-            onTap: () {
-              // _navigateToGroupProfile(context);
-            },
           ),
-        ),
+          _propertyOnRow(Strings.PRICE_FOR_MONTH,
+              '${classesType.priceForMonth.toString()}${Strings.CURRENCY}'),
+          _propertyOnRow(Strings.PRICE_FOR_EACH,
+              '${classesType.priceForEach.toString()}${Strings.CURRENCY}'),
+          _propertyOnRow(
+              Strings.NUMBER_OF_GROUPS, classesType.groups.length.toString()),
+        ],
+      ),
+    );
+  }
+
+  Widget _classesTypeCard(Widget content) {
+    return Card(
+      elevation: _classesTypeElevation,
+      margin: EdgeInsets.all(_margins),
+      shape: RoundedRectangleBorder(
+        side: BorderSide(color: _borderColor, width: _borderWidth),
+        borderRadius: BorderRadius.circular(_cornerEdges),
+      ),
+      color: _classesTypeBackground,
+      child: Container(
+        width: MediaQuery.of(context).size.width - _classesTypeWidth,
+        padding: EdgeInsets.all(_paddings),
+        child: content,
+      ),
+    );
+  }
+
+  Widget _propertyOnRow(String propertyName, String value) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [Text(propertyName), Text(value)],
+    );
+  }
+
+  Widget _groupItemCard(Widget content) {
+    return Card(
+      elevation: _groupElevation,
+      margin: EdgeInsets.all(_margins),
+      shape: RoundedRectangleBorder(
+        side: BorderSide(color: _borderColor, width: _borderWidth),
+        borderRadius: BorderRadius.circular(_cornerEdges),
+      ),
+      color: _groupBackground,
+      child: Container(
+        width: MediaQuery.of(context).size.width - _groupWidth,
+        padding: EdgeInsets.all(_paddings),
+        child: content,
+      ),
+    );
+  }
+
+  Widget _groupItemExpanded(Group group) {
+    return _groupItemCard(
+      Column(
+        children: [
+          Container(
+            alignment: Alignment.center,
+            padding: EdgeInsets.only(top: _paddings, bottom: _paddings),
+            child: Text(
+              group.name,
+              style: TextStyle(
+                  fontWeight: FontWeight.bold, fontSize: _titleFontSize),
+            ),
+          ),
+          Text(
+            group.address.target!.toString(),
+          ),
+          _propertyOnRow(
+              Strings.NUMBER_OF_STUDENTS, group.students.length.toString()),
+          _propertyOnRow(
+              Strings.NUMBER_OF_CLASSES, group.classes.length.toString())
+        ],
       ),
     );
   }
 
   Widget _groupItem(Group group) {
-    return Slidable(
-        actionPane: const SlidableDrawerActionPane(),
-        secondaryActions: [
-          IconSlideAction(
-            caption: Strings.DELETE,
-            color: Colors.red,
-            icon: Icons.delete,
-            onTap: () {
-              // removeFromDbFunction!(classes);
-              // _showInfo(context);
-            },
-          ),
-        ],
-        child: Card(
-          color: Colors.orangeAccent,
-          child: Text(group.name),
-        ));
+    return _groupItemCard(
+      Text(
+        group.name,
+        style: TextStyle(fontSize: _titleFontSize, fontWeight: FontWeight.w500),
+      ),
+    );
   }
 
-  Widget _getItem(TreeNodeData data) {
+  Widget _classesItem(Classes classes) {
+    List<Widget> widgets = [];
+    for (var attendance in classes.attendances) {
+      widgets.add(
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(attendance.student.target!.introduceYourself()),
+            attendance.bill.target!.isPaid
+                ? const Icon(Icons.check_box)
+                : const Icon(Icons.check_box_outline_blank),
+          ],
+        ),
+      );
+    }
+    return Card(
+      color: _colorDependsOnDate(classes.dateTime),
+      shape: RoundedRectangleBorder(
+        side: BorderSide(color: _borderColor, width: _borderWidth),
+        borderRadius: BorderRadius.circular(_cornerEdges),
+      ),
+      margin: EdgeInsets.symmetric(vertical: _margins),
+      elevation: _classesElevation,
+      child: Container(
+        padding: EdgeInsets.all(_paddings),
+        width: MediaQuery.of(context).size.width - _classesWidth,
+        child: Column(
+          children: [
+            Container(
+              padding: EdgeInsets.all(_paddings),
+              child: Text(
+                '${formatDate(classes.dateTime)} ${formatTime(classes.dateTime)}',
+                style: TextStyle(
+                    fontSize: _titleFontSize, fontWeight: FontWeight.bold),
+              ),
+            ),
+            _propertyOnRow(
+              Strings.PRESENTS_AT_THE_CLASSSES,
+              classes.presentStudentsNum.toString(),
+            ),
+            Column(
+              children: widgets,
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Color _colorDependsOnDate(DateTime dateTime){
+    switch(dateTime.month)
+    {
+      case 1:
+        return Colors.red.shade200;
+      case 2:
+        return Colors.blue.shade200;
+      case 3:
+        return Colors.green.shade200;
+      case 4:
+        return Colors.yellow.shade200;
+      case 5:
+        return Colors.orange.shade200;
+      case 6:
+        return Colors.indigo.shade200;
+      case 7:
+        return Colors.blueGrey.shade200;
+      case 8:
+        return Colors.cyan.shade200;
+      case 9:
+        return Colors.lightGreen.shade200;
+      case 10:
+        return Colors.amber.shade200;
+      case 11:
+        return Colors.deepPurple.shade200;
+      case 12:
+        return Colors.teal.shade200;
+      default:
+        return Colors.red;
+    }
+  }
+
+  Widget _getItem(TreeNodeData data, {bool isExpanded = false}) {
     if (data.object != null) {
       if (data.object is Classes) {
         return _classesItem(data.object);
       }
       if (data.object is Group) {
-        return _groupItem(data.object);
+        return isExpanded
+            ? _groupItemExpanded(data.object)
+            : _groupItem(data.object);
       }
       if (data.object is ClassesType) {
-        return _classesTypeItem(data.object);
+        return isExpanded
+            ? _classesTypeItemExpanded(data.object)
+            : _classesTypeItem(data.object);
       }
     }
     return Text(data.label);

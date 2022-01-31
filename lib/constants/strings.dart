@@ -58,6 +58,8 @@ class Strings {
       DELETED_STUDENT = 'Usunięto studenta',
       DETAILS = 'Szczegóły',
       DISCONNECT = 'Rozłącz',
+      DATE = 'Data',
+      TIME = 'Czas',
       EDIT = 'Edytuj',
       EDITED = 'Edytowano',
       ENTER_AMOUNT = 'Podaj kwotę',
