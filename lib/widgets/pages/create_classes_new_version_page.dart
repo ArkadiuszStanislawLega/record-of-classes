@@ -138,7 +138,7 @@ class _CreateClassesNewVersionPageState
                 ),
               ),
               Visibility(
-                  visible: item.isExpand, child: _addAndRemoveButtons(item))
+                  visible: item.isExpand, child: _buttonsColumn(item))
             ],
           ),
         );
@@ -154,7 +154,7 @@ class _CreateClassesNewVersionPageState
     );
   }
 
-  Widget _addAndRemoveButtons(TreeNodeData item) {
+  Widget _buttonsColumn(TreeNodeData item) {
     return Column(
       children: [
         _removeButton(item),
