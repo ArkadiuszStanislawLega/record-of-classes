@@ -9,6 +9,7 @@ import 'package:record_of_classes/models/classes.dart';
 import 'package:record_of_classes/models/classes_type.dart';
 import 'package:record_of_classes/models/group.dart';
 import 'package:record_of_classes/models/student.dart';
+import 'package:record_of_classes/widgets/templates/classes_type_item_template.dart';
 import 'package:record_of_classes/widgets/templates/item_content_template.dart';
 import 'package:record_of_classes/widgets/templates/item_title_template.dart';
 import 'package:record_of_classes/widgets/templates/lists/property_in_one_row.dart';
@@ -214,7 +215,7 @@ class _CreateClassesNewVersionPageState
   }
 
   Widget _classesTypeItem(ClassesType classesType) {
-    return _classesTypeCard(
+    return ClassesTypeItemTemplate(content:
       Container(
         padding: EdgeInsets.all(_paddings),
         child: Text(
@@ -226,24 +227,9 @@ class _CreateClassesNewVersionPageState
     );
   }
 
-  Widget _classesTypeCard(Widget content) {
-    return Card(
-      elevation: _classesTypeElevation,
-      margin: EdgeInsets.all(_margins),
-      shape: RoundedRectangleBorder(
-        side: BorderSide(color: _borderColor, width: _borderWidth),
-        borderRadius: BorderRadius.circular(_cornerEdges),
-      ),
-      color: _classesTypeBackground,
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width - _classesTypeWidth,
-        child: content,
-      ),
-    );
-  }
 
   Widget _classesTypeItemExpanded(ClassesType classesType) {
-    return _classesTypeCard(
+    return ClassesTypeItemTemplate(content:
       Column(
         children: [
           _classesTypeItemTitle(classesType),
