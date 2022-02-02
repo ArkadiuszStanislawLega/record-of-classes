@@ -9,7 +9,8 @@ import 'package:record_of_classes/models/classes.dart';
 import 'package:record_of_classes/models/classes_type.dart';
 import 'package:record_of_classes/models/group.dart';
 import 'package:record_of_classes/models/student.dart';
-import 'package:record_of_classes/widgets/templates/lists/item_title_template.dart';
+import 'package:record_of_classes/widgets/templates/item_content_template.dart';
+import 'package:record_of_classes/widgets/templates/item_title_template.dart';
 import 'package:record_of_classes/widgets/templates/lists/property_in_one_row.dart';
 
 class CreateClassesNewVersionPage extends StatefulWidget {
@@ -274,8 +275,8 @@ class _CreateClassesNewVersionPageState
   }
 
   Widget _classesTypeItemContent(ClassesType classesType) {
-    return _itemContent(
-      [
+    return ItemContentTemplate(
+      widgets: [
         PropertyInOneRow(
             property: AppStrings.PRICE_FOR_MONTH,
             value:
@@ -354,8 +355,8 @@ class _CreateClassesNewVersionPageState
       Navigator.pushNamed(context, AppUrls.DETAIL_GROUP, arguments: group);
 
   Widget _groupItemContent(Group group) {
-    return _itemContent(
-      [
+    return ItemContentTemplate(
+      widgets: [
         Text(
           group.address.target!.toString(),
         ),
@@ -433,14 +434,7 @@ class _CreateClassesNewVersionPageState
         ),
       );
     }
-    return _itemContent(widgets);
-  }
-
-  Widget _itemContent(List<Widget> widgets) {
-    return Container(
-      padding: EdgeInsets.all(_paddings),
-      child: Column(children: widgets),
-    );
+    return ItemContentTemplate(widgets: widgets);
   }
 
   void _navigateToClassesDetailPage(Classes classes) =>
