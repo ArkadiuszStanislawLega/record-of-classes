@@ -13,6 +13,7 @@ import 'package:record_of_classes/widgets/templates/classes_type_item_template.d
 import 'package:record_of_classes/widgets/templates/classes_type_treeview_item.dart';
 import 'package:record_of_classes/widgets/templates/item_content_template.dart';
 import 'package:record_of_classes/widgets/templates/item_title_template.dart';
+import 'package:record_of_classes/widgets/templates/lists/classes_type_tree_view_item_expanded.dart';
 import 'package:record_of_classes/widgets/templates/lists/property_in_one_row.dart';
 
 class CreateClassesNewVersionPage extends StatefulWidget {
@@ -215,62 +216,6 @@ class _CreateClassesNewVersionPageState
         child: _icon(Icons.delete, _removeButtonBackground));
   }
 
-
-  Widget _classesTypeItemExpanded(ClassesType classesType) {
-    return ClassesTypeItemTemplate(content:
-      Column(
-        children: [
-          _classesTypeItemTitle(classesType),
-          _classesTypeItemContent(classesType)
-        ],
-      ),
-    );
-  }
-
-  Widget _classesTypeItemTitle(ClassesType classesType) {
-    return ItemTitleTemplate(
-      widgets: [
-        Container(
-          alignment: Alignment.center,
-          padding: EdgeInsets.only(top: _paddings, bottom: _paddings),
-          child: Text(
-            classesType.name,
-            style: TextStyle(
-                fontWeight: FontWeight.bold, fontSize: _titleFontSize),
-          ),
-        ),
-        InkWell(
-          onTap: () => _navigateToClassTypeDetailPage(classesType),
-          child: _icon(Icons.arrow_forward_ios_sharp, _navigateArrowBackground,
-              foreground: _navigateButtonForeground),
-        ),
-      ],
-    );
-  }
-
-  Widget _classesTypeItemContent(ClassesType classesType) {
-    return ItemContentTemplate(
-      widgets: [
-        PropertyInOneRow(
-            property: AppStrings.PRICE_FOR_MONTH,
-            value:
-                '${classesType.priceForMonth.toString()}${AppStrings.CURRENCY}'),
-        PropertyInOneRow(
-            property: AppStrings.PRICE_FOR_EACH,
-            value:
-                '${classesType.priceForEach.toString()}${AppStrings.CURRENCY}'),
-        PropertyInOneRow(
-            property: AppStrings.NUMBER_OF_GROUPS,
-            value: classesType.groups.length.toString()),
-      ],
-    );
-  }
-
-  void _navigateToClassTypeDetailPage(ClassesType classesType) {
-    Navigator.pushNamed(context, AppUrls.DETAIL_CLASSES_TYPE,
-        arguments: classesType);
-  }
-
   Widget _groupItem(Group group) {
     return _groupItemCard(
       Container(
@@ -426,7 +371,7 @@ class _CreateClassesNewVersionPageState
       }
       if (data.object is ClassesType) {
         return isExpanded
-            ? _classesTypeItemExpanded(data.object)
+            ? ClassesTypeTreeViewItemExpanded(classesType: data.object)
             : ClassesTypeTreeViewItem(classesType: data.object);
       }
     }
