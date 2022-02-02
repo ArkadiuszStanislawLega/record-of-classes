@@ -10,6 +10,7 @@ import 'package:record_of_classes/models/classes_type.dart';
 import 'package:record_of_classes/models/group.dart';
 import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/widgets/templates/classes_type_item_template.dart';
+import 'package:record_of_classes/widgets/templates/classes_type_treeview_item.dart';
 import 'package:record_of_classes/widgets/templates/item_content_template.dart';
 import 'package:record_of_classes/widgets/templates/item_title_template.dart';
 import 'package:record_of_classes/widgets/templates/lists/property_in_one_row.dart';
@@ -212,19 +213,6 @@ class _CreateClassesNewVersionPageState
           //TODO: Baza daynch
         },
         child: _icon(Icons.delete, _removeButtonBackground));
-  }
-
-  Widget _classesTypeItem(ClassesType classesType) {
-    return ClassesTypeItemTemplate(content:
-      Container(
-        padding: EdgeInsets.all(_paddings),
-        child: Text(
-          classesType.name,
-          style:
-              TextStyle(fontSize: _titleFontSize, fontWeight: FontWeight.w500),
-        ),
-      ),
-    );
   }
 
 
@@ -439,7 +427,7 @@ class _CreateClassesNewVersionPageState
       if (data.object is ClassesType) {
         return isExpanded
             ? _classesTypeItemExpanded(data.object)
-            : _classesTypeItem(data.object);
+            : ClassesTypeTreeViewItem(classesType: data.object);
       }
     }
     return Text(data.label);
