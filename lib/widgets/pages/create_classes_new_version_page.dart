@@ -10,6 +10,8 @@ import 'package:record_of_classes/models/classes.dart';
 import 'package:record_of_classes/models/classes_type.dart';
 import 'package:record_of_classes/models/group.dart';
 import 'package:record_of_classes/models/student.dart';
+import 'package:record_of_classes/widgets/templates/classes_tree_view_item.dart';
+import 'package:record_of_classes/widgets/templates/classes_tree_view_item_expanded.dart';
 import 'package:record_of_classes/widgets/templates/classes_type_item_template.dart';
 import 'package:record_of_classes/widgets/templates/classes_type_treeview_item.dart';
 import 'package:record_of_classes/widgets/templates/group_item_template.dart';
@@ -39,10 +41,7 @@ class _CreateClassesNewVersionPageState
 
   DateTime selectedDate = DateTime.now(), selectedTime = DateTime.now();
 
-
-
-  final Color
-      _borderColor = Colors.grey,
+  final Color _borderColor = Colors.grey,
       _navigateButtonForeground = Colors.white;
 
   final double _itemsOffset = 15.0,
@@ -188,82 +187,12 @@ class _CreateClassesNewVersionPageState
             icon: Icons.delete, background: AppColors.removeButtonBackground));
   }
 
-  Widget _classesItem(Classes classes) {
-    return Card(
-      color: _colorsOfTheMonth[classes.dateTime.month],
-      shape: RoundedRectangleBorder(
-        side: BorderSide(color: _borderColor, width: _borderWidth),
-        borderRadius: BorderRadius.circular(_cornerEdges),
-      ),
-      margin: EdgeInsets.symmetric(vertical: _margins),
-      elevation: _classesElevation,
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width - _classesWidth,
-        child: Column(
-          children: [
-            _classesItemTitle(classes),
-            _classesItemContent(classes),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _classesItemTitle(Classes classes) {
-    return ItemTitleTemplate(
-      widgets: [
-        Text(
-          formatDate(classes.dateTime),
-          style:
-              TextStyle(fontSize: _titleFontSize, fontWeight: FontWeight.bold),
-        ),
-        Text(
-          formatTime(classes.dateTime),
-          style:
-              TextStyle(fontSize: _titleFontSize, fontWeight: FontWeight.bold),
-        ),
-        InkWell(
-          onTap: () => _navigateToClassesDetailPage(classes),
-          child: IconInCardTemplate(
-              icon: Icons.arrow_forward_ios_sharp,
-              background: AppColors.navigateArrowBackground,
-              foreground: _navigateButtonForeground),
-        ),
-      ],
-    );
-  }
-
-  Widget _classesItemContent(Classes classes) {
-    List<Widget> widgets = [];
-    widgets.add(
-      PropertyInOneRow(
-        property: AppStrings.PRESENTS_AT_THE_CLASSSES,
-        value: classes.presentStudentsNum.toString(),
-      ),
-    );
-    for (var attendance in classes.attendances) {
-      widgets.add(
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(attendance.student.target!.introduceYourself()),
-            attendance.bill.target!.isPaid
-                ? const Icon(Icons.check_box)
-                : const Icon(Icons.check_box_outline_blank),
-          ],
-        ),
-      );
-    }
-    return ItemContentTemplate(widgets: widgets);
-  }
-
-  void _navigateToClassesDetailPage(Classes classes) =>
-      Navigator.pushNamed(context, AppUrls.DETAIL_CLASSES, arguments: classes);
-
   Widget _getItem(TreeNodeData data, {bool isExpanded = false}) {
     if (data.object != null) {
       if (data.object is Classes) {
-        return _classesItem(data.object);
+        return isExpanded
+            ? ClassesTreeViewItemExpanded(classes: data.object)
+            : ClassesTreeViewItem(classes: data.object);
       }
       if (data.object is Group) {
         return isExpanded
