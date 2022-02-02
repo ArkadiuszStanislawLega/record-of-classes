@@ -16,7 +16,7 @@ class ClassesTypeItemTemplate extends StatelessWidget {
         ),
         color: AppColors.classesTypeBackground,
         child: SizedBox(
-          width: MediaQuery.of(context).size.width - AppDoubles.classesTypeWidth,
+          width: MediaQuery.of(context).size.width - AppDoubles.classesTypeWidthInTreeView,
           child: content,
         ),
       );

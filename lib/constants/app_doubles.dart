@@ -1,8 +1,8 @@
 class AppDoubles {
   static const double itemsOffset = 15.0,
       borderWidth = 1.0,
-      classesTypeWidth = 80.0,
-      groupWidth = 95.0,
+      classesTypeWidthInTreeView = 80.0,
+      groupWidthInTreeView = 95.0,
       classesWidth = 100.0,
       margins = 10.0,
       paddings = 5.0,

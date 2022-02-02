@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:list_treeview/tree/controller/tree_controller.dart';
 import 'package:list_treeview/tree/node/tree_node.dart';
 import 'package:list_treeview/tree/tree_view.dart';
+import 'package:record_of_classes/constants/app_colours.dart';
 import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/constants/app_urls.dart';
 import 'package:record_of_classes/main.dart';
@@ -11,9 +12,11 @@ import 'package:record_of_classes/models/group.dart';
 import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/widgets/templates/classes_type_item_template.dart';
 import 'package:record_of_classes/widgets/templates/classes_type_treeview_item.dart';
+import 'package:record_of_classes/widgets/templates/group_item_template.dart';
+import 'package:record_of_classes/widgets/templates/icon_in_card_template.dart';
 import 'package:record_of_classes/widgets/templates/item_content_template.dart';
 import 'package:record_of_classes/widgets/templates/item_title_template.dart';
-import 'package:record_of_classes/widgets/templates/lists/classes_type_tree_view_item_expanded.dart';
+import 'package:record_of_classes/widgets/templates/classes_type_tree_view_item_expanded.dart';
 import 'package:record_of_classes/widgets/templates/lists/property_in_one_row.dart';
 
 class CreateClassesNewVersionPage extends StatefulWidget {
@@ -190,21 +193,10 @@ class _CreateClassesNewVersionPageState
               add(item);
               //TODO: Baza daynch
             },
-            child: _icon(Icons.add, _addButtonBackground),
+            child: IconInCardTemplate(
+                icon: Icons.add, background: AppColors.addButtonBackground),
           )
         : const SizedBox();
-  }
-
-  Card _icon(IconData icon, Color background,
-      {Color foreground = Colors.white}) {
-    return Card(
-      color: background,
-      child: Icon(
-        icon,
-        color: foreground,
-        size: _iconSize,
-      ),
-    );
   }
 
   Widget _removeButton(TreeNodeData item) {
@@ -213,11 +205,12 @@ class _CreateClassesNewVersionPageState
           delete(item);
           //TODO: Baza daynch
         },
-        child: _icon(Icons.delete, _removeButtonBackground));
+        child: IconInCardTemplate(
+            icon: Icons.delete, background: AppColors.removeButtonBackground));
   }
 
   Widget _groupItem(Group group) {
-    return _groupItemCard(
+    return GroupItemTemplate(content:
       Container(
         padding: EdgeInsets.all(_paddings),
         child: Text(
@@ -229,24 +222,8 @@ class _CreateClassesNewVersionPageState
     );
   }
 
-  Widget _groupItemCard(Widget content) {
-    return Card(
-      elevation: _groupElevation,
-      margin: EdgeInsets.all(_margins),
-      shape: RoundedRectangleBorder(
-        side: BorderSide(color: _borderColor, width: _borderWidth),
-        borderRadius: BorderRadius.circular(_cornerEdges),
-      ),
-      color: _groupBackground,
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width - _groupWidth,
-        child: content,
-      ),
-    );
-  }
-
   Widget _groupItemExpanded(Group group) {
-    return _groupItemCard(
+    return GroupItemTemplate(content:
       Column(
         children: [_groupItemTitle(group), _groupItemContent(group)],
       ),
@@ -263,7 +240,9 @@ class _CreateClassesNewVersionPageState
         ),
         InkWell(
           onTap: () => _navigateToGroupDetailPage(group),
-          child: _icon(Icons.arrow_forward_ios_sharp, _navigateArrowBackground,
+          child: IconInCardTemplate(
+              icon: Icons.arrow_forward_ios_sharp,
+              background: AppColors.navigateArrowBackground,
               foreground: _navigateButtonForeground),
         ),
       ],
@@ -325,7 +304,9 @@ class _CreateClassesNewVersionPageState
         ),
         InkWell(
           onTap: () => _navigateToClassesDetailPage(classes),
-          child: _icon(Icons.arrow_forward_ios_sharp, _navigateArrowBackground,
+          child: IconInCardTemplate(
+              icon: Icons.arrow_forward_ios_sharp,
+              background: AppColors.navigateArrowBackground,
               foreground: _navigateButtonForeground),
         ),
       ],
