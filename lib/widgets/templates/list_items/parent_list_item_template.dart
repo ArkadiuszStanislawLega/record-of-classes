@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:record_of_classes/constants/app_urls.dart';
-import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/models/parent.dart';
 import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/widgets/templates/snack_bar_info_template.dart';
@@ -32,12 +32,12 @@ class _ParentListItemTemplate extends State<ParentListItemTemplate> {
         actionPane: const SlidableDrawerActionPane(),
         secondaryActions: [
           IconSlideAction(
-              caption: Strings.DELETE,
+              caption: AppStrings.DELETE,
               color: Colors.red,
               icon: Icons.delete,
               onTap: removeParent),
           IconSlideAction(
-              caption: Strings.ADD,
+              caption: AppStrings.ADD,
               color: Colors.green,
               icon: Icons.add,
               onTap: addParent),
@@ -66,7 +66,7 @@ class _ParentListItemTemplate extends State<ParentListItemTemplate> {
     SnackBarInfoTemplate(
         context: context,
         message:
-            '${widget.parent.introduceYourself()} ${Strings.REMOVED_FROM_DATABASE}!');
+            '${widget.parent.introduceYourself()} ${AppStrings.REMOVED_FROM_DATABASE}!');
   }
 
   void addParent() {
@@ -74,6 +74,6 @@ class _ParentListItemTemplate extends State<ParentListItemTemplate> {
     SnackBarInfoTemplate(
         context: context,
         message:
-            '${widget.parent.introduceYourself()} ${Strings.AND} ${widget.student.introduceYourself()} ${Strings.THEY_ARE_FAMILY_NOW}!');
+            '${widget.parent.introduceYourself()} ${AppStrings.AND} ${widget.student.introduceYourself()} ${AppStrings.THEY_ARE_FAMILY_NOW}!');
   }
 }

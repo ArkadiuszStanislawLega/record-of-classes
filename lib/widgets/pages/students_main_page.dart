@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:record_of_classes/constants/app_urls.dart';
-import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/objectbox.g.dart';
@@ -100,12 +100,12 @@ class _StudentsMainPageState extends State<StudentsMainPage> {
             Container(
               padding: const EdgeInsets.all(16.0),
               child: const Text(
-                Strings.STUDENT_MANAGEMENT,
+                AppStrings.STUDENT_MANAGEMENT,
                 style: TextStyle(fontSize: 25, color: Colors.white),
               ),
             ),
             OneRowPropertyTemplate(
-              title: '${Strings.NUMBER_OF_STUDENTS}:',
+              title: '${AppStrings.NUMBER_OF_STUDENTS}:',
               value: _studentsList.length.toString(),
             ),
           ],

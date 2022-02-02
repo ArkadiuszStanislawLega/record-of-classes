@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/widgets/templates/create/create_student_template.dart';
@@ -16,13 +16,13 @@ class CreateStudentPage extends StatelessWidget {
         ModalRoute.of(context)!.settings.arguments as Function;
     return Scaffold(
         appBar: AppBar(
-          title: const Text(Strings.CREATE_STUDENT),
+          title: const Text(AppStrings.CREATE_STUDENT),
         ),
         body: Column(children: [
           _createStudentTemplate,
           ElevatedButton(
             onPressed: () => _onPressCreateButtonEvent(context),
-            child: const Text(Strings.CREATE_STUDENT),
+            child: const Text(AppStrings.CREATE_STUDENT),
           ),
         ],),);
   }
@@ -36,6 +36,6 @@ class CreateStudentPage extends StatelessWidget {
   void _infoCreatedStudent(BuildContext context) => SnackBarInfoTemplate(
       context: context,
       message:
-      '${Strings.CREATE_STUDENT}: ${_createdStudent.introduceYourself()}!');
+      '${AppStrings.CREATE_STUDENT}: ${_createdStudent.introduceYourself()}!');
 
 }

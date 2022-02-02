@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:objectbox/objectbox.dart';
-import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/group.dart';
 import 'package:record_of_classes/models/student.dart';
@@ -29,7 +29,7 @@ class _StudentsInGroupListItemTemplateState
         actionPane: const SlidableDrawerActionPane(),
         secondaryActions: [
           IconSlideAction(
-            caption: Strings.DELETE,
+            caption: AppStrings.DELETE,
             color: Colors.deepOrange,
             icon: Icons.remove,
             onTap: updateDatabase,

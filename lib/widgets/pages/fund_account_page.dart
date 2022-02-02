@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/widgets/templates/snack_bar_info_template.dart';
 
@@ -20,28 +20,28 @@ class _FundAccountPageState extends State<FundAccountPage> {
   @override
   Widget build(BuildContext context) {
    args = ModalRoute.of(context)!.settings.arguments as Map;
-   _student = args[Strings.STUDENT];
-   _fundAccountUpdateDb = args[Strings.FUNCTION];
+   _student = args[AppStrings.STUDENT];
+   _fundAccountUpdateDb = args[AppStrings.FUNCTION];
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(Strings.FUND_ACCOUNT),
+        title: const Text(AppStrings.FUND_ACCOUNT),
       ),
       body: Column(
         children: [
-          Text('${Strings.STUDENT_ACCOUNT} ${_student.introduceYourself()}'),
-          Text('${Strings.CURRENT_STATE_OF_BALANCE}: ${_student.account.target!.balance.toStringAsFixed(2)}${Strings.CURRENCY}'),
+          Text('${AppStrings.STUDENT_ACCOUNT} ${_student.introduceYourself()}'),
+          Text('${AppStrings.CURRENT_STATE_OF_BALANCE}: ${_student.account.target!.balance.toStringAsFixed(2)}${AppStrings.CURRENCY}'),
           TextField(
             keyboardType: TextInputType.number,
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
-              hintText: Strings.ENTER_AMOUNT,
+              hintText: AppStrings.ENTER_AMOUNT,
             ),
             onChanged: (userInput) => _input= double.parse(userInput),
           ),
           TextButton(
             onPressed: _updateDatabase,
-            child: const Text(Strings.FUND),
+            child: const Text(AppStrings.FUND),
           )
         ],
       ),
@@ -50,7 +50,7 @@ class _FundAccountPageState extends State<FundAccountPage> {
   void _updateDatabase(){
     _fundAccountUpdateDb!(value: _input);
 
-    SnackBarInfoTemplate(context: context, message: '${Strings.FUNDED_ACCOUNT} ${_student.introduceYourself()} ${Strings.AMOUNT} $_input${Strings.CURRENCY}');
+    SnackBarInfoTemplate(context: context, message: '${AppStrings.FUNDED_ACCOUNT} ${_student.introduceYourself()} ${AppStrings.AMOUNT} $_input${AppStrings.CURRENCY}');
     Navigator.pop(context);
   }
 }

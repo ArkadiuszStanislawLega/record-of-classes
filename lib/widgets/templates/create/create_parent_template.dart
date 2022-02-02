@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/models/person.dart';
 
 class CreateParentTemplate extends StatefulWidget {
@@ -36,14 +36,14 @@ class _CreateParentTemplate extends State<CreateParentTemplate> {
             controller: widget._nameInputController,
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
-              hintText: Strings.NAME,
+              hintText: AppStrings.NAME,
             ),
             onChanged: (userInput) => widget._parentName = userInput),
         TextField(
             controller: widget._surnameInputController,
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
-              hintText: Strings.SURNAME,
+              hintText: AppStrings.SURNAME,
             ),
             onChanged: (userInput) => widget._parentSurname = userInput),
       ],

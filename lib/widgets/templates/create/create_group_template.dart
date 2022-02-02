@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/models/group.dart';
 import 'package:record_of_classes/widgets/templates/create/create_address_template.dart';
 
@@ -50,7 +50,7 @@ class _CreateGroupTemplateState extends State<CreateGroupTemplate> {
           controller: widget._nameController,
           decoration: InputDecoration(
               hintText: widget.group == null
-                  ? Strings.GROUP_NAME
+                  ? AppStrings.GROUP_NAME
                   : widget.group!.name),
           onChanged: (String str) =>
               str.isNotEmpty ? widget._inputName = str : {},

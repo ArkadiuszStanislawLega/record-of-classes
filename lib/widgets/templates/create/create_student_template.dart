@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/enumerators/PersonType.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/account.dart';
@@ -27,7 +27,7 @@ class CreateStudentTemplate extends StatelessWidget {
             controller: _ageController,
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
-              hintText: Strings.AGE,
+              hintText: AppStrings.AGE,
             ),
             onChanged: (userInput) => _personAge = userInput),
       ],

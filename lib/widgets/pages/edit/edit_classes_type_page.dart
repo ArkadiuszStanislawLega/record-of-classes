@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:objectbox/objectbox.dart';
-import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/classes_type.dart';
 import 'package:record_of_classes/widgets/templates/add_new_classes_type_template.dart';
@@ -25,7 +25,7 @@ class _EditClassesTypePageState extends State<EditClassesTypePage> {
         AddNewClassesTypeTemplate(classesType: _classesType);
     return Scaffold(
       appBar: AppBar(
-        title: Text('${Strings.EDIT} ${_classesType.name}'),
+        title: Text('${AppStrings.EDIT} ${_classesType.name}'),
       ),
       body: Column(
         children: [
@@ -40,16 +40,16 @@ class _EditClassesTypePageState extends State<EditClassesTypePage> {
                     SnackBarInfoTemplate(
                         context: context,
                         message:
-                        '${Strings.UPDATED} ${_classesType.name} ${Strings.SUCCESFULLY}!');
+                        '${AppStrings.UPDATED} ${_classesType.name} ${AppStrings.SUCCESFULLY}!');
                     Navigator.pop(context);
                   }
                   else{
                     SnackBarInfoTemplate(
                         context: context,
-                        message: Strings.ERROR_MESSAGE_CHECK_FIELDS_FILL);
+                        message: AppStrings.ERROR_MESSAGE_CHECK_FIELDS_FILL);
                   }
                 },
-                child: const Text(Strings.OK),
+                child: const Text(AppStrings.OK),
               ),
             ],
           ),

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/models/phone.dart';
 
 class CreatePhoneTemplate extends StatefulWidget {
@@ -94,7 +94,7 @@ class _CreatePhoneTemplate extends State<CreatePhoneTemplate> {
           decoration: InputDecoration(
             border: const OutlineInputBorder(),
             hintText: widget.phone == null
-                ? Strings.PHONE_NAME
+                ? AppStrings.PHONE_NAME
                 : widget.phone!.numberName,
           ),
           onChanged: (userInput) => widget._numberName = userInput),
@@ -107,7 +107,7 @@ class _CreatePhoneTemplate extends State<CreatePhoneTemplate> {
             decoration: InputDecoration(
               border: const OutlineInputBorder(),
               hintText: widget.phone == null
-                  ? Strings.PHONE_NUMBER
+                  ? AppStrings.PHONE_NUMBER
                   : widget.phone!.number.toString(),
             ),
             onChanged: (userInput) => widget._number = userInput),

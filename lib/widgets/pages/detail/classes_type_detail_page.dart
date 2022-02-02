@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/constants/app_urls.dart';
-import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/classes_type.dart';
 import 'package:record_of_classes/models/group.dart';
@@ -50,12 +50,12 @@ class _DetailClassesTypeState extends State<DetailClassesType> {
                 children: [
                   SpeedDialChild(
                       child: const Icon(Icons.group_add),
-                      label: Strings.ADD_GROUP,
+                      label: AppStrings.ADD_GROUP,
                       backgroundColor: Colors.amberAccent,
                       onTap: _navigateToCreateNewGroupPage),
                   SpeedDialChild(
                       child: const Icon(Icons.edit),
-                      label: Strings.EDIT,
+                      label: AppStrings.EDIT,
                       backgroundColor: Colors.amberAccent,
                       onTap: _navigateToEditClassesType),
                 ],
@@ -125,21 +125,21 @@ class _DetailClassesTypeState extends State<DetailClassesType> {
           children: [
             _pageTitle(),
             OneRowPropertyTemplate(
-              title: '${Strings.NUMBER_OF_GROUPS}:',
+              title: '${AppStrings.NUMBER_OF_GROUPS}:',
               value: _classesType.groups.length.toString(),
             ),
             OneRowPropertyTemplate(
-              title: '${Strings.PRICE_FOR_MONTH}:',
+              title: '${AppStrings.PRICE_FOR_MONTH}:',
               value:
-                  '${_classesType.priceForMonth.toString()}${Strings.CURRENCY}',
+                  '${_classesType.priceForMonth.toString()}${AppStrings.CURRENCY}',
             ),
             OneRowPropertyTemplate(
-              title: '${Strings.PRICE_FOR_EACH}:',
+              title: '${AppStrings.PRICE_FOR_EACH}:',
               value:
-                  '${_classesType.priceForEach.toString()}${Strings.CURRENCY}',
+                  '${_classesType.priceForEach.toString()}${AppStrings.CURRENCY}',
             ),
             OneRowPropertyTemplate(
-              title: '${Strings.NUMBER_OF_SIGNED_UP}:',
+              title: '${AppStrings.NUMBER_OF_SIGNED_UP}:',
               value: '${_classesType.numberOfStudents()}',
             ),
           ],
@@ -156,7 +156,7 @@ class _DetailClassesTypeState extends State<DetailClassesType> {
           style: const TextStyle(fontSize: 25, color: Colors.white),
         ),
         Text(
-          Strings.CLASSES_TYPE.toLowerCase(),
+          AppStrings.CLASSES_TYPE.toLowerCase(),
           style: const TextStyle(fontSize: 12, color: Colors.white),
         ),
       ],

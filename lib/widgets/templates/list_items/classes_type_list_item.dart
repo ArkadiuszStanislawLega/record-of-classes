@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/constants/app_urls.dart';
-import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/classes_type.dart';
 import 'package:record_of_classes/widgets/templates/snack_bar_info_template.dart';
@@ -18,7 +18,7 @@ class ClassesTypeListItem extends StatelessWidget {
       actionPane: const SlidableDrawerActionPane(),
       secondaryActions: [
         IconSlideAction(
-          caption: Strings.DELETE,
+          caption: AppStrings.DELETE,
           color: Colors.red,
           icon: Icons.delete,
           onTap: () {
@@ -34,17 +34,17 @@ class ClassesTypeListItem extends StatelessWidget {
           children: [
             Column(
               children: [
-                const Text('${Strings.PRICE_FOR_MONTH}:'),
+                const Text('${AppStrings.PRICE_FOR_MONTH}:'),
                 Text(
-                    '${classesType.priceForMonth.toString()}${Strings
+                    '${classesType.priceForMonth.toString()}${AppStrings
                         .CURRENCY}')
               ],
             ),
             Column(
               children: [
-                const Text('${Strings.PRICE_FOR_EACH}:'),
+                const Text('${AppStrings.PRICE_FOR_EACH}:'),
                 Text(
-                    '${classesType.priceForEach.toString()}${Strings.CURRENCY}')
+                    '${classesType.priceForEach.toString()}${AppStrings.CURRENCY}')
               ],
             ),
           ],
@@ -65,6 +65,6 @@ class ClassesTypeListItem extends StatelessWidget {
 
   void _showInfo(BuildContext context) =>
       SnackBarInfoTemplate(context: context,
-          message: '${Strings.CLASSES_TYPE}: ${classesType.name} - ${Strings
+          message: '${AppStrings.CLASSES_TYPE}: ${classesType.name} - ${AppStrings
               .REMOVED}!');
 }

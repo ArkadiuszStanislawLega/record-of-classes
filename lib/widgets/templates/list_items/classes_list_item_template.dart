@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:record_of_classes/constants/app_urls.dart';
-import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/classes.dart';
 import 'package:record_of_classes/widgets/templates/snack_bar_info_template.dart';
@@ -10,7 +10,6 @@ class ClassesListItemTemplate extends StatelessWidget {
   ClassesListItemTemplate(
       {Key? key, required this.classes, this.removeFromDbFunction})
       : super(key: key);
-
 
   late Classes classes;
   late Function? removeFromDbFunction;
@@ -21,7 +20,7 @@ class ClassesListItemTemplate extends StatelessWidget {
       actionPane: const SlidableDrawerActionPane(),
       secondaryActions: [
         IconSlideAction(
-          caption: Strings.DELETE,
+          caption: AppStrings.DELETE,
           color: Colors.red,
           icon: Icons.delete,
           onTap: () {
@@ -42,9 +41,8 @@ class ClassesListItemTemplate extends StatelessWidget {
           subtitle: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                  '${classes.dateTime.day}.${classes.dateTime.month < 10 ? '0${classes.dateTime.month}' : classes.dateTime.month}.${classes.dateTime.year}'),
-              Text(classes.dateTime.toString())
+              Text(formatDate(classes.dateTime)),
+              Text(formatTime(classes.dateTime))
             ],
           ),
           onTap: () {
@@ -61,5 +59,5 @@ class ClassesListItemTemplate extends StatelessWidget {
   void _showInfo(BuildContext context) => SnackBarInfoTemplate(
       context: context,
       message:
-          '${Strings.GROUPS}: ${classes.group.target!.name} ${formatDate(classes.dateTime)} - ${Strings.REMOVED}!');
+          '${AppStrings.GROUPS}: ${classes.group.target!.name} ${formatDate(classes.dateTime)} - ${AppStrings.REMOVED}!');
 }

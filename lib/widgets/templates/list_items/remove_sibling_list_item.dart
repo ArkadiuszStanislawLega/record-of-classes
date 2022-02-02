@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:objectbox/objectbox.dart';
-import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/widgets/templates/snack_bar_info_template.dart';
@@ -21,7 +21,7 @@ class RemoveSiblingListItem extends StatelessWidget {
           actionPane: const SlidableDrawerActionPane(),
           secondaryActions: [
             IconSlideAction(
-              caption: Strings.DISCONNECT,
+              caption: AppStrings.DISCONNECT,
               color: Colors.deepOrange,
               icon: Icons.remove,
               onTap: () {
@@ -51,5 +51,5 @@ class RemoveSiblingListItem extends StatelessWidget {
   void showInfoSnackBar(var context) => SnackBarInfoTemplate(
       context: context,
       message:
-          '${sibling.introduceYourself()} ${Strings.AND} ${student.introduceYourself()} ${Strings.THEY_ARENT_SIBLINGS}');
+          '${sibling.introduceYourself()} ${AppStrings.AND} ${student.introduceYourself()} ${AppStrings.THEY_ARENT_SIBLINGS}');
 }

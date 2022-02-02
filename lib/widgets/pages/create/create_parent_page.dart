@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:objectbox/objectbox.dart';
-import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/enumerators/PersonType.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/parent.dart';
@@ -27,7 +27,7 @@ class CreateParentPage extends StatelessWidget {
     _selectedStudent = ModalRoute.of(context)!.settings.arguments as Student;
     return Scaffold(
       appBar: AppBar(
-        title: const Text(Strings.ADD_PARENT),
+        title: const Text(AppStrings.ADD_PARENT),
       ),
       body: Column(
         children: [
@@ -35,7 +35,7 @@ class CreateParentPage extends StatelessWidget {
           _createPhone,
           TextButton(
               onPressed: () => _createParent(context),
-              child: const Text(Strings.ADD_PARENT))
+              child: const Text(AppStrings.ADD_PARENT))
         ],
       ),
     );
@@ -98,7 +98,7 @@ class CreateParentPage extends StatelessWidget {
   void _createParentSuccessfulMessage(BuildContext context) {
     var parent = _createParentTemplate.getParent();
     _snackBarInfo(context,
-        '${Strings.SUCCESFULLY_ADDED} ${parent.surname} ${parent.surname} ${Strings.TO_DATABASE}.');
+        '${AppStrings.SUCCESFULLY_ADDED} ${parent.surname} ${parent.surname} ${AppStrings.TO_DATABASE}.');
   }
 
   void _clearValues() {
@@ -107,7 +107,7 @@ class CreateParentPage extends StatelessWidget {
   }
 
   void _createParentUnsuccessfulMessage(BuildContext context) =>
-      _snackBarInfo(context, Strings.FAIL_TO_ADD_NEW_PARENT_TO_DATABASE);
+      _snackBarInfo(context, AppStrings.FAIL_TO_ADD_NEW_PARENT_TO_DATABASE);
 
   void _snackBarInfo(BuildContext context, String message) {
     SnackBarInfoTemplate(message: message, context: context);

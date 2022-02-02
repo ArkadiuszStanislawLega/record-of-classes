@@ -1,4 +1,4 @@
-import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/constants/app_strings.dart';
 
 enum PersonType {
   none,
@@ -10,12 +10,12 @@ enum PersonType {
 String ConverterPersonTypeToString(PersonType value){
   switch(value){
     case PersonType.none:
-      return Strings.NONE_TYPE;
+      return AppStrings.NONE_TYPE;
     case PersonType.teacher:
-      return Strings.TEACHER;
+      return AppStrings.TEACHER;
     case PersonType.parent:
-      return Strings.PARENT;
+      return AppStrings.PARENT;
     case PersonType.student:
-      return Strings.STUDENT;
+      return AppStrings.STUDENT;
   }
 }

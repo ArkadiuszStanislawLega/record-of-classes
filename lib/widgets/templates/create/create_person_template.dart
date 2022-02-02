@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/models/person.dart';
 
 class CreatePersonTemplate extends StatelessWidget {
@@ -17,14 +17,14 @@ class CreatePersonTemplate extends StatelessWidget {
           controller: _nameController,
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
-              hintText: Strings.NAME,
+              hintText: AppStrings.NAME,
             ),
             onChanged: (userInput) => _personName = userInput),
         TextField(
           controller: _surnameController,
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
-              hintText: Strings.SURNAME,
+              hintText: AppStrings.SURNAME,
             ),
             onChanged: (userInput) => _personSurname = userInput),
       ],

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/account.dart';
 import 'package:record_of_classes/models/attendance.dart';
@@ -99,7 +99,7 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
           });
         },
         child: const Text(
-          Strings.SIGNED_UP_FOR_CLASSES,
+          AppStrings.SIGNED_UP_FOR_CLASSES,
           style: TextStyle(color: Colors.white),
         ),
       ),
@@ -123,7 +123,7 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
       child: TextButton(
         onPressed: () => setState(() => _isWrittenOpen = false),
         child: const Text(
-          Strings.PRESENTS_AT_THE_CLASSSES,
+          AppStrings.PRESENTS_AT_THE_CLASSSES,
           style: TextStyle(color: Colors.white),
         ),
       ),
@@ -145,22 +145,22 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
                     widget._classes.group.target!.name,
                     style: const TextStyle(fontSize: 25, color: Colors.white),
                   ),
-                  Text(Strings.CLASSES_CONDUCTED.toLowerCase(),
+                  Text(AppStrings.CLASSES_CONDUCTED.toLowerCase(),
                       style:
                           const TextStyle(fontSize: 12, color: Colors.white)),
                 ],
               ),
             ),
             OneRowPropertyTemplate(
-              title: '${Strings.DATE_OF_CLASSES}:',
+              title: '${AppStrings.DATE_OF_CLASSES}:',
               value: formatDate(widget._classes.dateTime),
             ),
             OneRowPropertyTemplate(
-              title: '${Strings.NUMBER_OF_SIGNED_UP}:',
+              title: '${AppStrings.NUMBER_OF_SIGNED_UP}:',
               value: widget._classes.group.target!.students.length.toString(),
             ),
             OneRowPropertyTemplate(
-                title: '${Strings.PRESENTS_AT_THE_CLASSSES}:',
+                title: '${AppStrings.PRESENTS_AT_THE_CLASSSES}:',
                 value: widget._classes.attendances
                     .skipWhile((element) => !element.isPresent)
                     .length
@@ -217,7 +217,7 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
       actionPane: const SlidableDrawerActionPane(),
       secondaryActions: [
         IconSlideAction(
-          caption: attendance.isPresent ? Strings.ABSENT : Strings.ABSENT,
+          caption: attendance.isPresent ? AppStrings.ABSENT : AppStrings.ABSENT,
           color: attendance.isPresent ? Colors.orange : Colors.green,
           icon: attendance.isPresent
               ? Icons.check_box_outline_blank
@@ -236,7 +236,7 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
         title: Text(attendance.student.target!.introduceYourself()),
         onTap: () {},
         subtitle: Text(
-            '${Strings.UNPAID_CLASSES}: ${attendance.student.target!.account.target!.countUnpaidBills()}'),
+            '${AppStrings.UNPAID_CLASSES}: ${attendance.student.target!.account.target!.countUnpaidBills()}'),
       ),
     );
   }
@@ -256,7 +256,7 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
       actionPane: const SlidableDrawerActionPane(),
       secondaryActions: [
         IconSlideAction(
-          caption: Strings.PRESENT,
+          caption: AppStrings.PRESENT,
           color: Colors.green,
           icon: Icons.check,
           onTap: () {
@@ -270,7 +270,7 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
         title: Text(student.introduceYourself()),
         onTap: () {},
         subtitle: Text(
-            '${Strings.UNPAID_CLASSES}: ${_numberOfUnpaidBills(student.account.target!.bills)}'),
+            '${AppStrings.UNPAID_CLASSES}: ${_numberOfUnpaidBills(student.account.target!.bills)}'),
       ),
     );
   }

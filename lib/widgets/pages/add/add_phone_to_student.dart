@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/person.dart';
 import 'package:record_of_classes/models/phone.dart';
@@ -17,16 +17,16 @@ class AddPhoneToStudentPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     _args = ModalRoute.of(context)!.settings.arguments as Map;
-    _student = _args[Strings.STUDENT];
-    _addContactFunction = _args[Strings.FUNCTION];
+    _student = _args[AppStrings.STUDENT];
+    _addContactFunction = _args[AppStrings.FUNCTION];
     return Scaffold(
       appBar: AppBar(
-        title: const Text(Strings.ADD_CONTACT),
+        title: const Text(AppStrings.ADD_CONTACT),
       ),
       body: Column(
         children: [
           _createPhoneTemplate,
-          TextButton(onPressed: ()=> _addNewContactToDatabase(context), child: const Text(Strings.ADD))
+          TextButton(onPressed: ()=> _addNewContactToDatabase(context), child: const Text(AppStrings.ADD))
         ],
       ),
     );
@@ -39,7 +39,7 @@ class AddPhoneToStudentPage extends StatelessWidget {
     // objectBox.store.box<Phone>().put(phone);
     // objectBox.store.box<Person>().put(_student.person.target!);
     _addContactFunction(_createPhoneTemplate.getPhone());
-    SnackBarInfoTemplate(context: context, message: '${Strings.ADDED_NEW_CONTACT}: ${_student.introduceYourself()}');
+    SnackBarInfoTemplate(context: context, message: '${AppStrings.ADDED_NEW_CONTACT}: ${_student.introduceYourself()}');
     Navigator.pop(context);
   }
 }

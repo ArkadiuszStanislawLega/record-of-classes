@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:record_of_classes/constants/app_urls.dart';
-import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/enumerators/PersonType.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/phone.dart';
@@ -24,23 +24,23 @@ class _PhoneBookListItemTemplateState extends State<PhoneBookListItemTemplate> {
       actionPane: const SlidableDrawerActionPane(),
       secondaryActions: [
         IconSlideAction(
-          caption: Strings.CALL,
+          caption: AppStrings.CALL,
           color: Colors.white,
           icon: Icons.phone,
           onTap: _makePhoneCall,
         ),
         IconSlideAction(
-            caption: Strings.SEND_MESSAGE,
+            caption: AppStrings.SEND_MESSAGE,
             color: Colors.yellow,
             icon: Icons.message,
             onTap: _senSMS),
         IconSlideAction(
-            caption: Strings.EDIT,
+            caption: AppStrings.EDIT,
             color: Colors.green,
             icon: Icons.edit,
             onTap: _navigateToEditContact),
         IconSlideAction(
-            caption: Strings.DELETE,
+            caption: AppStrings.DELETE,
             color: Colors.red,
             icon: Icons.delete,
             onTap: _navigateToRemoveContact),
@@ -74,7 +74,7 @@ class _PhoneBookListItemTemplateState extends State<PhoneBookListItemTemplate> {
         break;
       case PersonType.student:
         Navigator.pushNamed(context, AppUrls.DETAIL_STUDENT, arguments: {
-          Strings.STUDENT: widget.phone.owner.target!.student.target
+          AppStrings.STUDENT: widget.phone.owner.target!.student.target
         });
         break;
       case PersonType.parent:
@@ -115,7 +115,7 @@ class _PhoneBookListItemTemplateState extends State<PhoneBookListItemTemplate> {
     });
     SnackBarInfoTemplate(
         context: context,
-        message: '${Strings.REMOVED_FROM_DATABASE} ${Strings.CONTACT}');
+        message: '${AppStrings.REMOVED_FROM_DATABASE} ${AppStrings.CONTACT}');
   }
 
   Color _colorDependsOnOwnerType() {

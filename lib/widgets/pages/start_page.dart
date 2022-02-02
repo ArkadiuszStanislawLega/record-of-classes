@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:record_of_classes/constants/app_urls.dart';
-import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/constants/app_strings.dart';
 
 class StartPageView extends StatefulWidget {
   const StartPageView({Key? key}) : super(key: key);
@@ -28,28 +28,28 @@ class _StartPageViewView extends State<StartPageView> {
         children: <Widget>[
           _button(
             onPressed: _navigateToStudentsMainPage,
-            title: Strings.STUDENTS_LIST.toLowerCase(),
+            title: AppStrings.STUDENTS_LIST.toLowerCase(),
             icon: const Icon(Icons.person),
           ),
           _button(
               onPressed: _navigateFinanceMainPage,
-              title: Strings.FINANCE.toLowerCase(),
+              title: AppStrings.FINANCE.toLowerCase(),
               icon: const Icon(Icons.monetization_on)),
           _button(
               onPressed: _navigatorClassesTypeMainPage,
-              title: Strings.CLASSES_TYPE.toLowerCase(),
+              title: AppStrings.CLASSES_TYPE.toLowerCase(),
               icon: const Icon(Icons.title)),
           _button(
               onPressed: _navigateGroupsMainPage,
-              title: Strings.GROUPS.toLowerCase(),
+              title: AppStrings.GROUPS.toLowerCase(),
               icon: const Icon(Icons.group)),
           _button(
               onPressed: _navigatorClassesMainPage,
-              title: Strings.CLASSES.toLowerCase(),
+              title: AppStrings.CLASSES.toLowerCase(),
               icon: const Icon(Icons.developer_board)),
           _button(
               onPressed: _navigateToPhoneBook,
-              title: Strings.PHONES.toLowerCase(),
+              title: AppStrings.PHONES.toLowerCase(),
               icon: const Icon(Icons.book)),
           _button(
               onPressed: _navigateToCreateClassesNewVersion,
@@ -78,7 +78,7 @@ class _StartPageViewView extends State<StartPageView> {
                 TextButton(
                     onPressed: _navigateToAboutPage,
                     child: const Text(
-                      Strings.ABOUT,
+                      AppStrings.ABOUT,
                       style: TextStyle(color: Colors.white),
                     )),
               ],

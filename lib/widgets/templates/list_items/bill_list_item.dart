@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/bill.dart';
 
@@ -28,12 +28,12 @@ class _BillListItem extends State<BillListItem> {
       actionPane: const SlidableDrawerActionPane(),
       secondaryActions: [
         !widget.bill.isPaid ? IconSlideAction(
-            caption: Strings.PAID,
+            caption: AppStrings.PAID,
             color: Colors.green,
             icon: Icons.check,
             onTap: _setIsPaidInDatabase) :
         IconSlideAction(
-            caption: Strings.UNPAID,
+            caption: AppStrings.UNPAID,
             color: Colors.orange,
             icon: Icons.close_outlined,
             onTap: _setIsUnpaidInDatabase),
@@ -55,7 +55,7 @@ class _BillListItem extends State<BillListItem> {
                 children: [
                   Text(formatDate(
                       widget.bill.attendance.target!.classes.target!.dateTime)),
-                  Text('${widget.bill.price.toString()}${Strings.CURRENCY}'),
+                  Text('${widget.bill.price.toString()}${AppStrings.CURRENCY}'),
                   Text(widget.bill.attendance.target!.classes.target!.group
                       .target!.name),
                 ],

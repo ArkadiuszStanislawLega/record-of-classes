@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/phone.dart';
 import 'package:record_of_classes/widgets/templates/create/create_phone_template.dart';
@@ -26,14 +26,14 @@ class _EditPhonePage extends State<EditPhonePage> {
     );
     return Scaffold(
       appBar: AppBar(
-        title: Text('${Strings.EDIT} ${Strings.CONTACT.toLowerCase()}'),
+        title: Text('${AppStrings.EDIT} ${AppStrings.CONTACT.toLowerCase()}'),
       ),
       body: Column(
         children: [
           _createPhoneTemplate,
           TextButton(
             onPressed: () => _actionAfterConfirmButtonClick(context),
-            child: const Text(Strings.OK),
+            child: const Text(AppStrings.OK),
           )
         ],
       ),
@@ -50,11 +50,11 @@ class _EditPhonePage extends State<EditPhonePage> {
       SnackBarInfoTemplate(
           context: context,
           message:
-              '${Strings.EDITED} ${Strings.CONTACT.toLowerCase()}: ${_createPhoneTemplate.getPhone().owner.target!.introduceYourself()}');
+              '${AppStrings.EDITED} ${AppStrings.CONTACT.toLowerCase()}: ${_createPhoneTemplate.getPhone().owner.target!.introduceYourself()}');
       Navigator.pop(context);
     } else {
       SnackBarInfoTemplate(
-          context: context, message: Strings.ERROR_MESSAGE_CHECK_FIELDS_FILL);
+          context: context, message: AppStrings.ERROR_MESSAGE_CHECK_FIELDS_FILL);
     }
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/classes.dart';
 import 'package:record_of_classes/models/group.dart';
@@ -29,8 +29,8 @@ class _AddClassesToGroup extends State<AddClassesToGroup> {
   @override
   Widget build(BuildContext context) {
     _args = ModalRoute.of(context)!.settings.arguments as Map;
-    widget._group = _args[Strings.GROUP];
-    _addClasses = _args[Strings.FUNCTION];
+    widget._group = _args[AppStrings.GROUP];
+    _addClasses = _args[AppStrings.FUNCTION];
     return Scaffold(
       appBar: AppBar(
         title: Text(widget._group.name),
@@ -40,7 +40,7 @@ class _AddClassesToGroup extends State<AddClassesToGroup> {
         child: Column(
           children: [
             const Text(
-              Strings.CHOSE_DATE_OF_CLASSES,
+              AppStrings.CHOSE_DATE_OF_CLASSES,
               style: TextStyle(fontSize: 17),
             ),
             Row(
@@ -59,7 +59,7 @@ class _AddClassesToGroup extends State<AddClassesToGroup> {
                     }, currentTime: DateTime.now(), locale: LocaleType.pl);
                   },
                   child: const Text(
-                    Strings.CHOSE_DATE,
+                    AppStrings.CHOSE_DATE,
                     style: TextStyle(color: Colors.blue),
                   ),
                 ),
@@ -78,7 +78,7 @@ class _AddClassesToGroup extends State<AddClassesToGroup> {
                     }, currentTime: DateTime.now());
                   },
                   child: const Text(
-                    Strings.CHOSE_TIME,
+                    AppStrings.CHOSE_TIME,
                     style: TextStyle(color: Colors.blue),
                   ),
                 ),
@@ -92,7 +92,7 @@ class _AddClassesToGroup extends State<AddClassesToGroup> {
               ],
             ),
             TextButton(
-                onPressed: _addToDatabase, child: const Text(Strings.ADD))
+                onPressed: _addToDatabase, child: const Text(AppStrings.ADD))
           ],
         ),
       ),
@@ -105,7 +105,7 @@ class _AddClassesToGroup extends State<AddClassesToGroup> {
       SnackBarInfoTemplate(
           context: context,
           message:
-          '${Strings.CREATED_NEW_CLASSES} ${Strings.IN_DAY} ${formatDate(widget.getClasses().dateTime)}');
+          '${AppStrings.CREATED_NEW_CLASSES} ${AppStrings.IN_DAY} ${formatDate(widget.getClasses().dateTime)}');
     });
     Navigator.pop(context);
   }

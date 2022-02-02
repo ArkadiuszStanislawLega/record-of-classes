@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/constants/app_urls.dart';
-import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/group.dart';
 import 'package:record_of_classes/models/student.dart';
@@ -77,7 +77,7 @@ class _AddStudentToGroupPageState extends State<AddStudentToGroupPage> {
       actionPane: const SlidableDrawerActionPane(),
       secondaryActions: [
         IconSlideAction(
-          caption: Strings.ADD,
+          caption: AppStrings.ADD,
           color: Colors.green,
           icon: Icons.add,
           onTap: () => _updateDatabase(student),
@@ -93,7 +93,7 @@ class _AddStudentToGroupPageState extends State<AddStudentToGroupPage> {
       onTap: () => Navigator.pushNamed(
         context,
         AppUrls.DETAIL_STUDENT,
-        arguments: {Strings.STUDENT: student},
+        arguments: {AppStrings.STUDENT: student},
       ),
     );
   }

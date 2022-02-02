@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/models/person.dart';
 import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/widgets/templates/snack_bar_info_template.dart';
@@ -25,8 +25,8 @@ class _EditStudentPage extends State<EditStudentPage> {
   @override
   Widget build(BuildContext context) {
     _args = ModalRoute.of(context)!.settings.arguments as Map;
-    _student = _args[Strings.STUDENT];
-    _updateStudentInDb = _args[Strings.FUNCTION];
+    _student = _args[AppStrings.STUDENT];
+    _updateStudentInDb = _args[AppStrings.FUNCTION];
     _person = _student.person.target!;
     return Scaffold(
         appBar: AppBar(
@@ -42,7 +42,7 @@ class _EditStudentPage extends State<EditStudentPage> {
       children: [
         TextField(
           decoration: InputDecoration(
-            hintText: _person.name == '' ? Strings.NAME : _person.name,
+            hintText: _person.name == '' ? AppStrings.NAME : _person.name,
           ),
           onChanged: (userInput) {
             _personName = userInput;
@@ -50,7 +50,7 @@ class _EditStudentPage extends State<EditStudentPage> {
         ),
         TextField(
           decoration: InputDecoration(
-            hintText: _person.surname == '' ? Strings.SURNAME : _person.surname,
+            hintText: _person.surname == '' ? AppStrings.SURNAME : _person.surname,
           ),
           onChanged: (userInput) {
             _personSurname = userInput;
@@ -62,7 +62,7 @@ class _EditStudentPage extends State<EditStudentPage> {
             },
             decoration: InputDecoration(
               hintText:
-                  _student.age == 0 ? Strings.AGE : _student.age.toString(),
+                  _student.age == 0 ? AppStrings.AGE : _student.age.toString(),
             ),
             keyboardType: TextInputType.number,
             inputFormatters: <TextInputFormatter>[
@@ -71,7 +71,7 @@ class _EditStudentPage extends State<EditStudentPage> {
         Center(
           child: TextButton(
             onPressed: confirmEditChanges,
-            child: const Text(Strings.OK),
+            child: const Text(AppStrings.OK),
           ),
         ),
       ],
@@ -107,11 +107,11 @@ class _EditStudentPage extends State<EditStudentPage> {
       SnackBarInfoTemplate(
           context: context,
           message:
-              '${Strings.SUCCESFULLY_UPDATED_STUDENT} ${_student.introduceYourself()}');
+              '${AppStrings.SUCCESFULLY_UPDATED_STUDENT} ${_student.introduceYourself()}');
       Navigator.pop(context);
     } else {
       SnackBarInfoTemplate(
-          context: context, message: Strings.ERROR_MESSAGE_CHECK_FIELDS_FILL);
+          context: context, message: AppStrings.ERROR_MESSAGE_CHECK_FIELDS_FILL);
     }
   }
 }

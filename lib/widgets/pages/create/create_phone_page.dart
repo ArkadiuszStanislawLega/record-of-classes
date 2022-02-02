@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/parent.dart';
 import 'package:record_of_classes/models/phone.dart';
@@ -25,14 +25,14 @@ class _CreatePhonePage extends State<CreatePhonePage> {
     _parent = ModalRoute.of(context)!.settings.arguments as Parent;
     return Scaffold(
       appBar: AppBar(
-        title: const Text(Strings.CREATE_CONTACT),
+        title: const Text(AppStrings.CREATE_CONTACT),
       ),
       body: Column(
         children: [
           _createPhoneTemplate,
           TextButton(
             onPressed: () => _actionAfterClickAddButton(context),
-            child: const Text(Strings.ADD),
+            child: const Text(AppStrings.ADD),
           ),
         ],
       ),
@@ -44,7 +44,7 @@ class _CreatePhonePage extends State<CreatePhonePage> {
     SnackBarInfoTemplate(
         context: context,
         message:
-            '${Strings.ADDED_NEW_CONTACT} ${Strings.TO} ${_parent.introduceYourself()}');
+            '${AppStrings.ADDED_NEW_CONTACT} ${AppStrings.TO} ${_parent.introduceYourself()}');
     Navigator.pop(context);
   }
 

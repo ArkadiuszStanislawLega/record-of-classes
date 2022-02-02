@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/enumerators/PersonType.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/phone.dart';
@@ -83,15 +83,15 @@ class _PhoneBookPageState extends State<PhoneBookPage> {
                   _filteringList(input);
                 },
                 decoration: const InputDecoration(
-                  hintText: Strings.FIND_CONTACT,
+                  hintText: AppStrings.FIND_CONTACT,
                 ),
               ),
             ),
             _pageNavigationButton(
-                title: Strings.ALPHABETIC_ASCENDING,
+                title: AppStrings.ALPHABETIC_ASCENDING,
                 filtering: PhonesFiltering.alphabeticalAscending),
             _pageNavigationButton(
-                title: Strings.ALPHABETIC_DESCENDING,
+                title: AppStrings.ALPHABETIC_DESCENDING,
                 filtering: PhonesFiltering.alphabeticalDescending),
           ],
         ),
@@ -196,20 +196,20 @@ class _PhoneBookPageState extends State<PhoneBookPage> {
             Container(
               padding: const EdgeInsets.all(16.0),
               child: const Text(
-                Strings.PHONE_BOOK,
+                AppStrings.PHONE_BOOK,
                 style: TextStyle(fontSize: 25, color: Colors.white),
               ),
             ),
             OneRowPropertyTemplate(
-              title: '${Strings.NUMBER_OF_PHONES}:',
+              title: '${AppStrings.NUMBER_OF_PHONES}:',
               value: '${_phones.length}',
             ),
             OneRowPropertyTemplate(
-              title: '${Strings.NUMBER_OF_STUDENTS_CONTACTS}:',
+              title: '${AppStrings.NUMBER_OF_STUDENTS_CONTACTS}:',
               value: '${_numberOfStudentsContacts()}',
             ),
             OneRowPropertyTemplate(
-              title: '${Strings.NUMBER_OF_PARENTS_CONTACTS}:',
+              title: '${AppStrings.NUMBER_OF_PARENTS_CONTACTS}:',
               value: '${_numberOfParentsContacts()}',
             ),
           ],

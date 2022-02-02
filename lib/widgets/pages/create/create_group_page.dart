@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/classes_type.dart';
 import 'package:record_of_classes/widgets/templates/create/create_group_template.dart';
@@ -22,14 +22,14 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('${_classesType.name} - ${Strings.ADD_GROUP}'),
+        title: Text('${_classesType.name} - ${AppStrings.ADD_GROUP}'),
       ),
       body: Column(
         children: [
           _createGroupTemplate,
           TextButton(
             onPressed: _addToDatabase,
-            child: const Text(Strings.ADD_GROUP),
+            child: const Text(AppStrings.ADD_GROUP),
           ),
         ],
       ),
@@ -48,7 +48,7 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
 
     SnackBarInfoTemplate(
         context: context,
-        message: '${Strings.SUCCESFULLY_ADDED} ${Strings.NEW_GROUP}');
+        message: '${AppStrings.SUCCESFULLY_ADDED} ${AppStrings.NEW_GROUP}');
 
     Navigator.pop(context);
   }

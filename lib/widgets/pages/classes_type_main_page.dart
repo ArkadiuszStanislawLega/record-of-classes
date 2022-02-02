@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:record_of_classes/constants/app_urls.dart';
-import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/classes_type.dart';
 import 'package:record_of_classes/widgets/templates/list_items/classes_type_list_item.dart';
@@ -97,11 +97,11 @@ class _ClassesTypeMainPageState extends State<ClassesTypeMainPage> {
                 child: Column(
                   children: [
                     const Text(
-                      Strings.MANAGE_CLASS_TYPES,
+                      AppStrings.MANAGE_CLASS_TYPES,
                       style: TextStyle(fontSize: 25, color: Colors.white),
                     ),
                     OneRowPropertyTemplate(
-                      title: '${Strings.NUMBER_OF_CLASS_TYPES}:',
+                      title: '${AppStrings.NUMBER_OF_CLASS_TYPES}:',
                       value: _classesTypes.length.toString(),
                     ),
                   ],

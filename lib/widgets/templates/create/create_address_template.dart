@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/models/address.dart';
 
 class CreateAddressTemplate extends StatefulWidget {
@@ -48,7 +48,7 @@ class _CreateAddressTemplateState extends State<CreateAddressTemplate> {
           controller: widget._cityController,
           decoration: InputDecoration(
               hintText: widget.address == null
-                  ? Strings.CITY
+                  ? AppStrings.CITY
                   : widget.address!.city),
           onChanged: (String str) =>
           str.isNotEmpty ? widget._inputCity = str : {},
@@ -57,7 +57,7 @@ class _CreateAddressTemplateState extends State<CreateAddressTemplate> {
           controller: widget._streetController,
           decoration: InputDecoration(
               hintText: widget.address == null
-                  ? Strings.STREET
+                  ? AppStrings.STREET
                   : widget.address!.street),
           onChanged: (String str) =>
               str.isNotEmpty ? widget._inputStreet = str : {},
@@ -66,7 +66,7 @@ class _CreateAddressTemplateState extends State<CreateAddressTemplate> {
           controller: widget._houseNumberController,
           decoration: InputDecoration(
               hintText: widget.address == null
-                  ? Strings.HOUSE_NUMBER
+                  ? AppStrings.HOUSE_NUMBER
                   : widget.address!.houseNumber),
           onChanged: (String str) =>
               str.isNotEmpty ? widget._inputHouseNumber = str : {},
@@ -75,7 +75,7 @@ class _CreateAddressTemplateState extends State<CreateAddressTemplate> {
           controller: widget._flatNumberController,
           decoration: InputDecoration(
               hintText: widget.address == null
-                  ? Strings.FLAT_NUMBER
+                  ? AppStrings.FLAT_NUMBER
                   : widget.address!.flatNumber),
           onChanged: (String str) =>
               str.isNotEmpty ? widget._inputFlatNumber = str : {},

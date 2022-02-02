@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:objectbox/objectbox.dart';
-import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/account.dart';
 import 'package:record_of_classes/models/attendance.dart';
@@ -34,7 +34,7 @@ class _StudentsListItemTemplate extends State<StudentsListItemTemplate> {
           actionPane: const SlidableDrawerActionPane(),
           secondaryActions: [
             IconSlideAction(
-                caption: Strings.DELETE,
+                caption: AppStrings.DELETE,
                 color: Colors.red,
                 icon: Icons.delete,
                 onTap: () => _removeFromDatabase(context)),
@@ -49,6 +49,6 @@ class _StudentsListItemTemplate extends State<StudentsListItemTemplate> {
     SnackBarInfoTemplate(
         context: context,
         message:
-            '${Strings.DELETED_STUDENT}: ${widget.student.introduceYourself()}');
+            '${AppStrings.DELETED_STUDENT}: ${widget.student.introduceYourself()}');
   }
 }

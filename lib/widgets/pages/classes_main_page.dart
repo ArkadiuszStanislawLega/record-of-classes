@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:objectbox/objectbox.dart';
-import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/classes.dart';
 import 'package:record_of_classes/widgets/templates/list_items/classes_list_item_template.dart';
@@ -112,12 +112,12 @@ class _ClassesMainPageState extends State<ClassesMainPage> {
             Container(
               padding: const EdgeInsets.all(16.0),
               child: const Text(
-                Strings.MANAGE_CLASSES,
+                AppStrings.MANAGE_CLASSES,
                 style: TextStyle(fontSize: 25, color: Colors.white),
               ),
             ),
             OneRowPropertyTemplate(
-              title: '${Strings.NUMBER_OF_CLASSES}:',
+              title: '${AppStrings.NUMBER_OF_CLASSES}:',
               value: _classesList.length.toString(),
             ),
           ],

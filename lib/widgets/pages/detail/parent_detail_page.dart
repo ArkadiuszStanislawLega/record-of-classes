@@ -3,7 +3,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/constants/app_urls.dart';
-import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/parent.dart';
 import 'package:record_of_classes/models/phone.dart';
@@ -39,12 +39,12 @@ class _ParentDetailPage extends State<ParentDetailPage> {
           children: [
             SpeedDialChild(
                 child: const Icon(Icons.phone),
-                label: Strings.ADD_CONTACT,
+                label: AppStrings.ADD_CONTACT,
                 backgroundColor: Colors.amberAccent,
                 onTap: _navigateToAddPhone),
             SpeedDialChild(
                 child: const Icon(Icons.edit),
-                label: Strings.EDIT,
+                label: AppStrings.EDIT,
                 backgroundColor: Colors.amberAccent,
                 onTap: _navigateToEditParent),
           ],
@@ -73,9 +73,9 @@ class _ParentDetailPage extends State<ParentDetailPage> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             _pageNavigationButton(
-                title: Strings.CONTACTS, page: ListsOnPages.contacts),
+                title: AppStrings.CONTACTS, page: ListsOnPages.contacts),
             _pageNavigationButton(
-                title: Strings.CHILDREN, page: ListsOnPages.children),
+                title: AppStrings.CHILDREN, page: ListsOnPages.children),
           ],
         ),
       ),
@@ -157,7 +157,7 @@ class _ParentDetailPage extends State<ParentDetailPage> {
           child: ListTile(
             title: Text(_parent.children.elementAt(index).introduceYourself()),
             subtitle: Text(
-                '${Strings.TO_PAY}: ${_parent.children.elementAt(index).account.target!.countUnpaidBillsPrice()}${Strings.CURRENCY}'),
+                '${AppStrings.TO_PAY}: ${_parent.children.elementAt(index).account.target!.countUnpaidBillsPrice()}${AppStrings.CURRENCY}'),
           ),
         ),
         childCount: _parent.children.length,
@@ -188,8 +188,8 @@ class _ParentDetailPage extends State<ParentDetailPage> {
           children: [
             _pageTitleContainer(),
             OneRowPropertyTemplate(
-              title: '${Strings.TO_PAY}:',
-              value: '$toPay${Strings.CURRENCY}',
+              title: '${AppStrings.TO_PAY}:',
+              value: '$toPay${AppStrings.CURRENCY}',
             ),
           ],
         ),
@@ -221,7 +221,7 @@ class _ParentDetailPage extends State<ParentDetailPage> {
         actionPane: const SlidableDrawerActionPane(),
         secondaryActions: [
           IconSlideAction(
-              caption: Strings.DELETE,
+              caption: AppStrings.DELETE,
               color: Colors.red,
               icon: Icons.delete,
               onTap: () {

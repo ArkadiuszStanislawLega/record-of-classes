@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/constants/app_urls.dart';
-import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/parent.dart';
 import 'package:record_of_classes/models/student.dart';
@@ -23,7 +23,7 @@ class ParentOfStudentListItemTemplate extends StatelessWidget {
         actionPane: const SlidableDrawerActionPane(),
         secondaryActions: [
           IconSlideAction(
-              caption: Strings.DISCONNECT,
+              caption: AppStrings.DISCONNECT,
               color: Colors.deepOrange,
               icon: Icons.remove,
               onTap: () {
@@ -41,7 +41,7 @@ class ParentOfStudentListItemTemplate extends StatelessWidget {
           child: ListTile(
             title: Text(parent.introduceYourself()),
             subtitle: Text(
-                '${Strings.NUMBER_OF_CHILDREN}: ${parent.children.length.toString()}'),
+                '${AppStrings.NUMBER_OF_CHILDREN}: ${parent.children.length.toString()}'),
             onTap: () {
               Navigator.pushNamed(context, AppUrls.DETAIL_PARENT,
                   arguments: parent);
@@ -56,5 +56,5 @@ class ParentOfStudentListItemTemplate extends StatelessWidget {
   void showInformationSnackBar(BuildContext context) => SnackBarInfoTemplate(
       context: context,
       message:
-          '${parent.introduceYourself()} ${Strings.AND} ${student.introduceYourself()} ${Strings.THEY_ARENT_FAMILY}');
+          '${parent.introduceYourself()} ${AppStrings.AND} ${student.introduceYourself()} ${AppStrings.THEY_ARENT_FAMILY}');
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/bill.dart';
 import 'package:record_of_classes/widgets/templates/list_items/bill_list_item.dart';
@@ -121,16 +121,16 @@ class _FinanceMainPageState extends State<FinanceMainPage> {
             Container(
               padding: const EdgeInsets.all(16.0),
               child: const Text(
-                Strings.MANAGE_FINANCES,
+                AppStrings.MANAGE_FINANCES,
                 style: TextStyle(fontSize: 25, color: Colors.white),
               ),
             ),
-            _oneRow('${Strings.PAID_CLASSES}:', _paid.length.toString()),
-            _oneRow('${Strings.UNPAID_CLASSES}:', _unpaid.length.toString()),
-            _oneRow('${Strings.TOTAL_PAID}:',
-                '${_paidPrice.toStringAsFixed(2)} ${Strings.CURRENCY}'),
-            _oneRow('${Strings.TOTAL_UNPAID}:',
-                '${_unpaidPrice.toStringAsFixed(2)} ${Strings.CURRENCY}'),
+            _oneRow('${AppStrings.PAID_CLASSES}:', _paid.length.toString()),
+            _oneRow('${AppStrings.UNPAID_CLASSES}:', _unpaid.length.toString()),
+            _oneRow('${AppStrings.TOTAL_PAID}:',
+                '${_paidPrice.toStringAsFixed(2)} ${AppStrings.CURRENCY}'),
+            _oneRow('${AppStrings.TOTAL_UNPAID}:',
+                '${_unpaidPrice.toStringAsFixed(2)} ${AppStrings.CURRENCY}'),
           ],
         ),
       ),

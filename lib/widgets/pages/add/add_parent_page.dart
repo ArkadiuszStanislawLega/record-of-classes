@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:record_of_classes/constants/app_urls.dart';
-import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/parent.dart';
 import 'package:record_of_classes/models/student.dart';
@@ -38,9 +38,9 @@ class _CreateParentPage extends State<AddParentPage> {
   @override
   Widget build(BuildContext context) {
     _args = ModalRoute.of(context)!.settings.arguments as Map;
-    _selectedStudent = _args[Strings.STUDENT];
-    _addFunction = _args[Strings.ADD_FUNCTION];
-    _removeFunction = _args[Strings.REMOVE_FUNCTION];
+    _selectedStudent = _args[AppStrings.STUDENT];
+    _addFunction = _args[AppStrings.ADD_FUNCTION];
+    _removeFunction = _args[AppStrings.REMOVE_FUNCTION];
 
     return StreamBuilder<List<Parent>>(
       stream: _parentsStream,

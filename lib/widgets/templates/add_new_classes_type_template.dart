@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/models/classes_type.dart';
 
 class AddNewClassesTypeTemplate extends StatefulWidget {
@@ -53,7 +53,7 @@ class _AddNewClassesTypeTemplateState extends State<AddNewClassesTypeTemplate> {
           controller: widget._nameOfClassesController,
           decoration: InputDecoration(
               hintText: widget.classesType == null
-                  ? Strings.NAME_OF_CLASSES_TYPE
+                  ? AppStrings.NAME_OF_CLASSES_TYPE
                   : widget.classesType!.name),
           onChanged: (String str) =>
               str.isNotEmpty ? widget._inputClassTypeName = str : {},
@@ -63,7 +63,7 @@ class _AddNewClassesTypeTemplateState extends State<AddNewClassesTypeTemplate> {
           keyboardType: TextInputType.number,
           decoration: InputDecoration(
               hintText: widget.classesType == null
-                  ? Strings.PRICE_FOR_EACH
+                  ? AppStrings.PRICE_FOR_EACH
                   : widget.classesType!.priceForEach.toString()),
           onChanged: (String str) =>
               str.isNotEmpty ? widget._inputPriceForEach = str : {},
@@ -73,7 +73,7 @@ class _AddNewClassesTypeTemplateState extends State<AddNewClassesTypeTemplate> {
           keyboardType: TextInputType.number,
           decoration: InputDecoration(
               hintText: widget.classesType == null
-                  ? Strings.PRICE_FOR_MONTH
+                  ? AppStrings.PRICE_FOR_MONTH
                   : widget.classesType!.priceForMonth.toString()),
           onChanged: (String str) =>
               str.isNotEmpty ? widget._inputPriceForMonth = str : {},

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:objectbox/objectbox.dart';
-import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/parent.dart';
 import 'package:record_of_classes/models/person.dart';
@@ -29,13 +29,13 @@ class _EditParentPageState extends State<EditParentPage> {
     _parent = ModalRoute.of(context)!.settings.arguments as Parent;
     return Scaffold(
       appBar: AppBar(
-        title: const Text(Strings.ADD_CONTACT),
+        title: const Text(AppStrings.ADD_CONTACT),
       ),
       body: Column(
         children: [
           TextField(
             decoration: InputDecoration(
-              hintText: _parent.person.target!.name == '' ? Strings.NAME : _parent.person.target!.name,
+              hintText: _parent.person.target!.name == '' ? AppStrings.NAME : _parent.person.target!.name,
             ),
             onChanged: (userInput) {
               _parentName = userInput;
@@ -44,7 +44,7 @@ class _EditParentPageState extends State<EditParentPage> {
           TextField(
             decoration: InputDecoration(
               hintText:
-              _parent.person.target!.surname == '' ? Strings.SURNAME : _parent.person.target!.surname,
+              _parent.person.target!.surname == '' ? AppStrings.SURNAME : _parent.person.target!.surname,
             ),
             onChanged: (userInput) {
               _parentSurname = userInput;
@@ -52,7 +52,7 @@ class _EditParentPageState extends State<EditParentPage> {
           ),
           TextButton(
             onPressed: _confirmEditChanges,
-            child: const Text(Strings.OK),
+            child: const Text(AppStrings.OK),
           ),
         ],
       ),
@@ -63,7 +63,7 @@ class _EditParentPageState extends State<EditParentPage> {
   void _confirmEditChanges() {
     _setNewValues();
     _updateValueInDatabase();
-    SnackBarInfoTemplate(context: context, message: '${Strings.DATA_HAS_BEEN_UPDATED} ${_parent.introduceYourself()}');
+    SnackBarInfoTemplate(context: context, message: '${AppStrings.DATA_HAS_BEEN_UPDATED} ${_parent.introduceYourself()}');
     Navigator.pop(context);
   }
 

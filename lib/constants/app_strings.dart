@@ -1,4 +1,4 @@
-class Strings {
+class AppStrings {
   static const String NAME = 'Imię',
       SURNAME = 'Nazwisko',
       ALPHABETIC_ASCENDING = 'Alfabetycznie rosnąco',

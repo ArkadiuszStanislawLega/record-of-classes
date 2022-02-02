@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:list_treeview/tree/controller/tree_controller.dart';
 import 'package:list_treeview/tree/node/tree_node.dart';
 import 'package:list_treeview/tree/tree_view.dart';
-import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/constants/app_strings.dart';
+import 'package:record_of_classes/constants/app_urls.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/classes.dart';
 import 'package:record_of_classes/models/classes_type.dart';
@@ -47,7 +48,9 @@ class _CreateClassesNewVersionPageState
       _borderColor = Colors.grey,
       _addButtonBackground = Colors.green.shade500,
       _removeButtonBackground = Colors.red,
-      _iconForegroundColor = Colors.white;
+      _iconForegroundColor = Colors.white,
+      _navigateArrowBackground = Colors.grey,
+      _navigateButtonForeground = Colors.black;
 
   final double _itemsOffset = 15.0,
       _borderWidth = 1.0,
@@ -68,7 +71,7 @@ class _CreateClassesNewVersionPageState
     _studentsList = objectBox.store.box<Student>().getAll();
     return Scaffold(
       appBar: AppBar(
-        title: const Text(Strings.CREATED_NEW_CLASSES),
+        title: const Text(AppStrings.CREATED_NEW_CLASSES),
       ),
       body: StreamBuilder<List<ClassesType>>(
         stream: _classesType,
@@ -166,7 +169,10 @@ class _CreateClassesNewVersionPageState
 
   Widget _addAndRemoveButtons(TreeNodeData item) {
     return Column(
-      children: [_removeButton(item), _addButton(item)],
+      children: [
+        _removeButton(item),
+        _addButton(item),
+      ],
     );
   }
 
@@ -183,12 +189,13 @@ class _CreateClassesNewVersionPageState
         : const SizedBox();
   }
 
-  Card _icon(IconData icon, Color background) {
+  Card _icon(IconData icon, Color background,
+      {Color foreground = Colors.white}) {
     return Card(
       color: background,
       child: Icon(
         icon,
-        color: _iconForegroundColor,
+        color: foreground,
         size: _iconSize,
       ),
     );
@@ -214,24 +221,40 @@ class _CreateClassesNewVersionPageState
     return _classesTypeCard(
       Column(
         children: [
-          Container(
-            alignment: Alignment.center,
-            padding: EdgeInsets.only(top: _paddings, bottom: _paddings),
-            child: Text(
-              classesType.name,
-              style: TextStyle(
-                  fontWeight: FontWeight.bold, fontSize: _titleFontSize),
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                alignment: Alignment.center,
+                padding: EdgeInsets.only(top: _paddings, bottom: _paddings),
+                child: Text(
+                  classesType.name,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: _titleFontSize),
+                ),
+              ),
+              InkWell(
+                onTap: () => _navigateToClassTypeDetailPage(classesType),
+                child: _icon(
+                    Icons.arrow_forward_ios_sharp, _navigateArrowBackground,
+                    foreground: _navigateButtonForeground),
+              ),
+            ],
           ),
-          _propertyOnRow(Strings.PRICE_FOR_MONTH,
-              '${classesType.priceForMonth.toString()}${Strings.CURRENCY}'),
-          _propertyOnRow(Strings.PRICE_FOR_EACH,
-              '${classesType.priceForEach.toString()}${Strings.CURRENCY}'),
-          _propertyOnRow(
-              Strings.NUMBER_OF_GROUPS, classesType.groups.length.toString()),
+          _propertyOnRow(AppStrings.PRICE_FOR_MONTH,
+              '${classesType.priceForMonth.toString()}${AppStrings.CURRENCY}'),
+          _propertyOnRow(AppStrings.PRICE_FOR_EACH,
+              '${classesType.priceForEach.toString()}${AppStrings.CURRENCY}'),
+          _propertyOnRow(AppStrings.NUMBER_OF_GROUPS,
+              classesType.groups.length.toString()),
         ],
       ),
     );
+  }
+
+  void _navigateToClassTypeDetailPage(ClassesType classesType) {
+    Navigator.pushNamed(context, AppUrls.DETAIL_CLASSES_TYPE,
+        arguments: classesType);
   }
 
   Widget _classesTypeCard(Widget content) {
@@ -279,26 +302,40 @@ class _CreateClassesNewVersionPageState
     return _groupItemCard(
       Column(
         children: [
-          Container(
-            alignment: Alignment.center,
-            padding: EdgeInsets.only(top: _paddings, bottom: _paddings),
-            child: Text(
-              group.name,
-              style: TextStyle(
-                  fontWeight: FontWeight.bold, fontSize: _titleFontSize),
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                alignment: Alignment.center,
+                padding: EdgeInsets.only(top: _paddings, bottom: _paddings),
+                child: Text(
+                  group.name,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: _titleFontSize),
+                ),
+              ),
+              InkWell(
+                onTap: () => _navigateToGroupDetailPage(group),
+                child: _icon(
+                    Icons.arrow_forward_ios_sharp, _navigateArrowBackground,
+                    foreground: _navigateButtonForeground),
+              ),
+            ],
           ),
           Text(
             group.address.target!.toString(),
           ),
           _propertyOnRow(
-              Strings.NUMBER_OF_STUDENTS, group.students.length.toString()),
+              AppStrings.NUMBER_OF_STUDENTS, group.students.length.toString()),
           _propertyOnRow(
-              Strings.NUMBER_OF_CLASSES, group.classes.length.toString())
+              AppStrings.NUMBER_OF_CLASSES, group.classes.length.toString())
         ],
       ),
     );
   }
+
+  void _navigateToGroupDetailPage(Group group) =>
+      Navigator.pushNamed(context, AppUrls.DETAIL_GROUP, arguments: group);
 
   Widget _groupItem(Group group) {
     return _groupItemCard(
@@ -337,16 +374,27 @@ class _CreateClassesNewVersionPageState
         width: MediaQuery.of(context).size.width - _classesWidth,
         child: Column(
           children: [
-            Container(
-              padding: EdgeInsets.all(_paddings),
-              child: Text(
-                '${formatDate(classes.dateTime)} ${formatTime(classes.dateTime)}',
-                style: TextStyle(
-                    fontSize: _titleFontSize, fontWeight: FontWeight.bold),
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  padding: EdgeInsets.all(_paddings),
+                  child: Text(
+                    '${formatDate(classes.dateTime)} ${formatTime(classes.dateTime)}',
+                    style: TextStyle(
+                        fontSize: _titleFontSize, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                InkWell(
+                  onTap: () => _navigateToClassesDetailPage(classes),
+                  child: _icon(
+                      Icons.arrow_forward_ios_sharp, _navigateArrowBackground,
+                      foreground: _navigateButtonForeground),
+                ),
+              ],
             ),
             _propertyOnRow(
-              Strings.PRESENTS_AT_THE_CLASSSES,
+              AppStrings.PRESENTS_AT_THE_CLASSSES,
               classes.presentStudentsNum.toString(),
             ),
             Column(
@@ -358,7 +406,8 @@ class _CreateClassesNewVersionPageState
     );
   }
 
-
+  void _navigateToClassesDetailPage(Classes classes) =>
+      Navigator.pushNamed(context, AppUrls.DETAIL_CLASSES, arguments: classes);
 
   Widget _getItem(TreeNodeData data, {bool isExpanded = false}) {
     if (data.object != null) {

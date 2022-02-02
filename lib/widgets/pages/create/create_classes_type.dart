@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/classes_type.dart';
 import 'package:record_of_classes/models/teacher.dart';
@@ -17,14 +17,14 @@ class CreateClassesTypePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(Strings.ADD_CLASSES_TYPE),
+        title: const Text(AppStrings.ADD_CLASSES_TYPE),
       ),
       body: Column(
         children: [
           _addNewClassesTypeTemplate,
           TextButton(
             onPressed: () => _confirmButtonOnClickActions(context),
-            child: const Text(Strings.ADD_CLASSES_TYPE),
+            child: const Text(AppStrings.ADD_CLASSES_TYPE),
           ),
         ],
       ),
@@ -40,11 +40,11 @@ class CreateClassesTypePage extends StatelessWidget {
       SnackBarInfoTemplate(
           context: context,
           message:
-              '${Strings.CREATED_NEW_CLASS_TYPE}: ${_createdClassType.name}');
+              '${AppStrings.CREATED_NEW_CLASS_TYPE}: ${_createdClassType.name}');
       Navigator.pop(context);
     } else {
       SnackBarInfoTemplate(
-          context: context, message: Strings.ERROR_MESSAGE_CHECK_FIELDS_FILL);
+          context: context, message: AppStrings.ERROR_MESSAGE_CHECK_FIELDS_FILL);
     }
   }
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/constants/app_urls.dart';
-import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/group.dart';
 import 'package:record_of_classes/widgets/templates/snack_bar_info_template.dart';
@@ -24,7 +24,7 @@ class _GroupListItemTemplateState extends State<GroupListItemTemplate> {
       actionPane: const SlidableDrawerActionPane(),
       secondaryActions: [
         IconSlideAction(
-          caption: Strings.DELETE,
+          caption: AppStrings.DELETE,
           color: Colors.red,
           icon: Icons.delete,
           onTap: () {
@@ -39,7 +39,7 @@ class _GroupListItemTemplateState extends State<GroupListItemTemplate> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-                '${Strings.PERSONS_IN_GROUP}: ${widget.group.students.length.toString()}'),
+                '${AppStrings.PERSONS_IN_GROUP}: ${widget.group.students.length.toString()}'),
             Text(widget.group.address.target.toString())
           ],
         ),
@@ -60,5 +60,5 @@ class _GroupListItemTemplateState extends State<GroupListItemTemplate> {
   void _showInfo(BuildContext context) => SnackBarInfoTemplate(
       context: context,
       message:
-          '${Strings.GROUP_OF_CLASSES}: ${widget.group.name} - ${Strings.REMOVED}!');
+          '${AppStrings.GROUP_OF_CLASSES}: ${widget.group.name} - ${AppStrings.REMOVED}!');
 }

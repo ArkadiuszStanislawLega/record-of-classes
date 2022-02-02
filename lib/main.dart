@@ -200,7 +200,7 @@ String formatTime(DateTime dateTime) {
       minutes = dateTime.minute,
       seconds = dateTime.second;
 
-  return '${hour < 10 ? '0${hour}' : hour} :${minutes < 10 ? '0${minutes}' : minutes}';
+  return '${hour < 10 ? '0${hour}' : hour}:${minutes < 10 ? '0${minutes}' : minutes}';
 }
 
 String formatDate(DateTime dateTime,{bool isTimeOn = false}) {

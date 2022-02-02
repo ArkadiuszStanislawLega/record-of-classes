@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/group.dart';
 import 'package:record_of_classes/widgets/templates/list_items/group_list_item_template.dart';
@@ -91,13 +91,13 @@ class _GroupsMainPageState extends State<GroupsMainPage> {
             Container(
               padding: const EdgeInsets.all(16.0),
               child: const Text(
-                Strings.MANAGE_GROUPS,
+                AppStrings.MANAGE_GROUPS,
                 style: TextStyle(fontSize: 25, color: Colors.white),
               ),
 
             ),
             OneRowPropertyTemplate(
-              title: '${Strings.NUMBER_OF_GROUPS}:',
+              title: '${AppStrings.NUMBER_OF_GROUPS}:',
               value: '${_groupsList.length}',
             ),
           ],

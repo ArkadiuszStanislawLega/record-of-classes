@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:objectbox/objectbox.dart';
-import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/widgets/templates/snack_bar_info_template.dart';
@@ -21,7 +21,7 @@ class SiblingsListItemTemplate extends StatelessWidget {
           actionPane: const SlidableDrawerActionPane(),
           secondaryActions: [
             IconSlideAction(
-              caption: Strings.ADD,
+              caption: AppStrings.ADD,
               color: Colors.green,
               icon: Icons.add,
               onTap: () {
@@ -42,6 +42,6 @@ class SiblingsListItemTemplate extends StatelessWidget {
     var siblingValues = sibling.person.target!.introduceYourself();
     var studentValues = student.person.target!.introduceYourself();
 
-    SnackBarInfoTemplate(context: context, message: '$siblingValues ${Strings.AND} $studentValues ${Strings.THEY_ARE_SIBLINGS}!');
+    SnackBarInfoTemplate(context: context, message: '$siblingValues ${AppStrings.AND} $studentValues ${AppStrings.THEY_ARE_SIBLINGS}!');
   }
 }

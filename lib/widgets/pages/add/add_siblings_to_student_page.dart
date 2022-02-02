@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/widgets/templates/list_items/siblings_list_item_template.dart';
@@ -22,12 +22,12 @@ class _AddSiblingsPage extends State<AddSiblingsToStudentPage> {
   @override
   Widget build(BuildContext context) {
     _args =  ModalRoute.of(context)!.settings.arguments as Map;
-    _student = _args[Strings.STUDENT];
-    _addSiblingsToDb = _args[Strings.FUNCTION];
+    _student = _args[AppStrings.STUDENT];
+    _addSiblingsToDb = _args[AppStrings.FUNCTION];
 
     return Scaffold(
       appBar: AppBar(
-          title: Text('${Strings.ADD_SIBLING} ${_student.introduceYourself()}'),),
+          title: Text('${AppStrings.ADD_SIBLING} ${_student.introduceYourself()}'),),
       body: StreamBuilder<List<Student>>(
         stream: _studentsStream,
         builder: (context, snapshot) {

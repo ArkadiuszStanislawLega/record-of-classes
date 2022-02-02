@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:record_of_classes/constants/app_urls.dart';
-import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/models/student.dart';
 
 class StudentListTileTemplate extends StatefulWidget {
@@ -25,7 +25,7 @@ class _StudentListTileTemplateState extends State<StudentListTileTemplate> {
       elevation: 7,
       child: ListTile(
         title: Text(widget.student.introduceYourself()),
-        subtitle: Text('${Strings.YEARS}: ${widget.student.age.toString()}'),
+        subtitle: Text('${AppStrings.YEARS}: ${widget.student.age.toString()}'),
         onTap: _navigateToStudentProfile,
       ),
     );
@@ -33,6 +33,6 @@ class _StudentListTileTemplateState extends State<StudentListTileTemplate> {
 
   void _navigateToStudentProfile() =>
       Navigator.pushNamed(context, AppUrls.DETAIL_STUDENT,
-          arguments: {Strings.STUDENT : widget.student,
-          Strings.FUNCTION : widget.updatingFunction});
+          arguments: {AppStrings.STUDENT : widget.student,
+          AppStrings.FUNCTION : widget.updatingFunction});
 }

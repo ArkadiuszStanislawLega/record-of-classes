@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:record_of_classes/constants/app_urls.dart';
-import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/classes.dart';
 import 'package:record_of_classes/models/group.dart';
@@ -48,17 +48,17 @@ class _DetailGroupPageState extends State<DetailGroupPage> {
               children: [
                 SpeedDialChild(
                     child: const Icon(Icons.person),
-                    label: Strings.ADD_PARTICIPANTS,
+                    label: AppStrings.ADD_PARTICIPANTS,
                     backgroundColor: Colors.amberAccent,
                     onTap: _navigateToAddStudent),
                 SpeedDialChild(
                     child: const Icon(Icons.class__outlined),
-                    label: Strings.ADD_CLASSES,
+                    label: AppStrings.ADD_CLASSES,
                     backgroundColor: Colors.amberAccent,
                     onTap: _navigateToAddClasses),
                 SpeedDialChild(
                     child: const Icon(Icons.edit),
-                    label: Strings.EDIT,
+                    label: AppStrings.EDIT,
                     backgroundColor: Colors.amberAccent,
                     onTap: _navigateToEditGroupPage),
               ],
@@ -73,7 +73,7 @@ class _DetailGroupPageState extends State<DetailGroupPage> {
 
   void _navigateToAddClasses() => Navigator.pushNamed(
       context, AppUrls.ADD_CLASSES_TO_GROUP,
-      arguments: {Strings.GROUP: group, Strings.FUNCTION: _addClassesToGroup});
+      arguments: {AppStrings.GROUP: group, AppStrings.FUNCTION: _addClassesToGroup});
 
   void _addClassesToGroup(Classes classes) {
     setState(() {
@@ -96,10 +96,10 @@ class _DetailGroupPageState extends State<DetailGroupPage> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             _pageNavigationButton(
-                title: Strings.LIST_OF_CLASSES_CONDUCTED,
+                title: AppStrings.LIST_OF_CLASSES_CONDUCTED,
                 listOnPage: ListOnPage.classes),
             _pageNavigationButton(
-                title: Strings.PARTICIPANTS,
+                title: AppStrings.PARTICIPANTS,
                 listOnPage: ListOnPage.participants),
           ],
         ),
@@ -210,16 +210,16 @@ class _DetailGroupPageState extends State<DetailGroupPage> {
           children: [
             _pageTitle(),
             OneRowPropertyTemplate(
-                title: Strings.CLASSES_TYPE,
+                title: AppStrings.CLASSES_TYPE,
                 value: group.classesType.target!.name),
             OneRowPropertyTemplate(
-                title: Strings.CLASSES_ADDRESS,
+                title: AppStrings.CLASSES_ADDRESS,
                 value: group.address.target.toString()),
             OneRowPropertyTemplate(
-                title: Strings.NUMBER_OF_STUDENTS,
+                title: AppStrings.NUMBER_OF_STUDENTS,
                 value: group.students.length.toString()),
             OneRowPropertyTemplate(
-                title: Strings.NUMBER_OF_CLASSES,
+                title: AppStrings.NUMBER_OF_CLASSES,
                 value: group.classes.length.toString()),
           ],
         ),
@@ -237,7 +237,7 @@ class _DetailGroupPageState extends State<DetailGroupPage> {
             style: const TextStyle(fontSize: 25, color: Colors.white),
           ),
           Text(
-            Strings.GROUP_OF_CLASSES.toLowerCase(),
+            AppStrings.GROUP_OF_CLASSES.toLowerCase(),
             style: const TextStyle(fontSize: 12, color: Colors.white),
           ),
         ],

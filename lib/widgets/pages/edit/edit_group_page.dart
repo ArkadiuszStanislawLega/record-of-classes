@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:record_of_classes/constants/strings.dart';
+import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/address.dart';
 import 'package:record_of_classes/models/group.dart';
@@ -23,14 +23,14 @@ class _EditGroupPageState extends State<EditGroupPage> {
     _createGroupTemplate = CreateGroupTemplate(group: _group);
     return Scaffold(
       appBar: AppBar(
-        title: Text('${Strings.EDIT} ${_group.name}'),
+        title: Text('${AppStrings.EDIT} ${_group.name}'),
       ),
       body: Column(
         children: [
           _createGroupTemplate,
           TextButton(
             onPressed: _createGroupButtonOnClickActions,
-            child: const Text(Strings.OK),
+            child: const Text(AppStrings.OK),
           ),
         ],
       ),
@@ -43,7 +43,7 @@ class _EditGroupPageState extends State<EditGroupPage> {
 
     SnackBarInfoTemplate(
         context: context,
-        message: '${Strings.DATA_HAS_BEEN_UPDATED} ${_group.name}');
+        message: '${AppStrings.DATA_HAS_BEEN_UPDATED} ${_group.name}');
     Navigator.pop(context);
   }
 
