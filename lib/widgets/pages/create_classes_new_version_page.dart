@@ -14,6 +14,7 @@ import 'package:record_of_classes/widgets/templates/classes_type_item_template.d
 import 'package:record_of_classes/widgets/templates/classes_type_treeview_item.dart';
 import 'package:record_of_classes/widgets/templates/group_item_template.dart';
 import 'package:record_of_classes/widgets/templates/group_tree_view_item.dart';
+import 'package:record_of_classes/widgets/templates/group_tree_view_item_expanded.dart';
 import 'package:record_of_classes/widgets/templates/icon_in_card_template.dart';
 import 'package:record_of_classes/widgets/templates/item_content_template.dart';
 import 'package:record_of_classes/widgets/templates/item_title_template.dart';
@@ -53,28 +54,18 @@ class _CreateClassesNewVersionPageState
     12: Colors.teal.shade200
   };
 
-  final Color _classesTypeBackground = Colors.blueGrey.shade400,
-      _groupBackground = Colors.blueGrey.shade200,
+  final Color
       _borderColor = Colors.grey,
-      _addButtonBackground = Colors.green.shade500,
-      _removeButtonBackground = Colors.red,
-      _iconForegroundColor = Colors.white,
-      _navigateArrowBackground = Colors.orange,
       _navigateButtonForeground = Colors.white;
 
   final double _itemsOffset = 15.0,
       _borderWidth = 1.0,
-      _classesTypeWidth = 80.0,
-      _groupWidth = 95.0,
       _classesWidth = 100.0,
       _margins = 10.0,
       _paddings = 5.0,
       _cornerEdges = 10.0,
       _titleFontSize = 16,
-      _classesTypeElevation = 9.0,
-      _groupElevation = 6.0,
-      _classesElevation = 3.0,
-      _iconSize = 30.0;
+      _classesElevation = 3.0;
 
   @override
   Widget build(BuildContext context) {
@@ -210,52 +201,6 @@ class _CreateClassesNewVersionPageState
             icon: Icons.delete, background: AppColors.removeButtonBackground));
   }
 
-  Widget _groupItemExpanded(Group group) {
-    return GroupItemTemplate(content:
-      Column(
-        children: [_groupItemTitle(group), _groupItemContent(group)],
-      ),
-    );
-  }
-
-  Widget _groupItemTitle(Group group) {
-    return ItemTitleTemplate(
-      widgets: [
-        Text(
-          group.name,
-          style:
-              TextStyle(fontWeight: FontWeight.bold, fontSize: _titleFontSize),
-        ),
-        InkWell(
-          onTap: () => _navigateToGroupDetailPage(group),
-          child: IconInCardTemplate(
-              icon: Icons.arrow_forward_ios_sharp,
-              background: AppColors.navigateArrowBackground,
-              foreground: _navigateButtonForeground),
-        ),
-      ],
-    );
-  }
-
-  void _navigateToGroupDetailPage(Group group) =>
-      Navigator.pushNamed(context, AppUrls.DETAIL_GROUP, arguments: group);
-
-  Widget _groupItemContent(Group group) {
-    return ItemContentTemplate(
-      widgets: [
-        Text(
-          group.address.target!.toString(),
-        ),
-        PropertyInOneRow(
-            property: AppStrings.NUMBER_OF_STUDENTS,
-            value: group.students.length.toString()),
-        PropertyInOneRow(
-            property: AppStrings.NUMBER_OF_CLASSES,
-            value: group.classes.length.toString())
-      ],
-    );
-  }
-
   Widget _classesItem(Classes classes) {
     return Card(
       color: _colorsOfTheMonth[classes.dateTime.month],
@@ -335,7 +280,7 @@ class _CreateClassesNewVersionPageState
       }
       if (data.object is Group) {
         return isExpanded
-            ? _groupItemExpanded(data.object)
+            ? GroupTreeViewItemExpanded(group: data.object)
             : GroupTreeViewItem(group: data.object);
       }
       if (data.object is ClassesType) {
