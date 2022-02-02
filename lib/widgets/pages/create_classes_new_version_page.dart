@@ -3,6 +3,7 @@ import 'package:list_treeview/tree/controller/tree_controller.dart';
 import 'package:list_treeview/tree/node/tree_node.dart';
 import 'package:list_treeview/tree/tree_view.dart';
 import 'package:record_of_classes/constants/app_colours.dart';
+import 'package:record_of_classes/constants/app_doubles.dart';
 import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/constants/app_urls.dart';
 import 'package:record_of_classes/main.dart';
@@ -12,16 +13,11 @@ import 'package:record_of_classes/models/group.dart';
 import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/widgets/templates/classes_tree_view_item.dart';
 import 'package:record_of_classes/widgets/templates/classes_tree_view_item_expanded.dart';
-import 'package:record_of_classes/widgets/templates/classes_type_item_template.dart';
 import 'package:record_of_classes/widgets/templates/classes_type_treeview_item.dart';
-import 'package:record_of_classes/widgets/templates/group_item_template.dart';
 import 'package:record_of_classes/widgets/templates/group_tree_view_item.dart';
 import 'package:record_of_classes/widgets/templates/group_tree_view_item_expanded.dart';
 import 'package:record_of_classes/widgets/templates/icon_in_card_template.dart';
-import 'package:record_of_classes/widgets/templates/item_content_template.dart';
-import 'package:record_of_classes/widgets/templates/item_title_template.dart';
 import 'package:record_of_classes/widgets/templates/classes_type_tree_view_item_expanded.dart';
-import 'package:record_of_classes/widgets/templates/lists/property_in_one_row.dart';
 
 class CreateClassesNewVersionPage extends StatefulWidget {
   const CreateClassesNewVersionPage({Key? key}) : super(key: key);
@@ -34,34 +30,21 @@ class CreateClassesNewVersionPage extends StatefulWidget {
 class _CreateClassesNewVersionPageState
     extends State<CreateClassesNewVersionPage> {
   late TreeViewController _controller;
-  late Stream<List<ClassesType>> _classesType;
+  late Stream<List<ClassesType>> _classesTypeStream;
+  late TreeNodeData _selectedTreeNodeData;
 
   List<TreeNodeData> _elements = [];
-  List<Student> _studentsList = [];
 
-  DateTime selectedDate = DateTime.now(), selectedTime = DateTime.now();
-
-  final Color _borderColor = Colors.grey,
-      _navigateButtonForeground = Colors.white;
-
-  final double _itemsOffset = 15.0,
-      _borderWidth = 1.0,
-      _classesWidth = 100.0,
-      _margins = 10.0,
-      _paddings = 5.0,
-      _cornerEdges = 10.0,
-      _titleFontSize = 16,
-      _classesElevation = 3.0;
+  final double _itemsOffset = 15.0;
 
   @override
   Widget build(BuildContext context) {
-    _studentsList = objectBox.store.box<Student>().getAll();
     return Scaffold(
       appBar: AppBar(
         title: const Text(AppStrings.CREATED_NEW_CLASSES),
       ),
       body: StreamBuilder<List<ClassesType>>(
-        stream: _classesType,
+        stream: _classesTypeStream,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             _prepareData(snapshot.data!);
@@ -114,10 +97,11 @@ class _CreateClassesNewVersionPageState
         double offsetX = item.level * _itemsOffset;
 
         return Container(
-          padding: EdgeInsets.symmetric(horizontal: _paddings),
+          padding: const EdgeInsets.symmetric(horizontal: AppDoubles.paddings),
           decoration: BoxDecoration(
             border: Border(
-              bottom: BorderSide(width: _borderWidth, color: _borderColor),
+              bottom: BorderSide(
+                  width: AppDoubles.borderWidth, color: AppColors.borderColor),
             ),
           ),
           child: Row(
@@ -137,8 +121,7 @@ class _CreateClassesNewVersionPageState
                   ),
                 ),
               ),
-              Visibility(
-                  visible: item.isExpand, child: _buttonsColumn(item))
+              Visibility(visible: item.isExpand, child: _buttonsColumn(item))
             ],
           ),
         );
@@ -157,13 +140,13 @@ class _CreateClassesNewVersionPageState
   Widget _buttonsColumn(TreeNodeData item) {
     return Column(
       children: [
-        _removeButton(item),
-        _addButton(item),
+        _removeItemButton(item),
+        _addItemButton(item),
       ],
     );
   }
 
-  Widget _addButton(TreeNodeData item) {
+  Widget _addItemButton(TreeNodeData item) {
     bool isObjectInstanceOfClasses = item.object is Classes;
     return !isObjectInstanceOfClasses
         ? InkWell(
@@ -177,7 +160,7 @@ class _CreateClassesNewVersionPageState
         : const SizedBox();
   }
 
-  Widget _removeButton(TreeNodeData item) {
+  Widget _removeItemButton(TreeNodeData item) {
     return InkWell(
         onTap: () {
           delete(item);
@@ -209,13 +192,43 @@ class _CreateClassesNewVersionPageState
   }
 
   void add(TreeNodeData dataNode) {
-    var newNode = TreeNodeData(
-      label: dataNode.label,
-    );
+    _selectedTreeNodeData = dataNode;
+    if (dataNode.object is Group) {
+      Navigator.pushNamed(context, AppUrls.ADD_CLASSES_TO_GROUP, arguments: {
+        AppStrings.GROUP: dataNode.object,
+        AppStrings.FUNCTION: _addClasses
+      });
+    }
+    if (dataNode.object is ClassesType) {
+      Navigator.pushNamed(
+        context,
+        AppUrls.CREATE_GROUP,
+        arguments: {
+          AppStrings.CLASSES_TYPE: dataNode.object,
+          AppStrings.FUNCTION: _addGroup
+        },
+      );
+    }
 
-    _controller.insertAtFront(dataNode, newNode);
+    // _controller.insertAtFront(dataNode, newNode);
 //    _controller.insertAtRear(dataNode, newNode);
 //    _controller.insertAtIndex(1, dataNode, newNode);
+  }
+
+  void _addClasses(Classes classes) {
+    setState(() {
+      classes.group.target!.addClasses(classes);
+      var newNode = TreeNodeData(label: classes.name, object: classes);
+      _controller.insertAtFront(_selectedTreeNodeData, newNode);
+    });
+  }
+
+  void _addGroup(Group group) {
+    setState(() {
+      group.classesType.target!.addGroup(group);
+      var newNode = TreeNodeData(label: group.name, object: group);
+      _controller.insertAtFront(_selectedTreeNodeData, newNode);
+    });
   }
 
   void delete(dynamic item) {
@@ -234,7 +247,7 @@ class _CreateClassesNewVersionPageState
   void initState() {
     super.initState();
     _controller = TreeViewController();
-    _classesType = objectBox.store
+    _classesTypeStream = objectBox.store
         .box<ClassesType>()
         .query()
         .watch(triggerImmediately: true)

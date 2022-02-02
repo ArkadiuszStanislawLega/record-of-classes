@@ -17,6 +17,10 @@ class Group {
 
   Group({this.id = 0, this.name = ''});
 
+  void addToDb() =>
+    objectBox.store.box<Group>().put(this);
+
+
   void addClasses(Classes classesToAdd) {
     classesToAdd.group.target = this;
     classes.add(classesToAdd);

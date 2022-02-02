@@ -14,11 +14,16 @@ class CreateGroupPage extends StatefulWidget {
 
 class _CreateGroupPageState extends State<CreateGroupPage> {
   late ClassesType _classesType;
+  late Function? _addFunction;
   final CreateGroupTemplate _createGroupTemplate = CreateGroupTemplate();
+  Map _args = {};
 
   @override
   Widget build(BuildContext context) {
-    _classesType = ModalRoute.of(context)!.settings.arguments as ClassesType;
+    _args = ModalRoute.of(context)!.settings.arguments as Map;
+    _classesType = _args[AppStrings.CLASSES_TYPE];
+    _addFunction = _args[AppStrings.FUNCTION];
+    // _classesType = ModalRoute.of(context)!.settings.arguments as ClassesType;
 
     return Scaffold(
       appBar: AppBar(
@@ -37,14 +42,21 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
   }
 
   void _addToDatabase() {
-    setState(() {
-      if (_createGroupTemplate.isInputValuesAreValid()) {
-        var group = _createGroupTemplate.getGroup();
-        _classesType.groups.add(group);
-        objectBox.store.box<ClassesType>().put(_classesType);
-        _createGroupTemplate.clearFields();
-      }
-    });
+    if (_addFunction == null) {
+      setState(() {
+        if (_createGroupTemplate.isInputValuesAreValid()) {
+          _classesType.addGroup(_createGroupTemplate.getGroup());
+          // var group = _createGroupTemplate.getGroup();
+          // _classesType.groups.add(group);
+          // objectBox.store.box<ClassesType>().put(_classesType);
+          _createGroupTemplate.clearFields();
+        }
+      });
+    } else {
+      var groupCreated = _createGroupTemplate.getGroup();
+      groupCreated.classesType.target = _classesType;
+      _addFunction!(groupCreated);
+    }
 
     SnackBarInfoTemplate(
         context: context,

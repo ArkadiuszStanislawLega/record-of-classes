@@ -1,4 +1,5 @@
 import 'package:objectbox/objectbox.dart';
+import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/teacher.dart';
 
 import 'group.dart';
@@ -22,6 +23,13 @@ class ClassesType {
   @override
   String toString() {
     return 'ClassesType{id: $id, priceForEach: $priceForEach, priceForMonth: $priceForMonth, name: $name}';
+  }
+
+  void addGroup(Group group){
+    group.classesType.target = this;
+    groups.add(group);
+    group.addToDb();
+    objectBox.store.box<ClassesType>().put(this);
   }
 
   int numberOfStudents() {
