@@ -49,8 +49,8 @@ class _CreateClassesNewVersionPageState
       _addButtonBackground = Colors.green.shade500,
       _removeButtonBackground = Colors.red,
       _iconForegroundColor = Colors.white,
-      _navigateArrowBackground = Colors.grey,
-      _navigateButtonForeground = Colors.black;
+      _navigateArrowBackground = Colors.orange,
+      _navigateButtonForeground = Colors.white;
 
   final double _itemsOffset = 15.0,
       _borderWidth = 1.0,
@@ -211,50 +211,12 @@ class _CreateClassesNewVersionPageState
   }
 
   Widget _classesTypeItem(ClassesType classesType) {
-    return _classesTypeCard(Text(
-      classesType.name,
-      style: TextStyle(fontSize: _titleFontSize, fontWeight: FontWeight.w500),
-    ));
-  }
-
-  Widget _classesTypeItemExpanded(ClassesType classesType) {
     return _classesTypeCard(
-      Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                alignment: Alignment.center,
-                padding: EdgeInsets.only(top: _paddings, bottom: _paddings),
-                child: Text(
-                  classesType.name,
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: _titleFontSize),
-                ),
-              ),
-              InkWell(
-                onTap: () => _navigateToClassTypeDetailPage(classesType),
-                child: _icon(
-                    Icons.arrow_forward_ios_sharp, _navigateArrowBackground,
-                    foreground: _navigateButtonForeground),
-              ),
-            ],
-          ),
-          _propertyOnRow(AppStrings.PRICE_FOR_MONTH,
-              '${classesType.priceForMonth.toString()}${AppStrings.CURRENCY}'),
-          _propertyOnRow(AppStrings.PRICE_FOR_EACH,
-              '${classesType.priceForEach.toString()}${AppStrings.CURRENCY}'),
-          _propertyOnRow(AppStrings.NUMBER_OF_GROUPS,
-              classesType.groups.length.toString()),
-        ],
+      Text(
+        classesType.name,
+        style: TextStyle(fontSize: _titleFontSize, fontWeight: FontWeight.w500),
       ),
     );
-  }
-
-  void _navigateToClassTypeDetailPage(ClassesType classesType) {
-    Navigator.pushNamed(context, AppUrls.DETAIL_CLASSES_TYPE,
-        arguments: classesType);
   }
 
   Widget _classesTypeCard(Widget content) {
@@ -266,18 +228,75 @@ class _CreateClassesNewVersionPageState
         borderRadius: BorderRadius.circular(_cornerEdges),
       ),
       color: _classesTypeBackground,
-      child: Container(
+      child: SizedBox(
         width: MediaQuery.of(context).size.width - _classesTypeWidth,
-        padding: EdgeInsets.all(_paddings),
         child: content,
       ),
     );
+  }
+
+  Widget _classesTypeItemExpanded(ClassesType classesType) {
+    return _classesTypeCard(
+      Column(
+        children: [
+          _classesTypeItemTitle(classesType),
+          _classesTypeItemContent(classesType)
+        ],
+      ),
+    );
+  }
+
+  Widget _classesTypeItemTitle(ClassesType classesType) {
+    return _itemTitle(
+      [
+        Container(
+          alignment: Alignment.center,
+          padding: EdgeInsets.only(top: _paddings, bottom: _paddings),
+          child: Text(
+            classesType.name,
+            style: TextStyle(
+                fontWeight: FontWeight.bold, fontSize: _titleFontSize),
+          ),
+        ),
+        InkWell(
+          onTap: () => _navigateToClassTypeDetailPage(classesType),
+          child: _icon(Icons.arrow_forward_ios_sharp, _navigateArrowBackground,
+              foreground: _navigateButtonForeground),
+        ),
+      ],
+    );
+  }
+
+  Widget _classesTypeItemContent(ClassesType classesType) {
+    return _itemContent(
+      [
+        _propertyOnRow(AppStrings.PRICE_FOR_MONTH,
+            '${classesType.priceForMonth.toString()}${AppStrings.CURRENCY}'),
+        _propertyOnRow(AppStrings.PRICE_FOR_EACH,
+            '${classesType.priceForEach.toString()}${AppStrings.CURRENCY}'),
+        _propertyOnRow(
+            AppStrings.NUMBER_OF_GROUPS, classesType.groups.length.toString()),
+      ],
+    );
+  }
+
+  void _navigateToClassTypeDetailPage(ClassesType classesType) {
+    Navigator.pushNamed(context, AppUrls.DETAIL_CLASSES_TYPE,
+        arguments: classesType);
   }
 
   Widget _propertyOnRow(String propertyName, String value) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [Text(propertyName), Text(value)],
+    );
+  }
+
+  Widget _groupItemExpanded(Group group) {
+    return _groupItemCard(
+      Column(
+        children: [_groupItemTitle(group), _groupItemContent(group)],
+      ),
     );
   }
 
@@ -290,52 +309,46 @@ class _CreateClassesNewVersionPageState
         borderRadius: BorderRadius.circular(_cornerEdges),
       ),
       color: _groupBackground,
-      child: Container(
+      child: SizedBox(
         width: MediaQuery.of(context).size.width - _groupWidth,
-        padding: EdgeInsets.all(_paddings),
         child: content,
       ),
     );
   }
 
-  Widget _groupItemExpanded(Group group) {
-    return _groupItemCard(
-      Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                alignment: Alignment.center,
-                padding: EdgeInsets.only(top: _paddings, bottom: _paddings),
-                child: Text(
-                  group.name,
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: _titleFontSize),
-                ),
-              ),
-              InkWell(
-                onTap: () => _navigateToGroupDetailPage(group),
-                child: _icon(
-                    Icons.arrow_forward_ios_sharp, _navigateArrowBackground,
-                    foreground: _navigateButtonForeground),
-              ),
-            ],
-          ),
-          Text(
-            group.address.target!.toString(),
-          ),
-          _propertyOnRow(
-              AppStrings.NUMBER_OF_STUDENTS, group.students.length.toString()),
-          _propertyOnRow(
-              AppStrings.NUMBER_OF_CLASSES, group.classes.length.toString())
-        ],
-      ),
+  Widget _groupItemTitle(Group group) {
+    return _itemTitle(
+      [
+        Text(
+          group.name,
+          style:
+              TextStyle(fontWeight: FontWeight.bold, fontSize: _titleFontSize),
+        ),
+        InkWell(
+          onTap: () => _navigateToGroupDetailPage(group),
+          child: _icon(Icons.arrow_forward_ios_sharp, _navigateArrowBackground,
+              foreground: _navigateButtonForeground),
+        ),
+      ],
     );
   }
 
   void _navigateToGroupDetailPage(Group group) =>
       Navigator.pushNamed(context, AppUrls.DETAIL_GROUP, arguments: group);
+
+  Widget _groupItemContent(Group group) {
+    return _itemContent(
+      [
+        Text(
+          group.address.target!.toString(),
+        ),
+        _propertyOnRow(
+            AppStrings.NUMBER_OF_STUDENTS, group.students.length.toString()),
+        _propertyOnRow(
+            AppStrings.NUMBER_OF_CLASSES, group.classes.length.toString())
+      ],
+    );
+  }
 
   Widget _groupItem(Group group) {
     return _groupItemCard(
@@ -347,7 +360,56 @@ class _CreateClassesNewVersionPageState
   }
 
   Widget _classesItem(Classes classes) {
+    return Card(
+      color: _colorsOfTheMonth[classes.dateTime.month],
+      shape: RoundedRectangleBorder(
+        side: BorderSide(color: _borderColor, width: _borderWidth),
+        borderRadius: BorderRadius.circular(_cornerEdges),
+      ),
+      margin: EdgeInsets.symmetric(vertical: _margins),
+      elevation: _classesElevation,
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width - _classesWidth,
+        child: Column(
+          children: [
+            _classesItemTitle(classes),
+            _classesItemContent(classes),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _classesItemTitle(Classes classes) {
+    return _itemTitle(
+      [
+        Text(
+          formatDate(classes.dateTime),
+          style:
+              TextStyle(fontSize: _titleFontSize, fontWeight: FontWeight.bold),
+        ),
+        Text(
+          formatTime(classes.dateTime),
+          style:
+              TextStyle(fontSize: _titleFontSize, fontWeight: FontWeight.bold),
+        ),
+        InkWell(
+          onTap: () => _navigateToClassesDetailPage(classes),
+          child: _icon(Icons.arrow_forward_ios_sharp, _navigateArrowBackground,
+              foreground: _navigateButtonForeground),
+        ),
+      ],
+    );
+  }
+
+  Widget _classesItemContent(Classes classes) {
     List<Widget> widgets = [];
+    widgets.add(
+      _propertyOnRow(
+        AppStrings.PRESENTS_AT_THE_CLASSSES,
+        classes.presentStudentsNum.toString(),
+      ),
+    );
     for (var attendance in classes.attendances) {
       widgets.add(
         Row(
@@ -361,48 +423,28 @@ class _CreateClassesNewVersionPageState
         ),
       );
     }
-    return Card(
-      color: _colorsOfTheMonth[classes.dateTime.month],
-      shape: RoundedRectangleBorder(
-        side: BorderSide(color: _borderColor, width: _borderWidth),
-        borderRadius: BorderRadius.circular(_cornerEdges),
-      ),
-      margin: EdgeInsets.symmetric(vertical: _margins),
-      elevation: _classesElevation,
-      child: Container(
-        padding: EdgeInsets.all(_paddings),
-        width: MediaQuery.of(context).size.width - _classesWidth,
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  padding: EdgeInsets.all(_paddings),
-                  child: Text(
-                    '${formatDate(classes.dateTime)} ${formatTime(classes.dateTime)}',
-                    style: TextStyle(
-                        fontSize: _titleFontSize, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                InkWell(
-                  onTap: () => _navigateToClassesDetailPage(classes),
-                  child: _icon(
-                      Icons.arrow_forward_ios_sharp, _navigateArrowBackground,
-                      foreground: _navigateButtonForeground),
-                ),
-              ],
-            ),
-            _propertyOnRow(
-              AppStrings.PRESENTS_AT_THE_CLASSSES,
-              classes.presentStudentsNum.toString(),
-            ),
-            Column(
-              children: widgets,
-            )
-          ],
+    return _itemContent(widgets);
+  }
+
+  Widget _itemTitle(List<Widget> widgets) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.black.withOpacity(0.2),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(_cornerEdges),
+          topRight: Radius.circular(_cornerEdges),
         ),
       ),
+      padding: EdgeInsets.all(_paddings),
+      child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween, children: widgets),
+    );
+  }
+
+  Widget _itemContent(List<Widget> widgets) {
+    return Container(
+      padding: EdgeInsets.all(_paddings),
+      child: Column(children: widgets),
     );
   }
 
