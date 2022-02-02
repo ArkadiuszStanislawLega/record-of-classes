@@ -9,6 +9,7 @@ import 'package:record_of_classes/models/classes.dart';
 import 'package:record_of_classes/models/classes_type.dart';
 import 'package:record_of_classes/models/group.dart';
 import 'package:record_of_classes/models/student.dart';
+import 'package:record_of_classes/widgets/templates/lists/item_title_template.dart';
 import 'package:record_of_classes/widgets/templates/lists/property_in_one_row.dart';
 
 class CreateClassesNewVersionPage extends StatefulWidget {
@@ -252,8 +253,8 @@ class _CreateClassesNewVersionPageState
   }
 
   Widget _classesTypeItemTitle(ClassesType classesType) {
-    return _itemTitle(
-      [
+    return ItemTitleTemplate(
+      widgets: [
         Container(
           alignment: Alignment.center,
           padding: EdgeInsets.only(top: _paddings, bottom: _paddings),
@@ -333,8 +334,8 @@ class _CreateClassesNewVersionPageState
   }
 
   Widget _groupItemTitle(Group group) {
-    return _itemTitle(
-      [
+    return ItemTitleTemplate(
+      widgets: [
         Text(
           group.name,
           style:
@@ -390,8 +391,8 @@ class _CreateClassesNewVersionPageState
   }
 
   Widget _classesItemTitle(Classes classes) {
-    return _itemTitle(
-      [
+    return ItemTitleTemplate(
+      widgets: [
         Text(
           formatDate(classes.dateTime),
           style:
@@ -433,21 +434,6 @@ class _CreateClassesNewVersionPageState
       );
     }
     return _itemContent(widgets);
-  }
-
-  Widget _itemTitle(List<Widget> widgets) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.2),
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(_cornerEdges),
-          topRight: Radius.circular(_cornerEdges),
-        ),
-      ),
-      padding: EdgeInsets.all(_paddings),
-      child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween, children: widgets),
-    );
   }
 
   Widget _itemContent(List<Widget> widgets) {
