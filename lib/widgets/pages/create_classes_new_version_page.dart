@@ -13,6 +13,7 @@ import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/widgets/templates/classes_type_item_template.dart';
 import 'package:record_of_classes/widgets/templates/classes_type_treeview_item.dart';
 import 'package:record_of_classes/widgets/templates/group_item_template.dart';
+import 'package:record_of_classes/widgets/templates/group_tree_view_item.dart';
 import 'package:record_of_classes/widgets/templates/icon_in_card_template.dart';
 import 'package:record_of_classes/widgets/templates/item_content_template.dart';
 import 'package:record_of_classes/widgets/templates/item_title_template.dart';
@@ -209,19 +210,6 @@ class _CreateClassesNewVersionPageState
             icon: Icons.delete, background: AppColors.removeButtonBackground));
   }
 
-  Widget _groupItem(Group group) {
-    return GroupItemTemplate(content:
-      Container(
-        padding: EdgeInsets.all(_paddings),
-        child: Text(
-          group.name,
-          style:
-              TextStyle(fontSize: _titleFontSize, fontWeight: FontWeight.w500),
-        ),
-      ),
-    );
-  }
-
   Widget _groupItemExpanded(Group group) {
     return GroupItemTemplate(content:
       Column(
@@ -348,7 +336,7 @@ class _CreateClassesNewVersionPageState
       if (data.object is Group) {
         return isExpanded
             ? _groupItemExpanded(data.object)
-            : _groupItem(data.object);
+            : GroupTreeViewItem(group: data.object);
       }
       if (data.object is ClassesType) {
         return isExpanded
