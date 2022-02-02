@@ -10,7 +10,6 @@ import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/classes.dart';
 import 'package:record_of_classes/models/classes_type.dart';
 import 'package:record_of_classes/models/group.dart';
-import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/widgets/templates/classes_tree_view_item.dart';
 import 'package:record_of_classes/widgets/templates/classes_tree_view_item_expanded.dart';
 import 'package:record_of_classes/widgets/templates/classes_type_treeview_item.dart';
@@ -150,10 +149,7 @@ class _CreateClassesNewVersionPageState
     bool isObjectInstanceOfClasses = item.object is Classes;
     return !isObjectInstanceOfClasses
         ? InkWell(
-            onTap: () {
-              add(item);
-              //TODO: Baza daynch
-            },
+            onTap: () => add(item),
             child: IconInCardTemplate(
                 icon: Icons.add, background: AppColors.addButtonBackground),
           )
@@ -194,11 +190,16 @@ class _CreateClassesNewVersionPageState
   void add(TreeNodeData dataNode) {
     _selectedTreeNodeData = dataNode;
     if (dataNode.object is Group) {
-      Navigator.pushNamed(context, AppUrls.ADD_CLASSES_TO_GROUP, arguments: {
-        AppStrings.GROUP: dataNode.object,
-        AppStrings.FUNCTION: _addClasses
-      });
+      Navigator.pushNamed(
+        context,
+        AppUrls.ADD_CLASSES_TO_GROUP,
+        arguments: {
+          AppStrings.GROUP: dataNode.object,
+          AppStrings.FUNCTION: _addClasses
+        },
+      );
     }
+
     if (dataNode.object is ClassesType) {
       Navigator.pushNamed(
         context,
