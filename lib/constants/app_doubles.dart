@@ -3,7 +3,7 @@ class AppDoubles {
       borderWidth = 1.0,
       classesTypeWidthInTreeView = 80.0,
       groupWidthInTreeView = 95.0,
-      classesWidth = 100.0,
+      classesWidthInTreeView = 100.0,
       margins = 10.0,
       paddings = 5.0,
       cornerEdges = 10.0,
