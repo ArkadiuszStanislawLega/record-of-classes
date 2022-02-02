@@ -9,6 +9,7 @@ import 'package:record_of_classes/models/classes.dart';
 import 'package:record_of_classes/models/classes_type.dart';
 import 'package:record_of_classes/models/group.dart';
 import 'package:record_of_classes/models/student.dart';
+import 'package:record_of_classes/widgets/templates/lists/property_in_one_row.dart';
 
 class CreateClassesNewVersionPage extends StatefulWidget {
   const CreateClassesNewVersionPage({Key? key}) : super(key: key);
@@ -212,9 +213,13 @@ class _CreateClassesNewVersionPageState
 
   Widget _classesTypeItem(ClassesType classesType) {
     return _classesTypeCard(
-      Text(
-        classesType.name,
-        style: TextStyle(fontSize: _titleFontSize, fontWeight: FontWeight.w500),
+      Container(
+        padding: EdgeInsets.all(_paddings),
+        child: Text(
+          classesType.name,
+          style:
+              TextStyle(fontSize: _titleFontSize, fontWeight: FontWeight.w500),
+        ),
       ),
     );
   }
@@ -270,12 +275,17 @@ class _CreateClassesNewVersionPageState
   Widget _classesTypeItemContent(ClassesType classesType) {
     return _itemContent(
       [
-        _propertyOnRow(AppStrings.PRICE_FOR_MONTH,
-            '${classesType.priceForMonth.toString()}${AppStrings.CURRENCY}'),
-        _propertyOnRow(AppStrings.PRICE_FOR_EACH,
-            '${classesType.priceForEach.toString()}${AppStrings.CURRENCY}'),
-        _propertyOnRow(
-            AppStrings.NUMBER_OF_GROUPS, classesType.groups.length.toString()),
+        PropertyInOneRow(
+            property: AppStrings.PRICE_FOR_MONTH,
+            value:
+                '${classesType.priceForMonth.toString()}${AppStrings.CURRENCY}'),
+        PropertyInOneRow(
+            property: AppStrings.PRICE_FOR_EACH,
+            value:
+                '${classesType.priceForEach.toString()}${AppStrings.CURRENCY}'),
+        PropertyInOneRow(
+            property: AppStrings.NUMBER_OF_GROUPS,
+            value: classesType.groups.length.toString()),
       ],
     );
   }
@@ -285,17 +295,15 @@ class _CreateClassesNewVersionPageState
         arguments: classesType);
   }
 
-  Widget _propertyOnRow(String propertyName, String value) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [Text(propertyName), Text(value)],
-    );
-  }
-
-  Widget _groupItemExpanded(Group group) {
+  Widget _groupItem(Group group) {
     return _groupItemCard(
-      Column(
-        children: [_groupItemTitle(group), _groupItemContent(group)],
+      Container(
+        padding: EdgeInsets.all(_paddings),
+        child: Text(
+          group.name,
+          style:
+              TextStyle(fontSize: _titleFontSize, fontWeight: FontWeight.w500),
+        ),
       ),
     );
   }
@@ -312,6 +320,14 @@ class _CreateClassesNewVersionPageState
       child: SizedBox(
         width: MediaQuery.of(context).size.width - _groupWidth,
         child: content,
+      ),
+    );
+  }
+
+  Widget _groupItemExpanded(Group group) {
+    return _groupItemCard(
+      Column(
+        children: [_groupItemTitle(group), _groupItemContent(group)],
       ),
     );
   }
@@ -342,20 +358,13 @@ class _CreateClassesNewVersionPageState
         Text(
           group.address.target!.toString(),
         ),
-        _propertyOnRow(
-            AppStrings.NUMBER_OF_STUDENTS, group.students.length.toString()),
-        _propertyOnRow(
-            AppStrings.NUMBER_OF_CLASSES, group.classes.length.toString())
+        PropertyInOneRow(
+            property: AppStrings.NUMBER_OF_STUDENTS,
+            value: group.students.length.toString()),
+        PropertyInOneRow(
+            property: AppStrings.NUMBER_OF_CLASSES,
+            value: group.classes.length.toString())
       ],
-    );
-  }
-
-  Widget _groupItem(Group group) {
-    return _groupItemCard(
-      Text(
-        group.name,
-        style: TextStyle(fontSize: _titleFontSize, fontWeight: FontWeight.w500),
-      ),
     );
   }
 
@@ -405,9 +414,9 @@ class _CreateClassesNewVersionPageState
   Widget _classesItemContent(Classes classes) {
     List<Widget> widgets = [];
     widgets.add(
-      _propertyOnRow(
-        AppStrings.PRESENTS_AT_THE_CLASSSES,
-        classes.presentStudentsNum.toString(),
+      PropertyInOneRow(
+        property: AppStrings.PRESENTS_AT_THE_CLASSSES,
+        value: classes.presentStudentsNum.toString(),
       ),
     );
     for (var attendance in classes.attendances) {
