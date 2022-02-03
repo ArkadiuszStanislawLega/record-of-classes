@@ -41,31 +41,28 @@ class _DetailClassesTypeState extends State<DetailClassesType> {
       stream: _groupStream,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return DefaultTabController(
-            length: 2,
-            child: Scaffold(
-              floatingActionButton: SpeedDial(
-                icon: Icons.settings,
-                backgroundColor: Colors.amber,
-                children: [
-                  SpeedDialChild(
-                      child: const Icon(Icons.group_add),
-                      label: AppStrings.ADD_GROUP,
-                      backgroundColor: Colors.amberAccent,
-                      onTap: _navigateToCreateNewGroupPage),
-                  SpeedDialChild(
-                      child: const Icon(Icons.edit),
-                      label: AppStrings.EDIT,
-                      backgroundColor: Colors.amberAccent,
-                      onTap: _navigateToEditClassesType),
-                ],
-              ),
-              body: CustomScrollView(
-                slivers: [
-                  _customAppBar(),
-                  _content(),
-                ],
-              ),
+          return Scaffold(
+            floatingActionButton: SpeedDial(
+              icon: Icons.settings,
+              backgroundColor: Colors.amber,
+              children: [
+                SpeedDialChild(
+                    child: const Icon(Icons.group_add),
+                    label: AppStrings.ADD_GROUP,
+                    backgroundColor: Colors.amberAccent,
+                    onTap: _navigateToCreateNewGroupPage),
+                SpeedDialChild(
+                    child: const Icon(Icons.edit),
+                    label: AppStrings.EDIT,
+                    backgroundColor: Colors.amberAccent,
+                    onTap: _navigateToEditClassesType),
+              ],
+            ),
+            body: CustomScrollView(
+              slivers: [
+                _customAppBar(),
+                _content(),
+              ],
             ),
           );
         } else {
@@ -165,7 +162,7 @@ class _DetailClassesTypeState extends State<DetailClassesType> {
 
   void _navigateToCreateNewGroupPage() =>
       Navigator.pushNamed(context, AppUrls.CREATE_GROUP,
-          arguments: _classesType);
+          arguments: {AppStrings.CLASSES_TYPE : _classesType});
 
   void _navigateToEditClassesType() => {
         Navigator.pushNamed(context, AppUrls.EDIT_CLASSES_TYPE,

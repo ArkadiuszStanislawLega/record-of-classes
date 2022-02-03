@@ -162,8 +162,9 @@ class _CreateClassesNewVersionPageState
         onTap: () {
           _removeClassesFromDb(item);
           _removeGroupFromDb(item);
+          _removeClassesTypeFromDb(item);
+
           delete(item);
-          //TODO: Baza daynch
         },
         child: IconInCardTemplate(
             icon: Icons.delete, background: AppColors.removeButtonBackground));
@@ -177,12 +178,18 @@ class _CreateClassesNewVersionPageState
     }
   }
 
-
-
   void _removeGroupFromDb(TreeNodeData item) {
     if (item.object is Group) {
       setState(() {
         item.object.classesType.target!.removeGroup(item.object.id);
+      });
+    }
+  }
+
+  void _removeClassesTypeFromDb(TreeNodeData item){
+    if(item.object is ClassesType){
+      setState(() {
+        item.object.removeFromDb();
       });
     }
   }

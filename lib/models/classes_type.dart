@@ -44,4 +44,11 @@ class ClassesType {
     }
     return numberOfStudents;
   }
+
+  void removeFromDb(){
+    for(int i  = 0; i < groups.length; i++){
+      removeGroup(groups[i].id);
+    }
+    objectBox.store.box<ClassesType>().remove(id);
+  }
 }

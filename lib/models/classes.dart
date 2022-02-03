@@ -11,6 +11,11 @@ class Classes {
   final attendances = ToMany<Attendance>();
 
 
+  @override
+  String toString() {
+    return 'Classes{id: $id, dateTime: $dateTime, group: ${group.target!.name}, attendances: ${attendances.length}}';
+  }
+
   void addToDb() => objectBox.store.box<Classes>().put(this);
 
   String get name => group.target!.name;

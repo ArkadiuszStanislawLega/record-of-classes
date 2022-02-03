@@ -70,7 +70,7 @@ Future<void> main() async {
   objectBox = await ObjectBox.create();
   // clearDb();
   _putTeacherToDb();
-  printDataFromDB();
+  // printDataFromDB();
   // objectBox.store.box<Account>().getAll().forEach((element) {
   //   print(element.id);
   // });
@@ -134,6 +134,21 @@ void printDataFromDB() {
 
   print('Accounts');
   objectBox.store.box<Account>().getAll().forEach((element) {
+    print(element.toString());
+  });
+
+  print('Classes');
+  objectBox.store.box<Classes>().getAll().forEach((element) {
+    print(element.toString());
+  });
+
+  print('Grups');
+  objectBox.store.box<Group>().getAll().forEach((element) {
+    print(element.toString());
+  });
+
+  print('ClassesType');
+  objectBox.store.box<ClassesType>().getAll().forEach((element) {
     print(element.toString());
   });
 }

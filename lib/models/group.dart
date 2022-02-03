@@ -15,6 +15,12 @@ class Group {
   final students = ToMany<Student>();
   final classes = ToMany<Classes>();
 
+
+  @override
+  String toString() {
+    return 'Group{id: $id, name: $name, address: ${address.target}, classesType: ${classesType.target!.name}, students: ${students.length}, classes: ${classes.length}}';
+  }
+
   Group({this.id = 0, this.name = ''});
 
   void addToDb() => objectBox.store.box<Group>().put(this);

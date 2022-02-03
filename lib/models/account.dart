@@ -12,6 +12,11 @@ class Account {
   @Backlink()
   final bills = ToMany<Bill>();
 
+  @override
+  String toString() {
+    return 'Account{id: $id, balance: $balance, student: ${student.target!.introduceYourself()}, bills: ${bills.length}}';
+  }
+
   Account({this.id = 0, this.balance = 0.0});
 
   double countUnpaidBillsPrice(){
