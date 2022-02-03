@@ -17,9 +17,13 @@ class Group {
 
   Group({this.id = 0, this.name = ''});
 
-  void addToDb() =>
-    objectBox.store.box<Group>().put(this);
+  void addToDb() => objectBox.store.box<Group>().put(this);
 
+  void removeClasses(int id) {
+    var selectedClasses = classes.firstWhere((element) => element.id == id);
+    selectedClasses.removeFromDb();
+    classes.removeWhere((classes) => classes.id == id);
+  }
 
   void addClasses(Classes classesToAdd) {
     classesToAdd.group.target = this;

@@ -130,6 +130,7 @@ class _CreateClassesNewVersionPageState
         _getItem(treeNodeData, isExpanded: data.isExpand);
       },
       onLongPress: (data) {
+        var node = data as TreeNodeData;
         delete(data);
       },
       controller: _controller,
@@ -159,11 +160,31 @@ class _CreateClassesNewVersionPageState
   Widget _removeItemButton(TreeNodeData item) {
     return InkWell(
         onTap: () {
+          _removeClassesFromDb(item);
+          _removeGroupFromDb(item);
           delete(item);
           //TODO: Baza daynch
         },
         child: IconInCardTemplate(
             icon: Icons.delete, background: AppColors.removeButtonBackground));
+  }
+
+  void _removeClassesFromDb(TreeNodeData item) {
+    if (item.object is Classes) {
+      setState(() {
+        item.object.group.target!.removeClasses(item.object.id);
+      });
+    }
+  }
+
+
+
+  void _removeGroupFromDb(TreeNodeData item) {
+    if (item.object is Group) {
+      setState(() {
+        item.object.classesType.target!.removeGroup(item.object.id);
+      });
+    }
   }
 
   Widget _getItem(TreeNodeData data, {bool isExpanded = false}) {

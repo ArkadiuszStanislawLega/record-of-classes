@@ -32,6 +32,11 @@ class ClassesType {
     objectBox.store.box<ClassesType>().put(this);
   }
 
+  void removeGroup(int id){
+    groups.firstWhere((group) => group.id == id).removeFromDb();
+    groups.removeWhere((group) => group.id == id);
+  }
+
   int numberOfStudents() {
     int numberOfStudents = 0;
     for (var group in groups) {
