@@ -60,9 +60,12 @@ class ClassesTreeViewItemExpanded extends StatelessWidget {
   Widget _classesItemContent() {
     List<Widget> widgets = [];
     widgets.add(
-      PropertyInOneRow(
-        property: AppStrings.PRESENTS_AT_THE_CLASSSES,
-        value: classes.presentStudentsNum.toString(),
+      Container(
+        margin: const EdgeInsets.only(bottom: 10.0),
+        child: PropertyInOneRow(
+          property: AppStrings.PRESENTS_AT_THE_CLASSSES,
+          value: classes.presentStudentsNum.toString(),
+        ),
       ),
     );
     for (var attendance in classes.attendances) {

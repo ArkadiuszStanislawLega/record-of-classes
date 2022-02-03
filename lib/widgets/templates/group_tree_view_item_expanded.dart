@@ -53,12 +53,15 @@ class GroupTreeViewItemExpanded extends StatelessWidget {
         Text(
           group.address.target!.toString(),
         ),
-        PropertyInOneRow(
-            property: AppStrings.NUMBER_OF_STUDENTS,
-            value: group.students.length.toString()),
-        PropertyInOneRow(
-            property: AppStrings.NUMBER_OF_CLASSES,
-            value: group.classes.length.toString())
+        Column(children: [
+          PropertyInOneRow(
+              property: AppStrings.NUMBER_OF_STUDENTS,
+              value: group.students.length.toString()),
+          PropertyInOneRow(
+              property: AppStrings.NUMBER_OF_CLASSES,
+              value: group.classes.length.toString())
+        ],)
+
       ],
     );
   }
