@@ -20,6 +20,8 @@ class AppStrings {
       ADDED_NEW_CONTACT = 'Dodano nowy kontakt',
       ATTENDANCE_LIST = 'Lista obecności',
       ATTENDANCES = 'Obecności',
+      AT_TIME = 'o godzinie',
+      ARE_YOU_SURE_TO_REMOVE = 'Czy na pewno usunąć',
       BILANCE = 'Saldo',
       CLASSES_ADDRESS = 'Adres zajęć',
       CLASSES_TYPE = 'Typ zajęć',
@@ -41,6 +43,7 @@ class AppStrings {
       NUMBER_OF_PARENTS_CONTACTS = 'Ilość numerów rodziców',
       CONTACTS = 'Kontakty',
       CONTACT = 'Kontakt',
+      CONFIRM_REMOVING = 'Potwierdź usunięcie',
       CREATE_STUDENT = 'Utwórz ucznia',
       CREATE_PARENT = 'Utwórz rodzica',
       CREATE_CONTACT = 'Utwórz kontakt',
@@ -101,6 +104,7 @@ class AppStrings {
       PARENT  ='Rodzic',
       STUDENT = 'Uczeń',
       OK = 'OK',
+      ON_DATE = 'w dniu',
       PARENTS = 'Rodzice',
       PARTICIPANTS = 'Uczestnicy',
       PAID = 'Zapłacono',
@@ -143,5 +147,7 @@ class AppStrings {
       BILLS_LIST = 'Lista rachunków',
       DATA_HAS_BEEN_UPDATED = 'Zakutalizowano dane',
       FUNDED_ACCOUNT = 'Zasiono konto',
-      ERROR_MESSAGE_CHECK_FIELDS_FILL ='Wystąpił błąd, spradź poprawność wypełnienia pól!';
+      ERROR_MESSAGE_CHECK_FIELDS_FILL ='Wystąpił błąd, spradź poprawność wypełnienia pól!',
+      YES = 'Tak',
+      NO = 'Nie';
 }

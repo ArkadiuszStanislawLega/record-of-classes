@@ -160,14 +160,90 @@ class _CreateClassesNewVersionPageState
   Widget _removeItemButton(TreeNodeData item) {
     return InkWell(
         onTap: () {
-          _removeClassesFromDb(item);
-          _removeGroupFromDb(item);
-          _removeClassesTypeFromDb(item);
-
-          delete(item);
+          _removeDialogWindow(item);
         },
         child: IconInCardTemplate(
             icon: Icons.delete, background: AppColors.removeButtonBackground));
+  }
+
+  void _removeDialogWindow(TreeNodeData item) {
+    Widget content = Text('');
+
+    if (item.object is Classes) {
+      var classes = item.object as Classes;
+      content = Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text('${AppStrings.ARE_YOU_SURE_TO_REMOVE} zajęcia:'),
+              Text(
+                classes.name,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                const Text('${AppStrings.ON_DATE}:'),
+                Text(
+                  formatDate(classes.dateTime),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                )
+              ]),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('${AppStrings.AT_TIME}:'),
+                  Text(
+                    formatTime(classes.dateTime),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  )
+                ],
+              ),
+            ],
+          ),
+          Text(
+            'Potwierdzenie usunięcia sprawi że wszystkie rachunki i obecności z tych zajęć zostaną usunięte bezpowrotnie. A opłacone zajęcia nie zwrócą środków na saldo potwierdzonych ',
+            style: TextStyle(fontStyle: FontStyle.italic),
+          ),
+        ],
+      );
+    }
+    if (item.object is Group) {
+      var group = item.object as Group;
+      content = Text('${AppStrings.ARE_YOU_SURE_TO_REMOVE}  ${group.name}');
+    }
+    if (item.object is ClassesType) {
+      var classesType = item.object as ClassesType;
+      content =
+          Text('${AppStrings.ARE_YOU_SURE_TO_REMOVE} ${classesType.name}');
+    }
+
+    showDialog(
+      context: context,
+      builder: (BuildContext ctx) {
+        return AlertDialog(
+          title: const Text(AppStrings.CONFIRM_REMOVING),
+          content: content,
+          actions: [
+            // The "Yes" button
+            TextButton(
+                onPressed: () {
+                  _removeClassesFromDb(item);
+                  _removeGroupFromDb(item);
+                  _removeClassesTypeFromDb(item);
+                  Navigator.of(context).pop();
+                  delete(item);
+                },
+                child: const Text(AppStrings.YES)),
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text(AppStrings.NO))
+          ],
+        );
+      },
+    );
   }
 
   void _removeClassesFromDb(TreeNodeData item) {
@@ -186,8 +262,8 @@ class _CreateClassesNewVersionPageState
     }
   }
 
-  void _removeClassesTypeFromDb(TreeNodeData item){
-    if(item.object is ClassesType){
+  void _removeClassesTypeFromDb(TreeNodeData item) {
+    if (item.object is ClassesType) {
       setState(() {
         item.object.removeFromDb();
       });

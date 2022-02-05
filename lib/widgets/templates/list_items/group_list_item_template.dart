@@ -34,28 +34,28 @@ class _GroupListItemTemplateState extends State<GroupListItemTemplate> {
         ),
       ],
       child: ListTile(
-        title: Text(widget.group.name),
-        subtitle: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-                '${AppStrings.PERSONS_IN_GROUP}: ${widget.group.students.length.toString()}'),
-            Text(widget.group.address.target.toString())
-          ],
-        ),
-        onTap: _navigateToGroupProfile
-      ),
+          title: Text(widget.group.name),
+          subtitle: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                  '${AppStrings.PERSONS_IN_GROUP}: ${widget.group.students.length.toString()}'),
+              Text(widget.group.address.target.toString())
+            ],
+          ),
+          onTap: _navigateToGroupProfile),
     );
   }
 
-  void _updateDatabase(){
+  void _updateDatabase() {
     setState(() {
       widget.group.removeFromDb();
     });
   }
 
-  void _navigateToGroupProfile() => Navigator.pushNamed(context, AppUrls.DETAIL_GROUP,
-      arguments: widget.group);
+  void _navigateToGroupProfile() =>
+      Navigator.pushNamed(context, AppUrls.DETAIL_GROUP,
+          arguments: widget.group);
 
   void _showInfo(BuildContext context) => SnackBarInfoTemplate(
       context: context,

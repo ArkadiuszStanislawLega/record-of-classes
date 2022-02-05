@@ -19,34 +19,37 @@ class Account {
 
   Account({this.id = 0, this.balance = 0.0});
 
-  double countUnpaidBillsPrice(){
+  double countUnpaidBillsPrice() {
     double unpaid = 0.0;
     for (var element in bills) {
-      if(!element.isPaid){
+      if (!element.isPaid) {
         unpaid += element.price;
       }
-    }return unpaid;
+    }
+    return unpaid;
   }
 
-  int countUnpaidBills(){
+  int countUnpaidBills() {
     int unpaid = 0;
     for (var element in bills) {
-      if(!element.isPaid){
+      if (!element.isPaid) {
         unpaid++;
       }
-    }return unpaid;
+    }
+    return unpaid;
   }
 
-  double countPaidBills(){
+  double countPaidBills() {
     double unpaid = 0.0;
     for (var element in bills) {
-      if(element.isPaid){
+      if (element.isPaid) {
         unpaid += element.price;
       }
-    }return unpaid;
+    }
+    return unpaid;
   }
 
-  void removeFromDb(){
+  void removeFromDb() {
     for (var bill in bills) {
       bill.removeFromDb();
     }
@@ -57,12 +60,12 @@ class Account {
     box.remove(id);
   }
 
-  void addValueToBalance(double value){
+  void addValueToBalance(double value) {
     balance += value;
     objectBox.store.box<Account>().put(this);
   }
 
-  void addBill(Bill bill){
+  void addBill(Bill bill) {
     bills.add(bill);
     objectBox.store.box<Account>().put(this);
   }
