@@ -1,9 +1,10 @@
 import 'package:objectbox/objectbox.dart';
+import 'package:record_of_classes/models/db_model.dart';
 
 import 'group.dart';
 
 @Entity()
-class Address {
+class Address extends DbModel {
   late int id;
   late String street;
   late String houseNumber;

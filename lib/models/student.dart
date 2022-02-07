@@ -1,6 +1,7 @@
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/account.dart';
 import 'package:record_of_classes/models/attendance.dart';
+import 'package:record_of_classes/models/db_model.dart';
 import 'package:record_of_classes/models/group.dart';
 import 'package:record_of_classes/models/parent.dart';
 import 'package:objectbox/objectbox.dart';
@@ -9,7 +10,7 @@ import 'package:record_of_classes/models/phone.dart';
 import 'person.dart';
 
 @Entity()
-class Student {
+class Student extends DbModel {
   late int id;
   late int age;
   final person = ToOne<Person>();
@@ -19,7 +20,12 @@ class Student {
   final groups = ToMany<Group>();
   final attendancesList = ToMany<Attendance>();
 
-  Student({this.id = 0, required this.age});
+  Student({this.id = 0, required this.age}) {
+    object = this;
+    super.setId = id;
+  }
+
+
 
   @override
   String toString() {
@@ -29,18 +35,22 @@ class Student {
     return '$id $age - null person';
   }
 
+  @override
+  Student? getFromDb() => objectBox.store.box<Student>().get(id);
+
+  @override
   void addToDb() => objectBox.store.box<Student>().put(this);
 
-  String introduceYourself () => person.target!.introduceYourself();
+  String introduceYourself() => person.target!.introduceYourself();
 
-  void addParentToDb(Parent parent){
+  void addParentToDb(Parent parent) {
     parents.add(parent);
     parent.children.add(this);
     objectBox.store.box<Student>().put(this);
     objectBox.store.box<Parent>().put(parent);
   }
 
-  void removeParentFromDb(Parent parent){
+  void removeParentFromDb(Parent parent) {
     var parentBox = objectBox.store.box<Parent>();
     var personBox = objectBox.store.box<Person>();
     var phoneBox = objectBox.store.box<Phone>();
@@ -58,40 +68,41 @@ class Student {
     personBox.remove(parent.person.target!.id);
   }
 
-  void fundAccountDb(double value){
+  void fundAccountDb(double value) {
     account.target!.balance += value;
     objectBox.store.box<Account>().put(account.target!);
   }
 
-  void removeSelectedParentRelation(Parent parent){
+  void removeSelectedParentRelation(Parent parent) {
     parent.children.removeWhere((s) => s.id == id);
     parents.removeWhere((p) => p.id == parent.id);
     objectBox.store.box<Parent>().put(parent);
     objectBox.store.box<Student>().put(this);
   }
 
-  void _removeAllParentRelations(){
+  void _removeAllParentRelations() {
     parents.clear();
   }
 
 
-  void removeAttendance(int id){
+  void removeAttendance(int id) {
     attendancesList.removeWhere((attendance) => attendance.id == id);
     objectBox.store.box<Student>().put(this);
   }
 
-  void addAttendance(Attendance attendance){
+  void addAttendance(Attendance attendance) {
     attendancesList.add(attendance);
     objectBox.store.box<Student>().put(this);
   }
 
-  void updateValues(Student student){
-    person.target!.updateValues(student.person.target!);
+  void updateValues(Student student) {
+    person.target!.update(student.person.target!);
     age = student.age;
     objectBox.store.box<Student>().put(this);
   }
 
-  void removeFromDb(){
+  @override
+  void removeFromDb() {
     account.target?.removeFromDb();
     parents.clear();
     siblings.clear();

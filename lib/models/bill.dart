@@ -1,11 +1,12 @@
 import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/attendance.dart';
+import 'package:record_of_classes/models/db_model.dart';
 
 import 'account.dart';
 
 @Entity()
-class Bill {
+class Bill extends DbModel {
   late int id = 0;
   late bool isPaid;
   late double price;
@@ -17,8 +18,6 @@ class Bill {
     return 'Bill{id: $id, isPaid: $isPaid, price: $price, attendance: $attendance, student: $studentAccount}';
   }
 
-  void addToDb() => objectBox.store.box<Bill>().put(this);
-
   void setIsPaidInDb() {
     isPaid = true;
     objectBox.store.box<Bill>().put(this);
@@ -29,6 +28,7 @@ class Bill {
     objectBox.store.box<Bill>().put(this);
   }
 
+  @override
   void removeFromDb() {
     studentAccount.target = null;
     attendance.target = null;

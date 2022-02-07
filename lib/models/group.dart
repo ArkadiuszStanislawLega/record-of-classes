@@ -15,7 +15,6 @@ class Group {
   final students = ToMany<Student>();
   final classes = ToMany<Classes>();
 
-
   @override
   String toString() {
     return 'Group{id: $id, name: $name, address: ${address.target}, classesType: ${classesType.target!.name}, students: ${students.length}, classes: ${classes.length}}';
@@ -24,6 +23,8 @@ class Group {
   Group({this.id = 0, this.name = ''});
 
   void addToDb() => objectBox.store.box<Group>().put(this);
+
+  Group? getFromDb() => objectBox.store.box<Group>().get(id);
 
   void removeClasses(int id) {
     var selectedClasses = classes.firstWhere((element) => element.id == id);

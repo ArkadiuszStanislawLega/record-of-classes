@@ -38,6 +38,7 @@ class _CreateClassesNewVersionPageState
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(AppStrings.CREATED_NEW_CLASSES),
@@ -274,8 +275,8 @@ class _CreateClassesNewVersionPageState
     if (data.object != null) {
       if (data.object is Classes) {
         return isExpanded
-            ? ClassesTreeViewItemExpanded(classes: data.object)
-            : ClassesTreeViewItem(classes: data.object);
+            ? ClassesTreeViewItemExpanded(classes: data.object )
+            : ClassesTreeViewItem(classes: data.object );
       }
       if (data.object is Group) {
         return isExpanded

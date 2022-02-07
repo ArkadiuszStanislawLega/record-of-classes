@@ -1,13 +1,14 @@
 import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/enumerators/PersonType.dart';
 import 'package:record_of_classes/main.dart';
+import 'package:record_of_classes/models/db_model.dart';
 import 'package:record_of_classes/models/parent.dart';
 import 'package:record_of_classes/models/phone.dart';
 import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/models/teacher.dart';
 
 @Entity()
-class Person {
+class Person extends DbModel{
   late int id;
   late String name;
   late String surname;
@@ -23,7 +24,10 @@ class Person {
       this.name = '',
       this.surname = '',
       this.personType = 0,
-      this.type = PersonType.none});
+      this.type = PersonType.none}){
+    object = this;
+    super.setId = id;
+  }
 
   @override
   String toString() {
@@ -39,9 +43,9 @@ class Person {
     return type.index;
   }
 
-  void updateValues(Person person) {
-    name = person.name;
-    surname = person.surname;
+  void update(Person updatedPerson) {
+    name = updatedPerson.name;
+    surname = updatedPerson.surname;
     objectBox.store.box<Person>().put(this);
   }
 
@@ -79,8 +83,18 @@ class Person {
     personBox.put(this);
   }
 
+  @override
   void removeFromDb() {
     removeAllPhonesDb();
     objectBox.store.box<Person>().remove(id);
   }
+
+  @override
+  void addToDb() {
+    // TODO: implement addToDb
+  }
+
+  @override
+  getFromDb() => objectBox.store.box<Person>().get(id);
+
 }

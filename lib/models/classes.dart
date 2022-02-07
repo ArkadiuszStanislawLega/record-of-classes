@@ -30,6 +30,10 @@ class Classes {
     return value;
   }
 
+  Classes? getFromDb(){
+    return objectBox.store.box<Classes>().get(id);
+  }
+
   void removeFromDb(){
     group.target!.classes.removeWhere((classes) => classes.id == id);
     for (var attendance in attendances) {

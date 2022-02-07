@@ -1,11 +1,12 @@
 import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/main.dart';
+import 'package:record_of_classes/models/db_model.dart';
 import 'package:record_of_classes/models/student.dart';
 
 import 'bill.dart';
 
 @Entity()
-class Account {
+class Account extends DbModel{
   late int id;
   late double balance;
   final student = ToOne<Student>();
@@ -49,6 +50,7 @@ class Account {
     return unpaid;
   }
 
+  @override
   void removeFromDb() {
     for (var bill in bills) {
       bill.removeFromDb();

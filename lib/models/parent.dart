@@ -1,4 +1,5 @@
 import 'package:objectbox/objectbox.dart';
+import 'package:record_of_classes/models/db_model.dart';
 
 import 'package:record_of_classes/models/student.dart';
 
@@ -6,7 +7,7 @@ import 'person.dart';
 
 
 @Entity()
-class Parent{
+class Parent extends DbModel{
   late int id = 0;
   final person = ToOne<Person>();
   final children = ToMany<Student>();
@@ -23,7 +24,9 @@ class Parent{
     return person.target!.introduceYourself();
   }
 
+  @override
   void removeFromDb(){
+    // TODO: implement removeFromDb
     // var parentBox = objectBox.store.box<Parent>();
     // var personBox = objectBox.store.box<Person>();
     // var phoneBox = objectBox.store.box<Phone>();

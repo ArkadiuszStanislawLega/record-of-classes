@@ -1,11 +1,12 @@
 import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/main.dart';
+import 'package:record_of_classes/models/db_model.dart';
 import 'package:record_of_classes/models/teacher.dart';
 
 import 'group.dart';
 
 @Entity()
-class ClassesType {
+class ClassesType extends DbModel{
   late int id;
   late double priceForEach;
   late double priceForMonth;
@@ -45,6 +46,7 @@ class ClassesType {
     return numberOfStudents;
   }
 
+  @override
   void removeFromDb(){
     for(int i  = 0; i < groups.length; i++){
       removeGroup(groups[i].id);
