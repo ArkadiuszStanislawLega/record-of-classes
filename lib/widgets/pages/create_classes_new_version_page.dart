@@ -201,8 +201,8 @@ class _CreateClassesNewVersionPageState
               ),
             ],
           ),
-          Text(
-            'Potwierdzenie usunięcia sprawi że wszystkie rachunki i obecności z tych zajęć zostaną usunięte bezpowrotnie. A opłacone zajęcia nie zwrócą środków na saldo potwierdzonych ',
+          const Text(
+            AppStrings.REMOVE_CLASSES_WARNING_MESSAGE,
             style: TextStyle(fontStyle: FontStyle.italic),
           ),
         ],

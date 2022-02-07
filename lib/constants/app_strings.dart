@@ -149,5 +149,6 @@ class AppStrings {
       FUNDED_ACCOUNT = 'Zasiono konto',
       ERROR_MESSAGE_CHECK_FIELDS_FILL ='Wystąpił błąd, spradź poprawność wypełnienia pól!',
       YES = 'Tak',
-      NO = 'Nie';
+      NO = 'Nie',
+      REMOVE_CLASSES_WARNING_MESSAGE = 'Potwierdzenie usunięcia sprawi że wszystkie rachunki i obecności z tych zajęć zostaną usunięte bezpowrotnie. Opłacone zajęcia nie zwrócą środków na saldo uczestników za zajęcia w których są potwierdzone obecności.';
 }
