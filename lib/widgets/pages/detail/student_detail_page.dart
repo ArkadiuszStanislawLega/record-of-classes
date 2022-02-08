@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:record_of_classes/constants/app_urls.dart';
 import 'package:record_of_classes/constants/app_strings.dart';
-import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/attendance.dart';
 import 'package:record_of_classes/models/bill.dart';
 import 'package:record_of_classes/models/parent.dart';
@@ -35,10 +34,7 @@ class _StudentDetailPage extends State<StudentDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    _args = ModalRoute
-        .of(context)!
-        .settings
-        .arguments as Map;
+    _args = ModalRoute.of(context)!.settings.arguments as Map;
     _student = _args[AppStrings.STUDENT];
     _updatingFunction = _args[AppStrings.FUNCTION];
     _student.getFromDb();
@@ -75,7 +71,7 @@ class _StudentDetailPage extends State<StudentDetailPage> {
               backgroundColor: Colors.amberAccent,
               onTap: _navigateToAddContact),
           SpeedDialChild(
-            visible: _updatingFunction != null? true : false,
+              visible: _updatingFunction != null ? true : false,
               child: const Icon(Icons.edit),
               label: AppStrings.EDIT,
               backgroundColor: Colors.amberAccent,
@@ -104,7 +100,6 @@ class _StudentDetailPage extends State<StudentDetailPage> {
     });
   }
 
-
   void _navigateToAddSiblings() =>
       Navigator.pushNamed(context, AppUrls.ADD_SIBLING, arguments: {
         AppStrings.STUDENT: _student,
@@ -131,11 +126,12 @@ class _StudentDetailPage extends State<StudentDetailPage> {
   }
 
   void _navigateToAddContact() =>
-      Navigator.pushNamed(context, AppUrls.ADD_CONTACT_TO_STUDENT,
-          arguments: {AppStrings.STUDENT : _student,
-          AppStrings.FUNCTION : _addContact});
+      Navigator.pushNamed(context, AppUrls.ADD_CONTACT_TO_STUDENT, arguments: {
+        AppStrings.STUDENT: _student,
+        AppStrings.FUNCTION: _addContact
+      });
 
-  void _addContact(Phone contact){
+  void _addContact(Phone contact) {
     setState(() {
       _student.person.target!.addPhone(contact);
     });
@@ -161,7 +157,8 @@ class _StudentDetailPage extends State<StudentDetailPage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            _pageNavigationButton(title: AppStrings.PARENTS, page: Pages.parents),
+            _pageNavigationButton(
+                title: AppStrings.PARENTS, page: Pages.parents),
             _pageNavigationButton(
                 title: AppStrings.SIBLINGS, page: Pages.siblings),
             _pageNavigationIconButton(
@@ -275,30 +272,28 @@ class _StudentDetailPage extends State<StudentDetailPage> {
   SliverList _phonesSliverList() {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
-            (BuildContext context, int index) =>
-            PhoneBookListItemTemplate(
-                phone: _student.person.target!.phones.elementAt(index),),
+        (BuildContext context, int index) => PhoneBookListItemTemplate(
+          phone: _student.person.target!.phones.elementAt(index),
+        ),
         childCount: _student.person.target!.phones.length,
       ),
     );
   }
 
-
   SliverList _parentsSliverList() {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
-            (BuildContext context, int index) =>
-            ParentOfStudentListItemTemplate(
-              parent: _student.parents.elementAt(index),
-              student: _student,
-              removeFunction: _removeConnectionsWithParent,
-            ),
+        (BuildContext context, int index) => ParentOfStudentListItemTemplate(
+          parent: _student.parents.elementAt(index),
+          student: _student,
+          removeFunction: _removeConnectionsWithParent,
+        ),
         childCount: _student.parents.length,
       ),
     );
   }
 
-  void _removeConnectionsWithParent(Parent parent){
+  void _removeConnectionsWithParent(Parent parent) {
     setState(() {
       _student.removeSelectedParentRelation(parent);
     });
@@ -307,9 +302,8 @@ class _StudentDetailPage extends State<StudentDetailPage> {
   SliverList _siblingsSliverList() {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
-            (BuildContext context, int index) =>
-            RemoveSiblingListItem(
-                sibling: _student.siblings.elementAt(index), student: _student),
+        (BuildContext context, int index) => RemoveSiblingListItem(
+            sibling: _student.siblings.elementAt(index), student: _student),
         childCount: _student.siblings.length,
       ),
     );
@@ -318,12 +312,11 @@ class _StudentDetailPage extends State<StudentDetailPage> {
   SliverList _accountSliverList() {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
-            (BuildContext context, int index) =>
-            BillListItem(
-              bill: _student.account.target!.bills.elementAt(index),
-              payBill: _payTheBill,
-              withdrawThePaymentOfTheBill: _withdrawTheBill,
-            ),
+        (BuildContext context, int index) => BillListItem(
+          bill: _student.account.target!.bills.elementAt(index),
+          payBill: _payTheBill,
+          withdrawThePaymentOfTheBill: _withdrawTheBill,
+        ),
         childCount: _student.account.target!.bills.length,
       ),
     );
@@ -350,9 +343,8 @@ class _StudentDetailPage extends State<StudentDetailPage> {
   SliverList _attendancesSliverList() {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
-            (BuildContext context, int index) =>
-            StudentAttendancesListItemTemplate(
-                attendance: _student.attendancesList.elementAt(index)),
+        (BuildContext context, int index) => StudentAttendancesListItemTemplate(
+            attendance: _student.attendancesList.elementAt(index)),
         childCount: _student.attendancesList.length,
       ),
     );
@@ -424,8 +416,7 @@ class _StudentDetailPage extends State<StudentDetailPage> {
   }
 
   Column _propertiesAccount() {
-    double _toPay = 0.0,
-        _paid = 0.0;
+    double _toPay = 0.0, _paid = 0.0;
     for (var bill in _student.account.target!.bills) {
       bill.isPaid ? _paid += bill.price : _toPay += bill.price;
     }
@@ -439,8 +430,7 @@ class _StudentDetailPage extends State<StudentDetailPage> {
         OneRowPropertyTemplate(
           title: '${AppStrings.BILANCE}:',
           value:
-          '${_student.account.target!.balance.toStringAsFixed(2)}${AppStrings
-              .CURRENCY}',
+              '${_student.account.target!.balance.toStringAsFixed(2)}${AppStrings.CURRENCY}',
         ),
         OneRowPropertyTemplate(
           title: '${AppStrings.TO_PAY}:',
@@ -476,9 +466,8 @@ class _StudentDetailPage extends State<StudentDetailPage> {
     );
   }
 
-  void addParent() {
-    Navigator.pushNamed(context, AppUrls.CREATE_PARENT, arguments: _student);
-  }
+  void addParent() =>
+      Navigator.pushNamed(context, AppUrls.CREATE_PARENT, arguments: _student);
 
   /// Function to send children.
   /// Updating siblings in database.
@@ -486,9 +475,8 @@ class _StudentDetailPage extends State<StudentDetailPage> {
     setState(() {
       _student.siblings.add(sibling);
       sibling.siblings.add(_student);
-      var box = objectBox.store.box<Student>();
-      box.put(_student);
-      box.put(sibling);
+      _student.addToDb();
+      sibling.addToDb();
     });
   }
 }

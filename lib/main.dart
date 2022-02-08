@@ -25,7 +25,7 @@ import 'package:record_of_classes/widgets/pages/add/add_parent_page.dart';
 import 'package:record_of_classes/widgets/pages/create/create_parent_page.dart';
 import 'package:record_of_classes/widgets/pages/create/create_phone_page.dart';
 import 'package:record_of_classes/widgets/pages/create/create_student_page.dart';
-import 'package:record_of_classes/widgets/pages/create_classes_new_version_page.dart';
+import 'package:record_of_classes/widgets/pages/record_of_classes_tree_view_page.dart';
 import 'package:record_of_classes/widgets/pages/detail/classes_type_detail_page.dart';
 import 'package:record_of_classes/widgets/pages/detail/group_detail_page.dart';
 import 'package:record_of_classes/widgets/pages/detail/parent_detail_page.dart';
@@ -207,7 +207,7 @@ class _RecordOfClassesApp extends State<RecordOfClassesApp> {
         AppUrls.PHONE_BOOK: (context) => PhoneBookPage(),
         AppUrls.FUND_ACCOUNT: (context) => FundAccountPage(),
         AppUrls.CREATE_CLASSES_NEW_VERSION: (context) =>
-            CreateClassesNewVersionPage(),
+            RecordOfClassesTreeViewPage(),
         '/test': (context) => Test()
       },
     );

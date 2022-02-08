@@ -96,9 +96,8 @@ class Student implements DbModel {
     siblings.clear();
     groups.clear();
 
-    var box = objectBox.store.box<Student>();
-    box.put(this);
-    box.remove(id);
+    addToDb();
+    removeFromDb();
     person.target!.removeFromDb();
   }
 

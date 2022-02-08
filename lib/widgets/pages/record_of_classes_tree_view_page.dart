@@ -18,16 +18,16 @@ import 'package:record_of_classes/widgets/templates/group_tree_view_item_expande
 import 'package:record_of_classes/widgets/templates/icon_in_card_template.dart';
 import 'package:record_of_classes/widgets/templates/classes_type_tree_view_item_expanded.dart';
 
-class CreateClassesNewVersionPage extends StatefulWidget {
-  const CreateClassesNewVersionPage({Key? key}) : super(key: key);
+class RecordOfClassesTreeViewPage extends StatefulWidget {
+  const RecordOfClassesTreeViewPage({Key? key}) : super(key: key);
 
   @override
-  _CreateClassesNewVersionPageState createState() =>
-      _CreateClassesNewVersionPageState();
+  _RecordOfClassesTreeViewPageState createState() =>
+      _RecordOfClassesTreeViewPageState();
 }
 
-class _CreateClassesNewVersionPageState
-    extends State<CreateClassesNewVersionPage> {
+class _RecordOfClassesTreeViewPageState
+    extends State<RecordOfClassesTreeViewPage> {
   late TreeViewController _controller;
   late Stream<List<ClassesType>> _classesTypeStream;
   late TreeNodeData _selectedTreeNodeData;
