@@ -6,7 +6,7 @@ import 'package:record_of_classes/models/teacher.dart';
 import 'group.dart';
 
 @Entity()
-class ClassesType extends DbModel{
+class ClassesType implements DbModel{
   late int id;
   late double priceForEach;
   late double priceForMonth;
@@ -30,7 +30,7 @@ class ClassesType extends DbModel{
     group.classesType.target = this;
     groups.add(group);
     group.addToDb();
-    objectBox.store.box<ClassesType>().put(this);
+    addToDb();
   }
 
   void removeGroup(int id){
@@ -51,6 +51,16 @@ class ClassesType extends DbModel{
     for(int i  = 0; i < groups.length; i++){
       removeGroup(groups[i].id);
     }
-    objectBox.store.box<ClassesType>().remove(id);
+    removeFromDb();
   }
+
+  @override
+  void addToDb() => objectBox.store.box<ClassesType>().put(this);
+
+  @override
+  getFromDb() => objectBox.store.box<ClassesType>().get(id);
+
+  @override
+  void update(updatedObject) => addToDb();
+
 }

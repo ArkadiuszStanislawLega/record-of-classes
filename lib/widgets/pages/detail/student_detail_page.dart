@@ -41,6 +41,8 @@ class _StudentDetailPage extends State<StudentDetailPage> {
         .arguments as Map;
     _student = _args[AppStrings.STUDENT];
     _updatingFunction = _args[AppStrings.FUNCTION];
+    _student.getFromDb();
+
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -135,7 +137,7 @@ class _StudentDetailPage extends State<StudentDetailPage> {
 
   void _addContact(Phone contact){
     setState(() {
-      _student.person.target!.addPhoneDb(contact);
+      _student.person.target!.addPhone(contact);
     });
   }
 

@@ -8,7 +8,7 @@ import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/models/teacher.dart';
 
 @Entity()
-class Person extends DbModel{
+class Person implements DbModel {
   late int id;
   late String name;
   late String surname;
@@ -24,10 +24,7 @@ class Person extends DbModel{
       this.name = '',
       this.surname = '',
       this.personType = 0,
-      this.type = PersonType.none}){
-    object = this;
-    super.setId = id;
-  }
+      this.type = PersonType.none});
 
   @override
   String toString() {
@@ -43,11 +40,6 @@ class Person extends DbModel{
     return type.index;
   }
 
-  void update(Person updatedPerson) {
-    name = updatedPerson.name;
-    surname = updatedPerson.surname;
-    objectBox.store.box<Person>().put(this);
-  }
 
   set dbPersonType(int value) {
     personType = value;
@@ -66,11 +58,11 @@ class Person extends DbModel{
     assert(PersonType.parent.index == 3);
   }
 
-  void addPhoneDb(Phone phone){
+  void addPhone(Phone phone) {
     phone.owner.target = this;
     phones.add(phone);
-    objectBox.store.box<Phone>().put(phone);
-    objectBox.store.box<Person>().put(this);
+    phone.addToDb();
+    addToDb();
   }
 
   void removeAllPhonesDb() {
@@ -83,16 +75,22 @@ class Person extends DbModel{
     personBox.put(this);
   }
 
+
   @override
-  void removeFromDb() {
-    removeAllPhonesDb();
-    objectBox.store.box<Person>().remove(id);
+  void update(updatedPerson) {
+    name = updatedPerson.name;
+    surname = updatedPerson.surname;
+    addToDb();
   }
 
   @override
-  void addToDb() {
-    // TODO: implement addToDb
+  void removeFromDb() {
+    removeAllPhonesDb();
+    removeFromDb();
   }
+
+  @override
+  void addToDb() => objectBox.store.box<Person>().put(this);
 
   @override
   getFromDb() => objectBox.store.box<Person>().get(id);

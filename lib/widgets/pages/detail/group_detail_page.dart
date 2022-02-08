@@ -34,7 +34,7 @@ class _DetailGroupPageState extends State<DetailGroupPage> {
       stream: _studentsStream,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          group = objectBox.store.box<Group>().get(group.id)!;
+          group.getFromDb();
           return Scaffold(
             body: CustomScrollView(
               slivers: [

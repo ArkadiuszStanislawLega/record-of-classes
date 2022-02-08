@@ -1,22 +1,22 @@
 import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/attendance.dart';
+import 'package:record_of_classes/models/db_model.dart';
 import 'package:record_of_classes/models/group.dart';
 
 @Entity()
-class Classes {
-  late int id = 0;
+class Classes implements DbModel {
+  late int id;
   late DateTime dateTime;
   final group = ToOne<Group>();
   final attendances = ToMany<Attendance>();
 
+  Classes({this.id = 0});
 
   @override
   String toString() {
     return 'Classes{id: $id, dateTime: $dateTime, group: ${group.target!.name}, attendances: ${attendances.length}}';
   }
-
-  void addToDb() => objectBox.store.box<Classes>().put(this);
 
   String get name => group.target!.name;
 
@@ -30,25 +30,31 @@ class Classes {
     return value;
   }
 
-  Classes? getFromDb(){
-    return objectBox.store.box<Classes>().get(id);
-  }
-
-  void removeFromDb(){
+  @override
+  void removeFromDb() {
     group.target!.classes.removeWhere((classes) => classes.id == id);
     for (var attendance in attendances) {
       attendance.removeFromDb();
     }
-    objectBox.store.box<Classes>().remove(id);
+    removeFromDb();
   }
 
-  void addAttendance(Attendance attendance){
+  void addAttendance(Attendance attendance) {
     attendances.add(attendance);
-    objectBox.store.box<Classes>().put(this);
+    addToDb();
   }
 
-  void removeClasses(int id){
+  void removeClasses(int id) {
     attendances.removeWhere((attendance) => attendance.id == id);
-    objectBox.store.box<Classes>().put(this);
+    addToDb();
   }
+
+  @override
+  void addToDb() => objectBox.store.box<Classes>().put(this);
+
+  @override
+  getFromDb() => objectBox.store.box<Classes>().get(id);
+
+  @override
+  void update(updatedObject) => addToDb();
 }

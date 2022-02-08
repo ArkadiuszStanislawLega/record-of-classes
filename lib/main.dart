@@ -165,6 +165,10 @@ class RecordOfClassesApp extends StatefulWidget {
 class _RecordOfClassesApp extends State<RecordOfClassesApp> {
   @override
   Widget build(BuildContext context) {
+    ClassesType ct = ClassesType(id: 64);
+    ct.getFromDb();
+    print(ct);
+
     return MaterialApp(
       title: 'Rejestr zajęć',
       theme: ThemeData(primarySwatch: Colors.blueGrey),

@@ -26,6 +26,7 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
   @override
   Widget build(BuildContext context) {
     widget._classes = ModalRoute.of(context)!.settings.arguments as Classes;
+    widget._classes.getFromDb();
 
     return Scaffold(
       body: CustomScrollView(

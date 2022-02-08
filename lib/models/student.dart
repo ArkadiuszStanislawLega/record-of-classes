@@ -10,7 +10,7 @@ import 'package:record_of_classes/models/phone.dart';
 import 'person.dart';
 
 @Entity()
-class Student extends DbModel {
+class Student implements DbModel {
   late int id;
   late int age;
   final person = ToOne<Person>();
@@ -20,12 +20,7 @@ class Student extends DbModel {
   final groups = ToMany<Group>();
   final attendancesList = ToMany<Attendance>();
 
-  Student({this.id = 0, required this.age}) {
-    object = this;
-    super.setId = id;
-  }
-
-
+  Student({this.id = 0, required this.age});
 
   @override
   String toString() {
@@ -35,19 +30,13 @@ class Student extends DbModel {
     return '$id $age - null person';
   }
 
-  @override
-  Student? getFromDb() => objectBox.store.box<Student>().get(id);
-
-  @override
-  void addToDb() => objectBox.store.box<Student>().put(this);
-
   String introduceYourself() => person.target!.introduceYourself();
 
   void addParentToDb(Parent parent) {
     parents.add(parent);
     parent.children.add(this);
-    objectBox.store.box<Student>().put(this);
-    objectBox.store.box<Parent>().put(parent);
+    addToDb();
+    parent.addToDb();
   }
 
   void removeParentFromDb(Parent parent) {
@@ -70,35 +59,34 @@ class Student extends DbModel {
 
   void fundAccountDb(double value) {
     account.target!.balance += value;
-    objectBox.store.box<Account>().put(account.target!);
+    account.target!.addToDb();
   }
 
   void removeSelectedParentRelation(Parent parent) {
     parent.children.removeWhere((s) => s.id == id);
     parents.removeWhere((p) => p.id == parent.id);
-    objectBox.store.box<Parent>().put(parent);
-    objectBox.store.box<Student>().put(this);
+    parent.addToDb();
+    addToDb();
   }
 
   void _removeAllParentRelations() {
     parents.clear();
   }
 
-
   void removeAttendance(int id) {
     attendancesList.removeWhere((attendance) => attendance.id == id);
-    objectBox.store.box<Student>().put(this);
+    addToDb();
   }
 
   void addAttendance(Attendance attendance) {
     attendancesList.add(attendance);
-    objectBox.store.box<Student>().put(this);
+    addToDb();
   }
 
   void updateValues(Student student) {
     person.target!.update(student.person.target!);
     age = student.age;
-    objectBox.store.box<Student>().put(this);
+    addToDb();
   }
 
   @override
@@ -112,5 +100,18 @@ class Student extends DbModel {
     box.put(this);
     box.remove(id);
     person.target!.removeFromDb();
+  }
+
+  @override
+  void addToDb() => objectBox.store.box<Student>().put(this);
+
+  @override
+  getFromDb() => objectBox.store.box<Student>().get(id);
+
+  @override
+  void update(updatedObject) {
+    person.target!.update(updatedObject.person.target!);
+    age = updatedObject.age;
+    addToDb();
   }
 }

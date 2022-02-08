@@ -7,7 +7,7 @@ import 'package:record_of_classes/models/student.dart';
 import 'bill.dart';
 
 @Entity()
-class Attendance extends DbModel{
+class Attendance implements DbModel{
   late int id = 0;
   late bool isPresent;
   final classes = ToOne<Classes>();
@@ -21,13 +21,20 @@ class Attendance extends DbModel{
     bill.target!.removeFromDb();
     classes.target!.removeClasses(id);
     student.target!.removeAttendance(id);
-    objectBox.store.box<Attendance>().remove(id);
+    removeFromDb();
   }
 
   void setBill(Bill createdBill) {
     bill.target = createdBill;
-    _commitChanges();
+    addToDb();
   }
 
-  void _commitChanges() => objectBox.store.box<Attendance>().put(this);
+  @override
+  void addToDb() => objectBox.store.box<Attendance>().put(this);
+
+  @override
+  getFromDb() => objectBox.store.box<Attendance>().get(id);
+
+  @override
+  void update(updatedObject) => addToDb();
 }

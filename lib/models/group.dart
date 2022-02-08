@@ -1,13 +1,14 @@
 import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/classes.dart';
+import 'package:record_of_classes/models/db_model.dart';
 import 'package:record_of_classes/models/student.dart';
 
 import 'address.dart';
 import 'classes_type.dart';
 
 @Entity()
-class Group {
+class Group implements DbModel{
   late int id;
   late String name;
   final address = ToOne<Address>();
@@ -21,11 +22,7 @@ class Group {
   }
 
   Group({this.id = 0, this.name = ''});
-
-  void addToDb() => objectBox.store.box<Group>().put(this);
-
-  Group? getFromDb() => objectBox.store.box<Group>().get(id);
-
+  
   void removeClasses(int id) {
     var selectedClasses = classes.firstWhere((element) => element.id == id);
     selectedClasses.removeFromDb();
@@ -36,9 +33,10 @@ class Group {
     classesToAdd.group.target = this;
     classes.add(classesToAdd);
     classesToAdd.addToDb();
-    objectBox.store.box<Group>().put(this);
+    addToDb();
   }
 
+  @override
   void removeFromDb() {
     address.target!.groups.removeWhere((group) => group.id == id);
     classesType.target!.groups.removeWhere((group) => group.id == id);
@@ -48,6 +46,16 @@ class Group {
     for (var element in classes) {
       element.removeFromDb();
     }
-    objectBox.store.box<Group>().remove(id);
+    removeFromDb();
   }
+
+  @override
+  void addToDb() => objectBox.store.box<Group>().put(this);
+
+  @override
+  getFromDb() => objectBox.store.box<Group>().get(id);
+
+  @override
+  void update(updatedObject)=> addToDb();
+
 }

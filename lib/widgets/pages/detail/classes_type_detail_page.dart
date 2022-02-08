@@ -41,6 +41,8 @@ class _DetailClassesTypeState extends State<DetailClassesType> {
       stream: _groupStream,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
+          _classesType.getFromDb();
+          // _classesType = objectBox.store.box<ClassesType>().get(_classesType.id)!;
           return Scaffold(
             floatingActionButton: SpeedDial(
               icon: Icons.settings,

@@ -28,33 +28,30 @@ class _ParentDetailPage extends State<ParentDetailPage> {
   @override
   Widget build(BuildContext context) {
     _parent = ModalRoute.of(context)!.settings.arguments as Parent;
-    _parent = _store.box<Parent>().get(_parent.id)!;
+    _parent.getFromDb();
 
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        floatingActionButton: SpeedDial(
-          icon: Icons.add,
-          backgroundColor: Colors.amber,
-          children: [
-            SpeedDialChild(
-                child: const Icon(Icons.phone),
-                label: AppStrings.ADD_CONTACT,
-                backgroundColor: Colors.amberAccent,
-                onTap: _navigateToAddPhone),
-            SpeedDialChild(
-                child: const Icon(Icons.edit),
-                label: AppStrings.EDIT,
-                backgroundColor: Colors.amberAccent,
-                onTap: _navigateToEditParent),
-          ],
-        ),
-        body: CustomScrollView(
-          slivers: [
-            _customAppBar(),
-            _content(),
-          ],
-        ),
+    return Scaffold(
+      floatingActionButton: SpeedDial(
+        icon: Icons.add,
+        backgroundColor: Colors.amber,
+        children: [
+          SpeedDialChild(
+              child: const Icon(Icons.phone),
+              label: AppStrings.ADD_CONTACT,
+              backgroundColor: Colors.amberAccent,
+              onTap: _navigateToAddPhone),
+          SpeedDialChild(
+              child: const Icon(Icons.edit),
+              label: AppStrings.EDIT,
+              backgroundColor: Colors.amberAccent,
+              onTap: _navigateToEditParent),
+        ],
+      ),
+      body: CustomScrollView(
+        slivers: [
+          _customAppBar(),
+          _content(),
+        ],
       ),
     );
   }

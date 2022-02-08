@@ -1,31 +1,33 @@
 import 'package:objectbox/objectbox.dart';
+import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/db_model.dart';
 
 import 'package:record_of_classes/models/student.dart';
 
 import 'person.dart';
 
-
 @Entity()
-class Parent extends DbModel{
-  late int id = 0;
+class Parent implements DbModel {
+  late int id;
   final person = ToOne<Person>();
   final children = ToMany<Student>();
 
+  Parent({this.id = 0});
+
   @override
   String toString() {
-    if (person.target != null){
+    if (person.target != null) {
       '$id,  ${person.target!.surname} ${person.target!.name}';
     }
     return '$id';
   }
 
-  String introduceYourself(){
+  String introduceYourself() {
     return person.target!.introduceYourself();
   }
 
   @override
-  void removeFromDb(){
+  void removeFromDb() {
     // TODO: implement removeFromDb
     // var parentBox = objectBox.store.box<Parent>();
     // var personBox = objectBox.store.box<Person>();
@@ -39,4 +41,13 @@ class Parent extends DbModel{
     // parentBox.remove(id);
     // person.target!.removeFromDb();
   }
+
+  @override
+  void addToDb() => objectBox.store.box<Parent>().put(this);
+
+  @override
+  getFromDb() => objectBox.store.box<Parent>().get(id);
+
+  @override
+  void update(updatedObject) => addToDb();
 }

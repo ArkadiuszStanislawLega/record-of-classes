@@ -6,7 +6,7 @@ import 'package:record_of_classes/models/student.dart';
 import 'bill.dart';
 
 @Entity()
-class Account extends DbModel{
+class Account implements DbModel{
   late int id;
   late double balance;
   final student = ToOne<Student>();
@@ -57,18 +57,26 @@ class Account extends DbModel{
     }
     bills.clear();
     student.target = null;
-    var box = objectBox.store.box<Account>();
-    box.put(this);
-    box.remove(id);
+    addToDb();
+    removeFromDb();
   }
 
   void addValueToBalance(double value) {
     balance += value;
-    objectBox.store.box<Account>().put(this);
+    addToDb();
   }
 
   void addBill(Bill bill) {
     bills.add(bill);
-    objectBox.store.box<Account>().put(this);
+    addToDb();
   }
+
+  @override
+  void addToDb() => objectBox.store.box<Account>().put(this);
+
+  @override
+  getFromDb() => objectBox.store.box<Account>().get(id);
+
+  @override
+  void update(updateObject) => addToDb();
 }

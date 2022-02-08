@@ -6,12 +6,14 @@ import 'package:record_of_classes/models/db_model.dart';
 import 'account.dart';
 
 @Entity()
-class Bill extends DbModel {
-  late int id = 0;
+class Bill implements DbModel {
+  late int id;
   late bool isPaid;
   late double price;
   final studentAccount = ToOne<Account>();
   final attendance = ToOne<Attendance>();
+
+  Bill({this.id = 0});
 
   @override
   String toString() {
@@ -20,20 +22,28 @@ class Bill extends DbModel {
 
   void setIsPaidInDb() {
     isPaid = true;
-    objectBox.store.box<Bill>().put(this);
+    addToDb();
   }
 
   void setIsUnpaidInDb() {
     isPaid = false;
-    objectBox.store.box<Bill>().put(this);
+    addToDb();
   }
 
   @override
   void removeFromDb() {
     studentAccount.target = null;
     attendance.target = null;
-    var box = objectBox.store.box<Bill>();
-    box.put(this);
-    box.remove(id);
+    addToDb();
+    removeFromDb();
   }
+
+  @override
+  void addToDb() => objectBox.store.box<Bill>().put(this);
+
+  @override
+  getFromDb() => objectBox.store.box<Bill>().get(id);
+
+  @override
+  void update(updatedObject) => addToDb();
 }
