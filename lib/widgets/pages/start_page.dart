@@ -53,8 +53,8 @@ class _StartPageViewView extends State<StartPageView> {
               icon: const Icon(Icons.book)),
           _button(
               onPressed: _navigateToCreateClassesNewVersion,
-              title: 'nowa wesja',
-              icon: const Icon(Icons.create))
+              title: AppStrings.MANAGEMENT.toLowerCase(),
+              icon: const Icon(Icons.account_tree))
         ],
       ),
       drawer: _mainMenu(),

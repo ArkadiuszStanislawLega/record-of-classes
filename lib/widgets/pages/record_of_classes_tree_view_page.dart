@@ -19,7 +19,7 @@ import 'package:record_of_classes/widgets/templates/icon_in_card_template.dart';
 import 'package:record_of_classes/widgets/templates/classes_type_tree_view_item_expanded.dart';
 
 class RecordOfClassesTreeViewPage extends StatefulWidget {
-  const RecordOfClassesTreeViewPage({Key? key}) : super(key: key);
+  RecordOfClassesTreeViewPage({Key? key}) : super(key: key);
 
   @override
   _RecordOfClassesTreeViewPageState createState() =>
@@ -41,7 +41,7 @@ class _RecordOfClassesTreeViewPageState
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(AppStrings.CREATED_NEW_CLASSES),
+        title: const Text(AppStrings.MANAGEMENT),
       ),
       body: StreamBuilder<List<ClassesType>>(
         stream: _classesTypeStream,

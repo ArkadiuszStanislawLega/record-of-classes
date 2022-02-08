@@ -36,6 +36,7 @@ class AppStrings {
       CLASSES_CONDUCTED = 'Przeprowadzone zajęcia',
       CURRENT_STATE_OF_BALANCE = 'Aktualny stan konta',
       MANAGE_CLASS_TYPES = 'Zarządzanie typami zajęć',
+      MANAGEMENT = 'Zarządzanie',
       MANAGE_GROUPS = 'Zarządzanie grupami',
       MANAGE_CLASSES = 'Zarządzanie przeprowadzonymi zajęciami',
       MANAGE_FINANCES = 'Zarządzanie finansami',
