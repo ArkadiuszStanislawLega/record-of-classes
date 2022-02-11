@@ -86,7 +86,14 @@ class _DetailGroupPageState extends State<DetailGroupPage> {
           arguments: group);
 
   _navigateToEditGroupPage() =>
-      Navigator.pushNamed(context, AppUrls.EDIT_GROUP, arguments: group);
+      Navigator.pushNamed(context, AppUrls.EDIT_GROUP, arguments: {AppStrings.GROUP : group,
+      AppStrings.FUNCTION : updateGroup});
+
+  void updateGroup(Group updated){
+    setState(() {
+      group = updated;
+    });
+  }
 
   SliverAppBar _customAppBar() {
     return SliverAppBar(

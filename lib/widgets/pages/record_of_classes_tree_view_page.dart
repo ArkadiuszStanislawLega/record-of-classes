@@ -44,6 +44,7 @@ class _RecordOfClassesTreeViewPageState
         title: const Text(AppStrings.MANAGEMENT),
       ),
       body: StreamBuilder<List<ClassesType>>(
+
         stream: _classesTypeStream,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
