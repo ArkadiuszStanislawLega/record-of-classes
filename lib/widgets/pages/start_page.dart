@@ -17,9 +17,13 @@ class _StartPageViewView extends State<StartPageView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Zarządzanie firmą', style: TextStyle(
-          fontFamily: 'ArchitectsDaughter'
-        ),),
+        title: const Text(
+          AppStrings.APP_TITLE,
+          style: TextStyle(
+            fontSize: 40,
+            fontFamily: AppStrings.FONT_LUCIAN_SCHOENSHRIFT,
+          ),
+        ),
       ),
       body: GridView.count(
         primary: false,
@@ -29,17 +33,15 @@ class _StartPageViewView extends State<StartPageView> {
         crossAxisCount: 3,
         children: <Widget>[
           _button(
-            onPressed: _navigateToStudentsMainPage,
-            title: AppStrings.STUDENTS_LIST.toLowerCase(),
-            icon: const Icon(Icons.person),
-            iconColor: Colors.orange.shade200
-          ),
+              onPressed: _navigateToStudentsMainPage,
+              title: AppStrings.STUDENTS_LIST.toLowerCase(),
+              icon: const Icon(Icons.person),
+              iconColor: Colors.orange.shade200),
           _button(
               onPressed: _navigateFinanceMainPage,
               title: AppStrings.FINANCE.toLowerCase(),
               icon: const Icon(Icons.monetization_on),
               iconColor: Colors.lightBlue.shade200),
-
           _button(
               onPressed: _navigateToCreateClassesNewVersion,
               title: AppStrings.MANAGEMENT.toLowerCase(),
@@ -54,7 +56,7 @@ class _StartPageViewView extends State<StartPageView> {
               onPressed: _navigateGroupsMainPage,
               title: AppStrings.GROUPS.toLowerCase(),
               icon: const Icon(Icons.group),
-              iconColor: Colors.yellowAccent.shade200),
+              iconColor: Colors.purpleAccent.shade200),
           _button(
               onPressed: _navigatorClassesMainPage,
               title: AppStrings.CLASSES.toLowerCase(),
@@ -64,14 +66,14 @@ class _StartPageViewView extends State<StartPageView> {
               onPressed: _navigateToPhoneBook,
               title: AppStrings.PHONES.toLowerCase(),
               icon: const Icon(Icons.book),
-              iconColor: Colors.tealAccent.shade200),
+              iconColor: Colors.brown.shade200),
         ],
       ),
       drawer: _mainMenu(),
     );
   }
 
-  _navigateToCreateClassesNewVersion(){
+  _navigateToCreateClassesNewVersion() {
     Navigator.pushNamed(context, AppUrls.CREATE_CLASSES_NEW_VERSION);
   }
 
@@ -106,14 +108,21 @@ class _StartPageViewView extends State<StartPageView> {
   void _navigateToAboutPage() => Navigator.pushNamed(context, AppUrls.ABOUT);
 
   Widget _button(
-      {required Icon icon, required String title, Function()? onPressed, Color iconColor = Colors.white}) {
+      {required Icon icon,
+      required String title,
+      Function()? onPressed,
+      Color iconColor = Colors.white}) {
     return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        primary: iconColor, // background
+        onPrimary: Colors.white, // foreground
+      ),
       onPressed: onPressed,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           IconButton(
-            color: iconColor,
+            color: Colors.white,
             iconSize: 50,
             onPressed: onPressed,
             icon: icon,
@@ -124,8 +133,8 @@ class _StartPageViewView extends State<StartPageView> {
               title,
               style: const TextStyle(
                   color: Colors.white,
-                  fontSize: 11,
-                  fontFamily: 'CroissantOne',
+                  fontSize: 15,
+                  fontFamily: AppStrings.FONT_NEW_ATHENA_UNICODE,
                   fontWeight: FontWeight.bold),
             ),
           )

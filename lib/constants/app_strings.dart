@@ -1,5 +1,6 @@
 class AppStrings {
   static const String NAME = 'Imię',
+      APP_TITLE = 'Pomocnik',
       SURNAME = 'Nazwisko',
       ALPHABETIC_ASCENDING = 'Alfabetycznie rosnąco',
       ALPHABETIC_DESCENDING = 'Alfabetycznie malejąco',
@@ -75,6 +76,11 @@ class AppStrings {
       FUND_ACCOUNT = 'Zasil konto',
       FUND = 'Zasil',
       FUNCTION = 'funkcja',
+      FONT_ARCHITECTS_DAUGHTER = 'ArchitectsDaughter',
+      FONT_CROISSANT_ONE = 'CroissantOne',
+      FONT_LIBERATION_SERIF = 'LiberationSerif',
+      FONT_LUCIAN_SCHOENSHRIFT = 'LucianSchoenschriftCAT',
+      FONT_NEW_ATHENA_UNICODE = 'NewNthenaUnicode',
       ADD_FUNCTION = 'add function',
       REMOVE_FUNCTION = 'remove function',
       FIND_CONTACT = 'Szukaj kontaktu',

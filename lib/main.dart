@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/constants/app_urls.dart';
 import 'package:record_of_classes/enumerators/PersonType.dart';
 import 'package:record_of_classes/models/account.dart';
@@ -166,8 +167,12 @@ class _RecordOfClassesApp extends State<RecordOfClassesApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      // theme:ThemeData(
+      //   scaffoldBackgroundColor: Colors.white70,
+      //   primarySwatch: Colors.indigo,
+      //   fontFamily: AppStrings.FONT_NEW_ATHENA_UNICODE,
+      // ),
       title: 'Rejestr zajęć',
-      theme: ThemeData(primarySwatch: Colors.blueGrey),
       initialRoute: AppUrls.HOME,
       routes: {
         AppUrls.EMPTY: (context) => const StartPageView(),

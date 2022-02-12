@@ -102,5 +102,17 @@ flutter:
     - family: CroissantOne
       fonts:
         - asset: fonts/CroissantOne-Regular.ttf
+    - family: LiberationSerif
+      fonts:
+        - asset: fonts/LiberationSerif-Bold.ttf
+        - asset: fonts/LiberationSerif-BoldItalic.ttf
+        - asset: fonts/LiberationSerif-Italic.ttf
+        - asset: fonts/LiberationSerif-Regular.ttf
+    - family: LucianSchoenschriftCAT
+      fonts:
+        - asset: fonts/Lucian Schoenschrift CAT.ttf
+    - family: NewNthenaUnicode
+      fonts:
+        - asset: fonts/new_athena_unicode.ttf
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
