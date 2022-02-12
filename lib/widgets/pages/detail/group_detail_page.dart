@@ -20,7 +20,9 @@ class DetailGroupPage extends StatefulWidget {
 enum ListOnPage { participants, classes }
 
 class _DetailGroupPageState extends State<DetailGroupPage> {
-  late Group group;
+  late Group _group;
+  late Function? _updateGroupFunction;
+  late Map _args;
   ListOnPage _currentListOnPage = ListOnPage.classes;
 
   late Stream<List<Student>> _studentsStream;
@@ -29,12 +31,14 @@ class _DetailGroupPageState extends State<DetailGroupPage> {
 
   @override
   Widget build(BuildContext context) {
-    group = ModalRoute.of(context)!.settings.arguments as Group;
+    _args = ModalRoute.of(context)!.settings.arguments as Map;
+    _group = _args[AppStrings.GROUP];
+    _updateGroupFunction = _args[AppStrings.FUNCTION];
     return StreamBuilder<List<Student>>(
       stream: _studentsStream,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          group.getFromDb();
+          _group.getFromDb();
           return Scaffold(
             body: CustomScrollView(
               slivers: [
@@ -71,27 +75,32 @@ class _DetailGroupPageState extends State<DetailGroupPage> {
     );
   }
 
-  void _navigateToAddClasses() => Navigator.pushNamed(
-      context, AppUrls.ADD_CLASSES_TO_GROUP,
-      arguments: {AppStrings.GROUP: group, AppStrings.FUNCTION: _addClassesToGroup});
+  void _navigateToAddClasses() =>
+      Navigator.pushNamed(context, AppUrls.ADD_CLASSES_TO_GROUP, arguments: {
+        AppStrings.GROUP: _group,
+        AppStrings.FUNCTION: _addClassesToGroup
+      });
 
   void _addClassesToGroup(Classes classes) {
     setState(() {
-      group.addClasses(classes);
+      _group.addClasses(classes);
     });
   }
 
   void _navigateToAddStudent() =>
       Navigator.pushNamed(context, AppUrls.ADD_STUDENT_TO_GROUP,
-          arguments: group);
+          arguments: _group);
 
-  _navigateToEditGroupPage() =>
-      Navigator.pushNamed(context, AppUrls.EDIT_GROUP, arguments: {AppStrings.GROUP : group,
-      AppStrings.FUNCTION : updateGroup});
+  _navigateToEditGroupPage() => Navigator.pushNamed(context, AppUrls.EDIT_GROUP,
+      arguments: {AppStrings.GROUP: _group, AppStrings.FUNCTION: _updateGroup});
 
-  void updateGroup(Group updated){
+  void _updateGroup(Group updated) {
+    if (_updateGroupFunction != null) {
+      _updateGroupFunction!(updated);
+    }
+
     setState(() {
-      group = updated;
+      _group = updated;
     });
   }
 
@@ -182,15 +191,15 @@ class _DetailGroupPageState extends State<DetailGroupPage> {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) => ClassesListItemTemplate(
-          classes: group.classes.elementAt(index),
+          classes: _group.classes.elementAt(index),
           removeFromDbFunction: _removeClassesFromDb,
         ),
-        childCount: group.classes.length,
+        childCount: _group.classes.length,
       ),
     );
   }
 
-  void _removeClassesFromDb(Classes classes){
+  void _removeClassesFromDb(Classes classes) {
     setState(() {
       classes.removeFromDb();
     });
@@ -200,11 +209,10 @@ class _DetailGroupPageState extends State<DetailGroupPage> {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) => StudentsInGroupListItemTemplate(
-          group: group,
-          student: group.students.elementAt(index),
-
+          group: _group,
+          student: _group.students.elementAt(index),
         ),
-        childCount: group.students.length,
+        childCount: _group.students.length,
       ),
     );
   }
@@ -218,16 +226,16 @@ class _DetailGroupPageState extends State<DetailGroupPage> {
             _pageTitle(),
             OneRowPropertyTemplate(
                 title: AppStrings.CLASSES_TYPE,
-                value: group.classesType.target!.name),
+                value: _group.classesType.target!.name),
             OneRowPropertyTemplate(
                 title: AppStrings.CLASSES_ADDRESS,
-                value: group.address.target.toString()),
+                value: _group.address.target.toString()),
             OneRowPropertyTemplate(
                 title: AppStrings.NUMBER_OF_STUDENTS,
-                value: group.students.length.toString()),
+                value: _group.students.length.toString()),
             OneRowPropertyTemplate(
                 title: AppStrings.NUMBER_OF_CLASSES,
-                value: group.classes.length.toString()),
+                value: _group.classes.length.toString()),
           ],
         ),
       ),
@@ -240,7 +248,7 @@ class _DetailGroupPageState extends State<DetailGroupPage> {
       child: Column(
         children: [
           Text(
-            group.name,
+            _group.name,
             style: const TextStyle(fontSize: 25, color: Colors.white),
           ),
           Text(

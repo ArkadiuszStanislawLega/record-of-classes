@@ -10,26 +10,34 @@ import 'package:record_of_classes/widgets/templates/item_content_template.dart';
 import 'package:record_of_classes/widgets/templates/item_title_template.dart';
 import 'package:record_of_classes/widgets/templates/lists/property_in_one_row.dart';
 
-class GroupTreeViewItemExpanded extends StatelessWidget {
-  const GroupTreeViewItemExpanded({Key? key, required this.group})
+class GroupTreeViewItemExpanded extends StatefulWidget {
+  GroupTreeViewItemExpanded({Key? key, required this.group})
       : super(key: key);
 
-  final Group group;
+  late Group group;
 
+  @override
+  State<StatefulWidget> createState() {
+    return _GroupTreeViewItemExpanded();
+  }
+}
+
+class _GroupTreeViewItemExpanded extends State<GroupTreeViewItemExpanded> {
   @override
   Widget build(BuildContext context) {
     return GroupItemTemplate(
       content: Column(
-        children: [_groupItemTitle(context), _groupItemContent(group)],
+        children: [_groupItemTitle(context), _groupItemContent(widget.group)],
       ),
     );
   }
+
 
   Widget _groupItemTitle(BuildContext context) {
     return ItemTitleTemplate(
       widgets: [
         Text(
-          group.name,
+          widget.group.name,
           style: const TextStyle(
               fontWeight: FontWeight.bold, fontSize: AppDoubles.titleFontSize),
         ),
@@ -45,7 +53,15 @@ class GroupTreeViewItemExpanded extends StatelessWidget {
   }
 
   void _navigateToGroupDetailPage(BuildContext context) =>
-      Navigator.pushNamed(context, AppUrls.DETAIL_GROUP, arguments: group);
+      Navigator.pushNamed(context, AppUrls.DETAIL_GROUP,
+          arguments: {AppStrings.GROUP: widget.group,
+            AppStrings.FUNCTION: _updateGroup});
+
+  void _updateGroup(Group updated) {
+    setState(() {
+      widget.group = updated;
+    });
+  }
 
   Widget _groupItemContent(Group group) {
     return ItemContentTemplate(
@@ -65,4 +81,5 @@ class GroupTreeViewItemExpanded extends StatelessWidget {
       ],
     );
   }
+
 }

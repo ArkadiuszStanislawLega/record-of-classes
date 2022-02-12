@@ -44,6 +44,7 @@ class _EditGroupPageState extends State<EditGroupPage> {
   void _createGroupButtonOnClickActions() {
       if(_isSomeValuesAreChange()) {
         _updateDatabase();
+
         if(_update != null){
           _update!(_group);
         }
@@ -91,6 +92,7 @@ class _EditGroupPageState extends State<EditGroupPage> {
   }
 
   void _updateDatabase(){
+    print('update');
     _group.addToDb();
     _group.address.target!.addToDb();
   }

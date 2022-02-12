@@ -16,8 +16,6 @@ class GroupListItemTemplate extends StatefulWidget {
 }
 
 class _GroupListItemTemplateState extends State<GroupListItemTemplate> {
-  late Store _store;
-
   @override
   Widget build(BuildContext context) {
     return Slidable(
@@ -54,8 +52,16 @@ class _GroupListItemTemplateState extends State<GroupListItemTemplate> {
   }
 
   void _navigateToGroupProfile() =>
-      Navigator.pushNamed(context, AppUrls.DETAIL_GROUP,
-          arguments: widget.group);
+      Navigator.pushNamed(context, AppUrls.DETAIL_GROUP, arguments: {
+        AppStrings.GROUP: widget.group,
+        AppStrings.FUNCTION: _updateGroup
+      });
+
+  void _updateGroup(Group updated) {
+    setState(() {
+      widget.group = updated;
+    });
+  }
 
   void _showInfo(BuildContext context) => SnackBarInfoTemplate(
       context: context,

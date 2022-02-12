@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/constants/app_urls.dart';
 import 'package:record_of_classes/models/group.dart';
 
@@ -25,5 +26,5 @@ class _StudentGroupListItemTemplateState
 
   void _navigateToGroupProfile() =>
       Navigator.pushNamed(context, AppUrls.DETAIL_GROUP,
-          arguments: widget.group);
+          arguments: {AppStrings.GROUP : widget.group});
 }
