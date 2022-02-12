@@ -187,7 +187,7 @@ class _RecordOfClassesApp extends State<RecordOfClassesApp> {
         AppUrls.ADD_SIBLING: (context) => const AddSiblingsToStudentPage(),
         AppUrls.CREATE_CLASSES_TYPE: (context) => CreateClassesTypePage(),
         AppUrls.DETAIL_CLASSES_TYPE: (context) => DetailClassesType(),
-        AppUrls.EDIT_CLASSES_TYPE: (context) => EditClassesTypePage(),
+        AppUrls.EDIT_CLASSES_TYPE: (context) => const EditClassesTypePage(),
         AppUrls.CREATE_GROUP: (context) => const CreateGroupPage(),
         AppUrls.EDIT_GROUP: (context) => const EditGroupPage(),
         AppUrls.DETAIL_GROUP: (context) => const DetailGroupPage(),

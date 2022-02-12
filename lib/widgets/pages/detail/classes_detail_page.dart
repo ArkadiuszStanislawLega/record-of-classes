@@ -22,10 +22,14 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
   bool _isWrittenOpen = true;
 
   static const double titleHeight = 250.0;
+  late Map _args;
+  late Function? _parentUpdateFunction;
 
   @override
   Widget build(BuildContext context) {
-    widget._classes = ModalRoute.of(context)!.settings.arguments as Classes;
+    _args = ModalRoute.of(context)!.settings.arguments as Map;
+    _parentUpdateFunction = _args[AppStrings.FUNCTION];
+    widget._classes = _args[AppStrings.CLASSES];
     widget._classes.getFromDb();
 
     return Scaffold(
@@ -175,6 +179,17 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
   SliverList _content() =>
       _isWrittenOpen ? _studentsSliverList() : _attendancesSliverList();
 
+  SliverList _studentsSliverList() {
+    List<Student> studentsList = _filteredStudentsList();
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+        (BuildContext context, int index) =>
+            _attendanceItemList(studentsList.elementAt(index)),
+        childCount: studentsList.length,
+      ),
+    );
+  }
+
   List<Student> _filteredStudentsList() {
     List<Student> studentsList = [];
     for (var student in widget._classes.group.target!.students) {
@@ -189,17 +204,6 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
       }
     }
     return studentsList;
-  }
-
-  SliverList _studentsSliverList() {
-    List<Student> studentsList = _filteredStudentsList();
-    return SliverList(
-      delegate: SliverChildBuilderDelegate(
-        (BuildContext context, int index) =>
-            _attendanceItemList(studentsList.elementAt(index)),
-        childCount: studentsList.length,
-      ),
-    );
   }
 
   SliverList _attendancesSliverList() {
@@ -226,7 +230,7 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
           onTap: () {
             setState(() {
               attendance.isPresent
-                  ? attendance.removeFromDb()
+                  ? _removeAttendance(attendance)
                   : _makeAttendancesInClasses(attendance.student.target!);
             });
           },
@@ -242,38 +246,14 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
     );
   }
 
-  int _numberOfUnpaidBills(List<Bill> bills) {
-    int counter = 0;
-    for (var bill in bills) {
-      if (!bill.isPaid) {
-        counter++;
-      }
-    }
-    return counter;
-  }
+  void _removeAttendance(Attendance attendance) {
+    setState(() {
+      attendance.removeFromDb();
+    });
 
-  Widget _attendanceItemList(Student student) {
-    return Slidable(
-      actionPane: const SlidableDrawerActionPane(),
-      secondaryActions: [
-        IconSlideAction(
-          caption: AppStrings.PRESENT,
-          color: Colors.green,
-          icon: Icons.check,
-          onTap: () {
-            setState(() {
-              _makeAttendancesInClasses(student);
-            });
-          },
-        ),
-      ],
-      child: ListTile(
-        title: Text(student.introduceYourself()),
-        onTap: () {},
-        subtitle: Text(
-            '${AppStrings.UNPAID_CLASSES}: ${_numberOfUnpaidBills(student.account.target!.bills)}'),
-      ),
-    );
+    if (_parentUpdateFunction != null) {
+      _parentUpdateFunction!(widget._classes);
+    }
   }
 
   void _makeAttendancesInClasses(Student student) {
@@ -294,6 +274,10 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
         student: student,
         attendance: attendance,
         currentClasses: currentClasses);
+
+    if (_parentUpdateFunction != null) {
+      _parentUpdateFunction!(widget._classes);
+    }
   }
 
   Attendance _createAttendance(Student student) {
@@ -324,5 +308,39 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
       required Classes currentClasses}) {
     student.addAttendance(attendance);
     currentClasses.addAttendance(attendance);
+  }
+
+  Widget _attendanceItemList(Student student) {
+    return Slidable(
+      actionPane: const SlidableDrawerActionPane(),
+      secondaryActions: [
+        IconSlideAction(
+          caption: AppStrings.PRESENT,
+          color: Colors.green,
+          icon: Icons.check,
+          onTap: () {
+            setState(() {
+              _makeAttendancesInClasses(student);
+            });
+          },
+        ),
+      ],
+      child: ListTile(
+        title: Text(student.introduceYourself()),
+        onTap: () {},
+        subtitle: Text(
+            '${AppStrings.UNPAID_CLASSES}: ${_numberOfUnpaidBills(student.account.target!.bills)}'),
+      ),
+    );
+  }
+
+  int _numberOfUnpaidBills(List<Bill> bills) {
+    int counter = 0;
+    for (var bill in bills) {
+      if (!bill.isPaid) {
+        counter++;
+      }
+    }
+    return counter;
   }
 }

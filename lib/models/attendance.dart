@@ -21,7 +21,7 @@ class Attendance implements DbModel{
     bill.target!.removeFromDb();
     classes.target!.removeClasses(id);
     student.target!.removeAttendance(id);
-    removeFromDb();
+    objectBox.store.box<Attendance>().remove(id);
   }
 
   void setBill(Bill createdBill) {

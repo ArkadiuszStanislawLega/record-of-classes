@@ -35,7 +35,7 @@ class Bill implements DbModel {
     studentAccount.target = null;
     attendance.target = null;
     addToDb();
-    removeFromDb();
+    objectBox.store.box<Bill>().remove(id);
   }
 
   @override

@@ -12,10 +12,10 @@ import 'package:record_of_classes/widgets/templates/item_title_template.dart';
 import 'package:record_of_classes/widgets/templates/lists/property_in_one_row.dart';
 
 class ClassesTreeViewItemExpanded extends StatefulWidget {
-  const ClassesTreeViewItemExpanded({Key? key, required this.classes})
+  ClassesTreeViewItemExpanded({Key? key, required this.classes})
       : super(key: key);
 
-  final Classes classes;
+  late Classes classes;
 
   @override
   State<StatefulWidget> createState() {
@@ -90,5 +90,12 @@ class _ClassesTreeViewItemExpanded extends State<ClassesTreeViewItemExpanded> {
 
   void _navigateToClassesDetailPage(BuildContext context) =>
       Navigator.pushNamed(context, AppUrls.DETAIL_CLASSES,
-          arguments: widget.classes);
+          arguments: {AppStrings.CLASSES : widget.classes,
+          AppStrings.FUNCTION : _updateClasses});
+
+  void _updateClasses(Classes updated){
+    setState(() {
+      widget.classes = updated;
+    });
+  }
 }
