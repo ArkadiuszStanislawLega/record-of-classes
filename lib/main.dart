@@ -165,10 +165,6 @@ class RecordOfClassesApp extends StatefulWidget {
 class _RecordOfClassesApp extends State<RecordOfClassesApp> {
   @override
   Widget build(BuildContext context) {
-    ClassesType ct = ClassesType(id: 64);
-    ct.getFromDb();
-    print(ct);
-
     return MaterialApp(
       title: 'Rejestr zajęć',
       theme: ThemeData(primarySwatch: Colors.blueGrey),
@@ -204,8 +200,8 @@ class _RecordOfClassesApp extends State<RecordOfClassesApp> {
         AppUrls.GROUPS_MAIN_PAGE: (context) => const GroupsMainPage(),
         AppUrls.ADD_PHONE: (context) => CreatePhonePage(),
         AppUrls.EDIT_PHONE: (context) => EditPhonePage(),
-        AppUrls.PHONE_BOOK: (context) => PhoneBookPage(),
-        AppUrls.FUND_ACCOUNT: (context) => FundAccountPage(),
+        AppUrls.PHONE_BOOK: (context) => const PhoneBookPage(),
+        AppUrls.FUND_ACCOUNT: (context) => const FundAccountPage(),
         AppUrls.CREATE_CLASSES_NEW_VERSION: (context) =>
             RecordOfClassesTreeViewPage(),
         '/test': (context) => Test()
@@ -216,10 +212,9 @@ class _RecordOfClassesApp extends State<RecordOfClassesApp> {
 
 String formatTime(DateTime dateTime) {
   int hour = dateTime.hour,
-      minutes = dateTime.minute,
-      seconds = dateTime.second;
+      minutes = dateTime.minute;
 
-  return '${hour < 10 ? '0${hour}' : hour}:${minutes < 10 ? '0${minutes}' : minutes}';
+  return '${hour < 10 ? '0$hour' : hour}:${minutes < 10 ? '0$minutes' : minutes}';
 }
 
 String formatDate(DateTime dateTime,{bool isTimeOn = false}) {
