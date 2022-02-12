@@ -10,11 +10,19 @@ import 'package:record_of_classes/widgets/templates/item_title_template.dart';
 
 import 'lists/property_in_one_row.dart';
 
-class ClassesTypeTreeViewItemExpanded extends StatelessWidget {
-  const ClassesTypeTreeViewItemExpanded({Key? key, required this.classesType})
+class ClassesTypeTreeViewItemExpanded extends StatefulWidget {
+  ClassesTypeTreeViewItemExpanded({Key? key, required this.classesType})
       : super(key: key);
-  final ClassesType classesType;
+  late ClassesType classesType;
 
+  @override
+  State<StatefulWidget> createState() {
+    return _ClassesTypeTreeViewItemExpanded();
+  }
+}
+
+class _ClassesTypeTreeViewItemExpanded
+    extends State<ClassesTypeTreeViewItemExpanded> {
   @override
   Widget build(BuildContext context) {
     return ClassesTypeItemTemplate(
@@ -32,7 +40,7 @@ class ClassesTypeTreeViewItemExpanded extends StatelessWidget {
           padding: const EdgeInsets.only(
               top: AppDoubles.paddings, bottom: AppDoubles.paddings),
           child: Text(
-            classesType.name,
+            widget.classesType.name,
             style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: AppDoubles.titleFontSize),
@@ -40,7 +48,7 @@ class ClassesTypeTreeViewItemExpanded extends StatelessWidget {
         ),
         InkWell(
           onTap: () => _navigateToClassTypeDetailPage(
-              context: context, classesType: classesType),
+              context: context, classesType: widget.classesType),
           child: _icon(
               Icons.arrow_forward_ios_sharp, AppColors.navigateArrowBackground,
               foreground: AppColors.navigateButtonForeground),
@@ -67,14 +75,14 @@ class ClassesTypeTreeViewItemExpanded extends StatelessWidget {
         PropertyInOneRow(
             property: AppStrings.PRICE_FOR_MONTH,
             value:
-                '${classesType.priceForMonth.toString()}${AppStrings.CURRENCY}'),
+                '${widget.classesType.priceForMonth.toString()}${AppStrings.CURRENCY}'),
         PropertyInOneRow(
             property: AppStrings.PRICE_FOR_EACH,
             value:
-                '${classesType.priceForEach.toString()}${AppStrings.CURRENCY}'),
+                '${widget.classesType.priceForEach.toString()}${AppStrings.CURRENCY}'),
         PropertyInOneRow(
             property: AppStrings.NUMBER_OF_GROUPS,
-            value: classesType.groups.length.toString()),
+            value: widget.classesType.groups.length.toString()),
       ],
     );
   }
@@ -82,6 +90,13 @@ class ClassesTypeTreeViewItemExpanded extends StatelessWidget {
   void _navigateToClassTypeDetailPage(
       {required BuildContext context, required ClassesType classesType}) {
     Navigator.pushNamed(context, AppUrls.DETAIL_CLASSES_TYPE,
-        arguments: classesType);
+        arguments: {AppStrings.CLASSES_TYPE: classesType,
+        AppStrings.FUNCTION : _updateClassesType});
+  }
+
+  void _updateClassesType(ClassesType updated) {
+    setState(() {
+      widget.classesType = updated;
+    });
   }
 }

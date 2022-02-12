@@ -7,7 +7,7 @@ import 'package:record_of_classes/widgets/templates/add_new_classes_type_templat
 import 'package:record_of_classes/widgets/templates/snack_bar_info_template.dart';
 
 class EditClassesTypePage extends StatefulWidget {
-  EditClassesTypePage({Key? key}) : super(key: key);
+  const EditClassesTypePage({Key? key}) : super(key: key);
 
   @override
   _EditClassesTypePageState createState() => _EditClassesTypePageState();
@@ -17,10 +17,14 @@ class _EditClassesTypePageState extends State<EditClassesTypePage> {
   late ClassesType _classesType, _updatedClassesType;
   late AddNewClassesTypeTemplate _addNewClassesTypeTemplate;
   late Store _store;
+  late Map _args;
+  late Function? _parentUpdateFunction;
 
   @override
   Widget build(BuildContext context) {
-    _classesType = ModalRoute.of(context)!.settings.arguments as ClassesType;
+    _args = ModalRoute.of(context)!.settings.arguments as Map;
+    _parentUpdateFunction = _args[AppStrings.FUNCTION];
+    _classesType = _args[AppStrings.CLASSES_TYPE];
     _addNewClassesTypeTemplate =
         AddNewClassesTypeTemplate(classesType: _classesType);
     return Scaffold(
@@ -40,10 +44,9 @@ class _EditClassesTypePageState extends State<EditClassesTypePage> {
                     SnackBarInfoTemplate(
                         context: context,
                         message:
-                        '${AppStrings.UPDATED} ${_classesType.name} ${AppStrings.SUCCESFULLY}!');
+                            '${AppStrings.UPDATED} ${_classesType.name} ${AppStrings.SUCCESFULLY}!');
                     Navigator.pop(context);
-                  }
-                  else{
+                  } else {
                     SnackBarInfoTemplate(
                         context: context,
                         message: AppStrings.ERROR_MESSAGE_CHECK_FIELDS_FILL);
@@ -74,6 +77,10 @@ class _EditClassesTypePageState extends State<EditClassesTypePage> {
       _setNewPriceForMonth();
       _setNewTeacher();
     });
+
+    if(_parentUpdateFunction != null) {
+      _parentUpdateFunction!(_classesType);
+    }
   }
 
   bool _isNamesAreDifferent() => _updatedClassesType.name != _classesType.name;

@@ -22,6 +22,8 @@ class _DetailClassesTypeState extends State<DetailClassesType> {
   late Store _store;
 
   late Stream<List<Group>> _groupStream;
+  late Map _args;
+  late Function? _parentUpdateFunction;
 
   @override
   void initState() {
@@ -36,7 +38,10 @@ class _DetailClassesTypeState extends State<DetailClassesType> {
 
   @override
   Widget build(BuildContext context) {
-    _classesType = ModalRoute.of(context)!.settings.arguments as ClassesType;
+    _args = ModalRoute.of(context)!.settings.arguments as Map;
+    _parentUpdateFunction = _args[AppStrings.FUNCTION];
+    _classesType = _args[AppStrings.CLASSES_TYPE];
+
     return StreamBuilder<List<Group>>(
       stream: _groupStream,
       builder: (context, snapshot) {
@@ -168,6 +173,17 @@ class _DetailClassesTypeState extends State<DetailClassesType> {
 
   void _navigateToEditClassesType() => {
         Navigator.pushNamed(context, AppUrls.EDIT_CLASSES_TYPE,
-            arguments: _classesType)
+            arguments: {AppStrings.CLASSES_TYPE: _classesType,
+            AppStrings.FUNCTION : _updateClassesType})
       };
+
+  void _updateClassesType(ClassesType updated){
+    if (_parentUpdateFunction != null){
+      _parentUpdateFunction!(updated);
+    }
+
+    setState(() {
+      _classesType = updated;
+    });
+  }
 }
