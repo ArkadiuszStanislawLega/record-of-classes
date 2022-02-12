@@ -17,7 +17,9 @@ class _StartPageViewView extends State<StartPageView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Zarządzanie firmą'),
+        title: const Text('Zarządzanie firmą', style: TextStyle(
+          fontFamily: 'ArchitectsDaughter'
+        ),),
       ),
       body: GridView.count(
         primary: false,
@@ -30,31 +32,39 @@ class _StartPageViewView extends State<StartPageView> {
             onPressed: _navigateToStudentsMainPage,
             title: AppStrings.STUDENTS_LIST.toLowerCase(),
             icon: const Icon(Icons.person),
+            iconColor: Colors.orange.shade200
           ),
           _button(
               onPressed: _navigateFinanceMainPage,
               title: AppStrings.FINANCE.toLowerCase(),
-              icon: const Icon(Icons.monetization_on)),
+              icon: const Icon(Icons.monetization_on),
+              iconColor: Colors.lightBlue.shade200),
+
           _button(
               onPressed: _navigateToCreateClassesNewVersion,
               title: AppStrings.MANAGEMENT.toLowerCase(),
-              icon: const Icon(Icons.account_tree)),
+              icon: const Icon(Icons.account_tree),
+              iconColor: Colors.teal.shade200),
           _button(
               onPressed: _navigatorClassesTypeMainPage,
               title: AppStrings.CLASSES_TYPE.toLowerCase(),
-              icon: const Icon(Icons.title)),
+              icon: const Icon(Icons.title),
+              iconColor: Colors.lightGreen.shade200),
           _button(
               onPressed: _navigateGroupsMainPage,
               title: AppStrings.GROUPS.toLowerCase(),
-              icon: const Icon(Icons.group)),
+              icon: const Icon(Icons.group),
+              iconColor: Colors.yellowAccent.shade200),
           _button(
               onPressed: _navigatorClassesMainPage,
               title: AppStrings.CLASSES.toLowerCase(),
-              icon: const Icon(Icons.developer_board)),
+              icon: const Icon(Icons.developer_board),
+              iconColor: Colors.pink.shade200),
           _button(
               onPressed: _navigateToPhoneBook,
               title: AppStrings.PHONES.toLowerCase(),
-              icon: const Icon(Icons.book)),
+              icon: const Icon(Icons.book),
+              iconColor: Colors.tealAccent.shade200),
         ],
       ),
       drawer: _mainMenu(),
@@ -96,14 +106,14 @@ class _StartPageViewView extends State<StartPageView> {
   void _navigateToAboutPage() => Navigator.pushNamed(context, AppUrls.ABOUT);
 
   Widget _button(
-      {required Icon icon, required String title, Function()? onPressed}) {
+      {required Icon icon, required String title, Function()? onPressed, Color iconColor = Colors.white}) {
     return ElevatedButton(
       onPressed: onPressed,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           IconButton(
-            color: Colors.white,
+            color: iconColor,
             iconSize: 50,
             onPressed: onPressed,
             icon: icon,
@@ -114,8 +124,8 @@ class _StartPageViewView extends State<StartPageView> {
               title,
               style: const TextStyle(
                   color: Colors.white,
-                  fontSize: 13,
-                  fontFamily: 'Arial',
+                  fontSize: 11,
+                  fontFamily: 'CroissantOne',
                   fontWeight: FontWeight.bold),
             ),
           )

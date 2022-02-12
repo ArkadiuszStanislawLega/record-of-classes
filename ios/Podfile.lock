@@ -34,7 +34,7 @@ SPEC CHECKSUMS:
   ObjectBox: a181cc5fb47e0a6ec60754d34dc49f40dc17829e
   objectbox_flutter_libs: 511c59b863bc45abc7f6f338499e4a50e9aa5f1d
   path_provider_ios: 7d7ce634493af4477d156294792024ec3485acd5
-  url_launcher_ios: 02f1989d4e14e998335b02b67a7590fa34f971af
+  url_launcher_ios: 839c58cdb4279282219f5e248c3321761ff3c4de
 
 PODFILE CHECKSUM: 9f5ae8bbf0a02883b1b9840864e24cc6b9f9df75
 
