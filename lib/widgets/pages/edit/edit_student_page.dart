@@ -50,7 +50,8 @@ class _EditStudentPage extends State<EditStudentPage> {
         ),
         TextField(
           decoration: InputDecoration(
-            hintText: _person.surname == '' ? AppStrings.SURNAME : _person.surname,
+            hintText:
+                _person.surname == '' ? AppStrings.SURNAME : _person.surname,
           ),
           onChanged: (userInput) {
             _personSurname = userInput;
@@ -78,8 +79,6 @@ class _EditStudentPage extends State<EditStudentPage> {
     );
   }
 
-  bool _isInputValid() => _isNameValid() && _isSurnameValid() && _isAgeValid();
-
   bool _isNameValid() => _personName != '';
 
   bool _isSurnameValid() => _personSurname != '';
@@ -99,19 +98,14 @@ class _EditStudentPage extends State<EditStudentPage> {
   }
 
   void confirmEditChanges() {
-    if (_isInputValid()) {
-      _updateStudentInDb(
-          name: _personName,
-          surname: _personSurname,
-          age: int.parse(_personAge));
-      SnackBarInfoTemplate(
-          context: context,
-          message:
-              '${AppStrings.SUCCESFULLY_UPDATED_STUDENT} ${_student.introduceYourself()}');
-      Navigator.pop(context);
-    } else {
-      SnackBarInfoTemplate(
-          context: context, message: AppStrings.ERROR_MESSAGE_CHECK_FIELDS_FILL);
-    }
+    _updateStudentInDb(
+        name: _isNameValid() ? _personName : _person.name,
+        surname: _isSurnameValid() ? _personSurname : _person.surname,
+        age: _isAgeValid() ? int.parse(_personAge) : _student.age);
+    SnackBarInfoTemplate(
+        context: context,
+        message:
+            '${AppStrings.SUCCESFULLY_UPDATED_STUDENT} ${_student.introduceYourself()}');
+    Navigator.pop(context);
   }
 }
