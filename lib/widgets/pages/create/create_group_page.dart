@@ -15,7 +15,7 @@ class CreateGroupPage extends StatefulWidget {
 class _CreateGroupPageState extends State<CreateGroupPage> {
   late ClassesType _classesType;
   late Function? _addFunction;
-  final CreateGroupTemplate _createGroupTemplate = CreateGroupTemplate();
+  late CreateGroupTemplate _createGroupTemplate;
   Map _args = {};
 
   @override
@@ -23,7 +23,7 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
     _args = ModalRoute.of(context)!.settings.arguments as Map;
     _classesType = _args[AppStrings.CLASSES_TYPE];
     _addFunction = _args[AppStrings.FUNCTION];
-
+    _createGroupTemplate = CreateGroupTemplate(classesTypeName: _classesType.name);
     return Scaffold(
       appBar: AppBar(
         title: Text('${_classesType.name} - ${AppStrings.ADD_GROUP}'),

@@ -4,11 +4,12 @@ import 'package:record_of_classes/models/group.dart';
 import 'package:record_of_classes/widgets/templates/create/create_address_template.dart';
 
 class CreateGroupTemplate extends StatefulWidget {
-  CreateGroupTemplate({Key? key, this.group}) : super(key: key);
+  CreateGroupTemplate({Key? key, this.group, required this.classesTypeName}) : super(key: key);
 
   Group? group;
 
-  String _inputName = '';
+  String _inputName = '',
+  classesTypeName = '';
 
   CreateAddressTemplate _createAddressTemplate = CreateAddressTemplate();
 
@@ -44,6 +45,8 @@ class _CreateGroupTemplateState extends State<CreateGroupTemplate> {
 
   @override
   Widget build(BuildContext context) {
+    widget._nameController.text = widget.classesTypeName;
+
     return Column(
       children: [
         TextField(

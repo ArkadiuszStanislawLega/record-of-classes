@@ -24,7 +24,7 @@ class _EditGroupPageState extends State<EditGroupPage> {
     _group = _args[AppStrings.GROUP];
     _update = _args[AppStrings.FUNCTION];
 
-    _createGroupTemplate = CreateGroupTemplate(group: _group);
+    _createGroupTemplate = CreateGroupTemplate(group: _group, classesTypeName: _group.name,);
     return Scaffold(
       appBar: AppBar(
         title: Text('${AppStrings.EDIT} ${_group.name}'),
