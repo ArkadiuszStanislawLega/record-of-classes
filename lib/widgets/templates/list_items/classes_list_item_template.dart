@@ -6,7 +6,7 @@ import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/classes.dart';
 import 'package:record_of_classes/widgets/templates/snack_bar_info_template.dart';
 
-class ClassesListItemTemplate extends StatelessWidget {
+class ClassesListItemTemplate extends StatefulWidget {
   ClassesListItemTemplate(
       {Key? key, required this.classes, this.removeFromDbFunction})
       : super(key: key);
@@ -14,6 +14,13 @@ class ClassesListItemTemplate extends StatelessWidget {
   late Classes classes;
   late Function? removeFromDbFunction;
 
+  @override
+  State<StatefulWidget> createState() {
+    return _ClassesListItemTemplate();
+  }
+}
+
+class _ClassesListItemTemplate extends State<ClassesListItemTemplate> {
   @override
   Widget build(BuildContext context) {
     return Slidable(
@@ -24,7 +31,7 @@ class ClassesListItemTemplate extends StatelessWidget {
           color: Colors.red,
           icon: Icons.delete,
           onTap: () {
-            removeFromDbFunction!(classes);
+            widget.removeFromDbFunction!(widget.classes);
             _showInfo(context);
           },
         ),
@@ -37,12 +44,12 @@ class ClassesListItemTemplate extends StatelessWidget {
         margin: const EdgeInsets.symmetric(vertical: 8.0),
         elevation: 7,
         child: ListTile(
-          title: Text(classes.group.target!.name),
+          title: Text(widget.classes.group.target!.name),
           subtitle: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(formatDate(classes.dateTime)),
-              Text(formatTime(classes.dateTime))
+              Text(formatDate(widget.classes.dateTime)),
+              Text(formatTime(widget.classes.dateTime))
             ],
           ),
           onTap: () {
@@ -54,10 +61,19 @@ class ClassesListItemTemplate extends StatelessWidget {
   }
 
   void _navigateToGroupProfile(BuildContext context) =>
-      Navigator.pushNamed(context, AppUrls.DETAIL_CLASSES, arguments: {AppStrings.CLASSES : classes});
+      Navigator.pushNamed(context, AppUrls.DETAIL_CLASSES, arguments: {
+        AppStrings.CLASSES: widget.classes,
+        AppStrings.FUNCTION: _updateModel
+      });
+
+  void _updateModel(Classes updated) {
+    setState(() {
+      widget.classes = updated;
+    });
+  }
 
   void _showInfo(BuildContext context) => SnackBarInfoTemplate(
       context: context,
       message:
-          '${AppStrings.GROUPS}: ${classes.group.target!.name} ${formatDate(classes.dateTime)} - ${AppStrings.REMOVED}!');
+          '${AppStrings.GROUPS}: ${widget.classes.group.target!.name} ${formatDate(widget.classes.dateTime)} - ${AppStrings.REMOVED}!');
 }
