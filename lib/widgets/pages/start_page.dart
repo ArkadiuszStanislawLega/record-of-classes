@@ -36,6 +36,10 @@ class _StartPageViewView extends State<StartPageView> {
               title: AppStrings.FINANCE.toLowerCase(),
               icon: const Icon(Icons.monetization_on)),
           _button(
+              onPressed: _navigateToCreateClassesNewVersion,
+              title: AppStrings.MANAGEMENT.toLowerCase(),
+              icon: const Icon(Icons.account_tree)),
+          _button(
               onPressed: _navigatorClassesTypeMainPage,
               title: AppStrings.CLASSES_TYPE.toLowerCase(),
               icon: const Icon(Icons.title)),
@@ -51,10 +55,6 @@ class _StartPageViewView extends State<StartPageView> {
               onPressed: _navigateToPhoneBook,
               title: AppStrings.PHONES.toLowerCase(),
               icon: const Icon(Icons.book)),
-          _button(
-              onPressed: _navigateToCreateClassesNewVersion,
-              title: AppStrings.MANAGEMENT.toLowerCase(),
-              icon: const Icon(Icons.account_tree))
         ],
       ),
       drawer: _mainMenu(),
@@ -100,20 +100,21 @@ class _StartPageViewView extends State<StartPageView> {
     return ElevatedButton(
       onPressed: onPressed,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           IconButton(
             color: Colors.white,
-            iconSize: 45,
+            iconSize: 50,
             onPressed: onPressed,
             icon: icon,
           ),
           Container(
-            padding: const EdgeInsets.all(5.0),
+            padding: const EdgeInsets.only(bottom: 5.0),
             child: Text(
               title,
               style: const TextStyle(
                   color: Colors.white,
+                  fontSize: 13,
                   fontFamily: 'Arial',
                   fontWeight: FontWeight.bold),
             ),
