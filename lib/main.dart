@@ -171,16 +171,30 @@ class _RecordOfClassesApp extends State<RecordOfClassesApp> {
         scaffoldBackgroundColor: Colors.green.shade900,
         primarySwatch: Colors.green,
         fontFamily: AppStrings.FONT_NEW_ATHENA_UNICODE,
+        cardTheme: CardTheme(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+        listTileTheme: ListTileThemeData(
+          horizontalTitleGap: 2.0,
+          tileColor: Colors.white60,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+
+        ),
         textTheme: const TextTheme(
           headline1: TextStyle(
               fontFamily: AppStrings.FONT_LUCIAN_SCHOENSHRIFT,
               fontSize: 35.0,
               color: Colors.white),
-          headline6: TextStyle(fontSize: 36.0, fontStyle: FontStyle.italic),
-          bodyText2: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
+          headline2: TextStyle(fontSize: 16.0, color: Colors.white),
+          bodyText2: TextStyle(
+              fontSize: 17.0, fontFamily: AppStrings.FONT_NEW_ATHENA_UNICODE),
         ),
       ),
-      title: 'Rejestr zajęć',
+      title: AppStrings.APP_TITLE,
       initialRoute: AppUrls.HOME,
       routes: {
         AppUrls.EMPTY: (context) => const StartPageView(),

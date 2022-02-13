@@ -31,17 +31,24 @@ class _GroupListItemTemplateState extends State<GroupListItemTemplate> {
           },
         ),
       ],
-      child: ListTile(
-          title: Text(widget.group.name),
-          subtitle: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                  '${AppStrings.PERSONS_IN_GROUP}: ${widget.group.students.length.toString()}'),
-              Text(widget.group.address.target.toString())
-            ],
-          ),
-          onTap: _navigateToGroupProfile),
+      child: Card(
+        child: ListTile(
+            title: Text(
+              widget.group.name,
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            subtitle: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  '${AppStrings.PERSONS_IN_GROUP}: ${widget.group.students.length.toString()}',
+                  style: Theme.of(context).textTheme.labelLarge,
+                ),
+                Text(widget.group.address.target.toString())
+              ],
+            ),
+            onTap: _navigateToGroupProfile),
+      ),
     );
   }
 

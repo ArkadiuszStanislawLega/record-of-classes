@@ -380,11 +380,11 @@ class _StudentDetailPage extends State<StudentDetailPage> {
       children: [
         Text(
           _student.introduceYourself(),
-          style: const TextStyle(fontSize: 25, color: Colors.white),
+          style: Theme.of(context).textTheme.headline1,
         ),
         Text(
           '${AppStrings.AGE}: ${_student.age.toString()} ${AppStrings.YEARS}',
-          style: const TextStyle(fontSize: 12, color: Colors.white),
+          style: Theme.of(context).textTheme.headline2,
         ),
       ],
     );

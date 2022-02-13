@@ -244,16 +244,16 @@ class _DetailGroupPageState extends State<DetailGroupPage> {
 
   Container _pageTitle() {
     return Container(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: Column(
         children: [
           Text(
             _group.name,
-            style: const TextStyle(fontSize: 25, color: Colors.white),
+            style: Theme.of(context).textTheme.headline1,
           ),
           Text(
             AppStrings.GROUP_OF_CLASSES.toLowerCase(),
-            style: const TextStyle(fontSize: 12, color: Colors.white),
+            style: Theme.of(context).textTheme.headline2,
           ),
         ],
       ),

@@ -199,7 +199,7 @@ class _ParentDetailPage extends State<ParentDetailPage> {
       padding: const EdgeInsets.all(16.0),
       child: Text(
         _parent.introduceYourself(),
-        style: const TextStyle(fontSize: 25, color: Colors.white),
+        style: Theme.of(context).textTheme.headline1,
       ),
     );
   }
@@ -228,9 +228,11 @@ class _ParentDetailPage extends State<ParentDetailPage> {
                 });
               }),
         ],
-        child: ListTile(
-          title: Text(phone.number.toString()),
-          subtitle: Text(phone.numberName),
+        child: Card(
+          child: ListTile(
+            title: Text(phone.number.toString()),
+            subtitle: Text(phone.numberName),
+          ),
         ),
       ),
     );

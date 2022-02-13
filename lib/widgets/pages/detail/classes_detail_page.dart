@@ -148,11 +148,10 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
                 children: [
                   Text(
                     widget._classes.group.target!.name,
-                    style: const TextStyle(fontSize: 25, color: Colors.white),
+                    style: Theme.of(context).textTheme.headline1,
                   ),
                   Text(AppStrings.CLASSES_CONDUCTED.toLowerCase(),
-                      style:
-                          const TextStyle(fontSize: 12, color: Colors.white)),
+                      style: Theme.of(context).textTheme.headline2),
                 ],
               ),
             ),
@@ -236,12 +235,17 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
           },
         ),
       ],
-      child: ListTile(
-        tileColor: attendance.isPresent ? Colors.orange : Colors.grey,
-        title: Text(attendance.student.target!.introduceYourself()),
-        onTap: () {},
-        subtitle: Text(
-            '${AppStrings.UNPAID_CLASSES}: ${attendance.student.target!.account.target!.countUnpaidBills()}'),
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: ListTile(
+          tileColor: attendance.isPresent ? Colors.orange : Colors.grey,
+          title: Text(attendance.student.target!.introduceYourself()),
+          onTap: () {},
+          subtitle: Text(
+              '${AppStrings.UNPAID_CLASSES}: ${attendance.student.target!.account.target!.countUnpaidBills()}'),
+        ),
       ),
     );
   }
@@ -325,11 +329,13 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
           },
         ),
       ],
-      child: ListTile(
-        title: Text(student.introduceYourself()),
-        onTap: () {},
-        subtitle: Text(
-            '${AppStrings.UNPAID_CLASSES}: ${_numberOfUnpaidBills(student.account.target!.bills)}'),
+      child: Card(
+        child: ListTile(
+          title: Text(student.introduceYourself()),
+          onTap: () {},
+          subtitle: Text(
+              '${AppStrings.UNPAID_CLASSES}: ${_numberOfUnpaidBills(student.account.target!.bills)}'),
+        ),
       ),
     );
   }

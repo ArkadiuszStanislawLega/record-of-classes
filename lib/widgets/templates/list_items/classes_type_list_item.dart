@@ -27,44 +27,44 @@ class ClassesTypeListItem extends StatelessWidget {
           },
         ),
       ],
-      child: ListTile(
-        title: Text(classesType.name),
-        subtitle: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
+      child: Card(
+        child: ListTile(
+            title: Text(classesType.name),
+            subtitle: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text('${AppStrings.PRICE_FOR_MONTH}:'),
-                Text(
-                    '${classesType.priceForMonth.toString()}${AppStrings
-                        .CURRENCY}')
+                Column(
+                  children: [
+                    const Text('${AppStrings.PRICE_FOR_MONTH}:'),
+                    Text(
+                        '${classesType.priceForMonth.toString()}${AppStrings.CURRENCY}')
+                  ],
+                ),
+                Column(
+                  children: [
+                    const Text('${AppStrings.PRICE_FOR_EACH}:'),
+                    Text(
+                        '${classesType.priceForEach.toString()}${AppStrings.CURRENCY}')
+                  ],
+                ),
               ],
             ),
-            Column(
-              children: [
-                const Text('${AppStrings.PRICE_FOR_EACH}:'),
-                Text(
-                    '${classesType.priceForEach.toString()}${AppStrings.CURRENCY}')
-              ],
-            ),
-          ],
-        ),
-        onTap: () => _navigateToDetailClassesProfile(context)
+            onTap: () => _navigateToDetailClassesProfile(context)),
       ),
     );
   }
 
-  void _updateDatabase(){
+  void _updateDatabase() {
     _store = objectBox.store;
     _store.box<ClassesType>().remove(classesType.id);
   }
 
-  void _navigateToDetailClassesProfile(BuildContext context) => Navigator.pushNamed(context, AppUrls.DETAIL_CLASSES_TYPE,
-      arguments: classesType);
+  void _navigateToDetailClassesProfile(BuildContext context) =>
+      Navigator.pushNamed(context, AppUrls.DETAIL_CLASSES_TYPE,
+          arguments: {AppStrings.CLASSES_TYPE: classesType});
 
-
-  void _showInfo(BuildContext context) =>
-      SnackBarInfoTemplate(context: context,
-          message: '${AppStrings.CLASSES_TYPE}: ${classesType.name} - ${AppStrings
-              .REMOVED}!');
+  void _showInfo(BuildContext context) => SnackBarInfoTemplate(
+      context: context,
+      message:
+          '${AppStrings.CLASSES_TYPE}: ${classesType.name} - ${AppStrings.REMOVED}!');
 }
