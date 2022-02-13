@@ -10,16 +10,14 @@ class ClassesTypeTreeViewItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClassesTypeItemTemplate(content:
-    Container(
-      padding: const EdgeInsets.all(AppDoubles.paddings),
-      child: Text(
-        classesType.name,
-        style:
-        const TextStyle(
-            fontSize: AppDoubles.titleFontSize, fontWeight: FontWeight.w500),
+    return ClassesTypeItemTemplate(
+      content: Container(
+        padding: const EdgeInsets.all(AppDoubles.paddings),
+        child: Text(
+          classesType.name,
+          style: Theme.of(context).textTheme.headline3,
+        ),
       ),
-    ),
     );
   }
 }

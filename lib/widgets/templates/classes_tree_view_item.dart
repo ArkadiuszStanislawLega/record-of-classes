@@ -23,21 +23,17 @@ class _ClassesTreeViewItem extends State<ClassesTreeViewItem>{
     return ClassesItemTemplate(
       classes: widget.classes,
       content: Container(
-        padding: const EdgeInsets.all(AppDoubles.paddings),
+        padding: const EdgeInsets.all(10.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               formatDate(widget.classes.dateTime),
-              style: const TextStyle(
-                  fontSize: AppDoubles.titleFontSize,
-                  fontWeight: FontWeight.w500),
+              style: Theme.of(context).textTheme.headline3,
             ),
             Text(
               formatTime(widget.classes.dateTime),
-              style: const TextStyle(
-                  fontSize: AppDoubles.titleFontSize,
-                  fontWeight: FontWeight.w500),
+              style: Theme.of(context).textTheme.headline3,
             ),
           ],
         ),

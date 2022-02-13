@@ -190,6 +190,7 @@ class _RecordOfClassesApp extends State<RecordOfClassesApp> {
               fontSize: 35.0,
               color: Colors.white),
           headline2: TextStyle(fontSize: 16.0, color: Colors.white),
+          headline3: TextStyle(fontSize: 20.0, color: Colors.white, fontWeight: FontWeight.bold),
           bodyText2: TextStyle(
               fontSize: 17.0, fontFamily: AppStrings.FONT_NEW_ATHENA_UNICODE),
         ),

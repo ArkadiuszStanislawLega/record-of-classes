@@ -180,7 +180,7 @@ class _RecordOfClassesTreeViewPageState
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text('${AppStrings.ARE_YOU_SURE_TO_REMOVE} zajęcia:'),
+              const Text('${AppStrings.ARE_YOU_SURE_TO_REMOVE} ${AppStrings.CLASSES}:'),
               Text(
                 classes.name,
                 style: const TextStyle(fontWeight: FontWeight.bold),

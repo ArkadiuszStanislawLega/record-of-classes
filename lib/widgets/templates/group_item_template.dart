@@ -16,7 +16,7 @@ class GroupItemTemplate extends StatelessWidget {
             color: AppColors.borderColor, width: AppDoubles.borderWidth),
         borderRadius: BorderRadius.circular(AppDoubles.cornerEdges),
       ),
-      color: AppColors.groupBackground,
+      color: Colors.brown.shade200,
       child: SizedBox(
         width: MediaQuery.of(context).size.width - AppDoubles.groupWidthInTreeView,
         child: content,

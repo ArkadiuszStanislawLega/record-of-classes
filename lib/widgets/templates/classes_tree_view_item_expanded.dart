@@ -53,10 +53,13 @@ class _ClassesTreeViewItemExpanded extends State<ClassesTreeViewItemExpanded> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(attendance.student.target!.introduceYourself()),
+            Text(
+              attendance.student.target!.introduceYourself(),
+              style: Theme.of(context).textTheme.headline2,
+            ),
             attendance.bill.target!.isPaid
-                ? const Icon(Icons.check_box)
-                : const Icon(Icons.check_box_outline_blank),
+                ? const Icon(Icons.check_box, color: Colors.white,)
+                : const Icon(Icons.check_box_outline_blank, color: Colors.white),
           ],
         ),
       );
@@ -69,14 +72,10 @@ class _ClassesTreeViewItemExpanded extends State<ClassesTreeViewItemExpanded> {
       widgets: [
         Text(
           formatDate(widget.classes.dateTime),
-          style: const TextStyle(
-              fontSize: AppDoubles.titleFontSize, fontWeight: FontWeight.bold),
+          style: Theme.of(context).textTheme.headline3,
         ),
-        Text(
-          formatTime(widget.classes.dateTime),
-          style: const TextStyle(
-              fontSize: AppDoubles.titleFontSize, fontWeight: FontWeight.bold),
-        ),
+        Text(formatTime(widget.classes.dateTime),
+            style: Theme.of(context).textTheme.headline3),
         InkWell(
           onTap: () => _navigateToClassesDetailPage(context),
           child: IconInCardTemplate(
@@ -89,11 +88,12 @@ class _ClassesTreeViewItemExpanded extends State<ClassesTreeViewItemExpanded> {
   }
 
   void _navigateToClassesDetailPage(BuildContext context) =>
-      Navigator.pushNamed(context, AppUrls.DETAIL_CLASSES,
-          arguments: {AppStrings.CLASSES : widget.classes,
-          AppStrings.FUNCTION : _updateClasses});
+      Navigator.pushNamed(context, AppUrls.DETAIL_CLASSES, arguments: {
+        AppStrings.CLASSES: widget.classes,
+        AppStrings.FUNCTION: _updateClasses
+      });
 
-  void _updateClasses(Classes updated){
+  void _updateClasses(Classes updated) {
     setState(() {
       widget.classes = updated;
     });

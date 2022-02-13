@@ -11,8 +11,7 @@ import 'package:record_of_classes/widgets/templates/item_title_template.dart';
 import 'package:record_of_classes/widgets/templates/lists/property_in_one_row.dart';
 
 class GroupTreeViewItemExpanded extends StatefulWidget {
-  GroupTreeViewItemExpanded({Key? key, required this.group})
-      : super(key: key);
+  GroupTreeViewItemExpanded({Key? key, required this.group}) : super(key: key);
 
   late Group group;
 
@@ -32,15 +31,10 @@ class _GroupTreeViewItemExpanded extends State<GroupTreeViewItemExpanded> {
     );
   }
 
-
   Widget _groupItemTitle(BuildContext context) {
     return ItemTitleTemplate(
       widgets: [
-        Text(
-          widget.group.name,
-          style: const TextStyle(
-              fontWeight: FontWeight.bold, fontSize: AppDoubles.titleFontSize),
-        ),
+        Text(widget.group.name, style: Theme.of(context).textTheme.headline3),
         InkWell(
           onTap: () => _navigateToGroupDetailPage(context),
           child: IconInCardTemplate(
@@ -53,9 +47,10 @@ class _GroupTreeViewItemExpanded extends State<GroupTreeViewItemExpanded> {
   }
 
   void _navigateToGroupDetailPage(BuildContext context) =>
-      Navigator.pushNamed(context, AppUrls.DETAIL_GROUP,
-          arguments: {AppStrings.GROUP: widget.group,
-            AppStrings.FUNCTION: _updateGroup});
+      Navigator.pushNamed(context, AppUrls.DETAIL_GROUP, arguments: {
+        AppStrings.GROUP: widget.group,
+        AppStrings.FUNCTION: _updateGroup
+      });
 
   void _updateGroup(Group updated) {
     setState(() {
@@ -68,18 +63,19 @@ class _GroupTreeViewItemExpanded extends State<GroupTreeViewItemExpanded> {
       widgets: [
         Text(
           group.address.target!.toString(),
+          style: Theme.of(context).textTheme.headline2,
         ),
-        Column(children: [
-          PropertyInOneRow(
-              property: AppStrings.NUMBER_OF_STUDENTS,
-              value: group.students.length.toString()),
-          PropertyInOneRow(
-              property: AppStrings.NUMBER_OF_CLASSES,
-              value: group.classes.length.toString())
-        ],)
-
+        Column(
+          children: [
+            PropertyInOneRow(
+                property: AppStrings.NUMBER_OF_STUDENTS,
+                value: group.students.length.toString()),
+            PropertyInOneRow(
+                property: AppStrings.NUMBER_OF_CLASSES,
+                value: group.classes.length.toString())
+          ],
+        )
       ],
     );
   }
-
 }

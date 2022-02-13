@@ -41,9 +41,7 @@ class _ClassesTypeTreeViewItemExpanded
               top: AppDoubles.paddings, bottom: AppDoubles.paddings),
           child: Text(
             widget.classesType.name,
-            style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: AppDoubles.titleFontSize),
+            style: Theme.of(context).textTheme.headline3,
           ),
         ),
         InkWell(

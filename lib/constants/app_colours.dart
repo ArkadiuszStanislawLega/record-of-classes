@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class AppColors{
-  static final Color classesTypeBackground = Colors.blueGrey.shade400,
-      groupBackground = Colors.blueGrey.shade200,
-      borderColor = Colors.grey,
+  static final Color classesTypeBackground = Colors.brown.shade700,
+      groupBackground = Colors.brown.shade300,
+      borderColor = Colors.white60,
       addButtonBackground = Colors.green.shade500,
       removeButtonBackground = Colors.red,
       iconForegroundColor = Colors.white,

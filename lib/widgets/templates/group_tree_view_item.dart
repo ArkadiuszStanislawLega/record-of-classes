@@ -15,9 +15,7 @@ class GroupTreeViewItem extends StatelessWidget {
         padding: const EdgeInsets.all(AppDoubles.paddings),
         child: Text(
           group.name,
-          style: const TextStyle(
-              fontSize: AppDoubles.titleFontSize, fontWeight: FontWeight.w500),
-        ),
+          style: Theme.of(context).textTheme.headline3),
       ),
     );
   }
