@@ -122,7 +122,7 @@ class _StartPageViewView extends State<StartPageView> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           IconButton(
-            color: Colors.white,
+            color: Colors.green.shade900,
             iconSize: 50,
             onPressed: onPressed,
             icon: icon,
@@ -131,11 +131,10 @@ class _StartPageViewView extends State<StartPageView> {
             padding: const EdgeInsets.only(bottom: 5.0),
             child: Text(
               title,
-              style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 15,
-                  fontFamily: AppStrings.FONT_NEW_ATHENA_UNICODE,
-                  fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  color: Colors.green.shade900,
+                  fontSize: 11,
+                  fontFamily: AppStrings.FONT_ARCHITECTS_DAUGHTER),
             ),
           )
         ],
