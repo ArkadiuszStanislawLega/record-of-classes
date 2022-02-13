@@ -5,8 +5,9 @@ import 'package:record_of_classes/models/person.dart';
 
 class CreatePersonTemplate extends StatelessWidget {
   String _personName = '', _personSurname = '';
-  final TextEditingController _nameController= TextEditingController(),
-  _surnameController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController(),
+      _surnameController = TextEditingController();
+
   CreatePersonTemplate({Key? key}) : super(key: key);
 
   @override
@@ -14,17 +15,23 @@ class CreatePersonTemplate extends StatelessWidget {
     return Column(
       children: [
         TextField(
-          controller: _nameController,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: AppStrings.NAME,
+            controller: _nameController,
+            decoration: InputDecoration(
+              border: const OutlineInputBorder(),
+              label: Text(
+                AppStrings.NAME,
+                style: Theme.of(context).textTheme.headline2,
+              ),
             ),
             onChanged: (userInput) => _personName = userInput),
         TextField(
-          controller: _surnameController,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: AppStrings.SURNAME,
+            controller: _surnameController,
+            decoration: InputDecoration(
+              border: const OutlineInputBorder(),
+              label: Text(
+                AppStrings.SURNAME,
+                style: Theme.of(context).textTheme.headline2,
+              ),
             ),
             onChanged: (userInput) => _personSurname = userInput),
       ],

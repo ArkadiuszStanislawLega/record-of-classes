@@ -50,12 +50,11 @@ class CreatePhoneTemplate extends StatefulWidget {
   bool _isEditedPhoneNumberValid() {
     try {
       int number = int.parse(_number);
-      return phone!.number != number  && number > 0;
-    }on FormatException {
+      return phone!.number != number && number > 0;
+    } on FormatException {
       return false;
     }
   }
-
 
   bool isInputValid() {
     try {
@@ -88,31 +87,41 @@ class CreatePhoneTemplate extends StatefulWidget {
 class _CreatePhoneTemplate extends State<CreatePhoneTemplate> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [   TextField(
-          controller: widget._nameNumberInputController,
-          decoration: InputDecoration(
-            border: const OutlineInputBorder(),
-            hintText: widget.phone == null
-                ? AppStrings.PHONE_NAME
-                : widget.phone!.numberName,
-          ),
-          onChanged: (userInput) => widget._numberName = userInput),
-        TextField(
-            controller: widget._numberInputController,
-            keyboardType: TextInputType.phone,
-            inputFormatters: <TextInputFormatter>[
-              FilteringTextInputFormatter.digitsOnly
-            ],
-            decoration: InputDecoration(
-              border: const OutlineInputBorder(),
-              hintText: widget.phone == null
-                  ? AppStrings.PHONE_NUMBER
-                  : widget.phone!.number.toString(),
-            ),
-            onChanged: (userInput) => widget._number = userInput),
-
-      ],
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 10.0),
+      child: Column(
+        children: [
+          TextField(
+              controller: widget._nameNumberInputController,
+              decoration: InputDecoration(
+                border: const OutlineInputBorder(),
+                label: Text(
+                  widget.phone == null
+                      ? AppStrings.PHONE_NAME
+                      : widget.phone!.numberName,
+                  style: Theme.of(context).textTheme.headline2,
+                ),
+              ),
+              onChanged: (userInput) => widget._numberName = userInput),
+          TextField(
+              controller: widget._numberInputController,
+              keyboardType: TextInputType.phone,
+              inputFormatters: <TextInputFormatter>[
+                FilteringTextInputFormatter.digitsOnly
+              ],
+              decoration: InputDecoration(
+                border: const OutlineInputBorder(),
+                label: Text(
+                  widget.phone == null
+                      ? AppStrings.PHONE_NUMBER
+                      : widget.phone!.number.toString(),
+                  style: Theme.of(context).textTheme.headline2,
+                ),
+                // hintText:
+              ),
+              onChanged: (userInput) => widget._number = userInput),
+        ],
+      ),
     );
   }
 }

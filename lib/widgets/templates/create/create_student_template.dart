@@ -20,17 +20,23 @@ class CreateStudentTemplate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        _createPersonTemplate,
-        TextField(
-            controller: _ageController,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: AppStrings.AGE,
-            ),
-            onChanged: (userInput) => _personAge = userInput),
-      ],
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 10.0),
+      child: Column(
+        children: [
+          _createPersonTemplate,
+          TextField(
+              controller: _ageController,
+              decoration: InputDecoration(
+                border: const OutlineInputBorder(),
+                label: Text(
+                  AppStrings.AGE,
+                  style: Theme.of(context).textTheme.headline2,
+                ),
+              ),
+              onChanged: (userInput) => _personAge = userInput),
+        ],
+      ),
     );
   }
 
