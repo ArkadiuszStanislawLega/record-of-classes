@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:record_of_classes/constants/app_doubles.dart';
 import 'package:record_of_classes/constants/app_urls.dart';
 import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/main.dart';
@@ -96,9 +97,13 @@ class _ClassesTypeMainPageState extends State<ClassesTypeMainPage> {
                     horizontal: 50.0, vertical: 20.0),
                 child: Column(
                   children: [
-                    const Text(
-                      AppStrings.MANAGE_CLASS_TYPES,
-                      style: TextStyle(fontSize: 25, color: Colors.white),
+                    Container(
+                      padding:
+                          const EdgeInsets.only(bottom: AppDoubles.paddings),
+                      child: Text(
+                        AppStrings.MANAGE_CLASS_TYPES,
+                        style: Theme.of(context).textTheme.headline1,
+                      ),
                     ),
                     OneRowPropertyTemplate(
                       title: '${AppStrings.NUMBER_OF_CLASS_TYPES}:',

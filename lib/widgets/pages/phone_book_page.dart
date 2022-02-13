@@ -195,9 +195,9 @@ class _PhoneBookPageState extends State<PhoneBookPage> {
           children: [
             Container(
               padding: const EdgeInsets.all(16.0),
-              child: const Text(
+              child: Text(
                 AppStrings.PHONE_BOOK,
-                style: TextStyle(fontSize: 25, color: Colors.white),
+                style: Theme.of(context).textTheme.headline1,
               ),
             ),
             OneRowPropertyTemplate(

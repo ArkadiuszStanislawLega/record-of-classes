@@ -167,11 +167,19 @@ class _RecordOfClassesApp extends State<RecordOfClassesApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // theme:ThemeData(
-      //   scaffoldBackgroundColor: Colors.white70,
-      //   primarySwatch: Colors.indigo,
-      //   fontFamily: AppStrings.FONT_NEW_ATHENA_UNICODE,
-      // ),
+      theme: ThemeData(
+        scaffoldBackgroundColor: Colors.green.shade900,
+        primarySwatch: Colors.green,
+        fontFamily: AppStrings.FONT_NEW_ATHENA_UNICODE,
+        textTheme: const TextTheme(
+          headline1: TextStyle(
+              fontFamily: AppStrings.FONT_LUCIAN_SCHOENSHRIFT,
+              fontSize: 35.0,
+              color: Colors.white),
+          headline6: TextStyle(fontSize: 36.0, fontStyle: FontStyle.italic),
+          bodyText2: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
+        ),
+      ),
       title: 'Rejestr zajęć',
       initialRoute: AppUrls.HOME,
       routes: {
@@ -216,13 +224,12 @@ class _RecordOfClassesApp extends State<RecordOfClassesApp> {
 }
 
 String formatTime(DateTime dateTime) {
-  int hour = dateTime.hour,
-      minutes = dateTime.minute;
+  int hour = dateTime.hour, minutes = dateTime.minute;
 
   return '${hour < 10 ? '0$hour' : hour}:${minutes < 10 ? '0$minutes' : minutes}';
 }
 
-String formatDate(DateTime dateTime,{bool isTimeOn = false}) {
+String formatDate(DateTime dateTime, {bool isTimeOn = false}) {
   int day = dateTime.day,
       month = dateTime.month,
       year = dateTime.year,

@@ -99,9 +99,9 @@ class _StudentsMainPageState extends State<StudentsMainPage> {
           children: [
             Container(
               padding: const EdgeInsets.all(16.0),
-              child: const Text(
+              child: Text(
                 AppStrings.STUDENT_MANAGEMENT,
-                style: TextStyle(fontSize: 25, color: Colors.white),
+                style: Theme.of(context).textTheme.headline1,
               ),
             ),
             OneRowPropertyTemplate(
@@ -133,7 +133,7 @@ class _StudentsMainPageState extends State<StudentsMainPage> {
     });
   }
 
-  void _updateStudent(Student student, Student updatingValues){
+  void _updateStudent(Student student, Student updatingValues) {
     setState(() {
       student.updateValues(updatingValues);
     });

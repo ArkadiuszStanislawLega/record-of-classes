@@ -120,9 +120,9 @@ class _FinanceMainPageState extends State<FinanceMainPage> {
           children: [
             Container(
               padding: const EdgeInsets.all(16.0),
-              child: const Text(
+              child: Text(
                 AppStrings.MANAGE_FINANCES,
-                style: TextStyle(fontSize: 25, color: Colors.white),
+                style: Theme.of(context).textTheme.headline1,
               ),
             ),
             _oneRow('${AppStrings.PAID_CLASSES}:', _paid.length.toString()),

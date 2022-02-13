@@ -31,6 +31,7 @@ class _StudentDetailPage extends State<StudentDetailPage> {
   Pages _currentPage = Pages.parents;
   late Map _args;
   late Function? _updatingFunction;
+  final double maxTitleHeight = 200.0;
 
   @override
   Widget build(BuildContext context) {
@@ -178,7 +179,7 @@ class _StudentDetailPage extends State<StudentDetailPage> {
       ),
       stretch: true,
       onStretchTrigger: () => Future<void>.value(),
-      expandedHeight: 200.0,
+      expandedHeight: maxTitleHeight,
       flexibleSpace: FlexibleSpaceBar(
         stretchModes: const <StretchMode>[
           StretchMode.zoomBackground,

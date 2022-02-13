@@ -111,9 +111,9 @@ class _ClassesMainPageState extends State<ClassesMainPage> {
           children: [
             Container(
               padding: const EdgeInsets.all(16.0),
-              child: const Text(
+              child: Text(
                 AppStrings.MANAGE_CLASSES,
-                style: TextStyle(fontSize: 25, color: Colors.white),
+                style: Theme.of(context).textTheme.headline1,
               ),
             ),
             OneRowPropertyTemplate(

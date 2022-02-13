@@ -38,13 +38,14 @@ class _RecordOfClassesTreeViewPageState
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
-        title: const Text(AppStrings.MANAGEMENT),
+        title: Text(
+          AppStrings.MANAGEMENT,
+          style: Theme.of(context).textTheme.headline1,
+        ),
       ),
       body: StreamBuilder<List<ClassesType>>(
-
         stream: _classesTypeStream,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
@@ -276,8 +277,8 @@ class _RecordOfClassesTreeViewPageState
     if (data.object != null) {
       if (data.object is Classes) {
         return isExpanded
-            ? ClassesTreeViewItemExpanded(classes: data.object )
-            : ClassesTreeViewItem(classes: data.object );
+            ? ClassesTreeViewItemExpanded(classes: data.object)
+            : ClassesTreeViewItem(classes: data.object);
       }
       if (data.object is Group) {
         return isExpanded
