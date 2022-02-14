@@ -30,7 +30,7 @@ class CreateAddressTemplate extends StatefulWidget {
 
 class _CreateAddressTemplateState extends State<CreateAddressTemplate> {
   @override
-  Widget build(BuildContext context) {
+  void initState() {
     widget._city = TextFieldTemplate(
         label: AppStrings.CITY,
         hint: widget.address == null ? '' : widget.address!.city);
@@ -44,6 +44,11 @@ class _CreateAddressTemplateState extends State<CreateAddressTemplate> {
         label: AppStrings.FLAT_NUMBER,
         hint: widget.address == null ? '' : widget.address!.flatNumber);
 
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       children: [
         widget._city,
