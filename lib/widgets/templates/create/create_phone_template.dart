@@ -3,24 +3,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/models/phone.dart';
+import 'package:record_of_classes/widgets/templates/text_field_template.dart';
 
 class CreatePhoneTemplate extends StatefulWidget {
   CreatePhoneTemplate({Key? key, this.phone}) : super(key: key);
   Phone? phone;
-  String _number = '', _numberName = '';
+  String _number = '';
 
-  final TextEditingController _numberInputController = TextEditingController(),
-      _nameNumberInputController = TextEditingController();
+  late TextFieldTemplate _numberName;
+  final TextEditingController _numberInputController = TextEditingController();
 
   Phone getPhone() {
     try {
       if (phone == null) {
-        return Phone(numberName: _numberName, number: int.parse(_number));
+        return Phone(numberName: _numberName.userInput, number: int.parse(_number));
       }
       _checkInput();
       return phone!;
     } on FormatException {
-      return Phone(numberName: _numberName, number: 0);
+      return Phone(numberName: _numberName.userInput, number: 0);
     }
   }
 
@@ -30,8 +31,8 @@ class CreatePhoneTemplate extends StatefulWidget {
   }
 
   void _checkIfNumberNameIsChange() {
-    if (phone!.numberName != _numberName && _isPhoneNameValid()) {
-      phone!.numberName = _numberName;
+    if (phone!.numberName != _numberName.userInput && _isPhoneNameValid()) {
+      phone!.numberName = _numberName.userInput;
     }
   }
 
@@ -45,7 +46,7 @@ class CreatePhoneTemplate extends StatefulWidget {
       _isEditedPhoneNameValid() && _isEditedPhoneNumberValid();
 
   bool _isEditedPhoneNameValid() =>
-      phone!.numberName != _numberName && _isPhoneNameValid();
+      phone!.numberName != _numberName.userInput && _isPhoneNameValid();
 
   bool _isEditedPhoneNumberValid() {
     try {
@@ -67,15 +68,14 @@ class CreatePhoneTemplate extends StatefulWidget {
     }
   }
 
-  bool _isPhoneNameValid() => _numberName != '';
+  bool _isPhoneNameValid() => _numberName.userInput != '';
 
   bool _isPhoneNumberValid() => _number != '' && int.parse(_number) > 0;
 
   void clearValues() {
     _number = '';
-    _numberName = '';
     _numberInputController.clear();
-    _nameNumberInputController.clear();
+    _numberName.clear();
   }
 
   @override
@@ -87,30 +87,22 @@ class CreatePhoneTemplate extends StatefulWidget {
 class _CreatePhoneTemplate extends State<CreatePhoneTemplate> {
   @override
   Widget build(BuildContext context) {
+    widget._numberName =    TextFieldTemplate(
+        label: AppStrings.PHONE_NAME,
+        hint: widget.phone == null ? '' : widget.phone!.numberName);
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 10.0),
+      padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
       child: Column(
         children: [
+          widget._numberName,
           TextField(
-              controller: widget._nameNumberInputController,
-              decoration: InputDecoration(
-                border: const OutlineInputBorder(),
-                label: Text(
-                  widget.phone == null
-                      ? AppStrings.PHONE_NAME
-                      : widget.phone!.numberName,
-                  style: Theme.of(context).textTheme.headline2,
-                ),
-              ),
-              onChanged: (userInput) => widget._numberName = userInput),
-          TextField(
+            style: Theme.of(context).textTheme.headline2,
               controller: widget._numberInputController,
               keyboardType: TextInputType.phone,
               inputFormatters: <TextInputFormatter>[
                 FilteringTextInputFormatter.digitsOnly
               ],
               decoration: InputDecoration(
-                border: const OutlineInputBorder(),
                 label: Text(
                   widget.phone == null
                       ? AppStrings.PHONE_NUMBER
