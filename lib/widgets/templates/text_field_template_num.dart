@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
-class TextFieldTemplate extends StatefulWidget {
-  TextFieldTemplate({Key? key, required this.label, required this.hint})
+class TextFieldTemplateNum extends StatefulWidget {
+  TextFieldTemplateNum({Key? key, required this.label, required this.hint})
       : super(key: key);
 
   final String label, hint;
@@ -18,19 +19,23 @@ class TextFieldTemplate extends StatefulWidget {
   }
 
   @override
-  _TextFieldTemplateState createState() => _TextFieldTemplateState();
+  _TextFieldTemplateNumState createState() => _TextFieldTemplateNumState();
 }
 
-class _TextFieldTemplateState extends State<TextFieldTemplate> {
+class _TextFieldTemplateNumState extends State<TextFieldTemplateNum> {
   @override
   Widget build(BuildContext context) {
     widget.controller ??= TextEditingController();
     return TextField(
       style: Theme.of(context).textTheme.headline2,
+      keyboardType: TextInputType.phone,
+      inputFormatters: <TextInputFormatter>[
+        FilteringTextInputFormatter.digitsOnly
+      ],
       controller: widget.controller,
       decoration: InputDecoration(
           label:
-              Text(widget.label, style: Theme.of(context).textTheme.headline2),
+          Text(widget.label, style: Theme.of(context).textTheme.headline2),
           hintText: widget.hint),
       onChanged: (String str) => str.isNotEmpty ? widget.input = str : {},
     );
