@@ -1,38 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/models/address.dart';
+import 'package:record_of_classes/widgets/templates/text_field_template.dart';
 
 class CreateAddressTemplate extends StatefulWidget {
   CreateAddressTemplate({Key? key, this.address}) : super(key: key);
   Address? address;
 
-  String _inputStreet = '',
-      _inputHouseNumber = '',
-      _inputFlatNumber = '',
-      _inputCity = '';
-
-  final TextEditingController _streetController = TextEditingController(),
-      _houseNumberController = TextEditingController(),
-      _flatNumberController = TextEditingController(),
-      _cityController = TextEditingController();
+  late TextFieldTemplate _city, _street, _houseNumber, _flatNumber;
 
   void clearFields() {
-    _inputFlatNumber = '';
-    _inputStreet = '';
-    _inputHouseNumber = '';
-    _inputCity = '';
-    _flatNumberController.clear();
-    _streetController.clear();
-    _houseNumberController.clear();
-    _cityController.clear();
+    _city.clear();
+    _street.clear();
+    _houseNumber.clear();
+    _flatNumber.clear();
   }
 
   Address getAddress() {
     return Address(
-        city: _inputCity,
-        street: _inputStreet,
-        flatNumber: _inputFlatNumber,
-        houseNumber: _inputHouseNumber);
+        city: _city.userInput,
+        street: _street.userInput,
+        flatNumber: _flatNumber.userInput,
+        houseNumber: _houseNumber.userInput);
   }
 
   @override
@@ -42,67 +31,26 @@ class CreateAddressTemplate extends StatefulWidget {
 class _CreateAddressTemplateState extends State<CreateAddressTemplate> {
   @override
   Widget build(BuildContext context) {
+    widget._city = TextFieldTemplate(
+        label: AppStrings.CITY,
+        hint: widget.address == null ? '' : widget.address!.city);
+    widget._street = TextFieldTemplate(
+        label: AppStrings.STREET,
+        hint: widget.address == null ? '' : widget.address!.street);
+    widget._houseNumber = TextFieldTemplate(
+        label: AppStrings.HOUSE_NUMBER,
+        hint: widget.address == null ? '' : widget.address!.houseNumber);
+    widget._flatNumber = TextFieldTemplate(
+        label: AppStrings.FLAT_NUMBER,
+        hint: widget.address == null ? '' : widget.address!.flatNumber);
+
     return Column(
       children: [
-        TextField(
-          controller: widget._cityController,
-          decoration: InputDecoration(
-              label: Text(AppStrings.CITY,
-                  style: Theme.of(context).textTheme.headline2),
-              hintText: widget.address == null
-                  ? ''
-                  : widget.address!.city),
-          onChanged: (String str) =>
-              str.isNotEmpty ? widget._inputCity = str : {},
-        ),
-        TextField(style:  Theme.of(context).textTheme.headline2 ,
-          controller: widget._streetController,
-          decoration: InputDecoration(
-              label: Text(AppStrings.STREET,
-                  style: Theme.of(context).textTheme.headline2),
-              hintText: widget.address == null
-                  ? ''
-                  : widget.address!.street),
-          onChanged: (String str) =>
-              str.isNotEmpty ? widget._inputStreet = str : {},
-        ),
-        TextField(
-          controller: widget._houseNumberController,
-          decoration: InputDecoration(
-              label: Text(AppStrings.HOUSE_NUMBER,
-                  style: Theme.of(context).textTheme.headline2),
-              hintText: widget.address == null
-                  ? ''
-                  : widget.address!.houseNumber),
-          onChanged: (String str) =>
-              str.isNotEmpty ? widget._inputHouseNumber = str : {},
-        ),
-        TextField(
-          controller: widget._flatNumberController,
-          decoration: InputDecoration(
-              label: Text(AppStrings.FLAT_NUMBER,
-                  style: Theme.of(context).textTheme.headline2),
-              hintText:
-                  widget.address != null ? widget.address!.flatNumber : ''),
-          onChanged: (String str) =>
-              str.isNotEmpty ? widget._inputFlatNumber = str : {},
-        ),
+        widget._city,
+        widget._street,
+        widget._houseNumber,
+        widget._flatNumber
       ],
     );
-  }
-
-  void _setInitialValues() {
-    if (widget.address != null) {
-      widget._inputCity = widget.address!.city;
-      widget._inputStreet = widget.address!.street;
-      widget._inputHouseNumber = widget.address!.houseNumber;
-      widget._inputFlatNumber = widget.address!.flatNumber;
-    }
-  }
-
-  @override
-  void initState() {
-    _setInitialValues();
-    super.initState();
   }
 }

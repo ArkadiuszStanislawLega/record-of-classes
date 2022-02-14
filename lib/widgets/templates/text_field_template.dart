@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 
 class TextFieldTemplate extends StatefulWidget {
-  TextFieldTemplate(
-      {Key? key, required this.label, required this.hint, this.controller})
+  TextFieldTemplate({Key? key, required this.label, required this.hint})
       : super(key: key);
 
   final String label, hint;
-  late TextEditingController? controller;
+  late String input;
+  late TextEditingController controller = TextEditingController();
 
-  String _input = '';
+  String get userInput {
+    return input;
+  }
 
-  String get input {
-    return _input;
+  void clear() {
+    input = '';
+    controller.clear();
   }
 
   @override
@@ -23,13 +26,16 @@ class _TextFieldTemplateState extends State<TextFieldTemplate> {
   Widget build(BuildContext context) {
     widget.controller ??= TextEditingController();
     return TextField(
-      style: Theme.of(context).textTheme.headline2,
-      controller: widget.controller,
-      decoration: InputDecoration(
-          label:
-              Text(widget.label, style: Theme.of(context).textTheme.headline2),
-          hintText: widget.hint),
-      onChanged: (String str) => str.isNotEmpty ? widget._input = str : {},
-    );
+        style: Theme.of(context).textTheme.headline2,
+        controller: widget.controller,
+        decoration: InputDecoration(
+            label: Text(widget.label,
+                style: Theme.of(context).textTheme.headline2),
+            hintText: widget.hint),
+        onChanged: (String str) {
+          print(str);
+          str.isNotEmpty ? widget.input = str : {};
+          print(widget.input);
+        });
   }
 }
