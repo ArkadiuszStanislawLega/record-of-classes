@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/enumerators/PersonType.dart';
-import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/account.dart';
 import 'package:record_of_classes/models/person.dart';
 import 'package:record_of_classes/models/student.dart';
-import 'package:record_of_classes/objectbox.g.dart';
 import 'package:record_of_classes/widgets/templates/create/create_person_template.dart';
-import 'package:record_of_classes/widgets/templates/snack_bar_info_template.dart';
 
 class CreateStudentTemplate extends StatelessWidget {
   CreateStudentTemplate({Key? key}) : super(key: key);

@@ -4,12 +4,12 @@ import 'package:record_of_classes/models/group.dart';
 import 'package:record_of_classes/widgets/templates/create/create_address_template.dart';
 
 class CreateGroupTemplate extends StatefulWidget {
-  CreateGroupTemplate({Key? key, this.group, required this.classesTypeName}) : super(key: key);
+  CreateGroupTemplate({Key? key, this.group, required this.classesTypeName})
+      : super(key: key);
 
   Group? group;
 
-  String _inputName = '',
-  classesTypeName = '';
+  String _inputName = '', classesTypeName = '';
 
   CreateAddressTemplate _createAddressTemplate = CreateAddressTemplate();
 
@@ -21,7 +21,7 @@ class CreateGroupTemplate extends StatefulWidget {
     _createAddressTemplate.clearFields();
   }
 
-  bool isInputValuesAreValid(){
+  bool isInputValuesAreValid() {
     return _inputName != '';
   }
 
@@ -52,6 +52,8 @@ class _CreateGroupTemplateState extends State<CreateGroupTemplate> {
         TextField(
           controller: widget._nameController,
           decoration: InputDecoration(
+              label: Text(AppStrings.GROUP_NAME,
+                  style: Theme.of(context).textTheme.headline2),
               hintText: widget.group == null
                   ? AppStrings.GROUP_NAME
                   : widget.group!.name),

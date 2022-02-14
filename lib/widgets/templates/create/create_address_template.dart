@@ -47,17 +47,21 @@ class _CreateAddressTemplateState extends State<CreateAddressTemplate> {
         TextField(
           controller: widget._cityController,
           decoration: InputDecoration(
+              label: Text(AppStrings.CITY,
+                  style: Theme.of(context).textTheme.headline2),
               hintText: widget.address == null
-                  ? AppStrings.CITY
+                  ? ''
                   : widget.address!.city),
           onChanged: (String str) =>
-          str.isNotEmpty ? widget._inputCity = str : {},
+              str.isNotEmpty ? widget._inputCity = str : {},
         ),
         TextField(
           controller: widget._streetController,
           decoration: InputDecoration(
+              label: Text(AppStrings.STREET,
+                  style: Theme.of(context).textTheme.headline2),
               hintText: widget.address == null
-                  ? AppStrings.STREET
+                  ? ''
                   : widget.address!.street),
           onChanged: (String str) =>
               str.isNotEmpty ? widget._inputStreet = str : {},
@@ -65,8 +69,10 @@ class _CreateAddressTemplateState extends State<CreateAddressTemplate> {
         TextField(
           controller: widget._houseNumberController,
           decoration: InputDecoration(
+              label: Text(AppStrings.HOUSE_NUMBER,
+                  style: Theme.of(context).textTheme.headline2),
               hintText: widget.address == null
-                  ? AppStrings.HOUSE_NUMBER
+                  ? ''
                   : widget.address!.houseNumber),
           onChanged: (String str) =>
               str.isNotEmpty ? widget._inputHouseNumber = str : {},
@@ -74,13 +80,13 @@ class _CreateAddressTemplateState extends State<CreateAddressTemplate> {
         TextField(
           controller: widget._flatNumberController,
           decoration: InputDecoration(
-              hintText: widget.address == null
-                  ? AppStrings.FLAT_NUMBER
-                  : widget.address!.flatNumber),
+              label: Text(AppStrings.FLAT_NUMBER,
+                  style: Theme.of(context).textTheme.headline2),
+              hintText:
+                  widget.address != null ? widget.address!.flatNumber : ''),
           onChanged: (String str) =>
               str.isNotEmpty ? widget._inputFlatNumber = str : {},
         ),
-
       ],
     );
   }

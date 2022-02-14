@@ -34,16 +34,18 @@ class _CreateParentTemplate extends State<CreateParentTemplate> {
       children: [
         TextField(
             controller: widget._nameInputController,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: AppStrings.NAME,
+            decoration: InputDecoration(
+              border: const OutlineInputBorder(),
+              label: Text(AppStrings.NAME,
+                  style: Theme.of(context).textTheme.headline2),
             ),
             onChanged: (userInput) => widget._parentName = userInput),
         TextField(
             controller: widget._surnameInputController,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: AppStrings.SURNAME,
+            decoration: InputDecoration(
+              border: const OutlineInputBorder(),
+              label: Text(AppStrings.SURNAME,
+                  style: Theme.of(context).textTheme.headline2),
             ),
             onChanged: (userInput) => widget._parentSurname = userInput),
       ],
