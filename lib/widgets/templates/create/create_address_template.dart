@@ -55,7 +55,7 @@ class _CreateAddressTemplateState extends State<CreateAddressTemplate> {
           onChanged: (String str) =>
               str.isNotEmpty ? widget._inputCity = str : {},
         ),
-        TextField(
+        TextField(style:  Theme.of(context).textTheme.headline2 ,
           controller: widget._streetController,
           decoration: InputDecoration(
               label: Text(AppStrings.STREET,
