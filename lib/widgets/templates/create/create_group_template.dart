@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/models/group.dart';
 import 'package:record_of_classes/widgets/templates/create/create_address_template.dart';
+import 'package:record_of_classes/widgets/templates/text_field_template.dart';
 
 class CreateGroupTemplate extends StatefulWidget {
   CreateGroupTemplate({Key? key, this.group, required this.classesTypeName})
@@ -9,25 +10,23 @@ class CreateGroupTemplate extends StatefulWidget {
 
   Group? group;
 
-  String _inputName = '', classesTypeName = '';
+  String classesTypeName = '';
 
   CreateAddressTemplate _createAddressTemplate = CreateAddressTemplate();
-
-  final TextEditingController _nameController = TextEditingController();
+  late TextFieldTemplate _inputName;
 
   void clearFields() {
-    _inputName = '';
-    _nameController.clear();
+    _inputName.clear();
     _createAddressTemplate.clearFields();
   }
 
   bool isInputValuesAreValid() {
-    return _inputName != '';
+    return _inputName.userInput != '';
   }
 
   Group getGroup() {
     return Group()
-      ..name = _inputName
+      ..name = _inputName.userInput
       ..address.target = _createAddressTemplate.getAddress();
   }
 
@@ -40,26 +39,18 @@ class _CreateGroupTemplateState extends State<CreateGroupTemplate> {
   void initState() {
     widget._createAddressTemplate =
         CreateAddressTemplate(address: widget.group?.address.target);
+    widget._inputName = TextFieldTemplate(
+        label: AppStrings.GROUP_NAME,
+        hint: widget.group == null ? '' : widget.group!.name);
+    widget._inputName.controller.text = widget.classesTypeName;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    widget._nameController.text = widget.classesTypeName;
-
     return Column(
       children: [
-        TextField(
-          controller: widget._nameController,
-          decoration: InputDecoration(
-              label: Text(AppStrings.GROUP_NAME,
-                  style: Theme.of(context).textTheme.headline2),
-              hintText: widget.group == null
-                  ? AppStrings.GROUP_NAME
-                  : widget.group!.name),
-          onChanged: (String str) =>
-              str.isNotEmpty ? widget._inputName = str : {},
-        ),
+        widget._inputName,
         widget._createAddressTemplate,
       ],
     );
