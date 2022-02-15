@@ -23,38 +23,38 @@ class _PhoneBookListItemTemplateState extends State<PhoneBookListItemTemplate> {
     return Slidable(
       actionPane: const SlidableDrawerActionPane(),
       secondaryActions: [
-        IconSlideAction(
-          caption: AppStrings.CALL,
-          color: Colors.white,
-          icon: Icons.phone,
-          onTap: _makePhoneCall,
-        ),
-        IconSlideAction(
-            caption: AppStrings.SEND_MESSAGE,
-            color: Colors.yellow,
+        _phoneActions(
+            icon: Icons.phone,
+            title: AppStrings.CALL,
+            onTapFunction: _makePhoneCall,
+            background: Colors.blue),
+        _phoneActions(
             icon: Icons.message,
-            onTap: _senSMS),
-        IconSlideAction(
-            caption: AppStrings.EDIT,
-            color: Colors.green,
+            title: AppStrings.SEND_MESSAGE,
+            onTapFunction: _sendSMS,
+            background: Colors.black26),
+        _phoneActions(
             icon: Icons.edit,
-            onTap: _navigateToEditContact),
-        IconSlideAction(
-            caption: AppStrings.DELETE,
-            color: Colors.red,
+            title: AppStrings.EDIT,
+            onTapFunction: _navigateToEditContact,
+            background: Colors.green),
+        _phoneActions(
             icon: Icons.delete,
-            onTap: _navigateToRemoveContact),
+            title: AppStrings.DELETE,
+            onTapFunction: _navigateToRemoveContact,
+            background: Colors.red)
       ],
       child: Card(
         color: _colorDependsOnOwnerType(),
-        shape: RoundedRectangleBorder(
-          side: const BorderSide(color: Colors.white70, width: 1),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        margin: const EdgeInsets.symmetric(vertical: 8.0),
         elevation: 7,
         child: ListTile(
-          title: Text(widget.phone.number.toString()),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(widget.phone.number.toString()),
+              Text(widget.phone.numberName)
+            ],
+          ),
           subtitle: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -65,6 +65,20 @@ class _PhoneBookListItemTemplateState extends State<PhoneBookListItemTemplate> {
           onTap: _navigateToParentProfile,
         ),
       ),
+    );
+  }
+
+  IconSlideAction _phoneActions({
+    required IconData icon,
+    required String title,
+    required Function? onTapFunction,
+    required Color background
+  }) {
+    return IconSlideAction(
+      icon: icon,
+      caption: title,
+      color: background,
+      onTap: onTapFunction as void Function(),
     );
   }
 
@@ -94,7 +108,7 @@ class _PhoneBookListItemTemplateState extends State<PhoneBookListItemTemplate> {
     await launch(launchUri.toString());
   }
 
-  Future<void> _senSMS() async {
+  Future<void> _sendSMS() async {
     final Uri launchUri = Uri(
       scheme: 'sms',
       path: widget.phone.number.toString(),

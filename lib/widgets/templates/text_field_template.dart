@@ -6,7 +6,7 @@ class TextFieldTemplate extends StatefulWidget {
 
   final String label, hint;
   late String input;
-  late TextEditingController controller = TextEditingController();
+  late TextEditingController? controller = TextEditingController();
 
   String get userInput {
     return input;
@@ -14,7 +14,7 @@ class TextFieldTemplate extends StatefulWidget {
 
   void clear() {
     input = '';
-    controller.clear();
+    controller!.clear();
   }
 
   @override
