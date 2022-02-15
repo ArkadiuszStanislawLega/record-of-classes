@@ -154,11 +154,18 @@ class _PhoneBookPageState extends State<PhoneBookPage> {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) => PhoneBookListItemTemplate(
-          phone: _filteredPhones.elementAt(index),
+          phone: _filteredPhones.elementAt(index),updateParent: _updateModel,
         ),
         childCount: _filteredPhones.length,
       ),
     );
+  }
+
+  void _updateModel(Phone  updated){
+    Phone selectedPhone = _phones.firstWhere((element) => element.id == updated.id);
+    setState(() {
+      selectedPhone = updated;
+    });
   }
 
   DecoratedBox _pageNavigationButton(

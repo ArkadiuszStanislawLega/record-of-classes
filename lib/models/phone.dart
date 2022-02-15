@@ -19,7 +19,8 @@ class Phone implements DbModel {
 
   @override
   void removeFromDb() {
-    //TODO: removeFromDb
+    owner.target!.phones.removeWhere((element) => element.id == id);
+    objectBox.store.box<Phone>().remove(id);
   }
 
   @override

@@ -1,26 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:record_of_classes/constants/app_strings.dart';
-import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/phone.dart';
 import 'package:record_of_classes/widgets/templates/create/create_phone_template.dart';
 import 'package:record_of_classes/widgets/templates/snack_bar_info_template.dart';
 
-class EditPhonePage extends StatefulWidget {
+class EditPhonePage extends StatelessWidget {
   EditPhonePage({Key? key}) : super(key: key);
 
-  @override
-  State<StatefulWidget> createState() {
-    return _EditPhonePage();
-  }
-}
-
-class _EditPhonePage extends State<EditPhonePage> {
   late Phone _phone;
   late CreatePhoneTemplate _createPhoneTemplate;
+  late Map _args;
+  late Function? _updateParentFunction;
 
   @override
   Widget build(BuildContext context) {
-    _phone = ModalRoute.of(context)!.settings.arguments as Phone;
+    _args = ModalRoute.of(context)!.settings.arguments as Map;
+    _phone = _args[AppStrings.PHONE_NUMBER];
+    _updateParentFunction = _args[AppStrings.FUNCTION];
+
     _createPhoneTemplate = CreatePhoneTemplate(
       phone: _phone,
     );
@@ -41,20 +38,28 @@ class _EditPhonePage extends State<EditPhonePage> {
   }
 
   void _actionAfterConfirmButtonClick(BuildContext context) {
-    if (_createPhoneTemplate.isEditedInputValid()) {
-      setState(() {
-        _phone = _createPhoneTemplate.getPhone();
-        objectBox.store.box<Phone>().put(_phone);
-      });
+    _updateModel();
 
-      SnackBarInfoTemplate(
-          context: context,
-          message:
-              '${AppStrings.EDITED} ${AppStrings.CONTACT.toLowerCase()}: ${_createPhoneTemplate.getPhone().owner.target!.introduceYourself()}');
-      Navigator.pop(context);
-    } else {
-      SnackBarInfoTemplate(
-          context: context, message: AppStrings.ERROR_MESSAGE_CHECK_FIELDS_FILL);
+    if (_updateParentFunction != null) {
+      _updateParentFunction!(_phone);
     }
+
+
+
+    SnackBarInfoTemplate(
+        context: context,
+        message:
+            '${AppStrings.EDITED} ${AppStrings.CONTACT.toLowerCase()}: ${_phone.owner.target!.introduceYourself()}');
+    Navigator.pop(context);
+  }
+
+  void _updateModel() {
+    _phone.numberName = _createPhoneTemplate.isEditedPhoneNameValid()
+        ? _createPhoneTemplate.getPhone().numberName
+        : _phone.numberName;
+    _phone.number = _createPhoneTemplate.isEditedPhoneNumberValid()
+        ? _createPhoneTemplate.getPhone().number
+        : _phone.number;
+    _phone.addToDb();
   }
 }

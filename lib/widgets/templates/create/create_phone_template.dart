@@ -43,13 +43,10 @@ class CreatePhoneTemplate extends StatefulWidget {
     }
   }
 
-  bool isEditedInputValid() =>
-      _isEditedPhoneNameValid() && _isEditedPhoneNumberValid();
-
-  bool _isEditedPhoneNameValid() =>
+  bool isEditedPhoneNameValid() =>
       phone!.numberName != _numberName.userInput && _isPhoneNameValid();
 
-  bool _isEditedPhoneNumberValid() {
+  bool isEditedPhoneNumberValid() {
     try {
       int number = int.parse(_number.userInput);
       return phone!.number != number && number > 0;

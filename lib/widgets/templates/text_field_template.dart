@@ -5,7 +5,7 @@ class TextFieldTemplate extends StatefulWidget {
       : super(key: key);
 
   final String label, hint;
-  late String input;
+  late String input='';
   late TextEditingController? controller = TextEditingController();
 
   String get userInput {
