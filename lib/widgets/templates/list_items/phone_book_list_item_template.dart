@@ -43,7 +43,7 @@ class _PhoneBookListItemTemplateState extends State<PhoneBookListItemTemplate> {
         _phoneActions(
             icon: Icons.delete,
             title: AppStrings.DELETE,
-            onTapFunction: _navigateToRemoveContact,
+            onTapFunction: _removeDialogWindow,
             background: Colors.red)
       ],
       child: Card(
@@ -133,9 +133,30 @@ class _PhoneBookListItemTemplateState extends State<PhoneBookListItemTemplate> {
     }
   }
 
-  void _navigateToRemoveContact() {
+  void _removeDialogWindow() {
+    showDialog(
+      context: context,
+      builder: (BuildContext ctx) {
+        return AlertDialog(
+          title: const Text(AppStrings.CONFIRM_REMOVING),
+          content: Text(
+              '${AppStrings.ARE_YOU_SURE_YOU_WANT_REMOVE_A_CONTACT} ${widget.phone.owner.target!.introduceYourself()}: ${widget.phone.numberName} - ${widget.phone.number}'),
+          actions: [
+            TextButton(
+                onPressed: _removeAction, child: const Text(AppStrings.YES)),
+            TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text(AppStrings.NO))
+          ],
+        );
+      },
+    );
+  }
+
+  void _removeAction() {
     _removeInParent();
     _removePhoneFromDb();
+    Navigator.of(context).pop();
   }
 
   void _removeInParent() => widget.removeParent!(widget.phone);

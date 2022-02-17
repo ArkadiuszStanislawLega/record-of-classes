@@ -27,6 +27,7 @@ class AppStrings {
       CLASSES_ADDRESS = 'Adres zajęć',
       CLASSES_TYPE = 'Typ zajęć',
       CALL = 'Zadzwoń',
+      ARE_YOU_SURE_YOU_WANT_REMOVE_A_CONTACT = 'Czy na pewno chcesz usunąć kontakt',
       SEND_MESSAGE = 'SMS',
       AND = 'i',
       TO = 'do',
