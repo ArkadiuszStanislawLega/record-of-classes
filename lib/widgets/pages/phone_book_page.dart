@@ -154,11 +154,19 @@ class _PhoneBookPageState extends State<PhoneBookPage> {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) => PhoneBookListItemTemplate(
-          phone: _filteredPhones.elementAt(index),updateParent: _updateModel,
+          phone: _filteredPhones.elementAt(index),
+          updateParent: _updateModel,
+          removeParent: _removePhone,
         ),
         childCount: _filteredPhones.length,
       ),
     );
+  }
+
+  void _removePhone(Phone phone){
+    setState(() {
+      _filteredPhones.removeWhere((element) => element.id == phone.id);
+    });
   }
 
   void _updateModel(Phone  updated){

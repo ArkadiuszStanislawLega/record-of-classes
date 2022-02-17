@@ -44,8 +44,6 @@ class EditPhonePage extends StatelessWidget {
       _updateParentFunction!(_phone);
     }
 
-
-
     SnackBarInfoTemplate(
         context: context,
         message:

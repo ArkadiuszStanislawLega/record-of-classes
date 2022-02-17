@@ -8,9 +8,11 @@ import 'package:record_of_classes/widgets/templates/snack_bar_info_template.dart
 import 'package:url_launcher/url_launcher.dart';
 
 class PhoneBookListItemTemplate extends StatefulWidget {
-  PhoneBookListItemTemplate({Key? key, required this.phone, this.updateParent}) : super(key: key);
+  PhoneBookListItemTemplate(
+      {Key? key, required this.phone, this.updateParent, this.removeParent})
+      : super(key: key);
   Phone phone;
-  Function? updateParent;
+  Function? updateParent, removeParent;
 
   @override
   _PhoneBookListItemTemplateState createState() =>
@@ -126,12 +128,17 @@ class _PhoneBookListItemTemplateState extends State<PhoneBookListItemTemplate> {
       widget.phone = updated;
     });
 
-    if(widget.updateParent != null){
+    if (widget.updateParent != null) {
       widget.updateParent!(updated);
     }
   }
 
-  void _navigateToRemoveContact() => _removePhoneFromDb();
+  void _navigateToRemoveContact() {
+    _removeInParent();
+    _removePhoneFromDb();
+  }
+
+  void _removeInParent() => widget.removeParent!(widget.phone);
 
   void _removePhoneFromDb() {
     setState(() {
