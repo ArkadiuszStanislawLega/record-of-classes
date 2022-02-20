@@ -88,11 +88,19 @@ class _StartPageViewView extends State<StartPageView> {
             Column(
               children: [
                 TextButton(
-                    onPressed: _navigateToAboutPage,
-                    child: const Text(
-                      AppStrings.ABOUT,
-                      style: TextStyle(color: Colors.white),
-                    )),
+                  onPressed: _navigateToAboutPage,
+                  child: const Text(
+                    AppStrings.ABOUT,
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+                TextButton(
+                  onPressed: _navigateToManageDatabase,
+                  child: const Text(
+                    AppStrings.MANAGE_DATABASE,
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
               ],
             ),
             const Text(
@@ -106,6 +114,9 @@ class _StartPageViewView extends State<StartPageView> {
   }
 
   void _navigateToAboutPage() => Navigator.pushNamed(context, AppUrls.ABOUT);
+
+  void _navigateToManageDatabase() =>
+      Navigator.pushNamed(context, AppUrls.MANAGE_DATABASE);
 
   Widget _button(
       {required Icon icon,

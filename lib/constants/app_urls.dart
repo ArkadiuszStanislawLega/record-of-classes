@@ -29,5 +29,6 @@ class AppUrls {
       EDIT_PHONE = '/edit_phone',
       PHONE_BOOK = '/phone_book_page',
       FUND_ACCOUNT = '/fund_account',
-      CREATE_CLASSES_NEW_VERSION = '/create_classes_new_version';
+      CREATE_CLASSES_NEW_VERSION = '/create_classes_new_version',
+      MANAGE_DATABASE = '/manage_database';
 }

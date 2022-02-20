@@ -27,6 +27,7 @@ import 'package:record_of_classes/widgets/pages/add/add_parent_page.dart';
 import 'package:record_of_classes/widgets/pages/create/create_parent_page.dart';
 import 'package:record_of_classes/widgets/pages/create/create_phone_page.dart';
 import 'package:record_of_classes/widgets/pages/create/create_student_page.dart';
+import 'package:record_of_classes/widgets/pages/manage_database_page.dart';
 import 'package:record_of_classes/widgets/pages/record_of_classes_tree_view_page.dart';
 import 'package:record_of_classes/widgets/pages/detail/classes_type_detail_page.dart';
 import 'package:record_of_classes/widgets/pages/detail/group_detail_page.dart';
@@ -61,7 +62,7 @@ class ObjectBox {
   /// Create an instance of ObjectBox to use throughout the app.
   static Future<ObjectBox> create() async {
     await getApplicationDocumentsDirectory().then((dir) {
-      ObjectBox.store =  Store(
+      ObjectBox.store = Store(
         getObjectBoxModel(),
         directory: '${dir.path}/${AppStrings.DATABASE_NAME}',
       );
@@ -188,7 +189,6 @@ class _RecordOfClassesApp extends State<RecordOfClassesApp> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
-
         ),
         textTheme: const TextTheme(
           headline1: TextStyle(
@@ -196,7 +196,8 @@ class _RecordOfClassesApp extends State<RecordOfClassesApp> {
               fontSize: 35.0,
               color: Colors.white),
           headline2: TextStyle(fontSize: 16.0, color: Colors.white),
-          headline3: TextStyle(fontSize: 20.0, color: Colors.white, fontWeight: FontWeight.bold),
+          headline3: TextStyle(
+              fontSize: 20.0, color: Colors.white, fontWeight: FontWeight.bold),
           bodyText2: TextStyle(
               fontSize: 17.0, fontFamily: AppStrings.FONT_NEW_ATHENA_UNICODE),
         ),
@@ -238,6 +239,7 @@ class _RecordOfClassesApp extends State<RecordOfClassesApp> {
         AppUrls.FUND_ACCOUNT: (context) => const FundAccountPage(),
         AppUrls.CREATE_CLASSES_NEW_VERSION: (context) =>
             RecordOfClassesTreeViewPage(),
+        AppUrls.MANAGE_DATABASE: (context) => ManageDatabasePage(),
         '/test': (context) => Test()
       },
     );
