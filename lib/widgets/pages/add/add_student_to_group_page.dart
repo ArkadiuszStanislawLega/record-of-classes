@@ -16,7 +16,6 @@ class AddStudentToGroupPage extends StatefulWidget {
 
 class _AddStudentToGroupPageState extends State<AddStudentToGroupPage> {
   late Group _group;
-  late Store _store;
   late Stream<List<Student>> _studentStream;
 
   @override
@@ -102,16 +101,15 @@ class _AddStudentToGroupPageState extends State<AddStudentToGroupPage> {
     setState(() {
       _group.students.add(student);
       student.groups.add(_group);
-      _store.box<Group>().put(_group);
-      _store.box<Student>().put(student);
+      _group.addToDb();
+      student.addToDb();
     });
   }
 
   @override
   void initState() {
     super.initState();
-    _store = objectBox.store;
-    _studentStream = _store
+    _studentStream = ObjectBox.store
         .box<Student>()
         .query()
         .watch(triggerImmediately: true)

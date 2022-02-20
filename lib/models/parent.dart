@@ -43,10 +43,10 @@ class Parent implements DbModel {
   }
 
   @override
-  void addToDb() => objectBox.store.box<Parent>().put(this);
+  void addToDb() => ObjectBox.store.box<Parent>().put(this);
 
   @override
-  getFromDb() => objectBox.store.box<Parent>().get(id);
+  getFromDb() => ObjectBox.store.box<Parent>().get(id);
 
   @override
   void update(updatedObject) => addToDb();

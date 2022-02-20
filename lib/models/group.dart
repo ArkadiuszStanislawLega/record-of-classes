@@ -50,10 +50,10 @@ class Group implements DbModel{
   }
 
   @override
-  void addToDb() => objectBox.store.box<Group>().put(this);
+  void addToDb() => ObjectBox.store.box<Group>().put(this);
 
   @override
-  getFromDb() => objectBox.store.box<Group>().get(id);
+  getFromDb() => ObjectBox.store.box<Group>().get(id);
 
   @override
   void update(updatedObject)=> addToDb();

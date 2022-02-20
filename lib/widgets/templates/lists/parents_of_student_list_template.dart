@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/parent.dart';
 import 'package:record_of_classes/models/student.dart';
@@ -17,7 +16,6 @@ class ParentsOfStudentList extends StatefulWidget {
 }
 
 class _ParentsOfStudentList extends State<ParentsOfStudentList> {
-  late Store _store;
   late Stream<List<Parent>> _parentsStream;
 
   @override
@@ -28,7 +26,7 @@ class _ParentsOfStudentList extends State<ParentsOfStudentList> {
         stream: _parentsStream,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            widget.children = _store.box<Student>().get(widget.children!.id);
+            widget.children = ObjectBox.store.box<Student>().get(widget.children!.id);
             return ListView.builder(
               itemCount: widget.children!.parents.length,
               scrollDirection: Axis.vertical,
@@ -60,8 +58,7 @@ class _ParentsOfStudentList extends State<ParentsOfStudentList> {
   @override
   void initState() {
     super.initState();
-    _store = objectBox.store;
-    _parentsStream = _store
+    _parentsStream = ObjectBox.store
         .box<Parent>()
         .query()
         .watch(triggerImmediately: true)

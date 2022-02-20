@@ -55,8 +55,8 @@ class _CreatePhonePage extends State<CreatePhonePage> {
       phone.owner.target = _parent.person.target!;
       _parent.person.target!.phones.add(phone);
 
-      objectBox.store.box<Parent>().put(_parent);
-      objectBox.store.box<Phone>().put(phone);
+      _parent.addToDb();
+      phone.addToDb();
     });
   }
 }

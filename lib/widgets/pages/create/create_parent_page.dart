@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/enumerators/PersonType.dart';
-import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/parent.dart';
 import 'package:record_of_classes/models/person.dart';
 import 'package:record_of_classes/models/phone.dart';
@@ -17,7 +15,6 @@ class CreateParentPage extends StatelessWidget {
   late Person _inputPerson;
   late Parent _inputParent;
   late Phone _inputPhone;
-  final Store _store = objectBox.store;
 
   final _createParentTemplate = CreateParentTemplate();
   final _createPhone = CreatePhoneTemplate();
@@ -78,7 +75,7 @@ class CreateParentPage extends StatelessWidget {
 
   void _addParentToChildren() => _selectedStudent.parents.add(_inputParent);
 
-  void _pushChangesToDb() => _store.box<Student>().put(_selectedStudent);
+  void _pushChangesToDb() => _selectedStudent.addToDb();
 
   void _setPersonsValues() {
     _setPersonType();

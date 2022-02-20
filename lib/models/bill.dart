@@ -35,14 +35,14 @@ class Bill implements DbModel {
     studentAccount.target = null;
     attendance.target = null;
     addToDb();
-    objectBox.store.box<Bill>().remove(id);
+    ObjectBox.store.box<Bill>().remove(id);
   }
 
   @override
-  void addToDb() => objectBox.store.box<Bill>().put(this);
+  void addToDb() => ObjectBox.store.box<Bill>().put(this);
 
   @override
-  getFromDb() => objectBox.store.box<Bill>().get(id);
+  getFromDb() => ObjectBox.store.box<Bill>().get(id);
 
   @override
   void update(updatedObject) => addToDb();

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/group.dart';
 import 'package:record_of_classes/models/student.dart';
@@ -15,7 +14,6 @@ class StudentGroupListTemplate extends StatefulWidget {
 }
 
 class _StudentGroupListTemplateState extends State<StudentGroupListTemplate> {
-  late Store _store;
   late Stream<List<Group>> _groupsStream;
 
   @override
@@ -43,8 +41,7 @@ class _StudentGroupListTemplateState extends State<StudentGroupListTemplate> {
   @override
   void initState() {
     super.initState();
-    _store = objectBox.store;
-    _groupsStream = _store
+    _groupsStream = ObjectBox.store
         .box<Group>()
         .query()
         .watch(triggerImmediately: true)

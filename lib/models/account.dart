@@ -72,10 +72,10 @@ class Account implements DbModel{
   }
 
   @override
-  void addToDb() => objectBox.store.box<Account>().put(this);
+  void addToDb() => ObjectBox.store.box<Account>().put(this);
 
   @override
-  getFromDb() => objectBox.store.box<Account>().get(id);
+  getFromDb() => ObjectBox.store.box<Account>().get(id);
 
   @override
   void update(updateObject) => addToDb();

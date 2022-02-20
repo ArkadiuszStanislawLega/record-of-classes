@@ -263,7 +263,7 @@ class _DetailGroupPageState extends State<DetailGroupPage> {
   @override
   void initState() {
     super.initState();
-    _studentsStream = objectBox.store
+    _studentsStream = ObjectBox.store
         .box<Student>()
         .query()
         .watch(triggerImmediately: true)

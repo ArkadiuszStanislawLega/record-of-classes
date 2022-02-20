@@ -4,7 +4,6 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/constants/app_urls.dart';
 import 'package:record_of_classes/constants/app_strings.dart';
-import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/parent.dart';
 import 'package:record_of_classes/models/phone.dart';
 import 'package:record_of_classes/widgets/templates/one_row_property_template.dart';
@@ -22,7 +21,6 @@ enum ListsOnPages { children, contacts }
 
 class _ParentDetailPage extends State<ParentDetailPage> {
   late Parent _parent;
-  late Store _store;
   ListsOnPages _currentList = ListsOnPages.contacts;
 
   @override
@@ -224,7 +222,7 @@ class _ParentDetailPage extends State<ParentDetailPage> {
               onTap: () {
                 setState(() {
                   _parent.person.target!.phones.remove(phone);
-                  _store.box<Phone>().remove(phone.id);
+                  phone.removeFromDb();
                 });
               }),
         ],
@@ -236,11 +234,5 @@ class _ParentDetailPage extends State<ParentDetailPage> {
         ),
       ),
     );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _store = objectBox.store;
   }
 }

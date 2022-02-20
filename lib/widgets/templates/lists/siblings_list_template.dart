@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/widgets/templates/list_items/remove_sibling_list_item.dart';
@@ -16,7 +15,6 @@ class SiblingsListTemplate extends StatefulWidget {
 }
 
 class _SiblingsListTemplate extends State<SiblingsListTemplate> {
-  late Store _store;
   late Stream<List<Student>> _siblingsStream;
 
   @override
@@ -31,7 +29,8 @@ class _SiblingsListTemplate extends State<SiblingsListTemplate> {
             shrinkWrap: true,
             itemBuilder: (context, index) {
               return RemoveSiblingListItem(
-                  sibling: widget.student.siblings.elementAt(index), student: widget.student);
+                  sibling: widget.student.siblings.elementAt(index),
+                  student: widget.student);
             },
           );
         } else {
@@ -44,8 +43,7 @@ class _SiblingsListTemplate extends State<SiblingsListTemplate> {
   @override
   void initState() {
     super.initState();
-    _store = objectBox.store;
-    _siblingsStream = _store
+    _siblingsStream = ObjectBox.store
         .box<Student>()
         .query()
         .watch(triggerImmediately: true)

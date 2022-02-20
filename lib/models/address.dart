@@ -27,14 +27,14 @@ class Address implements DbModel {
       this.city = ''});
 
   @override
-  void addToDb() => objectBox.store.box<Address>().put(this);
+  void addToDb() => ObjectBox.store.box<Address>().put(this);
 
   @override
-  getFromDb() => objectBox.store.box<Address>().get(id);
+  getFromDb() => ObjectBox.store.box<Address>().get(id);
 
   @override
   void update(updatedObject) => addToDb();
 
   @override
-  void removeFromDb() => objectBox.store.box<Address>().remove(id);
+  void removeFromDb() => ObjectBox.store.box<Address>().remove(id);
 }

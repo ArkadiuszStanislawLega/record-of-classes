@@ -33,7 +33,7 @@ class _PhoneBookPageState extends State<PhoneBookPage> {
   @override
   void initState() {
     super.initState();
-    _phonesSteam = objectBox.store
+    _phonesSteam = ObjectBox.store
         .box<Phone>()
         .query()
         .watch(triggerImmediately: true)

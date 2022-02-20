@@ -44,7 +44,7 @@ class _TestState extends State<Test> {
   @override
   void initState() {
     super.initState();
-    _store = objectBox.store;
+    _store = ObjectBox.store;
     _accountsSteam = _store
         .box<Account>()
         .query()

@@ -89,7 +89,7 @@ class _AddSiblingsPage extends State<AddSiblingsToStudentPage> {
   @override
   void initState() {
     super.initState();
-    _studentsStream = objectBox.store
+    _studentsStream = ObjectBox.store
         .box<Student>()
         .query()
         .watch(triggerImmediately: true)

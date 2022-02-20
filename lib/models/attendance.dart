@@ -21,7 +21,7 @@ class Attendance implements DbModel{
     bill.target!.removeFromDb();
     classes.target!.removeClasses(id);
     student.target!.removeAttendance(id);
-    objectBox.store.box<Attendance>().remove(id);
+    ObjectBox.store.box<Attendance>().remove(id);
   }
 
   void setBill(Bill createdBill) {
@@ -30,10 +30,10 @@ class Attendance implements DbModel{
   }
 
   @override
-  void addToDb() => objectBox.store.box<Attendance>().put(this);
+  void addToDb() => ObjectBox.store.box<Attendance>().put(this);
 
   @override
-  getFromDb() => objectBox.store.box<Attendance>().get(id);
+  getFromDb() => ObjectBox.store.box<Attendance>().get(id);
 
   @override
   void update(updatedObject) => addToDb();

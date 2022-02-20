@@ -28,7 +28,7 @@ class _CreateParentPage extends State<AddParentPage> {
   @override
   void initState() {
     super.initState();
-    _parentsStream = objectBox.store
+    _parentsStream = ObjectBox.store
         .box<Parent>()
         .query()
         .watch(triggerImmediately: true)

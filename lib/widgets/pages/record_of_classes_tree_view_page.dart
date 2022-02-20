@@ -355,7 +355,7 @@ class _RecordOfClassesTreeViewPageState
   void initState() {
     super.initState();
     _controller = TreeViewController();
-    _classesTypeStream = objectBox.store
+    _classesTypeStream = ObjectBox.store
         .box<ClassesType>()
         .query()
         .watch(triggerImmediately: true)

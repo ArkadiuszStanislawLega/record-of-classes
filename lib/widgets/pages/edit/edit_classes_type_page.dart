@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/constants/app_strings.dart';
-import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/classes_type.dart';
 import 'package:record_of_classes/widgets/templates/add_new_classes_type_template.dart';
 import 'package:record_of_classes/widgets/templates/snack_bar_info_template.dart';
@@ -16,7 +14,6 @@ class EditClassesTypePage extends StatefulWidget {
 class _EditClassesTypePageState extends State<EditClassesTypePage> {
   late ClassesType _classesType, _updatedClassesType;
   late AddNewClassesTypeTemplate _addNewClassesTypeTemplate;
-  late Store _store;
   late Map _args;
   late Function? _parentUpdateFunction;
 
@@ -64,10 +61,9 @@ class _EditClassesTypePageState extends State<EditClassesTypePage> {
   bool _isValuesAreValid() => _addNewClassesTypeTemplate.isInputValid();
 
   void _updateValuesInDb() {
-    _store = objectBox.store;
     _updatedClassesType = _addNewClassesTypeTemplate.getClassType();
     _setNewValues();
-    _store.box<ClassesType>().put(_classesType);
+    _classesType.addToDb();
   }
 
   void _setNewValues() {

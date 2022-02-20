@@ -23,7 +23,7 @@ class _ClassesTypeMainPageState extends State<ClassesTypeMainPage> {
   @override
   void initState() {
     super.initState();
-    _classesTypesStream = objectBox.store
+    _classesTypesStream = ObjectBox.store
         .box<ClassesType>()
         .query()
         .watch(triggerImmediately: true)

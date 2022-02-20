@@ -49,8 +49,7 @@ class CreateClassesTypePage extends StatelessWidget {
   }
 
   Teacher _getTeacherFromDb() =>
-      objectBox.store.box<Teacher>().getAll().elementAt(0);
+      ObjectBox.store.box<Teacher>().getAll().elementAt(0);
 
-  void _addClassesTypeToDb(ClassesType classesType) =>
-      objectBox.store.box<ClassesType>().put(classesType);
+  void _addClassesTypeToDb(ClassesType classesType) => classesType.addToDb();
 }

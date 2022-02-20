@@ -20,14 +20,14 @@ class Phone implements DbModel {
   @override
   void removeFromDb() {
     owner.target!.phones.removeWhere((element) => element.id == id);
-    objectBox.store.box<Phone>().remove(id);
+    ObjectBox.store.box<Phone>().remove(id);
   }
 
   @override
-  void addToDb() => objectBox.store.box<Phone>().put(this);
+  void addToDb() => ObjectBox.store.box<Phone>().put(this);
 
   @override
-  getFromDb() => objectBox.store.box<Phone>().get(id);
+  getFromDb() => ObjectBox.store.box<Phone>().get(id);
 
   @override
   void update(updatedObject) => addToDb();

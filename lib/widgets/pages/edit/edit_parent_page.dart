@@ -16,13 +16,6 @@ class EditParentPage extends StatefulWidget {
 class _EditParentPageState extends State<EditParentPage> {
   late Parent _parent;
   String _parentName = '', _parentSurname = '';
-  late Store _store;
-
-  @override
-  void initState() {
-    super.initState();
-    _store = objectBox.store;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,6 +71,5 @@ class _EditParentPageState extends State<EditParentPage> {
     });
   }
 
-  void _updateValueInDatabase() =>
-      _store.box<Person>().put(_parent.person.target!);
+  void _updateValueInDatabase() => _parent.person.target!.addToDb();
 }

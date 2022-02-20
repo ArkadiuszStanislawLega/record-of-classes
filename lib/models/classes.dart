@@ -50,10 +50,10 @@ class Classes implements DbModel {
   }
 
   @override
-  void addToDb() => objectBox.store.box<Classes>().put(this);
+  void addToDb() => ObjectBox.store.box<Classes>().put(this);
 
   @override
-  getFromDb() => objectBox.store.box<Classes>().get(id);
+  getFromDb() => ObjectBox.store.box<Classes>().get(id);
 
   @override
   void update(updatedObject) => addToDb();

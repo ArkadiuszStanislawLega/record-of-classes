@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/constants/app_urls.dart';
 import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/main.dart';
@@ -19,7 +18,6 @@ class DetailClassesType extends StatefulWidget {
 class _DetailClassesTypeState extends State<DetailClassesType> {
   static const double titleHeight = 180.0;
   late ClassesType _classesType;
-  late Store _store;
 
   late Stream<List<Group>> _groupStream;
   late Map _args;
@@ -28,8 +26,7 @@ class _DetailClassesTypeState extends State<DetailClassesType> {
   @override
   void initState() {
     super.initState();
-    _store = objectBox.store;
-    _groupStream = _store
+    _groupStream = ObjectBox.store
         .box<Group>()
         .query()
         .watch(triggerImmediately: true)

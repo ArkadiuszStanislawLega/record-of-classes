@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/constants/app_urls.dart';
 import 'package:record_of_classes/enumerators/PersonType.dart';
@@ -51,15 +52,20 @@ import 'widgets/pages/detail/classes_detail_page.dart';
 
 class ObjectBox {
   /// The Store of this app.
-  late final Store store;
+  static late final Store store;
 
-  ObjectBox._create(this.store) {
+  ObjectBox._create(store) {
     // Add any additional setup code, e.g. build queries.
   }
 
   /// Create an instance of ObjectBox to use throughout the app.
   static Future<ObjectBox> create() async {
-    final store = await openStore();
+    await getApplicationDocumentsDirectory().then((dir) {
+      ObjectBox.store =  Store(
+        getObjectBoxModel(),
+        directory: '${dir.path}/${AppStrings.DATABASE_NAME}',
+      );
+    });
     return ObjectBox._create(store);
   }
 }
@@ -79,7 +85,7 @@ Future<void> main() async {
 }
 
 void _putTeacherToDb() {
-  var teacherObjectBox = objectBox.store.box<Teacher>();
+  var teacherObjectBox = ObjectBox.store.box<Teacher>();
   var teachers = teacherObjectBox.getAll();
   if (teachers.isEmpty) {
     var person = Person(name: 'Monika', surname: 'Łęga')
@@ -90,27 +96,27 @@ void _putTeacherToDb() {
 }
 
 void clearDb() {
-  objectBox.store.box<Account>().removeAll();
-  objectBox.store.box<Address>().removeAll();
-  objectBox.store.box<Attendance>().removeAll();
-  objectBox.store.box<Bill>().removeAll();
-  objectBox.store.box<Classes>().removeAll();
-  objectBox.store.box<ClassesType>().removeAll();
-  objectBox.store.box<Group>().removeAll();
-  objectBox.store.box<Parent>().removeAll();
-  objectBox.store.box<Person>().removeAll();
-  objectBox.store.box<Phone>().removeAll();
-  objectBox.store.box<Student>().removeAll();
-  objectBox.store.box<Teacher>().removeAll();
+  ObjectBox.store.box<Account>().removeAll();
+  ObjectBox.store.box<Address>().removeAll();
+  ObjectBox.store.box<Attendance>().removeAll();
+  ObjectBox.store.box<Bill>().removeAll();
+  ObjectBox.store.box<Classes>().removeAll();
+  ObjectBox.store.box<ClassesType>().removeAll();
+  ObjectBox.store.box<Group>().removeAll();
+  ObjectBox.store.box<Parent>().removeAll();
+  ObjectBox.store.box<Person>().removeAll();
+  ObjectBox.store.box<Phone>().removeAll();
+  ObjectBox.store.box<Student>().removeAll();
+  ObjectBox.store.box<Teacher>().removeAll();
 }
 
 void printDataFromDB() {
   print('Persons:');
-  objectBox.store.box<Person>().getAll().forEach((element) {
+  ObjectBox.store.box<Person>().getAll().forEach((element) {
     print(element.toString());
 
     print('Students:');
-    objectBox.store.box<Student>().getAll().forEach((element) {
+    ObjectBox.store.box<Student>().getAll().forEach((element) {
       print(element.toString());
       print('rodzice: ${element.parents.length.toString()}');
       for (var parent in element.parents) {
@@ -119,7 +125,7 @@ void printDataFromDB() {
     });
   });
   print('Parents');
-  objectBox.store.box<Parent>().getAll().forEach((element) {
+  ObjectBox.store.box<Parent>().getAll().forEach((element) {
     print('${element.toString()} ${element.person.target.toString()}');
     print('dzieci:');
     element.children.forEach((children) {
@@ -128,28 +134,28 @@ void printDataFromDB() {
   });
 
   print('Phones');
-  objectBox.store.box<Phone>().getAll().forEach((element) {
+  ObjectBox.store.box<Phone>().getAll().forEach((element) {
     print(
         '${element.owner.target!.introduceYourself()} ${element.numberName} ${element.number}');
   });
 
   print('Accounts');
-  objectBox.store.box<Account>().getAll().forEach((element) {
+  ObjectBox.store.box<Account>().getAll().forEach((element) {
     print(element.toString());
   });
 
   print('Classes');
-  objectBox.store.box<Classes>().getAll().forEach((element) {
+  ObjectBox.store.box<Classes>().getAll().forEach((element) {
     print(element.toString());
   });
 
   print('Grups');
-  objectBox.store.box<Group>().getAll().forEach((element) {
+  ObjectBox.store.box<Group>().getAll().forEach((element) {
     print(element.toString());
   });
 
   print('ClassesType');
-  objectBox.store.box<ClassesType>().getAll().forEach((element) {
+  ObjectBox.store.box<ClassesType>().getAll().forEach((element) {
     print(element.toString());
   });
 }

@@ -3,7 +3,6 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/constants/app_urls.dart';
 import 'package:record_of_classes/constants/app_strings.dart';
-import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/classes_type.dart';
 import 'package:record_of_classes/widgets/templates/snack_bar_info_template.dart';
 
@@ -22,7 +21,7 @@ class ClassesTypeListItem extends StatelessWidget {
           color: Colors.red,
           icon: Icons.delete,
           onTap: () {
-            _updateDatabase();
+            classesType.removeFromDb();
             _showInfo(context);
           },
         ),
@@ -52,11 +51,6 @@ class ClassesTypeListItem extends StatelessWidget {
             onTap: () => _navigateToDetailClassesProfile(context)),
       ),
     );
-  }
-
-  void _updateDatabase() {
-    _store = objectBox.store;
-    _store.box<ClassesType>().remove(classesType.id);
   }
 
   void _navigateToDetailClassesProfile(BuildContext context) =>

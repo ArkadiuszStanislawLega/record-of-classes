@@ -14,7 +14,6 @@ class ClassesMainPage extends StatefulWidget {
 }
 
 class _ClassesMainPageState extends State<ClassesMainPage> {
-  late Store _store;
   late Stream<List<Classes>> _classesStream;
   List<Classes> _classesList = [];
   static const double titleHeight = 200.0;
@@ -22,8 +21,7 @@ class _ClassesMainPageState extends State<ClassesMainPage> {
   @override
   void initState() {
     super.initState();
-    _store = objectBox.store;
-    _classesStream = _store
+    _classesStream = ObjectBox.store
         .box<Classes>()
         .query()
         .watch(triggerImmediately: true)
@@ -36,7 +34,7 @@ class _ClassesMainPageState extends State<ClassesMainPage> {
       stream: _classesStream,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          _classesList = objectBox.store.box<Classes>().getAll();
+          _classesList = ObjectBox.store.box<Classes>().getAll();
           return Scaffold(
             body: CustomScrollView(
               slivers: [

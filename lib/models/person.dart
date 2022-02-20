@@ -66,8 +66,8 @@ class Person implements DbModel {
   }
 
   void removeAllPhonesDb() {
-    var phoneBox = objectBox.store.box<Phone>();
-    var personBox = objectBox.store.box<Person>();
+    var phoneBox = ObjectBox.store.box<Phone>();
+    var personBox = ObjectBox.store.box<Person>();
     for (var element in phones) {
       phoneBox.remove(element.id);
     }
@@ -90,9 +90,9 @@ class Person implements DbModel {
   }
 
   @override
-  void addToDb() => objectBox.store.box<Person>().put(this);
+  void addToDb() => ObjectBox.store.box<Person>().put(this);
 
   @override
-  getFromDb() => objectBox.store.box<Person>().get(id);
+  getFromDb() => ObjectBox.store.box<Person>().get(id);
 
 }

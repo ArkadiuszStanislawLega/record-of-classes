@@ -28,7 +28,7 @@ class CreateStudentPage extends StatelessWidget {
   }
   void _onPressCreateButtonEvent(BuildContext context) {
     _createdStudent = _createStudentTemplate.getStudent();
-    objectBox.store.box<Student>().put(_createdStudent);
+    _createdStudent.addToDb();
     _infoCreatedStudent(context);
     Navigator.pop(context);
 

@@ -40,9 +40,9 @@ class Student implements DbModel {
   }
 
   void removeParentFromDb(Parent parent) {
-    var parentBox = objectBox.store.box<Parent>();
-    var personBox = objectBox.store.box<Person>();
-    var phoneBox = objectBox.store.box<Phone>();
+    var parentBox = ObjectBox.store.box<Parent>();
+    var personBox = ObjectBox.store.box<Person>();
+    var phoneBox = ObjectBox.store.box<Phone>();
 
     parents.removeWhere((studentsParent) => studentsParent.id == parent.id);
     parent.children.removeWhere((children) => children.id == id);
@@ -102,10 +102,10 @@ class Student implements DbModel {
   }
 
   @override
-  void addToDb() => objectBox.store.box<Student>().put(this);
+  void addToDb() => ObjectBox.store.box<Student>().put(this);
 
   @override
-  getFromDb() => objectBox.store.box<Student>().get(id);
+  getFromDb() => ObjectBox.store.box<Student>().get(id);
 
   @override
   void update(updatedObject) {

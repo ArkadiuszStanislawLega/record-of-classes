@@ -4,7 +4,6 @@ import 'package:record_of_classes/constants/app_urls.dart';
 import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/student.dart';
-import 'package:record_of_classes/objectbox.g.dart';
 import 'package:record_of_classes/widgets/templates/list_items/students_list_item_template.dart';
 import 'package:record_of_classes/widgets/templates/one_row_property_template.dart';
 
@@ -16,7 +15,6 @@ class StudentsMainPage extends StatefulWidget {
 }
 
 class _StudentsMainPageState extends State<StudentsMainPage> {
-  late Store _store;
   late Stream<List<Student>> _studentsStream;
   late List<Student> _studentsList;
 
@@ -86,7 +84,7 @@ class _StudentsMainPageState extends State<StudentsMainPage> {
 
   void _addStudentToDb(Student student) {
     setState(() {
-      objectBox.store.box<Student>().put(student);
+      student.addToDb();
     });
   }
 
@@ -142,8 +140,7 @@ class _StudentsMainPageState extends State<StudentsMainPage> {
   @override
   void initState() {
     super.initState();
-    _store = objectBox.store;
-    _studentsStream = _store
+    _studentsStream = ObjectBox.store
         .box<Student>()
         .query()
         .watch(triggerImmediately: true)

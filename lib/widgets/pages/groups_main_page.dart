@@ -19,7 +19,7 @@ class _GroupsMainPageState extends State<GroupsMainPage> {
   @override
   void initState() {
     super.initState();
-    _groupsStream = objectBox.store
+    _groupsStream = ObjectBox.store
         .box<Group>()
         .query()
         .watch(triggerImmediately: true)
@@ -32,7 +32,7 @@ class _GroupsMainPageState extends State<GroupsMainPage> {
       stream: _groupsStream,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          _groupsList = objectBox.store.box<Group>().getAll();
+          _groupsList = ObjectBox.store.box<Group>().getAll();
           return DefaultTabController(
             length: 2,
             child: Scaffold(

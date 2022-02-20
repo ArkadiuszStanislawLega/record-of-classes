@@ -24,7 +24,7 @@ class _FinanceMainPageState extends State<FinanceMainPage> {
   @override
   void initState() {
     super.initState();
-    _billsStream = objectBox.store
+    _billsStream = ObjectBox.store
         .box<Bill>()
         .query()
         .watch(triggerImmediately: true)

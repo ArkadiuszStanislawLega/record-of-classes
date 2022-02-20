@@ -16,10 +16,10 @@ class Teacher implements DbModel{
   }
 
   @override
-  void addToDb() => objectBox.store.box<Teacher>().put(this);
+  void addToDb() => ObjectBox.store.box<Teacher>().put(this);
 
   @override
-  getFromDb() => objectBox.store.box<Teacher>().get(id);
+  getFromDb() => ObjectBox.store.box<Teacher>().get(id);
 
   @override
   void update(updatedObject) => addToDb();
