@@ -69,6 +69,7 @@ class AppStrings {
       EDIT = 'Edytuj',
       EDITED = 'Edytowano',
       ENTER_AMOUNT = 'Podaj kwotę',
+      EXPORT_DATABASE ='Eksportuj bazę danych',
       UPDATED = 'Zaktualizowano',
       FAIL_TO_ADD_NEW_PARENT_TO_DATABASE =
           'Nie udało się dodać nowego rodzica do bazy danych.',
@@ -92,6 +93,7 @@ class AppStrings {
       HOUSE_NUMBER = 'Numer domu',
       ID = 'ID',
       IN_DAY = 'w dniu',
+      IMPORT_DATABASE = 'Importuj bazę danych',
       LIST = 'Lista',
       LIST_OF_TYPES = 'Lista typów',
       LIST_OF_CLASSES_CONDUCTED = 'Lista przeprowadzonych zajęć',

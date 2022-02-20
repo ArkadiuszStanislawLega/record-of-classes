@@ -41,6 +41,7 @@ dependencies:
   flutter_speed_dial: ^5.0.0+1
   url_launcher: ^6.0.18
   list_treeview: ^0.3.0
+  flutter_share: ^2.0.0
 
 dev_dependencies:
   flutter_test:
