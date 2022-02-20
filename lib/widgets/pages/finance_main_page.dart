@@ -4,6 +4,7 @@ import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/bill.dart';
 import 'package:record_of_classes/widgets/templates/list_items/bill_list_item.dart';
+import 'package:record_of_classes/widgets/templates/one_row_property_template.dart';
 
 class FinanceMainPage extends StatefulWidget {
   const FinanceMainPage({Key? key}) : super(key: key);
@@ -125,12 +126,20 @@ class _FinanceMainPageState extends State<FinanceMainPage> {
                 style: Theme.of(context).textTheme.headline1,
               ),
             ),
-            _oneRow('${AppStrings.PAID_CLASSES}:', _paid.length.toString()),
-            _oneRow('${AppStrings.UNPAID_CLASSES}:', _unpaid.length.toString()),
-            _oneRow('${AppStrings.TOTAL_PAID}:',
-                '${_paidPrice.toStringAsFixed(2)} ${AppStrings.CURRENCY}'),
-            _oneRow('${AppStrings.TOTAL_UNPAID}:',
-                '${_unpaidPrice.toStringAsFixed(2)} ${AppStrings.CURRENCY}'),
+            OneRowPropertyTemplate(
+                title: '${AppStrings.PAID_CLASSES}:',
+                value: _paid.length.toString()),
+            OneRowPropertyTemplate(
+                title: '${AppStrings.UNPAID_CLASSES}:',
+                value: _unpaid.length.toString()),
+            OneRowPropertyTemplate(
+                title: '${AppStrings.TOTAL_PAID}:',
+                value:
+                    '${_paidPrice.toStringAsFixed(2)} ${AppStrings.CURRENCY}'),
+            OneRowPropertyTemplate(
+                title: '${AppStrings.TOTAL_UNPAID}:',
+                value:
+                    '${_unpaidPrice.toStringAsFixed(2)} ${AppStrings.CURRENCY}'),
           ],
         ),
       ),
