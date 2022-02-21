@@ -58,7 +58,7 @@ class Account implements DbModel{
     bills.clear();
     student.target = null;
     addToDb();
-    removeFromDb();
+    ObjectBox.store.box<Account>().remove(id);
   }
 
   void addValueToBalance(double value) {

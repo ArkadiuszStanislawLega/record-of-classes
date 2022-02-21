@@ -91,14 +91,14 @@ class Student implements DbModel {
 
   @override
   void removeFromDb() {
-    account.target?.removeFromDb();
     parents.clear();
     siblings.clear();
     groups.clear();
 
     addToDb();
-    removeFromDb();
+    account.target?.removeFromDb();
     person.target!.removeFromDb();
+    ObjectBox.store.box<Student>().remove(id);
   }
 
   @override
