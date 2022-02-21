@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_share/flutter_share.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:record_of_classes/constants/app_strings.dart';
 
 class ManageDatabasePage extends StatefulWidget {
@@ -40,8 +41,20 @@ class _ManageDatabasePageState extends State<ManageDatabasePage> {
   }
 
   Future<void> exportDb() async {
+    shareFile();
   }
 
-  Future<void> importDb() async {
+  Future<void> importDb() async {}
+
+  Future<void> shareFile() async {
+    await getApplicationDocumentsDirectory().then(
+      (dir) {
+        FlutterShare.shareFile(
+          title: AppStrings.EXPORTING_DATABASE_TITLE,
+          text: AppStrings.EXPORTING_DATABASE_TEXT,
+          filePath: '${dir.path}/${AppStrings.DATABASE_NAME}',
+        );
+      },
+    );
   }
 }

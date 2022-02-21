@@ -70,6 +70,8 @@ class AppStrings {
       EDITED = 'Edytowano',
       ENTER_AMOUNT = 'Podaj kwotę',
       EXPORT_DATABASE ='Eksportuj bazę danych',
+      EXPORTING_DATABASE_TITLE = 'Eksport bazy danych',
+      EXPORTING_DATABASE_TEXT = 'Wybierz lokalizację dla bazy danych',
       UPDATED = 'Zaktualizowano',
       FAIL_TO_ADD_NEW_PARENT_TO_DATABASE =
           'Nie udało się dodać nowego rodzica do bazy danych.',
