@@ -69,6 +69,10 @@ class ObjectBox {
     });
     return ObjectBox._create(store);
   }
+
+  void open(){
+    store.syncClient();
+  }
 }
 
 late ObjectBox objectBox;
