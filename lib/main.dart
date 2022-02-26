@@ -64,7 +64,7 @@ class ObjectBox {
     await getApplicationDocumentsDirectory().then((dir) {
       ObjectBox.store = Store(
         getObjectBoxModel(),
-        directory: '${dir.path}/${AppStrings.DATABASE_NAME}',
+        directory: '${dir.path}/${AppStrings.DATABASE_DIRECTORY}',
       );
     });
     return ObjectBox._create(store);

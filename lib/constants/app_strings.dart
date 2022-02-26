@@ -27,7 +27,8 @@ class AppStrings {
       CLASSES_ADDRESS = 'Adres zajęć',
       CLASSES_TYPE = 'Typ zajęć',
       CALL = 'Zadzwoń',
-      ARE_YOU_SURE_YOU_WANT_REMOVE_A_CONTACT = 'Czy na pewno chcesz usunąć kontakt',
+      ARE_YOU_SURE_YOU_WANT_REMOVE_A_CONTACT =
+          'Czy na pewno chcesz usunąć kontakt',
       SEND_MESSAGE = 'SMS',
       AND = 'i',
       TO = 'do',
@@ -58,18 +59,21 @@ class AppStrings {
       CHOSE_DATE_OF_CLASSES = 'Wybierz termin zajęć',
       CHANGE_SROTING = 'Zmień sortowanie',
       CURRENCY = 'zł',
-      DATABASE_NAME = 'objectbox',
+      DATABASE_DIRECTORY = 'objectbox',
       DATE_OF_CLASSES = 'Data zajęć',
       DELETE = 'Usuń',
       DELETED_STUDENT = 'Usunięto studenta',
       DETAILS = 'Szczegóły',
       DISCONNECT = 'Rozłącz',
+      DATABASE_FILE_NAME = 'data',
+      DATABASE_EXTENSION = 'mdb',
+      DATABASE_FULL_FILE_NAME = '$DATABASE_FILE_NAME.$DATABASE_EXTENSION',
       DATE = 'Data',
       TIME = 'Czas',
       EDIT = 'Edytuj',
       EDITED = 'Edytowano',
       ENTER_AMOUNT = 'Podaj kwotę',
-      EXPORT_DATABASE ='Eksportuj bazę danych',
+      EXPORT_DATABASE = 'Eksportuj bazę danych',
       EXPORTING_DATABASE_TITLE = 'Eksport bazy danych',
       EXPORTING_DATABASE_TEXT = 'Wybierz lokalizację dla bazy danych',
       UPDATED = 'Zaktualizowano',
@@ -110,11 +114,11 @@ class AppStrings {
       NUMBER_OF_SIBLINGS = 'Ilość rodzeństwa',
       NUMBER_OF_ATTENDANCES = 'Ilość obecności',
       NUMBER_OF_CLASS_TYPES = 'Ilość typów zajęć',
-      NUMBER_OF_PHONES= 'Ilość numerów telefonów',
+      NUMBER_OF_PHONES = 'Ilość numerów telefonów',
       NONE_TYPE = 'Brak typu',
       MANAGE_DATABASE = 'Zarządzaj bazą danych',
       TEACHER = 'Nauczyciel',
-      PARENT  ='Rodzic',
+      PARENT = 'Rodzic',
       STUDENT = 'Uczeń',
       OK = 'OK',
       ON_DATE = 'w dniu',
@@ -140,7 +144,7 @@ class AppStrings {
       SUCCESFULLY = 'pomyślnie',
       SUCCESFULLY_UPDATED_STUDENT = 'Pomyślnie edyowano ucznia',
       STREET = 'Ulica',
-      SIGNED_UP_FOR_CLASSES= 'Zapisani na zajęcia',
+      SIGNED_UP_FOR_CLASSES = 'Zapisani na zajęcia',
       TO_DATABASE = 'do bazy danych',
       TO_PAY = 'Do zapłaty',
       TOTAL_PAID = 'Łącznie zapłacono',
@@ -161,8 +165,19 @@ class AppStrings {
       BILLS_LIST = 'Lista rachunków',
       DATA_HAS_BEEN_UPDATED = 'Zakutalizowano dane',
       FUNDED_ACCOUNT = 'Zasiono konto',
-      ERROR_MESSAGE_CHECK_FIELDS_FILL ='Wystąpił błąd, spradź poprawność wypełnienia pól!',
+      ERROR_MESSAGE_CHECK_FIELDS_FILL =
+          'Wystąpił błąd, spradź poprawność wypełnienia pól!',
       YES = 'Tak',
       NO = 'Nie',
-      REMOVE_CLASSES_WARNING_MESSAGE = 'Potwierdzenie usunięcia sprawi że wszystkie rachunki i obecności z tych zajęć zostaną usunięte bezpowrotnie. Opłacone zajęcia nie zwrócą środków na saldo uczestników za zajęcia w których są potwierdzone obecności.';
+      SELECT_THE_FILE_TO_BE_IMPORTED = "Wybierz plik który ma zostać zaimportowany",
+      AFTER_IMPORTING_CORRECTLY_RESTAT_THE_APP =
+          'Po prawidłowej zaimportowaniu, należy uruchomić aplikację ponownie.',
+      OTHERWISE_THE_DB_WILL_NOT_BE_IMPORTED_CORRECTLY =
+          'W przeciwnym wypadku nie zostanie poprawnie zaimportowana baza.',
+      CHOSEN_FILE_NEED_TO_HAVE_SPECIFIC_EXTENSIONS =
+          'Wybierany plik musi posiadać rozszerzenie:',
+      DATABASE_WAS_SUCCESSFULLY_IMPORTED =
+          'Poprawnie zaimportowano bazę danych.',
+      REMOVE_CLASSES_WARNING_MESSAGE =
+          'Potwierdzenie usunięcia sprawi że wszystkie rachunki i obecności z tych zajęć zostaną usunięte bezpowrotnie. Opłacone zajęcia nie zwrócą środków na saldo uczestników za zajęcia w których są potwierdzone obecności.';
 }
