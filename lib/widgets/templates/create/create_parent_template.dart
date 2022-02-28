@@ -2,23 +2,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/models/person.dart';
+import 'package:record_of_classes/widgets/templates/text_field_template.dart';
 
 class CreateParentTemplate extends StatefulWidget {
   CreateParentTemplate({Key? key}) : super(key: key);
 
-  String _parentName = '', _parentSurname = '';
-  final TextEditingController _nameInputController = TextEditingController(),
-      _surnameInputController = TextEditingController();
+  late TextFieldTemplate _parentName, _parentSurname;
 
   Person getParent() {
-    return Person(name: _parentName, surname: _parentSurname);
+    return Person(name: _parentName.input, surname: _parentSurname.input);
   }
 
   void clearValues() {
-    _parentName = '';
-    _parentSurname = '';
-    _nameInputController.clear();
-    _surnameInputController.clear();
+    _parentName.clear();
+    _parentSurname.clear();
   }
 
   @override
@@ -30,25 +27,16 @@ class CreateParentTemplate extends StatefulWidget {
 class _CreateParentTemplate extends State<CreateParentTemplate> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        TextField(
-            controller: widget._nameInputController,
-            decoration: InputDecoration(
-              border: const OutlineInputBorder(),
-              label: Text(AppStrings.NAME,
-                  style: Theme.of(context).textTheme.headline2),
-            ),
-            onChanged: (userInput) => widget._parentName = userInput),
-        TextField(
-            controller: widget._surnameInputController,
-            decoration: InputDecoration(
-              border: const OutlineInputBorder(),
-              label: Text(AppStrings.SURNAME,
-                  style: Theme.of(context).textTheme.headline2),
-            ),
-            onChanged: (userInput) => widget._parentSurname = userInput),
-      ],
+    return Container(
+      padding: const EdgeInsets.all(10.0),
+      child: Column(
+        children: [
+          widget._parentName =
+              TextFieldTemplate(label: AppStrings.NAME, hint: ''),
+          widget._parentSurname =
+              TextFieldTemplate(label: AppStrings.SURNAME, hint: '')
+        ],
+      ),
     );
   }
 }
