@@ -16,7 +16,7 @@ class DetailClassesType extends StatefulWidget {
 }
 
 class _DetailClassesTypeState extends State<DetailClassesType> {
-  static const double titleHeight = 180.0;
+  static const double titleHeight = 200.0;
   late ClassesType _classesType;
 
   late Stream<List<Group>> _groupStream;
