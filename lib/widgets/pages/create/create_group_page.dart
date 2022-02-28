@@ -28,14 +28,17 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
       appBar: AppBar(
         title: Text('${_classesType.name} - ${AppStrings.ADD_GROUP}'),
       ),
-      body: Column(
-        children: [
-          _createGroupTemplate,
-          TextButton(
-            onPressed: _addToDatabase,
-            child: const Text(AppStrings.ADD_GROUP),
-          ),
-        ],
+      body: Container(
+        padding: const EdgeInsets.all(10.0),
+        child: Column(
+          children: [
+            _createGroupTemplate,
+            TextButton(
+              onPressed: _addToDatabase,
+              child: const Text(AppStrings.ADD_GROUP),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -1,41 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/models/classes_type.dart';
+import 'package:record_of_classes/widgets/templates/text_field_template.dart';
+import 'package:record_of_classes/widgets/templates/text_field_template_num.dart';
 
 class AddNewClassesTypeTemplate extends StatefulWidget {
   AddNewClassesTypeTemplate({Key? key, this.classesType}) : super(key: key);
   ClassesType? classesType;
 
-  String _inputPriceForEach = '',
-      _inputPriceForMonth = '',
-      _inputClassTypeName = '';
-
-  final TextEditingController _priceForEachController = TextEditingController(),
-      _priceForMonthController = TextEditingController(),
-      _nameOfClassesController = TextEditingController();
+  late TextFieldTemplate _classesTypeName;
+  late TextFieldTemplateNum _priceForEach, _priceForMonth;
 
   bool _isPriceForEachIsValid() =>
-      double.tryParse(_inputPriceForEach) != null ? true : false;
+      double.tryParse(_priceForEach.input) != null ? true : false;
 
   bool _isPriceForMonthIsValid() =>
-      double.tryParse(_inputPriceForMonth) != null ? true : false;
+      double.tryParse(_priceForMonth.input) != null ? true : false;
 
   bool isInputValid() => _isPriceForEachIsValid() && _isPriceForMonthIsValid();
 
   void clearFields() {
-    _inputClassTypeName = '';
-    _inputPriceForEach = '';
-    _inputPriceForMonth = '';
-    _nameOfClassesController.clear();
-    _priceForEachController.clear();
-    _priceForMonthController.clear();
+    _classesTypeName.clear();
+    _priceForEach.clear();
+    _priceForMonth.clear();
   }
 
   ClassesType getClassType() {
     return ClassesType(
-        name: _inputClassTypeName,
-        priceForEach: double.parse(_inputPriceForEach),
-        priceForMonth: double.parse(_inputPriceForMonth));
+        name: _classesTypeName.input,
+        priceForEach: double.parse(_priceForEach.input),
+        priceForMonth: double.parse(_priceForMonth.input));
   }
 
   @override
@@ -46,47 +40,27 @@ class AddNewClassesTypeTemplate extends StatefulWidget {
 class _AddNewClassesTypeTemplateState extends State<AddNewClassesTypeTemplate> {
   @override
   Widget build(BuildContext context) {
-    _setInitialValues();
-    return Column(
-      children: [
-        TextField(
-          controller: widget._nameOfClassesController,
-          decoration: InputDecoration(
-              hintText: widget.classesType == null
-                  ? AppStrings.NAME_OF_CLASSES_TYPE
-                  : widget.classesType!.name),
-          onChanged: (String str) =>
-              str.isNotEmpty ? widget._inputClassTypeName = str : {},
-        ),
-        TextField(
-          controller: widget._priceForEachController,
-          keyboardType: TextInputType.number,
-          decoration: InputDecoration(
-              hintText: widget.classesType == null
-                  ? AppStrings.PRICE_FOR_EACH
-                  : widget.classesType!.priceForEach.toString()),
-          onChanged: (String str) =>
-              str.isNotEmpty ? widget._inputPriceForEach = str : {},
-        ),
-        TextField(
-          controller: widget._priceForMonthController,
-          keyboardType: TextInputType.number,
-          decoration: InputDecoration(
-              hintText: widget.classesType == null
-                  ? AppStrings.PRICE_FOR_MONTH
-                  : widget.classesType!.priceForMonth.toString()),
-          onChanged: (String str) =>
-              str.isNotEmpty ? widget._inputPriceForMonth = str : {},
-        ),
-      ],
+    return Container(
+      padding: const EdgeInsets.all(10.0),
+      child: Column(
+        children: [
+          widget._classesTypeName = TextFieldTemplate(
+              label: AppStrings.NAME_OF_CLASSES_TYPE,
+              hint: widget.classesType == null ? '' : widget.classesType!.name),
+          widget._priceForEach = TextFieldTemplateNum(
+            label: AppStrings.PRICE_FOR_EACH,
+            hint: widget.classesType == null
+                ? ''
+                : widget.classesType!.priceForEach.toString(),
+          ),
+          widget._priceForMonth = TextFieldTemplateNum(
+            label: AppStrings.PRICE_FOR_MONTH,
+            hint: widget.classesType == null
+                ? ''
+                : widget.classesType!.priceForMonth.toString(),
+          ),
+        ],
+      ),
     );
-  }
-
-  void _setInitialValues(){
-    if (widget.classesType != null){
-      widget._inputClassTypeName = widget.classesType!.name;
-      widget._inputPriceForEach = widget.classesType!.priceForEach.toString();
-      widget._inputPriceForMonth = widget.classesType!.priceForMonth.toString();
-    }
   }
 }
