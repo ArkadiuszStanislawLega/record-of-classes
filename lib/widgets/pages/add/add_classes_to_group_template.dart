@@ -34,16 +34,16 @@ class _AddClassesToGroup extends State<AddClassesToGroup> {
     _addClasses = _args[AppStrings.FUNCTION];
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget._group.name),
+        title: Text(widget._group.name, style: Theme.of(context)!.textTheme.headline1,),
       ),
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 50.0, vertical: 20.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text(
+            Text(
               AppStrings.CHOSE_DATE_OF_CLASSES,
-              style: TextStyle(fontSize: 17),
+              style: Theme.of(context)!.textTheme.headline3
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -66,12 +66,15 @@ class _AddClassesToGroup extends State<AddClassesToGroup> {
                           });
                         }, currentTime: DateTime.now(), locale: LocaleType.pl);
                       },
-                      child: const Text(
+                      child: Text(
                         AppStrings.CHOSE_DATE,
-                        style: TextStyle(color: Colors.blue),
+                        style: Theme.of(context)!.textTheme.headline3,
                       ),
                     ),
-                    Text(formatDate(widget.selectedDate)),
+                    Text(
+                      formatDate(widget.selectedDate),
+                      style: Theme.of(context)!.textTheme.headline2,
+                    ),
                   ],
                 ),
                 Column(
@@ -90,12 +93,15 @@ class _AddClassesToGroup extends State<AddClassesToGroup> {
                           });
                         }, currentTime: DateTime.now(), locale: LocaleType.pl);
                       },
-                      child: const Text(
+                      child: Text(
                         AppStrings.CHOSE_TIME,
-                        style: TextStyle(color: Colors.blue),
+                        style: Theme.of(context)!.textTheme.headline3,
                       ),
                     ),
-                    Text(formatTime(widget.selectedTime))
+                    Text(
+                      formatTime(widget.selectedTime),
+                      style: Theme.of(context)!.textTheme.headline2,
+                    ),
                   ],
                 ),
               ],
