@@ -14,7 +14,7 @@ class FinanceMainPage extends StatefulWidget {
 }
 
 class _FinanceMainPageState extends State<FinanceMainPage> {
-  static const double titleHeight = 200.0;
+  static const double titleHeight = 220.0;
   late Stream<List<Bill>> _billsStream;
 
   final List<Bill> _unpaid = [], _paid = [];

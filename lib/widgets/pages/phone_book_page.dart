@@ -28,7 +28,7 @@ class _PhoneBookPageState extends State<PhoneBookPage> {
 
   bool _wasNotInitialized = true;
 
-  static const titleHeight = 200.0;
+  static const titleHeight = 220.0;
 
   @override
   void initState() {

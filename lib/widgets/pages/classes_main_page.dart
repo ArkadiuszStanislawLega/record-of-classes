@@ -16,7 +16,7 @@ class ClassesMainPage extends StatefulWidget {
 class _ClassesMainPageState extends State<ClassesMainPage> {
   late Stream<List<Classes>> _classesStream;
   List<Classes> _classesList = [];
-  static const double titleHeight = 200.0;
+  static const double titleHeight = 220.0;
 
   @override
   void initState() {

@@ -16,6 +16,8 @@ class _GroupsMainPageState extends State<GroupsMainPage> {
   late Stream<List<Group>> _groupsStream;
   List<Group> _groupsList = [];
 
+  static const double titleHeight = 150.0;
+
   @override
   void initState() {
     super.initState();
@@ -55,7 +57,7 @@ class _GroupsMainPageState extends State<GroupsMainPage> {
     return SliverAppBar(
       stretch: true,
       onStretchTrigger: () => Future<void>.value(),
-      expandedHeight: 200.0,
+      expandedHeight: titleHeight,
       flexibleSpace: FlexibleSpaceBar(
         stretchModes: const <StretchMode>[
           StretchMode.zoomBackground,
