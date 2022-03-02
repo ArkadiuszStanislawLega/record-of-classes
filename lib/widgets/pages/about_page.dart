@@ -11,8 +11,8 @@ class AboutPage extends StatelessWidget {
       body: Container(padding: const EdgeInsets.all(30.0),
           child: Column(
         children: [
-          Text('Autorem i właścicielem praw jest Arkadiusz Łęga, błędy i problemy proszę zgłaszać na adres e-mail: horemhe@vp.pl',
-          style: Theme.of(context)!.textTheme.headline2,),
+          Text('Autorem i właścicielem praw jest Arkadiusz Łęga, błędy i problemy proszę zgłaszać na adres e-mail: horemheb@vp.pl',
+          style: Theme.of(context).textTheme.headline2,),
         ],
       ),)
     );

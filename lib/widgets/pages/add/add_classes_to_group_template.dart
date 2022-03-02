@@ -34,7 +34,7 @@ class _AddClassesToGroup extends State<AddClassesToGroup> {
     _addClasses = _args[AppStrings.FUNCTION];
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget._group.name, style: Theme.of(context)!.textTheme.headline1,),
+        title: Text(widget._group.name, style: Theme.of(context).textTheme.headline1,),
       ),
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 50.0, vertical: 20.0),
@@ -43,7 +43,7 @@ class _AddClassesToGroup extends State<AddClassesToGroup> {
           children: [
             Text(
               AppStrings.CHOSE_DATE_OF_CLASSES,
-              style: Theme.of(context)!.textTheme.headline3
+              style: Theme.of(context).textTheme.headline3
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -68,12 +68,12 @@ class _AddClassesToGroup extends State<AddClassesToGroup> {
                       },
                       child: Text(
                         AppStrings.CHOSE_DATE,
-                        style: Theme.of(context)!.textTheme.headline3,
+                        style: Theme.of(context).textTheme.headline3,
                       ),
                     ),
                     Text(
                       formatDate(widget.selectedDate),
-                      style: Theme.of(context)!.textTheme.headline2,
+                      style: Theme.of(context).textTheme.headline2,
                     ),
                   ],
                 ),
@@ -95,12 +95,12 @@ class _AddClassesToGroup extends State<AddClassesToGroup> {
                       },
                       child: Text(
                         AppStrings.CHOSE_TIME,
-                        style: Theme.of(context)!.textTheme.headline3,
+                        style: Theme.of(context).textTheme.headline3,
                       ),
                     ),
                     Text(
                       formatTime(widget.selectedTime),
-                      style: Theme.of(context)!.textTheme.headline2,
+                      style: Theme.of(context).textTheme.headline2,
                     ),
                   ],
                 ),

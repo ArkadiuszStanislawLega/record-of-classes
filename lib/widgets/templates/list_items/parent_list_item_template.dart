@@ -28,28 +28,31 @@ class _ParentListItemTemplate extends State<ParentListItemTemplate> {
   @override
   Widget build(BuildContext context) {
     if (widget.parent.person.target != null) {
-      return Slidable(
-        actionPane: const SlidableDrawerActionPane(),
-        secondaryActions: [
-          IconSlideAction(
-              caption: AppStrings.DELETE,
-              color: Colors.red,
-              icon: Icons.delete,
-              onTap: removeParent),
-          IconSlideAction(
-              caption: AppStrings.ADD,
-              color: Colors.green,
-              icon: Icons.add,
-              onTap: addParent),
-        ],
-        child: ListTile(
-          title: Text(widget.parent.introduceYourself()),
-          subtitle: Text(widget.parent.person.target!.phones.isNotEmpty
-              ? widget.parent.person.target!.phones
-                  .elementAt(0)
-                  .number
-                  .toString()
-              : ''),
+      return Container(
+        padding: const EdgeInsets.only(top: 10.0, right: 5.0, left: 5.0),
+        child: Slidable(
+          actionPane: const SlidableDrawerActionPane(),
+          secondaryActions: [
+            IconSlideAction(
+                caption: AppStrings.DELETE,
+                color: Colors.red,
+                icon: Icons.delete,
+                onTap: removeParent),
+            IconSlideAction(
+                caption: AppStrings.ADD,
+                color: Colors.green,
+                icon: Icons.add,
+                onTap: addParent),
+          ],
+          child: ListTile(
+            title: Text(widget.parent.introduceYourself()),
+            subtitle: Text(widget.parent.person.target!.phones.isNotEmpty
+                ? widget.parent.person.target!.phones
+                    .elementAt(0)
+                    .number
+                    .toString()
+                : ''),
+          ),
         ),
       );
     }
