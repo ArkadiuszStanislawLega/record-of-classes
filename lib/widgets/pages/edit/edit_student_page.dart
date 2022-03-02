@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/models/person.dart';
 import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/widgets/templates/snack_bar_info_template.dart';
+import 'package:record_of_classes/widgets/templates/text_field_template.dart';
+import 'package:record_of_classes/widgets/templates/text_field_template_num.dart';
 
 class EditStudentPage extends StatefulWidget {
   EditStudentPage({Key? key}) : super(key: key);
@@ -20,7 +21,9 @@ class _EditStudentPage extends State<EditStudentPage> {
   late Function _updateStudentInDb;
   late Map _args;
 
-  String _personAge = '', _personName = '', _personSurname = '';
+  late TextFieldTemplate _name, _surname;
+  late TextFieldTemplateNum _age;
+
 
   @override
   Widget build(BuildContext context) {
@@ -40,35 +43,13 @@ class _EditStudentPage extends State<EditStudentPage> {
   Widget _content() {
     return Column(
       children: [
-        TextField(
-          decoration: InputDecoration(
-            hintText: _person.name == '' ? AppStrings.NAME : _person.name,
-          ),
-          onChanged: (userInput) {
-            _personName = userInput;
-          },
+        _name = TextFieldTemplate(label: AppStrings.NAME, hint: _person.name),
+        _surname = TextFieldTemplate(
+          label: AppStrings.SURNAME,
+          hint: _person.surname,
         ),
-        TextField(
-          decoration: InputDecoration(
-            hintText:
-                _person.surname == '' ? AppStrings.SURNAME : _person.surname,
-          ),
-          onChanged: (userInput) {
-            _personSurname = userInput;
-          },
-        ),
-        TextField(
-            onChanged: (userInput) {
-              _personAge = userInput;
-            },
-            decoration: InputDecoration(
-              hintText:
-                  _student.age == 0 ? AppStrings.AGE : _student.age.toString(),
-            ),
-            keyboardType: TextInputType.number,
-            inputFormatters: <TextInputFormatter>[
-              FilteringTextInputFormatter.digitsOnly
-            ]),
+        _age = TextFieldTemplateNum(
+            label: AppStrings.AGE, hint: _student.age.toString()),
         Center(
           child: TextButton(
             onPressed: confirmEditChanges,
@@ -79,18 +60,18 @@ class _EditStudentPage extends State<EditStudentPage> {
     );
   }
 
-  bool _isNameValid() => _personName != '';
+  bool _isNameValid() => _name.input != '';
 
-  bool _isSurnameValid() => _personSurname != '';
+  bool _isSurnameValid() => _surname.input != '';
 
   bool _isAgeValid() {
-    if (_personAge == '') {
+    if (_age.input == '') {
       return false;
     }
-    if (int.tryParse(_personAge) == 0) {
+    if (int.tryParse(_age.input ) == 0) {
       return false;
     }
-    if (int.parse(_personAge) > 0) {
+    if (int.parse(_age.input ) > 0) {
       return true;
     }
 
@@ -99,9 +80,9 @@ class _EditStudentPage extends State<EditStudentPage> {
 
   void confirmEditChanges() {
     _updateStudentInDb(
-        name: _isNameValid() ? _personName : _person.name,
-        surname: _isSurnameValid() ? _personSurname : _person.surname,
-        age: _isAgeValid() ? int.parse(_personAge) : _student.age);
+        name: _isNameValid() ? _name.input : _person.name,
+        surname: _isSurnameValid() ? _surname.input : _person.surname,
+        age: _isAgeValid() ? int.parse(_age.input) : _student.age);
     SnackBarInfoTemplate(
         context: context,
         message:
