@@ -21,25 +21,33 @@ class AddPhoneToStudentPage extends StatelessWidget {
     _addContactFunction = _args[AppStrings.FUNCTION];
     return Scaffold(
       appBar: AppBar(
-        title: const Text(AppStrings.ADD_CONTACT),
+        title: Text(
+          AppStrings.ADD_CONTACT,
+          style: Theme.of(context).textTheme.headline1,
+        ),
       ),
       body: Column(
         children: [
           _createPhoneTemplate,
-          TextButton(onPressed: ()=> _addNewContactToDatabase(context), child: const Text(AppStrings.ADD))
+          TextButton(
+              onPressed: () => _addNewContactToDatabase(context),
+              child: const Text(AppStrings.ADD))
         ],
       ),
     );
   }
 
-  void _addNewContactToDatabase(BuildContext context){
+  void _addNewContactToDatabase(BuildContext context) {
     // Phone phone = _createPhoneTemplate.getPhone();
     // phone.owner.target = _student.person.target;
     // _student.person.target!.phones.add(phone);
     // objectBox.store.box<Phone>().put(phone);
     // objectBox.store.box<Person>().put(_student.person.target!);
     _addContactFunction(_createPhoneTemplate.getPhone());
-    SnackBarInfoTemplate(context: context, message: '${AppStrings.ADDED_NEW_CONTACT}: ${_student.introduceYourself()}');
+    SnackBarInfoTemplate(
+        context: context,
+        message:
+            '${AppStrings.ADDED_NEW_CONTACT}: ${_student.introduceYourself()}');
     Navigator.pop(context);
   }
 }
