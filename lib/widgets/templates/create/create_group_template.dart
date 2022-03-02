@@ -6,29 +6,27 @@ import 'package:record_of_classes/widgets/templates/text_field_template.dart';
 
 class CreateGroupTemplate extends StatefulWidget {
   CreateGroupTemplate({Key? key, this.group, required this.classesTypeName})
-      : super(key: key){
-    _name = TextFieldTemplate(label: AppStrings.GROUP_NAME, hint: '${group?.name}');
-  }
+      : super(key: key);
 
   Group? group;
 
   String classesTypeName = '';
 
   CreateAddressTemplate _createAddressTemplate = CreateAddressTemplate();
-  late TextFieldTemplate _name;
+  late TextFieldTemplate _inputName;
 
   void clearFields() {
-    _name.clear();
+    _inputName.clear();
     _createAddressTemplate.clearFields();
   }
 
   bool isInputValuesAreValid() {
-    return _name.userInput != '';
+    return _inputName.userInput != '';
   }
 
   Group getGroup() {
     return Group()
-      ..name = _name.userInput
+      ..name = _inputName.input
       ..address.target = _createAddressTemplate.getAddress();
   }
 
@@ -41,10 +39,10 @@ class _CreateGroupTemplateState extends State<CreateGroupTemplate> {
   void initState() {
     widget._createAddressTemplate =
         CreateAddressTemplate(address: widget.group?.address.target);
-    widget._name = TextFieldTemplate(
+    widget._inputName = TextFieldTemplate(
         label: AppStrings.GROUP_NAME,
         hint: widget.group == null ? '' : widget.group!.name);
-    widget._name.controller!.text = widget.classesTypeName;
+    widget._inputName.controller!.text = widget.classesTypeName;
     super.initState();
   }
 
@@ -52,7 +50,7 @@ class _CreateGroupTemplateState extends State<CreateGroupTemplate> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        widget._name,
+        widget._inputName,
         widget._createAddressTemplate,
       ],
     );

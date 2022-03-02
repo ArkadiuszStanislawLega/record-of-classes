@@ -8,7 +8,7 @@ import 'address.dart';
 import 'classes_type.dart';
 
 @Entity()
-class Group implements DbModel{
+class Group implements DbModel {
   late int id;
   late String name;
   final address = ToOne<Address>();
@@ -22,7 +22,7 @@ class Group implements DbModel{
   }
 
   Group({this.id = 0, this.name = ''});
-  
+
   void removeClasses(int id) {
     var selectedClasses = classes.firstWhere((element) => element.id == id);
     selectedClasses.removeFromDb();
@@ -41,12 +41,17 @@ class Group implements DbModel{
   void removeFromDb() {
     address.target!.groups.removeWhere((group) => group.id == id);
     classesType.target!.groups.removeWhere((group) => group.id == id);
-    for (var student in students) {
-      student.groups.removeWhere((element) => element.id == id);
+    if (students.isNotEmpty) {
+      for (var student in students) {
+        student.groups.removeWhere((element) => element.id == id);
+      }
     }
-    for (var element in classes) {
-      element.removeFromDb();
+    if (classes.isNotEmpty) {
+      for (var element in classes) {
+        element.removeFromDb();
+      }
     }
+    ObjectBox.store.box<Group>().remove(id);
   }
 
   @override
@@ -56,6 +61,5 @@ class Group implements DbModel{
   getFromDb() => ObjectBox.store.box<Group>().get(id);
 
   @override
-  void update(updatedObject)=> addToDb();
-
+  void update(updatedObject) => addToDb();
 }

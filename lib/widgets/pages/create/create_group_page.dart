@@ -66,7 +66,6 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
       );
     } else {
       var groupCreated = _createGroupTemplate.getGroup();
-      print('tutaj ${_createGroupTemplate.getGroup().name}');
       groupCreated.classesType.target = _classesType;
       _addFunction!(groupCreated);
       _createGroupTemplate.clearFields();
