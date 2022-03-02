@@ -32,11 +32,11 @@ class Classes implements DbModel {
 
   @override
   void removeFromDb() {
-    group.target!.classes.removeWhere((classes) => classes.id == id);
+    group.target?.classes.removeWhere((classes) => classes.id == id);
     for (var attendance in attendances) {
       attendance.removeFromDb();
     }
-    removeFromDb();
+    ObjectBox.store.box<Classes>().remove(id);
   }
 
   void addAttendance(Attendance attendance) {

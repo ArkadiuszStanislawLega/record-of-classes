@@ -82,7 +82,7 @@ Future<void> main() async {
   objectBox = await ObjectBox.create();
   // clearDb();
   _putTeacherToDb();
-  // printDataFromDB();
+  printDataFromDB();
   // objectBox.store.box<Account>().getAll().forEach((element) {
   //   print(element.id);
   // });

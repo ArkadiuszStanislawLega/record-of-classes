@@ -51,7 +51,7 @@ class ClassesType implements DbModel{
     for(int i  = 0; i < groups.length; i++){
       removeGroup(groups[i].id);
     }
-    removeFromDb();
+    ObjectBox.store.box<ClassesType>().remove(id);
   }
 
   @override

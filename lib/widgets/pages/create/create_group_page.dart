@@ -22,13 +22,22 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
     _args = ModalRoute.of(context)!.settings.arguments as Map;
     _classesType = _args[AppStrings.CLASSES_TYPE];
     _addFunction = _args[AppStrings.FUNCTION];
-    _createGroupTemplate = CreateGroupTemplate(classesTypeName: _classesType.name);
+    _createGroupTemplate =
+        CreateGroupTemplate(classesTypeName: _classesType.name);
     return Scaffold(
       appBar: AppBar(
-        title: Column(children: [
-          Text(AppStrings.ADD_GROUP, style: Theme.of(context).textTheme.headline1,),
-          Text('${AppStrings.CLASSES_TYPE}: ${_classesType.name}', style: Theme.of(context).textTheme.headline2,),
-        ],),
+        title: Column(
+          children: [
+            Text(
+              AppStrings.ADD_GROUP,
+              style: Theme.of(context).textTheme.headline1,
+            ),
+            Text(
+              '${AppStrings.CLASSES_TYPE}: ${_classesType.name}',
+              style: Theme.of(context).textTheme.headline2,
+            ),
+          ],
+        ),
       ),
       body: Container(
         padding: const EdgeInsets.all(10.0),
@@ -47,14 +56,17 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
 
   void _addToDatabase() {
     if (_addFunction == null) {
-      setState(() {
-        if (_createGroupTemplate.isInputValuesAreValid()) {
-          _classesType.addGroup(_createGroupTemplate.getGroup());
-          _createGroupTemplate.clearFields();
-        }
-      });
+      setState(
+        () {
+          if (_createGroupTemplate.isInputValuesAreValid()) {
+            _classesType.addGroup(_createGroupTemplate.getGroup());
+            _createGroupTemplate.clearFields();
+          }
+        },
+      );
     } else {
       var groupCreated = _createGroupTemplate.getGroup();
+      print('tutaj ${_createGroupTemplate.getGroup().name}');
       groupCreated.classesType.target = _classesType;
       _addFunction!(groupCreated);
       _createGroupTemplate.clearFields();

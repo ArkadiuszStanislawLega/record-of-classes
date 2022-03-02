@@ -18,9 +18,9 @@ class Attendance implements DbModel{
 
   @override
   void removeFromDb() {
-    bill.target!.removeFromDb();
-    classes.target!.removeClasses(id);
-    student.target!.removeAttendance(id);
+    bill.target?.removeFromDb();
+    classes.target?.removeClasses(id);
+    student.target?.removeAttendance(id);
     ObjectBox.store.box<Attendance>().remove(id);
   }
 

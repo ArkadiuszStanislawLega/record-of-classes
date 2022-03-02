@@ -18,7 +18,7 @@ class Group implements DbModel{
 
   @override
   String toString() {
-    return 'Group{id: $id, name: $name, address: ${address.target}, classesType: ${classesType.target!.name}, students: ${students.length}, classes: ${classes.length}}';
+    return 'Group{id: $id, name: $name, address: ${address.target}, classesType: ${classesType.target?.name}, students: ${students.length}, classes: ${classes.length}}';
   }
 
   Group({this.id = 0, this.name = ''});
@@ -27,6 +27,7 @@ class Group implements DbModel{
     var selectedClasses = classes.firstWhere((element) => element.id == id);
     selectedClasses.removeFromDb();
     classes.removeWhere((classes) => classes.id == id);
+    ObjectBox.store.box<Group>().remove(id);
   }
 
   void addClasses(Classes classesToAdd) {
@@ -46,7 +47,6 @@ class Group implements DbModel{
     for (var element in classes) {
       element.removeFromDb();
     }
-    removeFromDb();
   }
 
   @override

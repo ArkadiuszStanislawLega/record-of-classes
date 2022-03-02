@@ -166,7 +166,14 @@ class _DetailClassesTypeState extends State<DetailClassesType> {
 
   void _navigateToCreateNewGroupPage() =>
       Navigator.pushNamed(context, AppUrls.CREATE_GROUP,
-          arguments: {AppStrings.CLASSES_TYPE : _classesType});
+          arguments: {AppStrings.CLASSES_TYPE : _classesType,
+          AppStrings.FUNCTION : _addGroup});
+
+  void _addGroup(Group group){
+    setState(() {
+      group.classesType.target!.addGroup(group);
+    });
+  }
 
   void _navigateToEditClassesType() => {
         Navigator.pushNamed(context, AppUrls.EDIT_CLASSES_TYPE,
