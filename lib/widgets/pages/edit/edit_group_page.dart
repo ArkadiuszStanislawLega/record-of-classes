@@ -24,11 +24,24 @@ class _EditGroupPageState extends State<EditGroupPage> {
     _group = _args[AppStrings.GROUP];
     _update = _args[AppStrings.FUNCTION];
 
-    _createGroupTemplate = CreateGroupTemplate(group: _group, classesTypeName: _group.name,);
+    _createGroupTemplate = CreateGroupTemplate(
+      group: _group,
+      classesTypeName: _group.name,
+    );
     return Scaffold(
       appBar: AppBar(
-        title: Text('${AppStrings.EDIT} ${_group.name}'),
-      ),
+          title: Column(
+        children: [
+          Text(
+            '${AppStrings.EDIT} ${AppStrings.GROUP.toLowerCase()}',
+            style: Theme.of(context).textTheme.headline1,
+          ),
+          Text(
+            _group.name,
+            style: Theme.of(context).textTheme.headline2,
+          )
+        ],
+      )),
       body: Column(
         children: [
           _createGroupTemplate,
@@ -42,21 +55,21 @@ class _EditGroupPageState extends State<EditGroupPage> {
   }
 
   void _createGroupButtonOnClickActions() {
-      if(_isSomeValuesAreChange()) {
-        _updateDatabase();
+    if (_isSomeValuesAreChange()) {
+      _updateDatabase();
 
-        if(_update != null){
-          _update!(_group);
-        }
-
-        SnackBarInfoTemplate(
-            context: context,
-            message: '${AppStrings.DATA_HAS_BEEN_UPDATED} ${_group.name}');
+      if (_update != null) {
+        _update!(_group);
       }
+
+      SnackBarInfoTemplate(
+          context: context,
+          message: '${AppStrings.DATA_HAS_BEEN_UPDATED} ${_group.name}');
+    }
     Navigator.pop(context);
   }
 
-  bool _isSomeValuesAreChange(){
+  bool _isSomeValuesAreChange() {
     bool isChange = false;
     Group createdGroup = _createGroupTemplate.getGroup();
     Address createdGroupAddress = createdGroup.address.target!;
@@ -67,7 +80,8 @@ class _EditGroupPageState extends State<EditGroupPage> {
         isChange = true;
       }
 
-      if (_group.address.target!.city != createdGroupAddress.city && createdGroupAddress.city != '') {
+      if (_group.address.target!.city != createdGroupAddress.city &&
+          createdGroupAddress.city != '') {
         _group.address.target!.city = createdGroupAddress.city;
         isChange = true;
       }
@@ -78,7 +92,8 @@ class _EditGroupPageState extends State<EditGroupPage> {
         isChange = true;
       }
 
-      if (_group.address.target!.houseNumber != createdGroupAddress.houseNumber) {
+      if (_group.address.target!.houseNumber !=
+          createdGroupAddress.houseNumber) {
         _group.address.target!.houseNumber = createdGroupAddress.houseNumber;
         isChange = true;
       }
@@ -91,7 +106,7 @@ class _EditGroupPageState extends State<EditGroupPage> {
     return isChange;
   }
 
-  void _updateDatabase(){
+  void _updateDatabase() {
     print('update');
     _group.addToDb();
     _group.address.target!.addToDb();

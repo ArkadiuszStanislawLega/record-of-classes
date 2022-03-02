@@ -26,7 +26,18 @@ class _EditClassesTypePageState extends State<EditClassesTypePage> {
         AddNewClassesTypeTemplate(classesType: _classesType);
     return Scaffold(
       appBar: AppBar(
-        title: Text('${AppStrings.EDIT} ${_classesType.name}'),
+        title: Column(
+          children: [
+            Text(
+              '${AppStrings.EDIT} ${AppStrings.CLASSES_TYPE.toLowerCase()}',
+              style: Theme.of(context).textTheme.headline1,
+            ),
+            Text(
+              _classesType.name,
+              style: Theme.of(context).textTheme.headline2,
+            )
+          ],
+        ),
       ),
       body: Column(
         children: [
@@ -36,18 +47,12 @@ class _EditClassesTypePageState extends State<EditClassesTypePage> {
             children: [
               TextButton(
                 onPressed: () {
-                  if (_isValuesAreValid()) {
-                    _updateValuesInDb();
-                    SnackBarInfoTemplate(
-                        context: context,
-                        message:
-                            '${AppStrings.UPDATED} ${_classesType.name} ${AppStrings.SUCCESFULLY}!');
-                    Navigator.pop(context);
-                  } else {
-                    SnackBarInfoTemplate(
-                        context: context,
-                        message: AppStrings.ERROR_MESSAGE_CHECK_FIELDS_FILL);
-                  }
+                  _updateValuesInDb();
+                  SnackBarInfoTemplate(
+                      context: context,
+                      message:
+                          '${AppStrings.UPDATED} ${_classesType.name} ${AppStrings.SUCCESFULLY}!');
+                  Navigator.pop(context);
                 },
                 child: const Text(AppStrings.OK),
               ),
@@ -58,10 +63,21 @@ class _EditClassesTypePageState extends State<EditClassesTypePage> {
     );
   }
 
-  bool _isValuesAreValid() => _addNewClassesTypeTemplate.isInputValid();
-
   void _updateValuesInDb() {
-    _updatedClassesType = _addNewClassesTypeTemplate.getClassType();
+    _updatedClassesType = _classesType;
+
+    _updatedClassesType.name =
+        _addNewClassesTypeTemplate.getClassType().name == ''
+            ? _classesType.name
+            : _addNewClassesTypeTemplate.getClassType().name;
+    _updatedClassesType.priceForEach =
+        _addNewClassesTypeTemplate.getClassType().priceForEach < 0
+            ? _classesType.priceForEach
+            : _addNewClassesTypeTemplate.getClassType().priceForEach;
+    _updatedClassesType.priceForMonth =
+        _addNewClassesTypeTemplate.getClassType().priceForMonth < 0
+            ? _classesType.priceForMonth
+            : _addNewClassesTypeTemplate.getClassType().priceForMonth;
     _setNewValues();
     _classesType.addToDb();
   }
@@ -74,7 +90,7 @@ class _EditClassesTypePageState extends State<EditClassesTypePage> {
       _setNewTeacher();
     });
 
-    if(_parentUpdateFunction != null) {
+    if (_parentUpdateFunction != null) {
       _parentUpdateFunction!(_classesType);
     }
   }

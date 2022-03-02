@@ -13,7 +13,7 @@ class CreateGroupTemplate extends StatefulWidget {
   String classesTypeName = '';
 
   CreateAddressTemplate _createAddressTemplate = CreateAddressTemplate();
-  late TextFieldTemplate _inputName;
+  late TextFieldTemplate _inputName  = TextFieldTemplate(label: AppStrings.GROUP_NAME, hint: '');
 
   void clearFields() {
     _inputName.clear();

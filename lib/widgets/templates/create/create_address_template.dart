@@ -4,7 +4,19 @@ import 'package:record_of_classes/models/address.dart';
 import 'package:record_of_classes/widgets/templates/text_field_template.dart';
 
 class CreateAddressTemplate extends StatefulWidget {
-  CreateAddressTemplate({Key? key, this.address}) : super(key: key);
+  CreateAddressTemplate({Key? key, this.address}) : super(key: key) {
+    _city = TextFieldTemplate(
+        label: AppStrings.CITY, hint: address == null ? '' : address!.city);
+    _street = TextFieldTemplate(
+        label: AppStrings.STREET, hint: address == null ? '' : address!.street);
+    _houseNumber = TextFieldTemplate(
+        label: AppStrings.HOUSE_NUMBER,
+        hint: address == null ? '' : address!.houseNumber);
+    _flatNumber = TextFieldTemplate(
+        label: AppStrings.FLAT_NUMBER,
+        hint: address == null ? '' : address!.flatNumber);
+  }
+
   Address? address;
 
   late TextFieldTemplate _city, _street, _houseNumber, _flatNumber;
@@ -29,23 +41,6 @@ class CreateAddressTemplate extends StatefulWidget {
 }
 
 class _CreateAddressTemplateState extends State<CreateAddressTemplate> {
-  @override
-  void initState() {
-    widget._city = TextFieldTemplate(
-        label: AppStrings.CITY,
-        hint: widget.address == null ? '' : widget.address!.city);
-    widget._street = TextFieldTemplate(
-        label: AppStrings.STREET,
-        hint: widget.address == null ? '' : widget.address!.street);
-    widget._houseNumber = TextFieldTemplate(
-        label: AppStrings.HOUSE_NUMBER,
-        hint: widget.address == null ? '' : widget.address!.houseNumber);
-    widget._flatNumber = TextFieldTemplate(
-        label: AppStrings.FLAT_NUMBER,
-        hint: widget.address == null ? '' : widget.address!.flatNumber);
-
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {

@@ -25,7 +25,10 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
     _createGroupTemplate = CreateGroupTemplate(classesTypeName: _classesType.name);
     return Scaffold(
       appBar: AppBar(
-        title: Text('${_classesType.name} - ${AppStrings.ADD_GROUP}'),
+        title: Column(children: [
+          Text(AppStrings.ADD_GROUP, style: Theme.of(context).textTheme.headline1,),
+          Text('${AppStrings.CLASSES_TYPE}: ${_classesType.name}', style: Theme.of(context).textTheme.headline2,),
+        ],),
       ),
       body: Container(
         padding: const EdgeInsets.all(10.0),

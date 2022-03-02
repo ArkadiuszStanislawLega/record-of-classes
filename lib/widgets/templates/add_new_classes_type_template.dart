@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/models/classes_type.dart';
 import 'package:record_of_classes/widgets/templates/text_field_template.dart';
-import 'package:record_of_classes/widgets/templates/text_field_template_num.dart';
+import 'package:record_of_classes/widgets/templates/text_field_template_double.dart';
 
 class AddNewClassesTypeTemplate extends StatefulWidget {
   AddNewClassesTypeTemplate({Key? key, this.classesType}) : super(key: key);
   ClassesType? classesType;
 
   late TextFieldTemplate _classesTypeName;
-  late TextFieldTemplateNum _priceForEach, _priceForMonth;
+  late TextFieldTemplateDouble _priceForEach, _priceForMonth;
 
   bool _isPriceForEachIsValid() =>
       double.tryParse(_priceForEach.input) != null ? true : false;
@@ -28,8 +28,12 @@ class AddNewClassesTypeTemplate extends StatefulWidget {
   ClassesType getClassType() {
     return ClassesType(
         name: _classesTypeName.input,
-        priceForEach: double.parse(_priceForEach.input),
-        priceForMonth: double.parse(_priceForMonth.input));
+        priceForEach: _priceForEach.input == ''
+            ? -1.0
+            : double.parse(_priceForEach.input.replaceAll(',', '.')),
+        priceForMonth: _priceForEach.input == ''
+            ? -1.0
+            : double.parse(_priceForMonth.input.replaceAll(',', '.')));
   }
 
   @override
@@ -47,13 +51,13 @@ class _AddNewClassesTypeTemplateState extends State<AddNewClassesTypeTemplate> {
           widget._classesTypeName = TextFieldTemplate(
               label: AppStrings.NAME_OF_CLASSES_TYPE,
               hint: widget.classesType == null ? '' : widget.classesType!.name),
-          widget._priceForEach = TextFieldTemplateNum(
+          widget._priceForEach = TextFieldTemplateDouble(
             label: AppStrings.PRICE_FOR_EACH,
             hint: widget.classesType == null
                 ? ''
                 : widget.classesType!.priceForEach.toString(),
           ),
-          widget._priceForMonth = TextFieldTemplateNum(
+          widget._priceForMonth = TextFieldTemplateDouble(
             label: AppStrings.PRICE_FOR_MONTH,
             hint: widget.classesType == null
                 ? ''
