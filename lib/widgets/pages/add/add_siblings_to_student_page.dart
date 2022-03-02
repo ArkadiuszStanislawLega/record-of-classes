@@ -21,18 +21,25 @@ class _AddSiblingsPage extends State<AddSiblingsToStudentPage> {
 
   @override
   Widget build(BuildContext context) {
-    _args =  ModalRoute.of(context)!.settings.arguments as Map;
+    _args = ModalRoute.of(context)!.settings.arguments as Map;
     _student = _args[AppStrings.STUDENT];
     _addSiblingsToDb = _args[AppStrings.FUNCTION];
 
     return Scaffold(
       appBar: AppBar(
-          title: Text('${AppStrings.ADD_SIBLING} ${_student.introduceYourself()}'),),
+        title: Column(
+          children: [
+            Text(AppStrings.ADD_SIBLING, style: Theme.of(context).textTheme.headline1,),
+            Text(_student.introduceYourself(), style: Theme.of(context).textTheme.headline2,)
+          ],
+        ),
+      ),
       body: StreamBuilder<List<Student>>(
         stream: _studentsStream,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return _unattachedSiblingListView(_sortData(_createUnattachedSiblings(snapshot.data!)));
+            return _unattachedSiblingListView(
+                _sortData(_createUnattachedSiblings(snapshot.data!)));
           } else {
             return const Center(child: CircularProgressIndicator());
           }

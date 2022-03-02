@@ -143,7 +143,7 @@ class _CreateParentPage extends State<AddParentPage> {
           padding: const EdgeInsets.all(16.0),
           child: Text(
             _selectedStudent.introduceYourself(),
-            style: const TextStyle(fontSize: 25, color: Colors.white),
+            style: Theme.of(context).textTheme.headline1,
           ),
         ),
       ),
