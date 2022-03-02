@@ -24,32 +24,40 @@ class _EditStudentPage extends State<EditStudentPage> {
   late TextFieldTemplate _name, _surname;
   late TextFieldTemplateNum _age;
 
-
   @override
   Widget build(BuildContext context) {
-    _args = ModalRoute.of(context)!.settings.arguments as Map;
-    _student = _args[AppStrings.STUDENT];
-    _updateStudentInDb = _args[AppStrings.FUNCTION];
-    _person = _student.person.target!;
+    _initValues();
     return Scaffold(
         appBar: AppBar(
           title: Text(
             _student.introduceYourself(),
+            style: Theme.of(context).textTheme.headline1,
           ),
         ),
         body: _content());
   }
 
+  void _initValues() {
+    _args = ModalRoute.of(context)!.settings.arguments as Map;
+    _student = _args[AppStrings.STUDENT];
+    _updateStudentInDb = _args[AppStrings.FUNCTION];
+    _person = _student.person.target!;
+
+    _name = TextFieldTemplate(label: AppStrings.NAME, hint: _person.name);
+    _surname = TextFieldTemplate(
+      label: AppStrings.SURNAME,
+      hint: _person.surname,
+    );
+    _age = TextFieldTemplateNum(
+        label: AppStrings.AGE, hint: _student.age.toString());
+  }
+
   Widget _content() {
     return Column(
       children: [
-        _name = TextFieldTemplate(label: AppStrings.NAME, hint: _person.name),
-        _surname = TextFieldTemplate(
-          label: AppStrings.SURNAME,
-          hint: _person.surname,
-        ),
-        _age = TextFieldTemplateNum(
-            label: AppStrings.AGE, hint: _student.age.toString()),
+        _name,
+        _surname,
+        _age,
         Center(
           child: TextButton(
             onPressed: confirmEditChanges,
@@ -60,6 +68,8 @@ class _EditStudentPage extends State<EditStudentPage> {
     );
   }
 
+
+
   bool _isNameValid() => _name.input != '';
 
   bool _isSurnameValid() => _surname.input != '';
@@ -68,10 +78,10 @@ class _EditStudentPage extends State<EditStudentPage> {
     if (_age.input == '') {
       return false;
     }
-    if (int.tryParse(_age.input ) == 0) {
+    if (int.tryParse(_age.input) == 0) {
       return false;
     }
-    if (int.parse(_age.input ) > 0) {
+    if (int.parse(_age.input) > 0) {
       return true;
     }
 
