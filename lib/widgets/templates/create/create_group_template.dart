@@ -42,6 +42,7 @@ class _CreateGroupTemplateState extends State<CreateGroupTemplate> {
     widget._inputName = TextFieldTemplate(
         label: AppStrings.GROUP_NAME,
         hint: widget.group == null ? '' : widget.group!.name);
+
     widget._inputName.controller!.text = widget.classesTypeName;
     super.initState();
   }
