@@ -34,8 +34,10 @@ class ClassesType implements DbModel{
   }
 
   void removeGroup(int id){
-    groups.firstWhere((group) => group.id == id).removeFromDb();
-    groups.removeWhere((group) => group.id == id);
+    for(int i = 0; i < groups.length; i++){
+      groups[i].removeFromDb();
+    }
+    groups.clear();
   }
 
   int numberOfStudents() {
