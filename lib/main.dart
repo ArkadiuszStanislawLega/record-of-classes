@@ -70,7 +70,7 @@ class ObjectBox {
     return ObjectBox._create(store);
   }
 
-  void open(){
+  void open() {
     store.syncClient();
   }
 }
@@ -256,7 +256,8 @@ String formatTime(DateTime dateTime) {
   return '${hour < 10 ? '0$hour' : hour}:${minutes < 10 ? '0$minutes' : minutes}';
 }
 
-String formatDate(DateTime dateTime, {bool isTimeOn = false}) {
+String formatDate(DateTime dateTime,
+    {bool isTimeOn = false, bool isWeekDayVisible = false}) {
   int day = dateTime.day,
       month = dateTime.month,
       year = dateTime.year,
@@ -268,6 +269,14 @@ String formatDate(DateTime dateTime, {bool isTimeOn = false}) {
       strYear = year.toString(),
       strHour = hour.toString(),
       strMinute = minute == 0 ? '${minute}0' : minute.toString();
+
+
+
+  if (isWeekDayVisible) {
+    return isTimeOn
+        ? '${AppStrings.WEEK_DAYS[dateTime.weekday]}, $strDay.$strMonth.$strYear $strHour:$strMinute'
+        : '${AppStrings.WEEK_DAYS[dateTime.weekday]}, $strDay.$strMonth.$strYear';
+  }
 
   return isTimeOn
       ? '$strDay.$strMonth.$strYear $strHour:$strMinute'

@@ -28,7 +28,7 @@ class _ClassesTreeViewItem extends State<ClassesTreeViewItem>{
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              formatDate(widget.classes.dateTime),
+              formatDate(widget.classes.dateTime, isWeekDayVisible: true),
               style: Theme.of(context).textTheme.headline3,
             ),
             Text(

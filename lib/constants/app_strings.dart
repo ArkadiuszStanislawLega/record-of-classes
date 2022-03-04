@@ -1,4 +1,13 @@
 class AppStrings {
+  static const Map WEEK_DAYS = {
+    1: 'poniedziałek',
+    2: 'wtorek',
+    3: 'środa',
+    4: 'czwartek',
+    5: 'piątek',
+    6: 'sobota',
+    7: 'niedziela',
+  };
   static const String NAME = 'Imię',
       APP_TITLE = 'Pomocnik',
       SURNAME = 'Nazwisko',
@@ -169,7 +178,8 @@ class AppStrings {
           'Wystąpił błąd, spradź poprawność wypełnienia pól!',
       YES = 'Tak',
       NO = 'Nie',
-      SELECT_THE_FILE_TO_BE_IMPORTED = "Wybierz plik który ma zostać zaimportowany",
+      SELECT_THE_FILE_TO_BE_IMPORTED =
+          "Wybierz plik który ma zostać zaimportowany",
       AFTER_IMPORTING_CORRECTLY_RESTAT_THE_APP =
           'Po prawidłowej zaimportowaniu, należy uruchomić aplikację ponownie.',
       OTHERWISE_THE_DB_WILL_NOT_BE_IMPORTED_CORRECTLY =
