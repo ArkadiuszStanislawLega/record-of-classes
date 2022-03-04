@@ -48,7 +48,7 @@ class _ClassesListItemTemplate extends State<ClassesListItemTemplate> {
           subtitle: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(formatDate(widget.classes.dateTime)),
+              Text(formatDate(widget.classes.dateTime, isWeekDayVisible: true)),
               Text(formatTime(widget.classes.dateTime))
             ],
           ),
