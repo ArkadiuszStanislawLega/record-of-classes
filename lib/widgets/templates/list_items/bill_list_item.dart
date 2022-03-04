@@ -12,7 +12,7 @@ class BillListItem extends StatefulWidget {
       required this.payBill,
       required this.withdrawThePaymentOfTheBill})
       : super(key: key);
-  final Bill bill;//withdraw
+  final Bill bill; //withdraw
   late Function payBill, withdrawThePaymentOfTheBill;
 
   @override
@@ -27,16 +27,17 @@ class _BillListItem extends State<BillListItem> {
     return Slidable(
       actionPane: const SlidableDrawerActionPane(),
       secondaryActions: [
-        !widget.bill.isPaid ? IconSlideAction(
-            caption: AppStrings.PAID,
-            color: Colors.green,
-            icon: Icons.check,
-            onTap: _setIsPaidInDatabase) :
-        IconSlideAction(
-            caption: AppStrings.UNPAID,
-            color: Colors.orange,
-            icon: Icons.close_outlined,
-            onTap: _setIsUnpaidInDatabase),
+        !widget.bill.isPaid
+            ? IconSlideAction(
+                caption: AppStrings.PAID,
+                color: Colors.green,
+                icon: Icons.check,
+                onTap: _setIsPaidInDatabase)
+            : IconSlideAction(
+                caption: AppStrings.UNPAID,
+                color: Colors.orange,
+                icon: Icons.close_outlined,
+                onTap: _setIsUnpaidInDatabase),
       ],
       child: Card(
         shape: RoundedRectangleBorder(
@@ -46,18 +47,24 @@ class _BillListItem extends State<BillListItem> {
         margin: const EdgeInsets.symmetric(vertical: 8.0),
         elevation: 7,
         child: ListTile(
-          title: Text(widget.bill.studentAccount.target!.student.target!
-              .introduceYourself()),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(widget.bill.studentAccount.target!.student.target!
+                  .introduceYourself()),
+              Text(formatDate(
+                  widget.bill.attendance.target!.classes.target!.dateTime,
+                  isWeekDayVisible: true))
+            ],
+          ),
           subtitle: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Column(
                 children: [
-                  Text(formatDate(
-                      widget.bill.attendance.target!.classes.target!.dateTime)),
-                  Text('${widget.bill.price.toString()}${AppStrings.CURRENCY}'),
                   Text(widget.bill.attendance.target!.classes.target!.group
                       .target!.name),
+                  Text('${widget.bill.price.toString()}${AppStrings.CURRENCY}'),
                 ],
               ),
               Icon(
@@ -74,5 +81,6 @@ class _BillListItem extends State<BillListItem> {
 
   void _setIsPaidInDatabase() => widget.payBill(widget.bill);
 
-  void _setIsUnpaidInDatabase() => widget.withdrawThePaymentOfTheBill(widget.bill);
+  void _setIsUnpaidInDatabase() =>
+      widget.withdrawThePaymentOfTheBill(widget.bill);
 }
