@@ -22,7 +22,7 @@ enum PhonesFiltering {
 class _PhoneBookPageState extends State<PhoneBookPage> {
   late Stream<List<Phone>> _phonesSteam;
   List<Phone> _phones = [];
-  List<Phone> _filteredPhones = [];
+  final List<Phone> _filteredPhones = [];
   PhonesFiltering _currentPhonesFiltering =
       PhonesFiltering.alphabeticalAscending;
 
@@ -79,11 +79,13 @@ class _PhoneBookPageState extends State<PhoneBookPage> {
             SizedBox(
               width: MediaQuery.of(context).size.width - 100,
               child: TextField(
+                style: Theme.of(context).textTheme.headline2,
                 onChanged: (input) {
                   _filteringList(input);
                 },
-                decoration: const InputDecoration(
-                  hintText: AppStrings.FIND_CONTACT,
+                decoration: InputDecoration(
+                  label: Text(AppStrings.FIND_CONTACT,
+                      style: Theme.of(context).textTheme.headline2),
                 ),
               ),
             ),
@@ -163,14 +165,15 @@ class _PhoneBookPageState extends State<PhoneBookPage> {
     );
   }
 
-  void _removePhone(Phone phone){
+  void _removePhone(Phone phone) {
     setState(() {
       _filteredPhones.removeWhere((element) => element.id == phone.id);
     });
   }
 
-  void _updateModel(Phone  updated){
-    Phone selectedPhone = _phones.firstWhere((element) => element.id == updated.id);
+  void _updateModel(Phone updated) {
+    Phone selectedPhone =
+        _phones.firstWhere((element) => element.id == updated.id);
     setState(() {
       selectedPhone = updated;
     });
@@ -196,7 +199,8 @@ class _PhoneBookPageState extends State<PhoneBookPage> {
       child: IconButton(
         icon: Icon(filtering == PhonesFiltering.alphabeticalDescending
             ? Icons.arrow_drop_down_sharp
-            : Icons.arrow_drop_up_sharp),
+            : Icons.arrow_drop_up_sharp,
+        color: Colors.white,),
         onPressed: () => setState(() => _currentPhonesFiltering = filtering),
       ),
     );
