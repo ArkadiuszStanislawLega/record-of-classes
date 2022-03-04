@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/constants/app_urls.dart';
 import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/main.dart';
@@ -86,13 +85,16 @@ class _AddStudentToGroupPageState extends State<AddStudentToGroupPage> {
     );
   }
 
-  ListTile _studentListTile(Student student){
-    return ListTile(
-      title: Text(student.introduceYourself()),
-      onTap: () => Navigator.pushNamed(
-        context,
-        AppUrls.DETAIL_STUDENT,
-        arguments: {AppStrings.STUDENT: student},
+  Widget _studentListTile(Student student){
+    return Container(
+      margin: const EdgeInsets.only(top: 10.0, right: 5.0, left: 5.0),
+      child: ListTile(
+        title: Text(student.introduceYourself()),
+        onTap: () => Navigator.pushNamed(
+          context,
+          AppUrls.DETAIL_STUDENT,
+          arguments: {AppStrings.STUDENT: student},
+        ),
       ),
     );
   }
