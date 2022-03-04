@@ -157,7 +157,7 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
             ),
             OneRowPropertyTemplate(
               title: '${AppStrings.DATE_OF_CLASSES}:',
-              value: formatDate(widget._classes.dateTime),
+              value: formatDate(widget._classes.dateTime, isWeekDayVisible: true),
             ),
             OneRowPropertyTemplate(
               title: '${AppStrings.NUMBER_OF_SIGNED_UP}:',
