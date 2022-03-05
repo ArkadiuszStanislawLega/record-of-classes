@@ -24,6 +24,7 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
   static const double titleHeight = 250.0;
   late Map _args;
   late Function? _parentUpdateFunction;
+  late List<Student> _studentsList;
 
   @override
   Widget build(BuildContext context) {
@@ -178,13 +179,17 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
   SliverList _content() =>
       _isWrittenOpen ? _studentsSliverList() : _attendancesSliverList();
 
+  void _refreshStudentList(){
+    widget._classes.group.target!.getFromDb();
+    _studentsList = _filteredStudentsList();
+  }
   SliverList _studentsSliverList() {
-    List<Student> studentsList = _filteredStudentsList();
+    _refreshStudentList();
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) =>
-            _attendanceItemList(studentsList.elementAt(index)),
-        childCount: studentsList.length,
+            _attendanceItemList(_studentsList.elementAt(index)),
+        childCount: _studentsList.length,
       ),
     );
   }
@@ -206,12 +211,11 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
   }
 
   SliverList _attendancesSliverList() {
-    List<Attendance> attendancesList = widget._classes.attendances;
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) =>
-            _attendanceUneditedItemList(attendancesList.elementAt(index)),
-        childCount: attendancesList.length,
+            _attendanceUneditedItemList(widget._classes.attendances.elementAt(index)),
+        childCount: widget._classes.attendances.length,
       ),
     );
   }

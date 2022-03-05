@@ -15,6 +15,10 @@ class Attendance implements DbModel{
   final student = ToOne<Student>();
 
   Attendance({this.isPresent = false});
+  @override
+  String toString(){
+    return '$id $isPresent ${classes.target!.toString()} ${student.target?.introduceYourself()}';
+  }
 
   @override
   void removeFromDb() {

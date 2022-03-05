@@ -82,7 +82,7 @@ Future<void> main() async {
   objectBox = await ObjectBox.create();
   // clearDb();
   _putTeacherToDb();
-  printDataFromDB();
+  // printDataFromDB();
   // objectBox.store.box<Account>().getAll().forEach((element) {
   //   print(element.id);
   // });
@@ -116,11 +116,11 @@ void clearDb() {
 }
 
 void printDataFromDB() {
-  print('Persons:');
+  print('-----------Persons-----------');
   ObjectBox.store.box<Person>().getAll().forEach((element) {
     print(element.toString());
 
-    print('Students:');
+    print('-----------Students-----------');
     ObjectBox.store.box<Student>().getAll().forEach((element) {
       print(element.toString());
       print('rodzice: ${element.parents.length.toString()}');
@@ -129,7 +129,7 @@ void printDataFromDB() {
       }
     });
   });
-  print('Parents');
+  print('-----------Parents-----------');
   ObjectBox.store.box<Parent>().getAll().forEach((element) {
     print('${element.toString()} ${element.person.target.toString()}');
     print('dzieci:');
@@ -138,29 +138,34 @@ void printDataFromDB() {
     });
   });
 
-  print('Phones');
+  print('-----------Phones-----------');
   ObjectBox.store.box<Phone>().getAll().forEach((element) {
     print(
         '${element.owner.target!.introduceYourself()} ${element.numberName} ${element.number}');
   });
 
-  print('Accounts');
+  print('-----------Accounts-----------');
   ObjectBox.store.box<Account>().getAll().forEach((element) {
     print(element.toString());
   });
 
-  print('Classes');
+  print('-----------Classes-----------');
   ObjectBox.store.box<Classes>().getAll().forEach((element) {
     print(element.toString());
   });
 
-  print('Grups');
+  print('-----------Grups-----------');
   ObjectBox.store.box<Group>().getAll().forEach((element) {
     print(element.toString());
   });
 
-  print('ClassesType');
+  print('-----------ClassesType-----------');
   ObjectBox.store.box<ClassesType>().getAll().forEach((element) {
+    print(element.toString());
+  });
+
+  print('-----------Attenadnces-----------');
+  ObjectBox.store.box<Attendance>().getAll().forEach((element) {
     print(element.toString());
   });
 }
@@ -181,7 +186,7 @@ class _RecordOfClassesApp extends State<RecordOfClassesApp> {
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.green.shade900,
         primarySwatch: Colors.green,
-        fontFamily: AppStrings.FONT_NEW_ATHENA_UNICODE,
+        fontFamily: AppStrings.FONT_LIBERATION_SERIF,
         cardTheme: CardTheme(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
@@ -202,8 +207,10 @@ class _RecordOfClassesApp extends State<RecordOfClassesApp> {
           headline2: TextStyle(fontSize: 16.0, color: Colors.white),
           headline3: TextStyle(
               fontSize: 20.0, color: Colors.white, fontWeight: FontWeight.bold),
+          headline4: TextStyle(
+              fontSize: 20.0, color: Colors.black, fontWeight: FontWeight.bold),
           bodyText2: TextStyle(
-              fontSize: 17.0, fontFamily: AppStrings.FONT_NEW_ATHENA_UNICODE),
+              fontSize: 17.0, fontFamily: AppStrings.FONT_LIBERATION_SERIF),
         ),
       ),
       title: AppStrings.APP_TITLE,
@@ -243,7 +250,7 @@ class _RecordOfClassesApp extends State<RecordOfClassesApp> {
         AppUrls.FUND_ACCOUNT: (context) => const FundAccountPage(),
         AppUrls.CREATE_CLASSES_NEW_VERSION: (context) =>
             RecordOfClassesTreeViewPage(),
-        AppUrls.MANAGE_DATABASE: (context) => ManageDatabasePage(),
+        AppUrls.MANAGE_DATABASE: (context) => const ManageDatabasePage(),
         '/test': (context) => Test()
       },
     );
@@ -269,8 +276,6 @@ String formatDate(DateTime dateTime,
       strYear = year.toString(),
       strHour = hour.toString(),
       strMinute = minute == 0 ? '${minute}0' : minute.toString();
-
-
 
   if (isWeekDayVisible) {
     return isTimeOn

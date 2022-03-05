@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/classes.dart';

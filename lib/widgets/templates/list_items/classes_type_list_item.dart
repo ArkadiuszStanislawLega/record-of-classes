@@ -28,11 +28,12 @@ class ClassesTypeListItem extends StatelessWidget {
       ],
       child: Card(
         child: ListTile(
-            title: Text(classesType.name),
+            title: Text(classesType.name, style: Theme.of(context).textTheme.headline4,),
             subtitle: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Text('${AppStrings.PRICE_FOR_MONTH}:'),
                     Text(

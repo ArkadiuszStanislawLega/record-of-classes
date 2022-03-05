@@ -39,9 +39,12 @@ class _ClassesTypeTreeViewItemExpanded
           alignment: Alignment.center,
           padding: const EdgeInsets.only(
               top: AppDoubles.paddings, bottom: AppDoubles.paddings),
-          child: Text(
-            widget.classesType.name,
-            style: Theme.of(context).textTheme.headline3,
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width * 0.6,
+            child: Text(
+              widget.classesType.name,
+              style: Theme.of(context).textTheme.headline3,
+            ),
           ),
         ),
         InkWell(
@@ -87,9 +90,10 @@ class _ClassesTypeTreeViewItemExpanded
 
   void _navigateToClassTypeDetailPage(
       {required BuildContext context, required ClassesType classesType}) {
-    Navigator.pushNamed(context, AppUrls.DETAIL_CLASSES_TYPE,
-        arguments: {AppStrings.CLASSES_TYPE: classesType,
-        AppStrings.FUNCTION : _updateClassesType});
+    Navigator.pushNamed(context, AppUrls.DETAIL_CLASSES_TYPE, arguments: {
+      AppStrings.CLASSES_TYPE: classesType,
+      AppStrings.FUNCTION: _updateClassesType
+    });
   }
 
   void _updateClassesType(ClassesType updated) {

@@ -46,6 +46,7 @@ class _ManageDatabasePageState extends State<ManageDatabasePage> {
   }
 
   Future<void> exportDb() async {
+
     await getApplicationDocumentsDirectory().then(
       (dir) {
         FlutterShare.shareFile(

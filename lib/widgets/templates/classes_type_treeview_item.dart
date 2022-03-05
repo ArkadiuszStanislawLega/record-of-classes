@@ -13,9 +13,13 @@ class ClassesTypeTreeViewItem extends StatelessWidget {
     return ClassesTypeItemTemplate(
       content: Container(
         padding: const EdgeInsets.all(AppDoubles.paddings),
-        child: Text(
-          classesType.name,
-          style: Theme.of(context).textTheme.headline3,
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width*0.8,
+          child: Text(
+            classesType.name,
+            textAlign: TextAlign.left,
+            style: Theme.of(context).textTheme.headline3,
+          ),
         ),
       ),
     );

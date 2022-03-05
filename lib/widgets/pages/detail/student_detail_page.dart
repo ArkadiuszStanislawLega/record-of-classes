@@ -435,11 +435,11 @@ class _StudentDetailPage extends State<StudentDetailPage> {
         ),
         OneRowPropertyTemplate(
           title: '${AppStrings.TO_PAY}:',
-          value: '$_toPay${AppStrings.CURRENCY}',
+          value: '${_toPay.toStringAsFixed(2)}${AppStrings.CURRENCY}',
         ),
         OneRowPropertyTemplate(
           title: '${AppStrings.PAID}:',
-          value: '$_paid${AppStrings.CURRENCY}',
+          value: '${_paid.toStringAsFixed(2)}${AppStrings.CURRENCY}',
         ),
       ],
     );

@@ -34,7 +34,12 @@ class _GroupTreeViewItemExpanded extends State<GroupTreeViewItemExpanded> {
   Widget _groupItemTitle(BuildContext context) {
     return ItemTitleTemplate(
       widgets: [
-        Text(widget.group.name, style: Theme.of(context).textTheme.headline3),
+        SizedBox(
+          width: MediaQuery.of(context).size.width * 0.6,
+          child: Text(widget.group.name,
+              textAlign:TextAlign.left,
+              style: Theme.of(context).textTheme.headline3),
+        ),
         InkWell(
           onTap: () => _navigateToGroupDetailPage(context),
           child: IconInCardTemplate(
