@@ -332,8 +332,6 @@ class _RecordOfClassesTreeViewPageState
   }
 
   void _addGroup(Group group) {
-    print(group);
-    
     setState(() {
       group.classesType.target!.addGroup(group);
       var newNode = TreeNodeData(label: group.name, object: group);

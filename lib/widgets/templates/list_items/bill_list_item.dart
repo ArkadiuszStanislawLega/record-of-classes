@@ -63,8 +63,14 @@ class _BillListItem extends State<BillListItem> {
             children: [
               Column(
                 children: [
-                  Text(widget.bill.attendance.target!.classes.target!.group
-                      .target!.name),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    child: Text(
+                      widget.bill.attendance.target!.classes.target!.group
+                          .target!.name,
+                      textAlign: TextAlign.left,
+                    ),
+                  ),
                   Text('${widget.bill.price.toString()}${AppStrings.CURRENCY}'),
                 ],
               ),

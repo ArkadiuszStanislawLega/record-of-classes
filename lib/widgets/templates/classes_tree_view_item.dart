@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:record_of_classes/constants/app_doubles.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/classes.dart';
 import 'package:record_of_classes/widgets/templates/classes_item_template.dart';

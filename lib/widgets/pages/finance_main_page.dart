@@ -193,22 +193,6 @@ class _FinanceMainPageState extends State<FinanceMainPage> {
     );
   }
 
-  Widget _oneRow(String title, String value) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          title,
-          style: const TextStyle(color: Colors.white),
-        ),
-        Text(
-          value,
-          style: const TextStyle(color: Colors.white),
-        ),
-      ],
-    );
-  }
-
   void _onPressChangeFiltering() {
     setState(
       () {
