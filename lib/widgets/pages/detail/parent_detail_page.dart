@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/constants/app_urls.dart';
 import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/models/parent.dart';

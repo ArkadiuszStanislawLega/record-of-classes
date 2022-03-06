@@ -27,7 +27,7 @@ class _DetailGroupPageState extends State<DetailGroupPage> {
 
   late Stream<List<Student>> _studentsStream;
 
-  static const double titleHeight = 250.0;
+  static const double titleHeight = 300.0;
 
   @override
   Widget build(BuildContext context) {

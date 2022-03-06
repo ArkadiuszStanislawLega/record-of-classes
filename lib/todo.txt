@@ -2,4 +2,4 @@
 [X] poprawić czcionki - zlewają się
 [ ] zarządzanie studentami - dodać filtry i sortowanie
 [X] zarządzanie finansami - po kliknieciu itemu przejscie do profilu studenta
-[ ] poprawić w itemach zarządanie długimi nazwami
+[X] poprawić w itemach zarządanie długimi nazwami
