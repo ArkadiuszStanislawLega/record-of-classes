@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:record_of_classes/constants/app_strings.dart';
+import 'package:record_of_classes/constants/app_urls.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/bill.dart';
 
@@ -74,6 +75,12 @@ class _BillListItem extends State<BillListItem> {
                   color: widget.bill.isPaid ? Colors.green : Colors.black),
             ],
           ),
+          onTap: () {
+            Navigator.pushNamed(context, AppUrls.DETAIL_STUDENT, arguments: {
+              AppStrings.STUDENT:
+                  widget.bill.studentAccount.target!.student.target!
+            });
+          },
         ),
       ),
     );
