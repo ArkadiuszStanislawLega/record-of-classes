@@ -8,7 +8,7 @@ import 'package:record_of_classes/widgets/templates/group_item_template.dart';
 import 'package:record_of_classes/widgets/templates/icon_in_card_template.dart';
 import 'package:record_of_classes/widgets/templates/item_content_template.dart';
 import 'package:record_of_classes/widgets/templates/item_title_template.dart';
-import 'package:record_of_classes/widgets/templates/lists/property_in_one_row.dart';
+import 'package:record_of_classes/widgets/templates/property_in_one_row.dart';
 
 class GroupTreeViewItemExpanded extends StatefulWidget {
   GroupTreeViewItemExpanded({Key? key, required this.group}) : super(key: key);

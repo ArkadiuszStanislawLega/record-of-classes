@@ -1,4 +1,5 @@
 [ ] zarzadzanie grupami - poprawic edycje nazwy - pojawia sie błąd
 [X] poprawić czcionki - zlewają się
 [ ] zarządzanie studentami - dodać filtry i sortowanie
-[ ] zarządzanie finansami - po kliknieciu itemu przejscie do profilu studenta
+[X] zarządzanie finansami - po kliknieciu itemu przejscie do profilu studenta
+[ ] poprawić w itemach zarządanie długimi nazwami
