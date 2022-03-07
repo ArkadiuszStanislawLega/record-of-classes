@@ -16,7 +16,7 @@ class StudentsMainPage extends StatefulWidget {
 
 class _StudentsMainPageState extends State<StudentsMainPage> {
   late Stream<List<Student>> _studentsStream;
-  late List<Student> _studentsList;
+  late List<Student> _studentsList, _filteredStudentsList;
 
   static const double titleHeight = 150.0;
 
@@ -113,16 +113,22 @@ class _StudentsMainPageState extends State<StudentsMainPage> {
   }
 
   SliverList _content() {
+    _filterListAlphabetically();
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) => StudentsListItemTemplate(
-          student: _studentsList.elementAt(index),
+          student: _filteredStudentsList.elementAt(index),
           removeFromDb: _removeStudentFromDb,
           updateInDb: _updateStudent,
         ),
         childCount: _studentsList.length,
       ),
     );
+  }
+
+  void _filterListAlphabetically(){
+    _filteredStudentsList = _studentsList;
+    _filteredStudentsList.sort((student1, student2) => student1.person.target!.surname.compareTo(student2.person.target!.surname));
   }
 
   void _removeStudentFromDb(Student student) {
