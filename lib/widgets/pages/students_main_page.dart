@@ -14,11 +14,9 @@ class StudentsMainPage extends StatefulWidget {
   _StudentsMainPageState createState() => _StudentsMainPageState();
 }
 
-enum StudentSortingBySurname { ascending, descending }
-
 class _StudentsMainPageState extends State<StudentsMainPage> {
   late Stream<List<Student>> _studentsStream;
-  StudentSortingBySurname currentSorting = StudentSortingBySurname.ascending;
+  bool _isSortingAscending = true;
   late List<Student> _studentsList, _filteredStudentsList;
 
   static const double titleHeight = 250.0;
@@ -56,10 +54,8 @@ class _StudentsMainPageState extends State<StudentsMainPage> {
         preferredSize: const Size(0, 10),
         child: Row(
           children: [
-            _pageNavigationButton(
-              isAscending: StudentSortingBySurname.ascending
-            ),
-            _pageNavigationButton(isAscending: StudentSortingBySurname.descending)
+            _pageNavigationButton(isAscending: true),
+            _pageNavigationButton(isAscending: false)
           ],
         ),
       ),
@@ -130,7 +126,8 @@ class _StudentsMainPageState extends State<StudentsMainPage> {
     );
   }
 
-  DecoratedBox _pageNavigationButton({required StudentSortingBySurname isAscending}) {
+  DecoratedBox _pageNavigationButton(
+      {required bool isAscending}) {
     return DecoratedBox(
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.only(
@@ -138,7 +135,7 @@ class _StudentsMainPageState extends State<StudentsMainPage> {
         boxShadow: [
           BoxShadow(
             spreadRadius: 1,
-            color: currentSorting == isAscending
+            color: _isSortingAscending == isAscending
                 ? Colors.black12
                 : Colors.transparent,
             offset: const Offset(0, -1),
@@ -147,11 +144,13 @@ class _StudentsMainPageState extends State<StudentsMainPage> {
         ],
       ),
       child: IconButton(
-        icon: Icon(isAscending == StudentSortingBySurname.ascending
-            ? Icons.arrow_drop_down_sharp
-            : Icons.arrow_drop_up_sharp,
-          color: Colors.white,),
-        onPressed: () => setState(() => currentSorting = isAscending),
+        icon: Icon(
+          isAscending == true
+              ? Icons.arrow_drop_down_sharp
+              : Icons.arrow_drop_up_sharp,
+          color: Colors.white,
+        ),
+        onPressed: () => setState(() => _isSortingAscending = isAscending),
       ),
     );
   }
@@ -172,7 +171,7 @@ class _StudentsMainPageState extends State<StudentsMainPage> {
 
   void _filterListAlphabetically() {
     _filteredStudentsList = _studentsList;
-    if (currentSorting == StudentSortingBySurname.ascending) {
+    if (_isSortingAscending) {
       _filteredStudentsList.sort((student1, student2) => student1
           .person.target!.surname
           .compareTo(student2.person.target!.surname));
