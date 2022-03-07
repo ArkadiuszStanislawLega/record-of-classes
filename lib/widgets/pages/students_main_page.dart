@@ -14,11 +14,14 @@ class StudentsMainPage extends StatefulWidget {
   _StudentsMainPageState createState() => _StudentsMainPageState();
 }
 
+enum StudentSortingBySurname { ascending, descending }
+
 class _StudentsMainPageState extends State<StudentsMainPage> {
   late Stream<List<Student>> _studentsStream;
+  StudentSortingBySurname currentSorting = StudentSortingBySurname.ascending;
   late List<Student> _studentsList, _filteredStudentsList;
 
-  static const double titleHeight = 150.0;
+  static const double titleHeight = 250.0;
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +52,17 @@ class _StudentsMainPageState extends State<StudentsMainPage> {
 
   SliverAppBar _customAppBar() {
     return SliverAppBar(
+      bottom: PreferredSize(
+        preferredSize: const Size(0, 10),
+        child: Row(
+          children: [
+            _pageNavigationButton(
+              isAscending: StudentSortingBySurname.ascending
+            ),
+            _pageNavigationButton(isAscending: StudentSortingBySurname.descending)
+          ],
+        ),
+      ),
       stretch: true,
       onStretchTrigger: () => Future<void>.value(),
       expandedHeight: titleHeight,
@@ -91,23 +105,53 @@ class _StudentsMainPageState extends State<StudentsMainPage> {
   SafeArea _propertiesView() {
     return SafeArea(
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 50.0, vertical: 20.0),
+        padding: const EdgeInsets.only(top: 50.0, left: 20.0, right: 20.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                AppStrings.STUDENT_MANAGEMENT,
-                style: Theme.of(context).textTheme.headline1,
-              ),
-            ),
-            OneRowPropertyTemplate(
-              title: '${AppStrings.NUMBER_OF_STUDENTS}:',
-              value: _studentsList.length.toString(),
+            Column(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(
+                    AppStrings.STUDENT_MANAGEMENT,
+                    style: Theme.of(context).textTheme.headline1,
+                  ),
+                ),
+                OneRowPropertyTemplate(
+                  title: '${AppStrings.NUMBER_OF_STUDENTS}:',
+                  value: _studentsList.length.toString(),
+                ),
+              ],
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  DecoratedBox _pageNavigationButton({required StudentSortingBySurname isAscending}) {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.only(
+            topRight: Radius.circular(30), topLeft: Radius.circular(30)),
+        boxShadow: [
+          BoxShadow(
+            spreadRadius: 1,
+            color: currentSorting == isAscending
+                ? Colors.black12
+                : Colors.transparent,
+            offset: const Offset(0, -1),
+            blurRadius: 4,
+          )
+        ],
+      ),
+      child: IconButton(
+        icon: Icon(isAscending == StudentSortingBySurname.ascending
+            ? Icons.arrow_drop_down_sharp
+            : Icons.arrow_drop_up_sharp,
+          color: Colors.white,),
+        onPressed: () => setState(() => currentSorting = isAscending),
       ),
     );
   }
@@ -126,9 +170,20 @@ class _StudentsMainPageState extends State<StudentsMainPage> {
     );
   }
 
-  void _filterListAlphabetically(){
+  void _filterListAlphabetically() {
     _filteredStudentsList = _studentsList;
-    _filteredStudentsList.sort((student1, student2) => student1.person.target!.surname.compareTo(student2.person.target!.surname));
+    if (currentSorting == StudentSortingBySurname.ascending) {
+      _filteredStudentsList.sort((student1, student2) => student1
+          .person.target!.surname
+          .compareTo(student2.person.target!.surname));
+    } else {
+      _filteredStudentsList.sort((student1, student2) => student1
+                  .person.target!.surname
+                  .compareTo(student2.person.target!.surname) ==
+              1
+          ? 0
+          : 1);
+    }
   }
 
   void _removeStudentFromDb(Student student) {
