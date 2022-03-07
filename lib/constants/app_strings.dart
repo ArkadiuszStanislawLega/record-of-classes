@@ -101,6 +101,7 @@ class AppStrings {
       ADD_FUNCTION = 'add function',
       REMOVE_FUNCTION = 'remove function',
       FIND_CONTACT = 'Szukaj kontaktu',
+      FIND_STUDENT = 'Szukaj ucznia',
       GROUP_NAME = 'Nazwa grupy',
       GROUP = 'Grupa',
       GROUPS = 'Grupy',

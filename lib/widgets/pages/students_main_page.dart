@@ -17,7 +17,7 @@ class StudentsMainPage extends StatefulWidget {
 class _StudentsMainPageState extends State<StudentsMainPage> {
   late Stream<List<Student>> _studentsStream;
   bool _isSortingAscending = true;
-  late List<Student> _studentsList, _filteredStudentsList;
+  late List<Student> _studentsList, _filteredStudentsList = [];
 
   static const double titleHeight = 250.0;
 
@@ -54,6 +54,19 @@ class _StudentsMainPageState extends State<StudentsMainPage> {
         preferredSize: const Size(0, 10),
         child: Row(
           children: [
+            SizedBox(
+              width: MediaQuery.of(context).size.width - 100,
+              child: TextField(
+                style: Theme.of(context).textTheme.headline2,
+                onChanged: (input) {
+                  _filteringList(input);
+                },
+                decoration: InputDecoration(
+                  label: Text(AppStrings.FIND_STUDENT,
+                      style: Theme.of(context).textTheme.headline2),
+                ),
+              ),
+            ),
             _pageNavigationButton(isAscending: true),
             _pageNavigationButton(isAscending: false)
           ],
@@ -86,6 +99,27 @@ class _StudentsMainPageState extends State<StudentsMainPage> {
         ),
       ),
     );
+  }
+
+  void _filteringList(input) {
+    _filteredStudentsList = [];
+    if (_studentsList.isNotEmpty) {
+      setState(
+        () {
+          if (input != '') {
+            for (var student in _studentsList) {
+              if (student.person.target!.surname.contains(input)) {
+                _filteredStudentsList.add(student);
+              }
+            }
+          } else {
+            for (var student in _studentsList) {
+              _filteredStudentsList.add(student);
+            }
+          }
+        },
+      );
+    }
   }
 
   void _navigateToCreateStudent() =>
@@ -126,8 +160,7 @@ class _StudentsMainPageState extends State<StudentsMainPage> {
     );
   }
 
-  DecoratedBox _pageNavigationButton(
-      {required bool isAscending}) {
+  DecoratedBox _pageNavigationButton({required bool isAscending}) {
     return DecoratedBox(
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.only(
@@ -164,13 +197,17 @@ class _StudentsMainPageState extends State<StudentsMainPage> {
           removeFromDb: _removeStudentFromDb,
           updateInDb: _updateStudent,
         ),
-        childCount: _studentsList.length,
+        childCount: _filteredStudentsList.length,
       ),
     );
   }
 
   void _filterListAlphabetically() {
-    _filteredStudentsList = _studentsList;
+    if (_filteredStudentsList.isEmpty) {
+      for (var student in _studentsList) {
+        _filteredStudentsList.add(student);
+      }
+    }
     if (_isSortingAscending) {
       _filteredStudentsList.sort((student1, student2) => student1
           .person.target!.surname
