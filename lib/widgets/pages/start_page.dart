@@ -144,7 +144,7 @@ class _StartPageViewView extends State<StartPageView> {
               title,
               style: TextStyle(
                   color: Colors.green.shade900,
-                  fontSize: 11,
+                  fontSize: 10,
                   fontFamily: AppStrings.FONT_ARCHITECTS_DAUGHTER),
             ),
           )

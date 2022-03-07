@@ -28,7 +28,7 @@ enum Pages { parents, siblings, account, attendance, phones }
 
 class _StudentDetailPage extends State<StudentDetailPage> {
   late Student _student;
-  Pages _currentPage = Pages.parents;
+  Pages _currentPage = Pages.account;
   late Map _args;
   late Function? _updatingFunction;
   final double maxTitleHeight = 230.0;

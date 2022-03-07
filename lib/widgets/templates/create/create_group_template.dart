@@ -6,7 +6,15 @@ import 'package:record_of_classes/widgets/templates/text_field_template.dart';
 
 class CreateGroupTemplate extends StatefulWidget {
   CreateGroupTemplate({Key? key, this.group, required this.classesTypeName})
-      : super(key: key);
+      : super(key: key){
+    _createAddressTemplate =
+        CreateAddressTemplate(address: group?.address.target);
+    _inputName = TextFieldTemplate(
+        label: AppStrings.GROUP_NAME,
+        hint: group == null ? '' : group!.name);
+
+    _inputName.controller!.text = classesTypeName;
+  }
 
   Group? group;
 
@@ -35,17 +43,6 @@ class CreateGroupTemplate extends StatefulWidget {
 }
 
 class _CreateGroupTemplateState extends State<CreateGroupTemplate> {
-  @override
-  void initState() {
-    widget._createAddressTemplate =
-        CreateAddressTemplate(address: widget.group?.address.target);
-    widget._inputName = TextFieldTemplate(
-        label: AppStrings.GROUP_NAME,
-        hint: widget.group == null ? '' : widget.group!.name);
-
-    widget._inputName.controller!.text = widget.classesTypeName;
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
