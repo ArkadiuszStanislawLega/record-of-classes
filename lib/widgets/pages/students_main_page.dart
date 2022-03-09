@@ -3,9 +3,12 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:record_of_classes/constants/app_urls.dart';
 import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/main.dart';
+import 'package:record_of_classes/models/person.dart';
 import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/widgets/templates/list_items/students_list_item_template.dart';
 import 'package:record_of_classes/widgets/templates/one_row_property_template.dart';
+
+import '../../objectbox.g.dart';
 
 class StudentsMainPage extends StatefulWidget {
   const StudentsMainPage({Key? key}) : super(key: key);
@@ -18,6 +21,8 @@ class _StudentsMainPageState extends State<StudentsMainPage> {
   late Stream<List<Student>> _studentsStream;
   bool _isSortingAscending = true;
   late List<Student> _studentsList, _filteredStudentsList = [];
+  String _inputSurname = '';
+  int _inputAge = 0;
 
   static const double titleHeight = 250.0;
 
@@ -52,23 +57,68 @@ class _StudentsMainPageState extends State<StudentsMainPage> {
     return SliverAppBar(
       bottom: PreferredSize(
         preferredSize: const Size(0, 10),
-        child: Row(
+        child: Column(
           children: [
-            SizedBox(
-              width: MediaQuery.of(context).size.width - 100,
-              child: TextField(
-                style: Theme.of(context).textTheme.headline2,
-                onChanged: (input) {
-                  _filteringList(input);
-                },
-                decoration: InputDecoration(
-                  label: Text(AppStrings.FIND_STUDENT,
-                      style: Theme.of(context).textTheme.headline2),
+            Row(
+              children: [
+                SizedBox(
+                  width: MediaQuery.of(context).size.width - 100,
+                  child: TextField(
+                    style: Theme.of(context).textTheme.headline2,
+                    onChanged: (input) {
+                      setState(() {
+                        if (input != '') {
+                          _inputAge = int.tryParse(input)! > 0 ? int.parse(input) : 0;
+                          print('nie jest pusty input age');
+                          _filterBySurnameAndAge();
+                        }
+                        else {
+                          print('jest pusty input age');
+                          _inputAge = 0;
+                        }
+                      });
+
+                    },
+                    decoration: InputDecoration(
+                      label: Text('Wiek szukanej osoby',
+                          style: Theme.of(context).textTheme.headline2),
+                    ),
+                  ),
                 ),
-              ),
+                TextButton(
+                    onPressed: _filterBySurnameAndAge,
+                    child: Text('Sort by age')),
+              ],
             ),
-            _pageNavigationButton(isAscending: true),
-            _pageNavigationButton(isAscending: false)
+            Row(
+              children: [
+                SizedBox(
+                  width: MediaQuery.of(context).size.width - 100,
+                  child: TextField(
+                    style: Theme.of(context).textTheme.headline2,
+                    onChanged: (input) {
+                      _inputSurname = input;
+                      setState(() {
+                        _filterBySurnameAndAge();
+                      });
+
+                      // setState(() {
+                      //   print(_inputSurname);
+                      //   for (var person in _sortStudentsList()) {
+                      //     _filteredStudentsList.add(person.student.target!);
+                      //   }
+                      // });
+                    },
+                    decoration: InputDecoration(
+                      label: Text(AppStrings.FIND_STUDENT,
+                          style: Theme.of(context).textTheme.headline2),
+                    ),
+                  ),
+                ),
+                _pageNavigationButton(isAscending: true),
+                _pageNavigationButton(isAscending: false)
+              ],
+            ),
           ],
         ),
       ),
@@ -189,7 +239,7 @@ class _StudentsMainPageState extends State<StudentsMainPage> {
   }
 
   SliverList _content() {
-    _filterListAlphabetically();
+    _filterBySurnameAndAge();
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) => StudentsListItemTemplate(
@@ -202,23 +252,68 @@ class _StudentsMainPageState extends State<StudentsMainPage> {
     );
   }
 
-  void _filterListAlphabetically() {
-    if (_filteredStudentsList.isEmpty) {
-      for (var student in _studentsList) {
-        _filteredStudentsList.add(student);
+  List<Person> _getAllStudents() {
+    return ObjectBox.store
+        .box<Person>()
+        .query(Person_.personType.equals(2))
+        .build()
+        .find();
+  }
+
+  List<Person> _getStudentsContainsInput() {
+    return ObjectBox.store
+        .box<Person>()
+        .query(Person_.surname.contains(_inputSurname)
+          ..and(Person_.personType.equals(2)))
+        .build()
+        .find();
+  }
+
+  List<Person> _getPersonsList() {
+    List<Person> lp =
+        _inputSurname == '' ? _getAllStudents() : _getStudentsContainsInput();
+    return lp;
+  }
+
+  List<Person> _sortStudentsList() {
+    List<Person> lp = _getPersonsList();
+    if (_isSortingAscending) {
+      lp.sort((person1, person2) => person1.surname.compareTo(person2.surname));
+    } else {
+      lp.sort((student1, student2) =>
+          student1.surname.compareTo(student2.surname) == 1 ? 0 : 1);
+    }
+    return lp;
+  }
+
+  void _filterBySurnameAndAge() {
+    _filteredStudentsList.clear();
+
+    if (_inputAge > 0) {
+      _filterByAge();
+    } else {
+      _filterOnlyBySurname();
+    }
+  }
+
+  void _filterOnlyBySurname(){
+    List<Person> lp = _sortStudentsList();
+    if (lp.isNotEmpty) {
+      for (var person in lp) {
+        if (person.personType == 2) {
+          person.student.target == null ? '' : _filteredStudentsList.add(
+              person.student.target!);
+        }
       }
     }
-    if (_isSortingAscending) {
-      _filteredStudentsList.sort((student1, student2) => student1
-          .person.target!.surname
-          .compareTo(student2.person.target!.surname));
-    } else {
-      _filteredStudentsList.sort((student1, student2) => student1
-                  .person.target!.surname
-                  .compareTo(student2.person.target!.surname) ==
-              1
-          ? 0
-          : 1);
+  }
+
+  void _filterByAge() {
+    List<Person> lp = _sortStudentsList();
+    for (var person in lp) {
+      if (person.personType == 2) {
+        _filteredStudentsList.add(person.student.target!);
+      }
     }
   }
 

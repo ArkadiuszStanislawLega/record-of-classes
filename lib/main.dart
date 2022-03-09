@@ -82,7 +82,7 @@ Future<void> main() async {
   objectBox = await ObjectBox.create();
   // clearDb();
   _putTeacherToDb();
-  // printDataFromDB();
+  printDataFromDB();
   // objectBox.store.box<Account>().getAll().forEach((element) {
   //   print(element.id);
   // });
@@ -93,7 +93,7 @@ void _putTeacherToDb() {
   var teacherObjectBox = ObjectBox.store.box<Teacher>();
   var teachers = teacherObjectBox.getAll();
   if (teachers.isEmpty) {
-    var person = Person(name: 'Monika', surname: 'Łęga')
+    var person = Person(name: 'Monika', surname: 'Łęga', personType: 1)
       ..dbPersonType = PersonType.teacher.index;
     var teacher = Teacher()..person.target = person;
     teacherObjectBox.put(teacher);
@@ -119,16 +119,16 @@ void printDataFromDB() {
   print('-----------Persons-----------');
   ObjectBox.store.box<Person>().getAll().forEach((element) {
     print(element.toString());
-
-    print('-----------Students-----------');
-    ObjectBox.store.box<Student>().getAll().forEach((element) {
-      print(element.toString());
-      print('rodzice: ${element.parents.length.toString()}');
-      for (var parent in element.parents) {
-        parent.person.target.toString();
-      }
-    });
   });
+  print('-----------Students-----------');
+  ObjectBox.store.box<Student>().getAll().forEach((element) {
+    print(element.toString());
+    print('rodzice: ${element.parents.length.toString()}');
+    for (var parent in element.parents) {
+      parent.person.target.toString();
+    }
+  });
+
   print('-----------Parents-----------');
   ObjectBox.store.box<Parent>().getAll().forEach((element) {
     print('${element.toString()} ${element.person.target.toString()}');

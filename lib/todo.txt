@@ -2,7 +2,7 @@
 [X] poprawić czcionki - zlewają się
 [ ] zarządzanie studentami - dodać filtry i sortowanie
     [X] sortowanie po nazwiskach
-    [ ] srtowanie po wieku
+    [ ] sortowanie po wieku
 [X] zarządzanie finansami - po kliknieciu itemu przejscie do profilu studenta
 [X] poprawić w itemach zarządanie długimi nazwami
 [ ] poprawić sharing - na androidzie ścieżka jest zła
