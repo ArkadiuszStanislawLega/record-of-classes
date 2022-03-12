@@ -69,7 +69,7 @@ class _StudentsMainPageState extends State<StudentsMainPage> {
                       setState(() {
                         if (input != '') {
                           _inputAge = int.tryParse(input)! > 0 ? int.parse(input) : 0;
-                          print('nie jest pusty input age');
+                          print('nie jest pusty input age ${_inputAge}');
                           _filterBySurnameAndAge();
                         }
                         else {
@@ -311,7 +311,7 @@ class _StudentsMainPageState extends State<StudentsMainPage> {
   void _filterByAge() {
     List<Person> lp = _sortStudentsList();
     for (var person in lp) {
-      if (person.personType == 2) {
+      if (person.personType == 2 && person.student.target!.age == _inputAge) {
         _filteredStudentsList.add(person.student.target!);
       }
     }
