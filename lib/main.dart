@@ -44,7 +44,6 @@ import 'package:record_of_classes/widgets/pages/phone_book_page.dart';
 import 'package:record_of_classes/widgets/pages/start_page.dart';
 import 'package:record_of_classes/widgets/pages/detail/student_detail_page.dart';
 import 'package:record_of_classes/widgets/pages/students_main_page.dart';
-import 'package:record_of_classes/widgets/test.dart';
 
 import 'models/person.dart';
 
@@ -82,7 +81,7 @@ Future<void> main() async {
   objectBox = await ObjectBox.create();
   // clearDb();
   _putTeacherToDb();
-  printDataFromDB();
+  // printDataFromDB();
   // objectBox.store.box<Account>().getAll().forEach((element) {
   //   print(element.id);
   // });
@@ -219,12 +218,14 @@ class _RecordOfClassesApp extends State<RecordOfClassesApp> {
         AppUrls.EMPTY: (context) => const StartPageView(),
         AppUrls.HOME: (context) => const StartPageView(),
         AppUrls.ABOUT: (context) => const AboutPage(),
+        AppUrls.MANAGE_DATABASE: (context) => const ManageDatabasePage(),
 
         AppUrls.STUDENS_MAIN_PAGE: (context) => const StudentsMainPage(),
         AppUrls.CREATE_STUDENT: (context) => CreateStudentPage(),
         AppUrls.DETAIL_STUDENT: (context) => const StudentDetailPage(),
         AppUrls.EDIT_STUDENT: (context) => EditStudentPage(),
         AppUrls.ADD_SIBLING: (context) => const AddSiblingsToStudentPage(),
+        AppUrls.ADD_CONTACT_TO_STUDENT: (context) => AddPhoneToStudentPage(),
 
         AppUrls.ADD_PARENT: (context) => const AddParentPage(),
         AppUrls.CREATE_PARENT: (context) => CreateParentPage(),
@@ -240,9 +241,7 @@ class _RecordOfClassesApp extends State<RecordOfClassesApp> {
         AppUrls.CREATE_GROUP: (context) => const CreateGroupPage(),
         AppUrls.EDIT_GROUP: (context) => const EditGroupPage(),
         AppUrls.DETAIL_GROUP: (context) => const DetailGroupPage(),
-
         AppUrls.ADD_CLASSES_TO_GROUP: (context) => AddClassesToGroup(),
-        AppUrls.ADD_CONTACT_TO_STUDENT: (context) => AddPhoneToStudentPage(),
         AppUrls.ADD_STUDENT_TO_GROUP: (context) => const AddStudentToGroupPage(),
 
         AppUrls.CLASSES_MAIN_PAGE: (context) => const ClassesMainPage(),
@@ -255,11 +254,6 @@ class _RecordOfClassesApp extends State<RecordOfClassesApp> {
         AppUrls.PHONE_BOOK: (context) => const PhoneBookPage(),
         AppUrls.ADD_PHONE: (context) => CreatePhonePage(),
         AppUrls.EDIT_PHONE: (context) => EditPhonePage(),
-
-
-
-        AppUrls.MANAGE_DATABASE: (context) => const ManageDatabasePage(),
-        '/test': (context) => Test()
       },
     );
   }
