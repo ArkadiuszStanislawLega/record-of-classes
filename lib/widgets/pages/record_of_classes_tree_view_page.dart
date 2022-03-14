@@ -10,13 +10,13 @@ import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/classes.dart';
 import 'package:record_of_classes/models/classes_type.dart';
 import 'package:record_of_classes/models/group.dart';
-import 'package:record_of_classes/widgets/templates/classes_tree_view_item.dart';
-import 'package:record_of_classes/widgets/templates/classes_tree_view_item_expanded.dart';
-import 'package:record_of_classes/widgets/templates/classes_type_treeview_item.dart';
-import 'package:record_of_classes/widgets/templates/group_tree_view_item.dart';
-import 'package:record_of_classes/widgets/templates/group_tree_view_item_expanded.dart';
+import 'package:record_of_classes/widgets/templates/tree_view_items/classes_tree_view_item.dart';
+import 'package:record_of_classes/widgets/templates/tree_view_items/classes_tree_view_item_expanded.dart';
+import 'package:record_of_classes/widgets/templates/tree_view_items/classes_type_tree_view_item.dart';
+import 'package:record_of_classes/widgets/templates/tree_view_items/group_tree_view_item.dart';
+import 'package:record_of_classes/widgets/templates/tree_view_items/group_tree_view_item_expanded.dart';
 import 'package:record_of_classes/widgets/templates/icon_in_card_template.dart';
-import 'package:record_of_classes/widgets/templates/classes_type_tree_view_item_expanded.dart';
+import 'package:record_of_classes/widgets/templates/tree_view_items/classes_type_tree_view_item_expanded.dart';
 
 class RecordOfClassesTreeViewPage extends StatefulWidget {
   RecordOfClassesTreeViewPage({Key? key}) : super(key: key);

@@ -8,7 +8,7 @@ import 'package:record_of_classes/widgets/templates/classes_type_item_template.d
 import 'package:record_of_classes/widgets/templates/item_content_template.dart';
 import 'package:record_of_classes/widgets/templates/item_title_template.dart';
 
-import 'property_in_one_row.dart';
+import '../property_in_one_row.dart';
 
 class ClassesTypeTreeViewItemExpanded extends StatefulWidget {
   ClassesTypeTreeViewItemExpanded({Key? key, required this.classesType})
