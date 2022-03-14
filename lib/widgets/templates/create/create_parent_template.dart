@@ -32,9 +32,9 @@ class _CreateParentTemplate extends State<CreateParentTemplate> {
       child: Column(
         children: [
           widget._parentName =
-              TextFieldTemplate(label: AppStrings.NAME, hint: ''),
+              TextFieldTemplate(label: AppStrings.name, hint: ''),
           widget._parentSurname =
-              TextFieldTemplate(label: AppStrings.SURNAME, hint: '')
+              TextFieldTemplate(label: AppStrings.surname, hint: '')
         ],
       ),
     );

@@ -18,10 +18,10 @@ class _StartPageViewView extends State<StartPageView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          AppStrings.APP_TITLE,
+          AppStrings.appTitle,
           style: TextStyle(
             fontSize: 40,
-            fontFamily: AppStrings.FONT_LUCIAN_SCHOENSHRIFT,
+            fontFamily: AppStrings.fontLucianSchoenshrift,
           ),
         ),
       ),
@@ -34,37 +34,37 @@ class _StartPageViewView extends State<StartPageView> {
         children: <Widget>[
           _button(
               onPressed: _navigateToStudentsMainPage,
-              title: AppStrings.STUDENTS_LIST.toLowerCase(),
+              title: AppStrings.studentList.toLowerCase(),
               icon: const Icon(Icons.person),
               iconColor: Colors.orange.shade200),
           _button(
               onPressed: _navigateFinanceMainPage,
-              title: AppStrings.FINANCE.toLowerCase(),
+              title: AppStrings.finance.toLowerCase(),
               icon: const Icon(Icons.monetization_on),
               iconColor: Colors.lightBlue.shade200),
           _button(
               onPressed: _navigateToCreateClassesNewVersion,
-              title: AppStrings.MANAGEMENT.toLowerCase(),
+              title: AppStrings.management.toLowerCase(),
               icon: const Icon(Icons.account_tree),
               iconColor: Colors.teal.shade200),
           _button(
               onPressed: _navigatorClassesTypeMainPage,
-              title: AppStrings.CLASSES_TYPE.toLowerCase(),
+              title: AppStrings.classesType.toLowerCase(),
               icon: const Icon(Icons.title),
               iconColor: Colors.lightGreen.shade200),
           _button(
               onPressed: _navigateGroupsMainPage,
-              title: AppStrings.GROUPS.toLowerCase(),
+              title: AppStrings.groups.toLowerCase(),
               icon: const Icon(Icons.group),
               iconColor: Colors.purpleAccent.shade200),
           _button(
               onPressed: _navigatorClassesMainPage,
-              title: AppStrings.CLASSES.toLowerCase(),
+              title: AppStrings.classes.toLowerCase(),
               icon: const Icon(Icons.developer_board),
               iconColor: Colors.pink.shade200),
           _button(
               onPressed: _navigateToPhoneBook,
-              title: AppStrings.PHONES.toLowerCase(),
+              title: AppStrings.phones.toLowerCase(),
               icon: const Icon(Icons.book),
               iconColor: Colors.brown.shade200),
         ],
@@ -90,14 +90,14 @@ class _StartPageViewView extends State<StartPageView> {
                 TextButton(
                   onPressed: _navigateToAboutPage,
                   child: const Text(
-                    AppStrings.ABOUT,
+                    AppStrings.about,
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
                 TextButton(
                   onPressed: _navigateToManageDatabase,
                   child: const Text(
-                    AppStrings.MANAGE_DATABASE,
+                    AppStrings.manageDatabase,
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
@@ -145,7 +145,7 @@ class _StartPageViewView extends State<StartPageView> {
               style: TextStyle(
                   color: Colors.green.shade900,
                   fontSize: 10,
-                  fontFamily: AppStrings.FONT_ARCHITECTS_DAUGHTER),
+                  fontFamily: AppStrings.fontArchitectsDaughter),
             ),
           )
         ],

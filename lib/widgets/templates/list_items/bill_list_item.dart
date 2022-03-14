@@ -30,12 +30,12 @@ class _BillListItem extends State<BillListItem> {
       secondaryActions: [
         !widget.bill.isPaid
             ? IconSlideAction(
-                caption: AppStrings.PAID,
+                caption: AppStrings.paid,
                 color: Colors.green,
                 icon: Icons.check,
                 onTap: _setIsPaidInDatabase)
             : IconSlideAction(
-                caption: AppStrings.UNPAID,
+                caption: AppStrings.unpaid,
                 color: Colors.orange,
                 icon: Icons.close_outlined,
                 onTap: _setIsUnpaidInDatabase),
@@ -71,7 +71,7 @@ class _BillListItem extends State<BillListItem> {
                       textAlign: TextAlign.left,
                     ),
                   ),
-                  Text('${widget.bill.price.toString()}${AppStrings.CURRENCY}'),
+                  Text('${widget.bill.price.toString()}${AppStrings.currency}'),
                 ],
               ),
               Icon(
@@ -83,7 +83,7 @@ class _BillListItem extends State<BillListItem> {
           ),
           onTap: () {
             Navigator.pushNamed(context, AppUrls.DETAIL_STUDENT, arguments: {
-              AppStrings.STUDENT:
+              AppStrings.student:
                   widget.bill.studentAccount.target!.student.target!
             });
           },

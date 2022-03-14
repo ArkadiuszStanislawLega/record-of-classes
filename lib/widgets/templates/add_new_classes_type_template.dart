@@ -49,16 +49,16 @@ class _AddNewClassesTypeTemplateState extends State<AddNewClassesTypeTemplate> {
       child: Column(
         children: [
           widget._classesTypeName = TextFieldTemplate(
-              label: AppStrings.NAME_OF_CLASSES_TYPE,
+              label: AppStrings.nameOfClassesType,
               hint: widget.classesType == null ? '' : widget.classesType!.name),
           widget._priceForEach = TextFieldTemplateDouble(
-            label: AppStrings.PRICE_FOR_EACH,
+            label: AppStrings.priceForEach,
             hint: widget.classesType == null
                 ? ''
                 : widget.classesType!.priceForEach.toString(),
           ),
           widget._priceForMonth = TextFieldTemplateDouble(
-            label: AppStrings.PRICE_FOR_MONTH,
+            label: AppStrings.priceForMonth,
             hint: widget.classesType == null
                 ? ''
                 : widget.classesType!.priceForMonth.toString(),

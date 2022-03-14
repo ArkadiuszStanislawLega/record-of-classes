@@ -22,7 +22,7 @@ class CreateStudentTemplate extends StatelessWidget {
       child: Column(
         children: [
           _createPersonTemplate,
-          _getAge = TextFieldTemplateNum(label: AppStrings.AGE, hint: '')
+          _getAge = TextFieldTemplateNum(label: AppStrings.age, hint: '')
         ],
       ),
     );

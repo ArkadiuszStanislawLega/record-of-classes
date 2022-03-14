@@ -6,14 +6,14 @@ import 'package:record_of_classes/widgets/templates/text_field_template.dart';
 class CreateAddressTemplate extends StatefulWidget {
   CreateAddressTemplate({Key? key, this.address}) : super(key: key) {
     _city = TextFieldTemplate(
-        label: AppStrings.CITY, hint: address == null ? '' : address!.city);
+        label: AppStrings.city, hint: address == null ? '' : address!.city);
     _street = TextFieldTemplate(
-        label: AppStrings.STREET, hint: address == null ? '' : address!.street);
+        label: AppStrings.street, hint: address == null ? '' : address!.street);
     _houseNumber = TextFieldTemplate(
-        label: AppStrings.HOUSE_NUMBER,
+        label: AppStrings.houseNumber,
         hint: address == null ? '' : address!.houseNumber);
     _flatNumber = TextFieldTemplate(
-        label: AppStrings.FLAT_NUMBER,
+        label: AppStrings.flatNumber,
         hint: address == null ? '' : address!.flatNumber);
   }
 

@@ -25,14 +25,14 @@ class _CreatePhonePage extends State<CreatePhonePage> {
     _parent = ModalRoute.of(context)!.settings.arguments as Parent;
     return Scaffold(
       appBar: AppBar(
-        title: const Text(AppStrings.CREATE_CONTACT),
+        title: const Text(AppStrings.createContact),
       ),
       body: Column(
         children: [
           _createPhoneTemplate,
           TextButton(
             onPressed: () => _actionAfterClickAddButton(context),
-            child: const Text(AppStrings.ADD),
+            child: const Text(AppStrings.add),
           ),
         ],
       ),
@@ -44,7 +44,7 @@ class _CreatePhonePage extends State<CreatePhonePage> {
     SnackBarInfoTemplate(
         context: context,
         message:
-            '${AppStrings.ADDED_NEW_CONTACT} ${AppStrings.TO} ${_parent.introduceYourself()}');
+            '${AppStrings.addNewContact} ${AppStrings.to} ${_parent.introduceYourself()}');
     Navigator.pop(context);
   }
 

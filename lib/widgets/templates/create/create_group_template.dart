@@ -10,7 +10,7 @@ class CreateGroupTemplate extends StatefulWidget {
     _createAddressTemplate =
         CreateAddressTemplate(address: group?.address.target);
     _inputName = TextFieldTemplate(
-        label: AppStrings.GROUP_NAME,
+        label: AppStrings.groupName,
         hint: group == null ? '' : group!.name);
 
     _inputName.controller!.text = classesTypeName;

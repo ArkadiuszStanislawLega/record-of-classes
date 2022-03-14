@@ -53,8 +53,8 @@ class _GroupTreeViewItemExpanded extends State<GroupTreeViewItemExpanded> {
 
   void _navigateToGroupDetailPage(BuildContext context) =>
       Navigator.pushNamed(context, AppUrls.DETAIL_GROUP, arguments: {
-        AppStrings.GROUP: widget.group,
-        AppStrings.FUNCTION: _updateGroup
+        AppStrings.group: widget.group,
+        AppStrings.function: _updateGroup
       });
 
   void _updateGroup(Group updated) {
@@ -73,10 +73,10 @@ class _GroupTreeViewItemExpanded extends State<GroupTreeViewItemExpanded> {
         Column(
           children: [
             PropertyInOneRow(
-                property: AppStrings.NUMBER_OF_STUDENTS,
+                property: AppStrings.numberOfStudents,
                 value: group.students.length.toString()),
             PropertyInOneRow(
-                property: AppStrings.NUMBER_OF_CLASSES,
+                property: AppStrings.numberOfClasses,
                 value: group.classes.length.toString())
           ],
         )

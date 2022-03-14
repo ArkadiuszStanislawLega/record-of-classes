@@ -20,8 +20,8 @@ class _EditClassesTypePageState extends State<EditClassesTypePage> {
   @override
   Widget build(BuildContext context) {
     _args = ModalRoute.of(context)!.settings.arguments as Map;
-    _parentUpdateFunction = _args[AppStrings.FUNCTION];
-    _classesType = _args[AppStrings.CLASSES_TYPE];
+    _parentUpdateFunction = _args[AppStrings.function];
+    _classesType = _args[AppStrings.classesType];
     _addNewClassesTypeTemplate =
         AddNewClassesTypeTemplate(classesType: _classesType);
     return Scaffold(
@@ -29,7 +29,7 @@ class _EditClassesTypePageState extends State<EditClassesTypePage> {
         title: Column(
           children: [
             Text(
-              '${AppStrings.EDIT} ${AppStrings.CLASSES_TYPE.toLowerCase()}',
+              '${AppStrings.edit} ${AppStrings.classesType.toLowerCase()}',
               style: Theme.of(context).textTheme.headline1,
             ),
             Text(
@@ -51,10 +51,10 @@ class _EditClassesTypePageState extends State<EditClassesTypePage> {
                   SnackBarInfoTemplate(
                       context: context,
                       message:
-                          '${AppStrings.UPDATED} ${_classesType.name} ${AppStrings.SUCCESFULLY}!');
+                          '${AppStrings.updated} ${_classesType.name} ${AppStrings.successfully}!');
                   Navigator.pop(context);
                 },
-                child: const Text(AppStrings.OK),
+                child: const Text(AppStrings.ok),
               ),
             ],
           ),

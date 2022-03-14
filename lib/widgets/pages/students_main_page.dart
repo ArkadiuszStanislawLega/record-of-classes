@@ -73,7 +73,7 @@ class _StudentsMainPageState extends State<StudentsMainPage> {
                       });
                     },
                     decoration: InputDecoration(
-                      label: Text(AppStrings.FIND_STUDENT,
+                      label: Text(AppStrings.findStudent,
                           style: Theme.of(context).textTheme.headline2),
                     ),
                   ),
@@ -90,7 +90,7 @@ class _StudentsMainPageState extends State<StudentsMainPage> {
                       _updateInputAge(input);
                     },
                     decoration: InputDecoration(
-                      label: Text(AppStrings.STUDENT_AGE,
+                      label: Text(AppStrings.studentAge,
                           style: Theme.of(context).textTheme.headline2),
                     ),
                   ),
@@ -166,12 +166,12 @@ class _StudentsMainPageState extends State<StudentsMainPage> {
                 Container(
                   padding: const EdgeInsets.all(16.0),
                   child: Text(
-                    AppStrings.STUDENT_MANAGEMENT,
+                    AppStrings.studentManagement,
                     style: Theme.of(context).textTheme.headline1,
                   ),
                 ),
                 OneRowPropertyTemplate(
-                  title: '${AppStrings.NUMBER_OF_STUDENTS}:',
+                  title: '${AppStrings.numberOfStudents}:',
                   value: _studentsList.length.toString(),
                 ),
               ],

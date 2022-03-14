@@ -101,12 +101,12 @@ class _ClassesTypeMainPageState extends State<ClassesTypeMainPage> {
                       padding:
                           const EdgeInsets.only(bottom: AppDoubles.paddings),
                       child: Text(
-                        AppStrings.MANAGE_CLASS_TYPES,
+                        AppStrings.manageClassTypes,
                         style: Theme.of(context).textTheme.headline1,
                       ),
                     ),
                     OneRowPropertyTemplate(
-                      title: '${AppStrings.NUMBER_OF_CLASS_TYPES}:',
+                      title: '${AppStrings.numberOfClassesType}:',
                       value: _classesTypes.length.toString(),
                     ),
                   ],

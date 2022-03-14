@@ -34,12 +34,12 @@ class _ParentDetailPage extends State<ParentDetailPage> {
         children: [
           SpeedDialChild(
               child: const Icon(Icons.phone),
-              label: AppStrings.ADD_CONTACT,
+              label: AppStrings.addContact,
               backgroundColor: Colors.amberAccent,
               onTap: _navigateToAddPhone),
           SpeedDialChild(
               child: const Icon(Icons.edit),
-              label: AppStrings.EDIT,
+              label: AppStrings.edit,
               backgroundColor: Colors.amberAccent,
               onTap: _navigateToEditParent),
         ],
@@ -67,9 +67,9 @@ class _ParentDetailPage extends State<ParentDetailPage> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             _pageNavigationButton(
-                title: AppStrings.CONTACTS, page: ListsOnPages.contacts),
+                title: AppStrings.contacts, page: ListsOnPages.contacts),
             _pageNavigationButton(
-                title: AppStrings.CHILDREN, page: ListsOnPages.children),
+                title: AppStrings.children, page: ListsOnPages.children),
           ],
         ),
       ),
@@ -151,7 +151,7 @@ class _ParentDetailPage extends State<ParentDetailPage> {
           child: ListTile(
             title: Text(_parent.children.elementAt(index).introduceYourself()),
             subtitle: Text(
-                '${AppStrings.TO_PAY}: ${_parent.children.elementAt(index).account.target!.countUnpaidBillsPrice()}${AppStrings.CURRENCY}'),
+                '${AppStrings.toPay}: ${_parent.children.elementAt(index).account.target!.countUnpaidBillsPrice()}${AppStrings.currency}'),
           ),
         ),
         childCount: _parent.children.length,
@@ -182,8 +182,8 @@ class _ParentDetailPage extends State<ParentDetailPage> {
           children: [
             _pageTitleContainer(),
             OneRowPropertyTemplate(
-              title: '${AppStrings.TO_PAY}:',
-              value: '$toPay${AppStrings.CURRENCY}',
+              title: '${AppStrings.toPay}:',
+              value: '$toPay${AppStrings.currency}',
             ),
           ],
         ),
@@ -215,7 +215,7 @@ class _ParentDetailPage extends State<ParentDetailPage> {
         actionPane: const SlidableDrawerActionPane(),
         secondaryActions: [
           IconSlideAction(
-              caption: AppStrings.DELETE,
+              caption: AppStrings.delete,
               color: Colors.red,
               icon: Icons.delete,
               onTap: () {

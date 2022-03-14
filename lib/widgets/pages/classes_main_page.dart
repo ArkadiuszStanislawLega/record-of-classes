@@ -109,12 +109,12 @@ class _ClassesMainPageState extends State<ClassesMainPage> {
             Container(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                AppStrings.MANAGE_CLASSES,
+                AppStrings.manageClasses,
                 style: Theme.of(context).textTheme.headline1,
               ),
             ),
             OneRowPropertyTemplate(
-              title: '${AppStrings.NUMBER_OF_CLASSES}:',
+              title: '${AppStrings.numberOfClasses}:',
               value: _classesList.length.toString(),
             ),
           ],

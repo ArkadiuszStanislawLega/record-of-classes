@@ -21,7 +21,7 @@ class _ManageDatabasePageState extends State<ManageDatabasePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          AppStrings.MANAGE_DATABASE,
+          AppStrings.manageDatabase,
           style: Theme.of(context).textTheme.headline1,
         ),
       ),
@@ -31,11 +31,11 @@ class _ManageDatabasePageState extends State<ManageDatabasePage> {
           child: Column(
             children: [
               TextButton(
-                child: const Text(AppStrings.EXPORT_DATABASE),
+                child: const Text(AppStrings.exportDatabase),
                 onPressed: exportDb,
               ),
               TextButton(
-                child: const Text(AppStrings.IMPORT_DATABASE),
+                child: const Text(AppStrings.importDatabase),
                 onPressed: importDb,
               ),
             ],
@@ -50,8 +50,8 @@ class _ManageDatabasePageState extends State<ManageDatabasePage> {
     await getApplicationDocumentsDirectory().then(
       (dir) {
         FlutterShare.shareFile(
-          title: AppStrings.EXPORTING_DATABASE_TITLE,
-          filePath: '${dir.path}/${AppStrings.DATABASE_DIRECTORY}',
+          title: AppStrings.exportingDatabaseDialogTitle,
+          filePath: '${dir.path}/${AppStrings.databaseDirectory}',
         );
       },
     );
@@ -65,7 +65,7 @@ class _ManageDatabasePageState extends State<ManageDatabasePage> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text(AppStrings.SELECT_THE_FILE_TO_BE_IMPORTED),
+        title: const Text(AppStrings.selectTheFileToBeImported),
         content: _dialogContent(),
         actions: <Widget>[
           TextButton(
@@ -79,7 +79,7 @@ class _ManageDatabasePageState extends State<ManageDatabasePage> {
                 },
               );
             },
-            child: const Text(AppStrings.OK),
+            child: const Text(AppStrings.ok),
           ),
         ],
       ),
@@ -91,7 +91,7 @@ class _ManageDatabasePageState extends State<ManageDatabasePage> {
       type: FileTypeCross.any,
     ).then(
       (selectedFile) async {
-        if (selectedFile.fileName!.endsWith(AppStrings.DATABASE_EXTENSION)) {
+        if (selectedFile.fileName!.endsWith(AppStrings.databaseExtension)) {
           return selectedFile;
         }
         return _getImportedFile();
@@ -103,7 +103,7 @@ class _ManageDatabasePageState extends State<ManageDatabasePage> {
     return await getApplicationDocumentsDirectory().then(
       (currentAppDirectory) async {
         final currentDatabaseDirectory = Directory(
-            '${currentAppDirectory.path}/${AppStrings.DATABASE_DIRECTORY}/${AppStrings.DATABASE_FULL_FILE_NAME}');
+            '${currentAppDirectory.path}/${AppStrings.databaseDirectory}/${AppStrings.databaseFullFileName}');
 
         final dbFile = File(currentDatabaseDirectory.path);
 
@@ -118,7 +118,7 @@ class _ManageDatabasePageState extends State<ManageDatabasePage> {
         database.writeAsBytes(data.buffer.asUint8List());
         SnackBarInfoTemplate(
             context: context,
-            message: AppStrings.DATABASE_WAS_SUCCESSFULLY_IMPORTED);
+            message: AppStrings.databaseWasSuccessfullyImported);
         return data;
       },
     );
@@ -128,19 +128,19 @@ class _ManageDatabasePageState extends State<ManageDatabasePage> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: const [
-        Text(AppStrings.CHOSEN_FILE_NEED_TO_HAVE_SPECIFIC_EXTENSIONS),
+        Text(AppStrings.chosenFileNeedToHaveSpecificExtension),
         Center(
           child: Text(
-            AppStrings.DATABASE_EXTENSION,
+            AppStrings.databaseExtension,
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
         Text(
-          AppStrings.OTHERWISE_THE_DB_WILL_NOT_BE_IMPORTED_CORRECTLY,
+          AppStrings.otherwiseTheDbWillNotBeImpoertedCorrectly,
           style: TextStyle(fontStyle: FontStyle.italic),
         ),
         Text(
-          AppStrings.AFTER_IMPORTING_CORRECTLY_RESTAT_THE_APP,
+          AppStrings.messageAfterCorrectlyImportDb,
           style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
         ),
       ],

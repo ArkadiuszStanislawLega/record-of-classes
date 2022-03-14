@@ -29,8 +29,8 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
   @override
   Widget build(BuildContext context) {
     _args = ModalRoute.of(context)!.settings.arguments as Map;
-    _parentUpdateFunction = _args[AppStrings.FUNCTION];
-    widget._classes = _args[AppStrings.CLASSES];
+    _parentUpdateFunction = _args[AppStrings.function];
+    widget._classes = _args[AppStrings.classes];
     widget._classes.getFromDb();
 
     return Scaffold(
@@ -105,7 +105,7 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
           });
         },
         child: const Text(
-          AppStrings.SIGNED_UP_FOR_CLASSES,
+          AppStrings.singedUpForClasses,
           style: TextStyle(color: Colors.white),
         ),
       ),
@@ -129,7 +129,7 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
       child: TextButton(
         onPressed: () => setState(() => _isWrittenOpen = false),
         child: const Text(
-          AppStrings.PRESENTS_AT_THE_CLASSSES,
+          AppStrings.presentsAtTheClasses,
           style: TextStyle(color: Colors.white),
         ),
       ),
@@ -151,21 +151,21 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
                     widget._classes.group.target!.name,
                     style: Theme.of(context).textTheme.headline1,
                   ),
-                  Text(AppStrings.CLASSES_CONDUCTED.toLowerCase(),
+                  Text(AppStrings.classesConducted.toLowerCase(),
                       style: Theme.of(context).textTheme.headline2),
                 ],
               ),
             ),
             OneRowPropertyTemplate(
-              title: '${AppStrings.DATE_OF_CLASSES}:',
+              title: '${AppStrings.dateOfClasses}:',
               value: formatDate(widget._classes.dateTime, isWeekDayVisible: true),
             ),
             OneRowPropertyTemplate(
-              title: '${AppStrings.NUMBER_OF_SIGNED_UP}:',
+              title: '${AppStrings.numberOfSignedUp}:',
               value: widget._classes.group.target!.students.length.toString(),
             ),
             OneRowPropertyTemplate(
-                title: '${AppStrings.PRESENTS_AT_THE_CLASSSES}:',
+                title: '${AppStrings.presentsAtTheClasses}:',
                 value: widget._classes.attendances
                     .skipWhile((element) => !element.isPresent)
                     .length
@@ -225,7 +225,7 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
       actionPane: const SlidableDrawerActionPane(),
       secondaryActions: [
         IconSlideAction(
-          caption: attendance.isPresent ? AppStrings.ABSENT : AppStrings.ABSENT,
+          caption: attendance.isPresent ? AppStrings.absent : AppStrings.absent,
           color: attendance.isPresent ? Colors.orange : Colors.green,
           icon: attendance.isPresent
               ? Icons.check_box_outline_blank
@@ -248,7 +248,7 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
           title: Text(attendance.student.target!.introduceYourself()),
           onTap: () {},
           subtitle: Text(
-              '${AppStrings.UNPAID_CLASSES}: ${attendance.student.target!.account.target!.countUnpaidBills()}'),
+              '${AppStrings.unpaidClasses}: ${attendance.student.target!.account.target!.countUnpaidBills()}'),
         ),
       ),
     );
@@ -323,7 +323,7 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
       actionPane: const SlidableDrawerActionPane(),
       secondaryActions: [
         IconSlideAction(
-          caption: AppStrings.PRESENT,
+          caption: AppStrings.present,
           color: Colors.green,
           icon: Icons.check,
           onTap: () {
@@ -338,7 +338,7 @@ class _ClassesDetailPageState extends State<ClassesDetailPage> {
           title: Text(student.introduceYourself()),
           onTap: () {},
           subtitle: Text(
-              '${AppStrings.UNPAID_CLASSES}: ${_numberOfUnpaidBills(student.account.target!.bills)}'),
+              '${AppStrings.unpaidClasses}: ${_numberOfUnpaidBills(student.account.target!.bills)}'),
         ),
       ),
     );

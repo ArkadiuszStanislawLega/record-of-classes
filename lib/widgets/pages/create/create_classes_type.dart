@@ -17,14 +17,14 @@ class CreateClassesTypePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(AppStrings.ADD_CLASSES_TYPE),
+        title: const Text(AppStrings.addClassesType),
       ),
       body: Column(
         children: [
           _addNewClassesTypeTemplate,
           TextButton(
             onPressed: () => _confirmButtonOnClickActions(context),
-            child: const Text(AppStrings.ADD_CLASSES_TYPE),
+            child: const Text(AppStrings.addClassesType),
           ),
         ],
       ),
@@ -40,11 +40,11 @@ class CreateClassesTypePage extends StatelessWidget {
       SnackBarInfoTemplate(
           context: context,
           message:
-              '${AppStrings.CREATED_NEW_CLASS_TYPE}: ${_createdClassType.name}');
+              '${AppStrings.createdNewClassesType}: ${_createdClassType.name}');
       Navigator.pop(context);
     } else {
       SnackBarInfoTemplate(
-          context: context, message: AppStrings.ERROR_MESSAGE_CHECK_FIELDS_FILL);
+          context: context, message: AppStrings.errorMessageCheckFieldFill);
     }
   }
 

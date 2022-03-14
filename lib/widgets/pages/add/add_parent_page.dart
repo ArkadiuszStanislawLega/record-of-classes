@@ -38,9 +38,9 @@ class _CreateParentPage extends State<AddParentPage> {
   @override
   Widget build(BuildContext context) {
     _args = ModalRoute.of(context)!.settings.arguments as Map;
-    _selectedStudent = _args[AppStrings.STUDENT];
-    _addFunction = _args[AppStrings.ADD_FUNCTION];
-    _removeFunction = _args[AppStrings.REMOVE_FUNCTION];
+    _selectedStudent = _args[AppStrings.student];
+    _addFunction = _args[AppStrings.addFunction];
+    _removeFunction = _args[AppStrings.removeFunction];
 
     return StreamBuilder<List<Parent>>(
       stream: _parentsStream,

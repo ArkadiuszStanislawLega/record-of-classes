@@ -10,12 +10,12 @@ enum PersonType {
 String ConverterPersonTypeToString(PersonType value){
   switch(value){
     case PersonType.none:
-      return AppStrings.NONE_TYPE;
+      return AppStrings.noneType;
     case PersonType.teacher:
-      return AppStrings.TEACHER;
+      return AppStrings.teacher;
     case PersonType.parent:
-      return AppStrings.PARENT;
+      return AppStrings.parent;
     case PersonType.student:
-      return AppStrings.STUDENT;
+      return AppStrings.student;
   }
 }

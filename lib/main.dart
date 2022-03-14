@@ -63,7 +63,7 @@ class ObjectBox {
     await getApplicationDocumentsDirectory().then((dir) {
       ObjectBox.store = Store(
         getObjectBoxModel(),
-        directory: '${dir.path}/${AppStrings.DATABASE_DIRECTORY}',
+        directory: '${dir.path}/${AppStrings.databaseDirectory}',
       );
     });
     return ObjectBox._create(store);
@@ -185,7 +185,7 @@ class _RecordOfClassesApp extends State<RecordOfClassesApp> {
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.green.shade900,
         primarySwatch: Colors.green,
-        fontFamily: AppStrings.FONT_LIBERATION_SERIF,
+        fontFamily: AppStrings.fontLiberationSerif,
         cardTheme: CardTheme(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
@@ -200,7 +200,7 @@ class _RecordOfClassesApp extends State<RecordOfClassesApp> {
         ),
         textTheme: const TextTheme(
           headline1: TextStyle(
-              fontFamily: AppStrings.FONT_LUCIAN_SCHOENSHRIFT,
+              fontFamily: AppStrings.fontLucianSchoenshrift,
               fontSize: 35.0,
               color: Colors.white),
           headline2: TextStyle(fontSize: 16.0, color: Colors.white),
@@ -209,10 +209,10 @@ class _RecordOfClassesApp extends State<RecordOfClassesApp> {
           headline4: TextStyle(
               fontSize: 20.0, color: Colors.black, fontWeight: FontWeight.bold),
           bodyText2: TextStyle(
-              fontSize: 17.0, fontFamily: AppStrings.FONT_LIBERATION_SERIF),
+              fontSize: 17.0, fontFamily: AppStrings.fontLiberationSerif),
         ),
       ),
-      title: AppStrings.APP_TITLE,
+      title: AppStrings.appTitle,
       initialRoute: AppUrls.HOME,
       routes: {
         AppUrls.EMPTY: (context) => const StartPageView(),
@@ -281,8 +281,8 @@ String formatDate(DateTime dateTime,
 
   if (isWeekDayVisible) {
     return isTimeOn
-        ? '${AppStrings.WEEK_DAYS[dateTime.weekday]}, $strDay.$strMonth.$strYear $strHour:$strMinute'
-        : '${AppStrings.WEEK_DAYS[dateTime.weekday]}, $strDay.$strMonth.$strYear';
+        ? '${AppStrings.weekDays[dateTime.weekday]}, $strDay.$strMonth.$strYear $strHour:$strMinute'
+        : '${AppStrings.weekDays[dateTime.weekday]}, $strDay.$strMonth.$strYear';
   }
 
   return isTimeOn

@@ -34,12 +34,12 @@ class _ParentListItemTemplate extends State<ParentListItemTemplate> {
           actionPane: const SlidableDrawerActionPane(),
           secondaryActions: [
             IconSlideAction(
-                caption: AppStrings.DELETE,
+                caption: AppStrings.delete,
                 color: Colors.red,
                 icon: Icons.delete,
                 onTap: removeParent),
             IconSlideAction(
-                caption: AppStrings.ADD,
+                caption: AppStrings.add,
                 color: Colors.green,
                 icon: Icons.add,
                 onTap: addParent),
@@ -69,7 +69,7 @@ class _ParentListItemTemplate extends State<ParentListItemTemplate> {
     SnackBarInfoTemplate(
         context: context,
         message:
-            '${widget.parent.introduceYourself()} ${AppStrings.REMOVED_FROM_DATABASE}!');
+            '${widget.parent.introduceYourself()} ${AppStrings.removedFromDatabase}!');
   }
 
   void addParent() {
@@ -77,6 +77,6 @@ class _ParentListItemTemplate extends State<ParentListItemTemplate> {
     SnackBarInfoTemplate(
         context: context,
         message:
-            '${widget.parent.introduceYourself()} ${AppStrings.AND} ${widget.student.introduceYourself()} ${AppStrings.THEY_ARE_FAMILY_NOW}!');
+            '${widget.parent.introduceYourself()} ${AppStrings.and} ${widget.student.introduceYourself()} ${AppStrings.theyAreFamilyNow}!');
   }
 }

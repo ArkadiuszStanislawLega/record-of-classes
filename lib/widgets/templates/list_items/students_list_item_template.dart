@@ -34,7 +34,7 @@ class _StudentsListItemTemplate extends State<StudentsListItemTemplate> {
           actionPane: const SlidableDrawerActionPane(),
           secondaryActions: [
             IconSlideAction(
-                caption: AppStrings.DELETE,
+                caption: AppStrings.delete,
                 color: Colors.red,
                 icon: Icons.delete,
                 onTap: () => _removeFromDatabase(context)),
@@ -49,6 +49,6 @@ class _StudentsListItemTemplate extends State<StudentsListItemTemplate> {
     SnackBarInfoTemplate(
         context: context,
         message:
-            '${AppStrings.DELETED_STUDENT}: ${widget.student.introduceYourself()}');
+            '${AppStrings.removedStudent}: ${widget.student.introduceYourself()}');
   }
 }

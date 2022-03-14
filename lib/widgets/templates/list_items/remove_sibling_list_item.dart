@@ -18,7 +18,7 @@ class RemoveSiblingListItem extends StatelessWidget {
           actionPane: const SlidableDrawerActionPane(),
           secondaryActions: [
             IconSlideAction(
-              caption: AppStrings.DISCONNECT,
+              caption: AppStrings.disconnect,
               color: Colors.deepOrange,
               icon: Icons.remove,
               onTap: () {
@@ -45,5 +45,5 @@ class RemoveSiblingListItem extends StatelessWidget {
   void showInfoSnackBar(var context) => SnackBarInfoTemplate(
       context: context,
       message:
-          '${sibling.introduceYourself()} ${AppStrings.AND} ${student.introduceYourself()} ${AppStrings.THEY_ARENT_SIBLINGS}');
+          '${sibling.introduceYourself()} ${AppStrings.and} ${student.introduceYourself()} ${AppStrings.theyArentSiblings}');
 }

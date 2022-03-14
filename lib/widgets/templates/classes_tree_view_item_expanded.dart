@@ -43,7 +43,7 @@ class _ClassesTreeViewItemExpanded extends State<ClassesTreeViewItemExpanded> {
       Container(
         margin: const EdgeInsets.only(bottom: 10.0),
         child: PropertyInOneRow(
-          property: AppStrings.PRESENTS_AT_THE_CLASSSES,
+          property: AppStrings.presentsAtTheClasses,
           value: widget.classes.presentStudentsNum.toString(),
         ),
       ),
@@ -89,8 +89,8 @@ class _ClassesTreeViewItemExpanded extends State<ClassesTreeViewItemExpanded> {
 
   void _navigateToClassesDetailPage(BuildContext context) =>
       Navigator.pushNamed(context, AppUrls.DETAIL_CLASSES, arguments: {
-        AppStrings.CLASSES: widget.classes,
-        AppStrings.FUNCTION: _updateClasses
+        AppStrings.classes: widget.classes,
+        AppStrings.function: _updateClasses
       });
 
   void _updateClasses(Classes updated) {

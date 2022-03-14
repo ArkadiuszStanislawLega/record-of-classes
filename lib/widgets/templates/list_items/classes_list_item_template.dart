@@ -27,7 +27,7 @@ class _ClassesListItemTemplate extends State<ClassesListItemTemplate> {
       actionPane: const SlidableDrawerActionPane(),
       secondaryActions: [
         IconSlideAction(
-          caption: AppStrings.DELETE,
+          caption: AppStrings.delete,
           color: Colors.red,
           icon: Icons.delete,
           onTap: () {
@@ -62,8 +62,8 @@ class _ClassesListItemTemplate extends State<ClassesListItemTemplate> {
 
   void _navigateToGroupProfile(BuildContext context) =>
       Navigator.pushNamed(context, AppUrls.DETAIL_CLASSES, arguments: {
-        AppStrings.CLASSES: widget.classes,
-        AppStrings.FUNCTION: _updateModel
+        AppStrings.classes: widget.classes,
+        AppStrings.function: _updateModel
       });
 
   void _updateModel(Classes updated) {
@@ -75,5 +75,5 @@ class _ClassesListItemTemplate extends State<ClassesListItemTemplate> {
   void _showInfo(BuildContext context) => SnackBarInfoTemplate(
       context: context,
       message:
-          '${AppStrings.GROUPS}: ${widget.classes.group.target!.name} ${formatDate(widget.classes.dateTime)} - ${AppStrings.REMOVED}!');
+          '${AppStrings.groups}: ${widget.classes.group.target!.name} ${formatDate(widget.classes.dateTime)} - ${AppStrings.removed}!');
 }

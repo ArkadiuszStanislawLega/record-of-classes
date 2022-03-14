@@ -22,14 +22,14 @@ class _AddSiblingsPage extends State<AddSiblingsToStudentPage> {
   @override
   Widget build(BuildContext context) {
     _args = ModalRoute.of(context)!.settings.arguments as Map;
-    _student = _args[AppStrings.STUDENT];
-    _addSiblingsToDb = _args[AppStrings.FUNCTION];
+    _student = _args[AppStrings.student];
+    _addSiblingsToDb = _args[AppStrings.function];
 
     return Scaffold(
       appBar: AppBar(
         title: Column(
           children: [
-            Text(AppStrings.ADD_SIBLING, style: Theme.of(context).textTheme.headline1,),
+            Text(AppStrings.addSiblings, style: Theme.of(context).textTheme.headline1,),
             Text(_student.introduceYourself(), style: Theme.of(context).textTheme.headline2,)
           ],
         ),

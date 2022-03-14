@@ -86,10 +86,10 @@ class _CreatePhoneTemplate extends State<CreatePhoneTemplate> {
   @override
   void initState() {
     widget._numberName = TextFieldTemplate(
-        label: AppStrings.PHONE_NAME,
+        label: AppStrings.phoneName,
         hint: widget.phone == null ? '' : widget.phone!.numberName);
     widget._number = TextFieldTemplateNum(
-        label: AppStrings.PHONE_NUMBER,
+        label: AppStrings.phoneNumber,
         hint: widget.phone == null ? '' : widget.phone!.number.toString());
     super.initState();
   }

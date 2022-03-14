@@ -36,8 +36,8 @@ class _StudentDetailPage extends State<StudentDetailPage> {
   @override
   Widget build(BuildContext context) {
     _args = ModalRoute.of(context)!.settings.arguments as Map;
-    _student = _args[AppStrings.STUDENT];
-    _updatingFunction = _args[AppStrings.FUNCTION];
+    _student = _args[AppStrings.student];
+    _updatingFunction = _args[AppStrings.function];
     _student.getFromDb();
 
     return Scaffold(
@@ -53,28 +53,28 @@ class _StudentDetailPage extends State<StudentDetailPage> {
         children: [
           SpeedDialChild(
               child: const Icon(Icons.monetization_on),
-              label: AppStrings.FUND_ACCOUNT,
+              label: AppStrings.fundAccount,
               backgroundColor: Colors.amberAccent,
               onTap: _navigateToFundAccount),
           SpeedDialChild(
               child: const Icon(Icons.person),
-              label: AppStrings.ADD_SIBLING,
+              label: AppStrings.addSiblings,
               backgroundColor: Colors.amberAccent,
               onTap: _navigateToAddSiblings),
           SpeedDialChild(
               child: const Icon(Icons.group),
-              label: AppStrings.ADD_PARENT,
+              label: AppStrings.addParent,
               backgroundColor: Colors.amberAccent,
               onTap: _navigateToAddParent),
           SpeedDialChild(
               child: const Icon(Icons.add_call),
-              label: AppStrings.ADD_CONTACT,
+              label: AppStrings.addContact,
               backgroundColor: Colors.amberAccent,
               onTap: _navigateToAddContact),
           SpeedDialChild(
               visible: _updatingFunction != null ? true : false,
               child: const Icon(Icons.edit),
-              label: AppStrings.EDIT,
+              label: AppStrings.edit,
               backgroundColor: Colors.amberAccent,
               onTap: _navigateToEditStudent),
         ],
@@ -84,8 +84,8 @@ class _StudentDetailPage extends State<StudentDetailPage> {
 
   void _navigateToEditStudent() =>
       Navigator.pushNamed(context, AppUrls.EDIT_STUDENT, arguments: {
-        AppStrings.STUDENT: _student,
-        AppStrings.FUNCTION: _updateStudentInDbAfterEditing
+        AppStrings.student: _student,
+        AppStrings.function: _updateStudentInDbAfterEditing
       });
 
   void _updateStudentInDbAfterEditing(
@@ -103,15 +103,15 @@ class _StudentDetailPage extends State<StudentDetailPage> {
 
   void _navigateToAddSiblings() =>
       Navigator.pushNamed(context, AppUrls.ADD_SIBLING, arguments: {
-        AppStrings.STUDENT: _student,
-        AppStrings.FUNCTION: _addSiblingToDb
+        AppStrings.student: _student,
+        AppStrings.function: _addSiblingToDb
       });
 
   void _navigateToAddParent() =>
       Navigator.pushNamed(context, AppUrls.ADD_PARENT, arguments: {
-        AppStrings.STUDENT: _student,
-        AppStrings.ADD_FUNCTION: _addParentToStudentInDb,
-        AppStrings.REMOVE_FUNCTION: _removeParentFromDb
+        AppStrings.student: _student,
+        AppStrings.addFunction: _addParentToStudentInDb,
+        AppStrings.removeFunction: _removeParentFromDb
       });
 
   void _removeParentFromDb(Parent parent) {
@@ -128,8 +128,8 @@ class _StudentDetailPage extends State<StudentDetailPage> {
 
   void _navigateToAddContact() =>
       Navigator.pushNamed(context, AppUrls.ADD_CONTACT_TO_STUDENT, arguments: {
-        AppStrings.STUDENT: _student,
-        AppStrings.FUNCTION: _addContact
+        AppStrings.student: _student,
+        AppStrings.function: _addContact
       });
 
   void _addContact(Phone contact) {
@@ -140,8 +140,8 @@ class _StudentDetailPage extends State<StudentDetailPage> {
 
   void _navigateToFundAccount() {
     Navigator.pushNamed(context, AppUrls.FUND_ACCOUNT, arguments: {
-      AppStrings.STUDENT: _student,
-      AppStrings.FUNCTION: _fundAccountUpdateDb
+      AppStrings.student: _student,
+      AppStrings.function: _fundAccountUpdateDb
     });
   }
 
@@ -159,9 +159,9 @@ class _StudentDetailPage extends State<StudentDetailPage> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             _pageNavigationButton(
-                title: AppStrings.PARENTS, page: Pages.parents),
+                title: AppStrings.parents, page: Pages.parents),
             _pageNavigationButton(
-                title: AppStrings.SIBLINGS, page: Pages.siblings),
+                title: AppStrings.siblings, page: Pages.siblings),
             _pageNavigationIconButton(
                 icon: const Icon(
                   Icons.monetization_on,
@@ -383,7 +383,7 @@ class _StudentDetailPage extends State<StudentDetailPage> {
           style: Theme.of(context).textTheme.headline1,
         ),
         Text(
-          '${AppStrings.AGE}: ${_student.age.toString()} ${AppStrings.YEARS}',
+          '${AppStrings.age}: ${_student.age.toString()} ${AppStrings.years}',
           style: Theme.of(context).textTheme.headline2,
         ),
       ],
@@ -409,7 +409,7 @@ class _StudentDetailPage extends State<StudentDetailPage> {
           child: _pageTitle(),
         ),
         OneRowPropertyTemplate(
-          title: '${AppStrings.NUMBER_OF_SIBLINGS}:',
+          title: '${AppStrings.numberOfSiblings}:',
           value: _student.siblings.length.toString(),
         ),
       ],
@@ -429,17 +429,17 @@ class _StudentDetailPage extends State<StudentDetailPage> {
           child: _pageTitle(),
         ),
         OneRowPropertyTemplate(
-          title: '${AppStrings.BILANCE}:',
+          title: '${AppStrings.balance}:',
           value:
-              '${_student.account.target!.balance.toStringAsFixed(2)}${AppStrings.CURRENCY}',
+              '${_student.account.target!.balance.toStringAsFixed(2)}${AppStrings.currency}',
         ),
         OneRowPropertyTemplate(
-          title: '${AppStrings.TO_PAY}:',
-          value: '${_toPay.toStringAsFixed(2)}${AppStrings.CURRENCY}',
+          title: '${AppStrings.toPay}:',
+          value: '${_toPay.toStringAsFixed(2)}${AppStrings.currency}',
         ),
         OneRowPropertyTemplate(
-          title: '${AppStrings.PAID}:',
-          value: '${_paid.toStringAsFixed(2)}${AppStrings.CURRENCY}',
+          title: '${AppStrings.paid}:',
+          value: '${_paid.toStringAsFixed(2)}${AppStrings.currency}',
         ),
       ],
     );
@@ -460,7 +460,7 @@ class _StudentDetailPage extends State<StudentDetailPage> {
           child: _pageTitle(),
         ),
         OneRowPropertyTemplate(
-          title: '${AppStrings.NUMBER_OF_ATTENDANCES}:',
+          title: '${AppStrings.numberOfAttendances}:',
           value: '$numberOfAttendances',
         ),
       ],

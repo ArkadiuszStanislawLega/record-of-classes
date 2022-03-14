@@ -21,7 +21,7 @@ class SiblingsListItemTemplate extends StatelessWidget {
           actionPane: const SlidableDrawerActionPane(),
           secondaryActions: [
             IconSlideAction(
-              caption: AppStrings.ADD,
+              caption: AppStrings.add,
               color: Colors.green,
               icon: Icons.add,
               onTap: () {
@@ -42,6 +42,6 @@ class SiblingsListItemTemplate extends StatelessWidget {
     var siblingValues = sibling.person.target!.introduceYourself();
     var studentValues = student.person.target!.introduceYourself();
 
-    SnackBarInfoTemplate(context: context, message: '$siblingValues ${AppStrings.AND} $studentValues ${AppStrings.THEY_ARE_SIBLINGS}!');
+    SnackBarInfoTemplate(context: context, message: '$siblingValues ${AppStrings.and} $studentValues ${AppStrings.theyAreSiblings}!');
   }
 }

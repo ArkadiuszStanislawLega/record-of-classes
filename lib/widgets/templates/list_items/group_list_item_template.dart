@@ -22,7 +22,7 @@ class _GroupListItemTemplateState extends State<GroupListItemTemplate> {
       actionPane: const SlidableDrawerActionPane(),
       secondaryActions: [
         IconSlideAction(
-          caption: AppStrings.DELETE,
+          caption: AppStrings.delete,
           color: Colors.red,
           icon: Icons.delete,
           onTap: () {
@@ -41,7 +41,7 @@ class _GroupListItemTemplateState extends State<GroupListItemTemplate> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '${AppStrings.PERSONS_IN_GROUP}: ${widget.group.students.length.toString()}',
+                  '${AppStrings.personsInGroup}: ${widget.group.students.length.toString()}',
                   style: Theme.of(context).textTheme.labelLarge,
                 ),
                 Text(widget.group.address.target.toString())
@@ -60,8 +60,8 @@ class _GroupListItemTemplateState extends State<GroupListItemTemplate> {
 
   void _navigateToGroupProfile() =>
       Navigator.pushNamed(context, AppUrls.DETAIL_GROUP, arguments: {
-        AppStrings.GROUP: widget.group,
-        AppStrings.FUNCTION: _updateGroup
+        AppStrings.group: widget.group,
+        AppStrings.function: _updateGroup
       });
 
   void _updateGroup(Group updated) {
@@ -73,5 +73,5 @@ class _GroupListItemTemplateState extends State<GroupListItemTemplate> {
   void _showInfo(BuildContext context) => SnackBarInfoTemplate(
       context: context,
       message:
-          '${AppStrings.GROUP_OF_CLASSES}: ${widget.group.name} - ${AppStrings.REMOVED}!');
+          '${AppStrings.groupOfClasses}: ${widget.group.name} - ${AppStrings.removed}!');
 }

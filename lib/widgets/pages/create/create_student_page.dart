@@ -16,13 +16,13 @@ class CreateStudentPage extends StatelessWidget {
         ModalRoute.of(context)!.settings.arguments as Function;
     return Scaffold(
         appBar: AppBar(
-          title: const Text(AppStrings.CREATE_STUDENT),
+          title: const Text(AppStrings.createStudent),
         ),
         body: Column(children: [
           _createStudentTemplate,
           ElevatedButton(
             onPressed: () => _onPressCreateButtonEvent(context),
-            child: const Text(AppStrings.CREATE_STUDENT),
+            child: const Text(AppStrings.createStudent),
           ),
         ],),);
   }
@@ -36,6 +36,6 @@ class CreateStudentPage extends StatelessWidget {
   void _infoCreatedStudent(BuildContext context) => SnackBarInfoTemplate(
       context: context,
       message:
-      '${AppStrings.CREATE_STUDENT}: ${_createdStudent.introduceYourself()}!');
+      '${AppStrings.createStudent}: ${_createdStudent.introduceYourself()}!');
 
 }

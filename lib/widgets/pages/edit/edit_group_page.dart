@@ -21,8 +21,8 @@ class _EditGroupPageState extends State<EditGroupPage> {
   @override
   Widget build(BuildContext context) {
     _args = ModalRoute.of(context)!.settings.arguments as Map;
-    _group = _args[AppStrings.GROUP];
-    _update = _args[AppStrings.FUNCTION];
+    _group = _args[AppStrings.group];
+    _update = _args[AppStrings.function];
 
     _createGroupTemplate = CreateGroupTemplate(
       group: _group,
@@ -33,7 +33,7 @@ class _EditGroupPageState extends State<EditGroupPage> {
           title: Column(
         children: [
           Text(
-            '${AppStrings.EDIT} ${AppStrings.GROUP.toLowerCase()}',
+            '${AppStrings.edit} ${AppStrings.group.toLowerCase()}',
             style: Theme.of(context).textTheme.headline1,
           ),
           Text(
@@ -47,7 +47,7 @@ class _EditGroupPageState extends State<EditGroupPage> {
           _createGroupTemplate,
           TextButton(
             onPressed: _createGroupButtonOnClickActions,
-            child: const Text(AppStrings.OK),
+            child: const Text(AppStrings.ok),
           ),
         ],
       ),
@@ -64,7 +64,7 @@ class _EditGroupPageState extends State<EditGroupPage> {
 
       SnackBarInfoTemplate(
           context: context,
-          message: '${AppStrings.DATA_HAS_BEEN_UPDATED} ${_group.name}');
+          message: '${AppStrings.dataHasBeenUpdated} ${_group.name}');
     }
     Navigator.pop(context);
   }

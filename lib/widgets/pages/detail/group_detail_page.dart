@@ -32,8 +32,8 @@ class _DetailGroupPageState extends State<DetailGroupPage> {
   @override
   Widget build(BuildContext context) {
     _args = ModalRoute.of(context)!.settings.arguments as Map;
-    _group = _args[AppStrings.GROUP];
-    _updateGroupFunction = _args[AppStrings.FUNCTION];
+    _group = _args[AppStrings.group];
+    _updateGroupFunction = _args[AppStrings.function];
     return StreamBuilder<List<Student>>(
       stream: _studentsStream,
       builder: (context, snapshot) {
@@ -52,17 +52,17 @@ class _DetailGroupPageState extends State<DetailGroupPage> {
               children: [
                 SpeedDialChild(
                     child: const Icon(Icons.person),
-                    label: AppStrings.ADD_PARTICIPANTS,
+                    label: AppStrings.addParticipant,
                     backgroundColor: Colors.amberAccent,
                     onTap: _navigateToAddStudent),
                 SpeedDialChild(
                     child: const Icon(Icons.class__outlined),
-                    label: AppStrings.ADD_CLASSES,
+                    label: AppStrings.addClasses,
                     backgroundColor: Colors.amberAccent,
                     onTap: _navigateToAddClasses),
                 SpeedDialChild(
                     child: const Icon(Icons.edit),
-                    label: AppStrings.EDIT,
+                    label: AppStrings.edit,
                     backgroundColor: Colors.amberAccent,
                     onTap: _navigateToEditGroupPage),
               ],
@@ -77,8 +77,8 @@ class _DetailGroupPageState extends State<DetailGroupPage> {
 
   void _navigateToAddClasses() =>
       Navigator.pushNamed(context, AppUrls.ADD_CLASSES_TO_GROUP, arguments: {
-        AppStrings.GROUP: _group,
-        AppStrings.FUNCTION: _addClassesToGroup
+        AppStrings.group: _group,
+        AppStrings.function: _addClassesToGroup
       });
 
   void _addClassesToGroup(Classes classes) {
@@ -92,7 +92,7 @@ class _DetailGroupPageState extends State<DetailGroupPage> {
           arguments: _group);
 
   _navigateToEditGroupPage() => Navigator.pushNamed(context, AppUrls.EDIT_GROUP,
-      arguments: {AppStrings.GROUP: _group, AppStrings.FUNCTION: _updateGroup});
+      arguments: {AppStrings.group: _group, AppStrings.function: _updateGroup});
 
   void _updateGroup(Group updated) {
     if (_updateGroupFunction != null) {
@@ -112,10 +112,10 @@ class _DetailGroupPageState extends State<DetailGroupPage> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             _pageNavigationButton(
-                title: AppStrings.LIST_OF_CLASSES_CONDUCTED,
+                title: AppStrings.listOfClassesConducted,
                 listOnPage: ListOnPage.classes),
             _pageNavigationButton(
-                title: AppStrings.PARTICIPANTS,
+                title: AppStrings.participants,
                 listOnPage: ListOnPage.participants),
           ],
         ),
@@ -225,16 +225,16 @@ class _DetailGroupPageState extends State<DetailGroupPage> {
           children: [
             _pageTitle(),
             OneRowPropertyTemplate(
-                title: AppStrings.CLASSES_TYPE,
+                title: AppStrings.classesType,
                 value: _group.classesType.target!.name),
             OneRowPropertyTemplate(
-                title: AppStrings.CLASSES_ADDRESS,
+                title: AppStrings.classesAddress,
                 value: _group.address.target.toString()),
             OneRowPropertyTemplate(
-                title: AppStrings.NUMBER_OF_STUDENTS,
+                title: AppStrings.numberOfStudents,
                 value: _group.students.length.toString()),
             OneRowPropertyTemplate(
-                title: AppStrings.NUMBER_OF_CLASSES,
+                title: AppStrings.numberOfClasses,
                 value: _group.classes.length.toString()),
           ],
         ),
@@ -252,7 +252,7 @@ class _DetailGroupPageState extends State<DetailGroupPage> {
             style: Theme.of(context).textTheme.headline1,
           ),
           Text(
-            AppStrings.GROUP_OF_CLASSES.toLowerCase(),
+            AppStrings.groupOfClasses.toLowerCase(),
             style: Theme.of(context).textTheme.headline2,
           ),
         ],

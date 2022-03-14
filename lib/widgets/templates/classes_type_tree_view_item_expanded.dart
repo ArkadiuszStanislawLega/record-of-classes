@@ -74,15 +74,15 @@ class _ClassesTypeTreeViewItemExpanded
     return ItemContentTemplate(
       widgets: [
         PropertyInOneRow(
-            property: AppStrings.PRICE_FOR_MONTH,
+            property: AppStrings.priceForMonth,
             value:
-                '${widget.classesType.priceForMonth.toString()}${AppStrings.CURRENCY}'),
+                '${widget.classesType.priceForMonth.toString()}${AppStrings.currency}'),
         PropertyInOneRow(
-            property: AppStrings.PRICE_FOR_EACH,
+            property: AppStrings.priceForEach,
             value:
-                '${widget.classesType.priceForEach.toString()}${AppStrings.CURRENCY}'),
+                '${widget.classesType.priceForEach.toString()}${AppStrings.currency}'),
         PropertyInOneRow(
-            property: AppStrings.NUMBER_OF_GROUPS,
+            property: AppStrings.numberOfGroups,
             value: widget.classesType.groups.length.toString()),
       ],
     );
@@ -91,8 +91,8 @@ class _ClassesTypeTreeViewItemExpanded
   void _navigateToClassTypeDetailPage(
       {required BuildContext context, required ClassesType classesType}) {
     Navigator.pushNamed(context, AppUrls.DETAIL_CLASSES_TYPE, arguments: {
-      AppStrings.CLASSES_TYPE: classesType,
-      AppStrings.FUNCTION: _updateClassesType
+      AppStrings.classesType: classesType,
+      AppStrings.function: _updateClassesType
     });
   }
 

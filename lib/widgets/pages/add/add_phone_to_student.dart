@@ -17,12 +17,12 @@ class AddPhoneToStudentPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     _args = ModalRoute.of(context)!.settings.arguments as Map;
-    _student = _args[AppStrings.STUDENT];
-    _addContactFunction = _args[AppStrings.FUNCTION];
+    _student = _args[AppStrings.student];
+    _addContactFunction = _args[AppStrings.function];
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          AppStrings.ADD_CONTACT,
+          AppStrings.addContact,
           style: Theme.of(context).textTheme.headline1,
         ),
       ),
@@ -31,7 +31,7 @@ class AddPhoneToStudentPage extends StatelessWidget {
           _createPhoneTemplate,
           TextButton(
               onPressed: () => _addNewContactToDatabase(context),
-              child: const Text(AppStrings.ADD))
+              child: const Text(AppStrings.add))
         ],
       ),
     );
@@ -47,7 +47,7 @@ class AddPhoneToStudentPage extends StatelessWidget {
     SnackBarInfoTemplate(
         context: context,
         message:
-            '${AppStrings.ADDED_NEW_CONTACT}: ${_student.introduceYourself()}');
+            '${AppStrings.addNewContact}: ${_student.introduceYourself()}');
     Navigator.pop(context);
   }
 }

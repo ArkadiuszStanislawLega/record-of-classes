@@ -23,7 +23,7 @@ class ParentOfStudentListItemTemplate extends StatelessWidget {
         actionPane: const SlidableDrawerActionPane(),
         secondaryActions: [
           IconSlideAction(
-              caption: AppStrings.DISCONNECT,
+              caption: AppStrings.disconnect,
               color: Colors.deepOrange,
               icon: Icons.remove,
               onTap: () {
@@ -41,7 +41,7 @@ class ParentOfStudentListItemTemplate extends StatelessWidget {
           child: ListTile(
             title: Text(parent.introduceYourself()),
             subtitle: Text(
-                '${AppStrings.NUMBER_OF_CHILDREN}: ${parent.children.length.toString()}'),
+                '${AppStrings.numberOfChildren}: ${parent.children.length.toString()}'),
             onTap: () {
               Navigator.pushNamed(context, AppUrls.DETAIL_PARENT,
                   arguments: parent);
@@ -56,5 +56,5 @@ class ParentOfStudentListItemTemplate extends StatelessWidget {
   void showInformationSnackBar(BuildContext context) => SnackBarInfoTemplate(
       context: context,
       message:
-          '${parent.introduceYourself()} ${AppStrings.AND} ${student.introduceYourself()} ${AppStrings.THEY_ARENT_FAMILY}');
+          '${parent.introduceYourself()} ${AppStrings.and} ${student.introduceYourself()} ${AppStrings.theArentFamily}');
 }

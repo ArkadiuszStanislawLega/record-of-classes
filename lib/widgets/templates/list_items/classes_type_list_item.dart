@@ -17,7 +17,7 @@ class ClassesTypeListItem extends StatelessWidget {
       actionPane: const SlidableDrawerActionPane(),
       secondaryActions: [
         IconSlideAction(
-          caption: AppStrings.DELETE,
+          caption: AppStrings.delete,
           color: Colors.red,
           icon: Icons.delete,
           onTap: () {
@@ -35,16 +35,16 @@ class ClassesTypeListItem extends StatelessWidget {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text('${AppStrings.PRICE_FOR_MONTH}:'),
+                    const Text('${AppStrings.priceForMonth}:'),
                     Text(
-                        '${classesType.priceForMonth.toString()}${AppStrings.CURRENCY}')
+                        '${classesType.priceForMonth.toString()}${AppStrings.currency}')
                   ],
                 ),
                 Column(
                   children: [
-                    const Text('${AppStrings.PRICE_FOR_EACH}:'),
+                    const Text('${AppStrings.priceForEach}:'),
                     Text(
-                        '${classesType.priceForEach.toString()}${AppStrings.CURRENCY}')
+                        '${classesType.priceForEach.toString()}${AppStrings.currency}')
                   ],
                 ),
               ],
@@ -56,10 +56,10 @@ class ClassesTypeListItem extends StatelessWidget {
 
   void _navigateToDetailClassesProfile(BuildContext context) =>
       Navigator.pushNamed(context, AppUrls.DETAIL_CLASSES_TYPE,
-          arguments: {AppStrings.CLASSES_TYPE: classesType});
+          arguments: {AppStrings.classesType: classesType});
 
   void _showInfo(BuildContext context) => SnackBarInfoTemplate(
       context: context,
       message:
-          '${AppStrings.CLASSES_TYPE}: ${classesType.name} - ${AppStrings.REMOVED}!');
+          '${AppStrings.classesType}: ${classesType.name} - ${AppStrings.removed}!');
 }

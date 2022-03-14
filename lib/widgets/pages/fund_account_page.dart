@@ -24,15 +24,15 @@ class _FundAccountPageState extends State<FundAccountPage> {
   @override
   Widget build(BuildContext context) {
     args = ModalRoute.of(context)!.settings.arguments as Map;
-    _student = args[AppStrings.STUDENT];
-    _fundAccountUpdateDb = args[AppStrings.FUNCTION];
+    _student = args[AppStrings.student];
+    _fundAccountUpdateDb = args[AppStrings.function];
     _inputAmount =
-        TextFieldTemplateDouble(label: AppStrings.ENTER_AMOUNT, hint: '');
+        TextFieldTemplateDouble(label: AppStrings.enterAmount, hint: '');
 
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          AppStrings.FUND_ACCOUNT,
+          AppStrings.fundAccount,
           style: Theme.of(context).textTheme.headline1,
         ),
       ),
@@ -41,7 +41,7 @@ class _FundAccountPageState extends State<FundAccountPage> {
         child: Column(
           children: [
             Text(
-              '${AppStrings.STUDENT_ACCOUNT}:',
+              '${AppStrings.studentAccount}:',
               style: Theme.of(context).textTheme.headline2,
             ),
             Container(
@@ -55,13 +55,13 @@ class _FundAccountPageState extends State<FundAccountPage> {
               height: _sizedBoxHeight,
             ),
             Text(
-              '${AppStrings.CURRENT_STATE_OF_BALANCE}: ',
+              '${AppStrings.currentStateOfBalance}: ',
               style: Theme.of(context).textTheme.headline2,
             ),
             Container(
               margin: const EdgeInsets.all(_smallPaddings),
               child: Text(
-                '${_student.account.target!.balance.toStringAsFixed(2)}${AppStrings.CURRENCY}',
+                '${_student.account.target!.balance.toStringAsFixed(2)}${AppStrings.currency}',
                 style: Theme.of(context).textTheme.headline3,
               ),
             ),
@@ -74,7 +74,7 @@ class _FundAccountPageState extends State<FundAccountPage> {
             ),
             TextButton(
               onPressed: _updateDatabase,
-              child: const Text(AppStrings.FUND),
+              child: const Text(AppStrings.fund),
             )
           ],
         ),
@@ -88,7 +88,7 @@ class _FundAccountPageState extends State<FundAccountPage> {
     SnackBarInfoTemplate(
         context: context,
         message:
-            '${AppStrings.FUNDED_ACCOUNT} ${_student.introduceYourself()} ${AppStrings.AMOUNT} ${_inputAmount.input}${AppStrings.CURRENCY}');
+            '${AppStrings.fundedAccount} ${_student.introduceYourself()} ${AppStrings.amount} ${_inputAmount.input}${AppStrings.currency}');
     Navigator.pop(context);
   }
 }

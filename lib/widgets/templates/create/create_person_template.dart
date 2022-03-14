@@ -14,10 +14,10 @@ class CreatePersonTemplate extends StatelessWidget {
     return Column(
       children: [
         _personName = TextFieldTemplate(
-          label: AppStrings.NAME,
+          label: AppStrings.name,
           hint: '',
         ),
-        _personSurname = TextFieldTemplate(label: AppStrings.SURNAME, hint: '')
+        _personSurname = TextFieldTemplate(label: AppStrings.surname, hint: '')
       ],
     );
   }

@@ -27,22 +27,22 @@ class _PhoneBookListItemTemplateState extends State<PhoneBookListItemTemplate> {
       secondaryActions: [
         _phoneActions(
             icon: Icons.phone,
-            title: AppStrings.CALL,
+            title: AppStrings.call,
             onTapFunction: _makePhoneCall,
             background: Colors.blue),
         _phoneActions(
             icon: Icons.message,
-            title: AppStrings.SEND_MESSAGE,
+            title: AppStrings.sendMessage,
             onTapFunction: _sendSMS,
             background: Colors.black26),
         _phoneActions(
             icon: Icons.edit,
-            title: AppStrings.EDIT,
+            title: AppStrings.edit,
             onTapFunction: _navigateToEditContact,
             background: Colors.green),
         _phoneActions(
             icon: Icons.delete,
-            title: AppStrings.DELETE,
+            title: AppStrings.delete,
             onTapFunction: _removeDialogWindow,
             background: Colors.red)
       ],
@@ -89,7 +89,7 @@ class _PhoneBookListItemTemplateState extends State<PhoneBookListItemTemplate> {
         break;
       case PersonType.student:
         Navigator.pushNamed(context, AppUrls.DETAIL_STUDENT, arguments: {
-          AppStrings.STUDENT: widget.phone.owner.target!.student.target
+          AppStrings.student: widget.phone.owner.target!.student.target
         });
         break;
       case PersonType.parent:
@@ -119,8 +119,8 @@ class _PhoneBookListItemTemplateState extends State<PhoneBookListItemTemplate> {
 
   void _navigateToEditContact() =>
       Navigator.pushNamed(context, AppUrls.EDIT_PHONE, arguments: {
-        AppStrings.PHONE_NUMBER: widget.phone,
-        AppStrings.FUNCTION: _updateModel
+        AppStrings.phoneNumber: widget.phone,
+        AppStrings.function: _updateModel
       });
 
   void _updateModel(Phone updated) {
@@ -138,15 +138,15 @@ class _PhoneBookListItemTemplateState extends State<PhoneBookListItemTemplate> {
       context: context,
       builder: (BuildContext ctx) {
         return AlertDialog(
-          title: const Text(AppStrings.CONFIRM_REMOVING),
+          title: const Text(AppStrings.confirmRemoving),
           content: Text(
-              '${AppStrings.ARE_YOU_SURE_YOU_WANT_REMOVE_A_CONTACT} ${widget.phone.owner.target!.introduceYourself()}: ${widget.phone.numberName} - ${widget.phone.number}'),
+              '${AppStrings.confirmationQuestionRemoveContact} ${widget.phone.owner.target!.introduceYourself()}: ${widget.phone.numberName} - ${widget.phone.number}'),
           actions: [
             TextButton(
-                onPressed: _removeAction, child: const Text(AppStrings.YES)),
+                onPressed: _removeAction, child: const Text(AppStrings.yes)),
             TextButton(
                 onPressed: () => Navigator.of(context).pop(),
-                child: const Text(AppStrings.NO))
+                child: const Text(AppStrings.no))
           ],
         );
       },
@@ -167,7 +167,7 @@ class _PhoneBookListItemTemplateState extends State<PhoneBookListItemTemplate> {
     });
     SnackBarInfoTemplate(
         context: context,
-        message: '${AppStrings.REMOVED_FROM_DATABASE} ${AppStrings.CONTACT}');
+        message: '${AppStrings.removedFromDatabase} ${AppStrings.contact}');
   }
 
   Color _colorDependsOnOwnerType() {

@@ -25,7 +25,7 @@ class _StudentListTileTemplateState extends State<StudentListTileTemplate> {
       elevation: 7,
       child: ListTile(
         title: Text(widget.student.introduceYourself()),
-        subtitle: Text('${AppStrings.YEARS}: ${widget.student.age.toString()}'),
+        subtitle: Text('${AppStrings.years}: ${widget.student.age.toString()}'),
         onTap: _navigateToStudentProfile,
       ),
     );
@@ -33,6 +33,6 @@ class _StudentListTileTemplateState extends State<StudentListTileTemplate> {
 
   void _navigateToStudentProfile() =>
       Navigator.pushNamed(context, AppUrls.DETAIL_STUDENT,
-          arguments: {AppStrings.STUDENT : widget.student,
-          AppStrings.FUNCTION : widget.updatingFunction});
+          arguments: {AppStrings.student : widget.student,
+          AppStrings.function : widget.updatingFunction});
 }

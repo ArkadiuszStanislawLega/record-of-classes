@@ -41,7 +41,7 @@ class _RecordOfClassesTreeViewPageState
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          AppStrings.MANAGEMENT,
+          AppStrings.management,
           style: Theme.of(context).textTheme.headline1,
         ),
       ),
@@ -180,13 +180,13 @@ class _RecordOfClassesTreeViewPageState
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text('${AppStrings.ARE_YOU_SURE_TO_REMOVE} ${AppStrings.CLASSES}:'),
+              const Text('${AppStrings.areYouSureToRemove} ${AppStrings.classes}:'),
               Text(
                 classes.name,
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                const Text('${AppStrings.ON_DATE}:'),
+                const Text('${AppStrings.onDate}:'),
                 Text(
                   formatDate(classes.dateTime),
                   style: const TextStyle(fontWeight: FontWeight.bold),
@@ -195,7 +195,7 @@ class _RecordOfClassesTreeViewPageState
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text('${AppStrings.AT_TIME}:'),
+                  const Text('${AppStrings.atTime}:'),
                   Text(
                     formatTime(classes.dateTime),
                     style: const TextStyle(fontWeight: FontWeight.bold),
@@ -205,7 +205,7 @@ class _RecordOfClassesTreeViewPageState
             ],
           ),
           const Text(
-            AppStrings.REMOVE_CLASSES_WARNING_MESSAGE,
+            AppStrings.dialogWarningMessageRemoveClasses,
             style: TextStyle(fontStyle: FontStyle.italic),
           ),
         ],
@@ -213,19 +213,19 @@ class _RecordOfClassesTreeViewPageState
     }
     if (item.object is Group) {
       var group = item.object as Group;
-      content = Text('${AppStrings.ARE_YOU_SURE_TO_REMOVE}  ${group.name}');
+      content = Text('${AppStrings.areYouSureToRemove}  ${group.name}');
     }
     if (item.object is ClassesType) {
       var classesType = item.object as ClassesType;
       content =
-          Text('${AppStrings.ARE_YOU_SURE_TO_REMOVE} ${classesType.name}');
+          Text('${AppStrings.areYouSureToRemove} ${classesType.name}');
     }
 
     showDialog(
       context: context,
       builder: (BuildContext ctx) {
         return AlertDialog(
-          title: const Text(AppStrings.CONFIRM_REMOVING),
+          title: const Text(AppStrings.confirmRemoving),
           content: content,
           actions: [
             // The "Yes" button
@@ -237,12 +237,12 @@ class _RecordOfClassesTreeViewPageState
                   Navigator.of(context).pop();
                   delete(item);
                 },
-                child: const Text(AppStrings.YES)),
+                child: const Text(AppStrings.yes)),
             TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: const Text(AppStrings.NO))
+                child: const Text(AppStrings.no))
           ],
         );
       },
@@ -301,8 +301,8 @@ class _RecordOfClassesTreeViewPageState
         context,
         AppUrls.ADD_CLASSES_TO_GROUP,
         arguments: {
-          AppStrings.GROUP: dataNode.object,
-          AppStrings.FUNCTION: _addClasses
+          AppStrings.group: dataNode.object,
+          AppStrings.function: _addClasses
         },
       );
     }
@@ -312,8 +312,8 @@ class _RecordOfClassesTreeViewPageState
         context,
         AppUrls.CREATE_GROUP,
         arguments: {
-          AppStrings.CLASSES_TYPE: dataNode.object,
-          AppStrings.FUNCTION: _addGroup
+          AppStrings.classesType: dataNode.object,
+          AppStrings.function: _addGroup
         },
       );
     }

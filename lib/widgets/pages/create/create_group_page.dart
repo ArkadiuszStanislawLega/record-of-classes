@@ -20,8 +20,8 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
   @override
   Widget build(BuildContext context) {
     _args = ModalRoute.of(context)!.settings.arguments as Map;
-    _classesType = _args[AppStrings.CLASSES_TYPE];
-    _addFunction = _args[AppStrings.FUNCTION];
+    _classesType = _args[AppStrings.classesType];
+    _addFunction = _args[AppStrings.function];
     _createGroupTemplate =
         CreateGroupTemplate(classesTypeName: _classesType.name);
     return Scaffold(
@@ -29,11 +29,11 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
         title: Column(
           children: [
             Text(
-              AppStrings.ADD_GROUP,
+              AppStrings.addGroup,
               style: Theme.of(context).textTheme.headline1,
             ),
             Text(
-              '${AppStrings.CLASSES_TYPE}: ${_classesType.name}',
+              '${AppStrings.classesType}: ${_classesType.name}',
               style: Theme.of(context).textTheme.headline2,
             ),
           ],
@@ -46,7 +46,7 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
             _createGroupTemplate,
             TextButton(
               onPressed: _addToDatabase,
-              child: const Text(AppStrings.ADD_GROUP),
+              child: const Text(AppStrings.addGroup),
             ),
           ],
         ),
@@ -73,7 +73,7 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
 
     SnackBarInfoTemplate(
         context: context,
-        message: '${AppStrings.SUCCESFULLY_ADDED} ${AppStrings.NEW_GROUP}');
+        message: '${AppStrings.successfullyAdded} ${AppStrings.newGroup}');
 
     Navigator.pop(context);
   }

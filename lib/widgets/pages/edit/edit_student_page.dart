@@ -39,17 +39,17 @@ class _EditStudentPage extends State<EditStudentPage> {
 
   void _initValues() {
     _args = ModalRoute.of(context)!.settings.arguments as Map;
-    _student = _args[AppStrings.STUDENT];
-    _updateStudentInDb = _args[AppStrings.FUNCTION];
+    _student = _args[AppStrings.student];
+    _updateStudentInDb = _args[AppStrings.function];
     _person = _student.person.target!;
 
-    _name = TextFieldTemplate(label: AppStrings.NAME, hint: _person.name);
+    _name = TextFieldTemplate(label: AppStrings.name, hint: _person.name);
     _surname = TextFieldTemplate(
-      label: AppStrings.SURNAME,
+      label: AppStrings.surname,
       hint: _person.surname,
     );
     _age = TextFieldTemplateNum(
-        label: AppStrings.AGE, hint: _student.age.toString());
+        label: AppStrings.age, hint: _student.age.toString());
   }
 
   Widget _content() {
@@ -61,7 +61,7 @@ class _EditStudentPage extends State<EditStudentPage> {
         Center(
           child: TextButton(
             onPressed: confirmEditChanges,
-            child: const Text(AppStrings.OK),
+            child: const Text(AppStrings.ok),
           ),
         ),
       ],
@@ -96,7 +96,7 @@ class _EditStudentPage extends State<EditStudentPage> {
     SnackBarInfoTemplate(
         context: context,
         message:
-            '${AppStrings.SUCCESFULLY_UPDATED_STUDENT} ${_student.introduceYourself()}');
+            '${AppStrings.successFullyUpdatedStudent} ${_student.introduceYourself()}');
     Navigator.pop(context);
   }
 }

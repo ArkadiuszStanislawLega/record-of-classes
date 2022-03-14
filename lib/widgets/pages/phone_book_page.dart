@@ -84,16 +84,16 @@ class _PhoneBookPageState extends State<PhoneBookPage> {
                   _filteringList(input);
                 },
                 decoration: InputDecoration(
-                  label: Text(AppStrings.FIND_CONTACT,
+                  label: Text(AppStrings.findContact,
                       style: Theme.of(context).textTheme.headline2),
                 ),
               ),
             ),
             _pageNavigationButton(
-                title: AppStrings.ALPHABETIC_ASCENDING,
+                title: AppStrings.alphabeticAscending,
                 filtering: PhonesFiltering.alphabeticalAscending),
             _pageNavigationButton(
-                title: AppStrings.ALPHABETIC_DESCENDING,
+                title: AppStrings.alphabeticDescending,
                 filtering: PhonesFiltering.alphabeticalDescending),
           ],
         ),
@@ -215,20 +215,20 @@ class _PhoneBookPageState extends State<PhoneBookPage> {
             Container(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                AppStrings.PHONE_BOOK,
+                AppStrings.phoneBook,
                 style: Theme.of(context).textTheme.headline1,
               ),
             ),
             OneRowPropertyTemplate(
-              title: '${AppStrings.NUMBER_OF_PHONES}:',
+              title: '${AppStrings.numberOfPhones}:',
               value: '${_phones.length}',
             ),
             OneRowPropertyTemplate(
-              title: '${AppStrings.NUMBER_OF_STUDENTS_CONTACTS}:',
+              title: '${AppStrings.numberOfStudentContacts}:',
               value: '${_numberOfStudentsContacts()}',
             ),
             OneRowPropertyTemplate(
-              title: '${AppStrings.NUMBER_OF_PARENTS_CONTACTS}:',
+              title: '${AppStrings.numberOfParentsContacts}:',
               value: '${_numberOfParentsContacts()}',
             ),
           ],

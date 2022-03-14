@@ -93,13 +93,13 @@ class _GroupsMainPageState extends State<GroupsMainPage> {
             Container(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                AppStrings.MANAGE_GROUPS,
+                AppStrings.manageGroups,
                 style: Theme.of(context).textTheme.headline1,
               ),
 
             ),
             OneRowPropertyTemplate(
-              title: '${AppStrings.NUMBER_OF_GROUPS}:',
+              title: '${AppStrings.numberOfGroups}:',
               value: '${_groupsList.length}',
             ),
           ],

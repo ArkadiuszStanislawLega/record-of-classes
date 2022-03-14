@@ -36,8 +36,8 @@ class _DetailClassesTypeState extends State<DetailClassesType> {
   @override
   Widget build(BuildContext context) {
     _args = ModalRoute.of(context)!.settings.arguments as Map;
-    _parentUpdateFunction = _args[AppStrings.FUNCTION];
-    _classesType = _args[AppStrings.CLASSES_TYPE];
+    _parentUpdateFunction = _args[AppStrings.function];
+    _classesType = _args[AppStrings.classesType];
 
     return StreamBuilder<List<Group>>(
       stream: _groupStream,
@@ -52,12 +52,12 @@ class _DetailClassesTypeState extends State<DetailClassesType> {
               children: [
                 SpeedDialChild(
                     child: const Icon(Icons.group_add),
-                    label: AppStrings.ADD_GROUP,
+                    label: AppStrings.addGroup,
                     backgroundColor: Colors.amberAccent,
                     onTap: _navigateToCreateNewGroupPage),
                 SpeedDialChild(
                     child: const Icon(Icons.edit),
-                    label: AppStrings.EDIT,
+                    label: AppStrings.edit,
                     backgroundColor: Colors.amberAccent,
                     onTap: _navigateToEditClassesType),
               ],
@@ -126,21 +126,21 @@ class _DetailClassesTypeState extends State<DetailClassesType> {
           children: [
             _pageTitle(),
             OneRowPropertyTemplate(
-              title: '${AppStrings.NUMBER_OF_GROUPS}:',
+              title: '${AppStrings.numberOfGroups}:',
               value: _classesType.groups.length.toString(),
             ),
             OneRowPropertyTemplate(
-              title: '${AppStrings.PRICE_FOR_MONTH}:',
+              title: '${AppStrings.priceForMonth}:',
               value:
-                  '${_classesType.priceForMonth.toString()}${AppStrings.CURRENCY}',
+                  '${_classesType.priceForMonth.toString()}${AppStrings.currency}',
             ),
             OneRowPropertyTemplate(
-              title: '${AppStrings.PRICE_FOR_EACH}:',
+              title: '${AppStrings.priceForEach}:',
               value:
-                  '${_classesType.priceForEach.toString()}${AppStrings.CURRENCY}',
+                  '${_classesType.priceForEach.toString()}${AppStrings.currency}',
             ),
             OneRowPropertyTemplate(
-              title: '${AppStrings.NUMBER_OF_SIGNED_UP}:',
+              title: '${AppStrings.numberOfSignedUp}:',
               value: '${_classesType.numberOfStudents()}',
             ),
           ],
@@ -157,7 +157,7 @@ class _DetailClassesTypeState extends State<DetailClassesType> {
           style: Theme.of(context).textTheme.headline1,
         ),
         Text(
-          AppStrings.CLASSES_TYPE.toLowerCase(),
+          AppStrings.classesType.toLowerCase(),
           style: Theme.of(context).textTheme.headline2,
         ),
       ],
@@ -166,8 +166,8 @@ class _DetailClassesTypeState extends State<DetailClassesType> {
 
   void _navigateToCreateNewGroupPage() =>
       Navigator.pushNamed(context, AppUrls.CREATE_GROUP,
-          arguments: {AppStrings.CLASSES_TYPE : _classesType,
-          AppStrings.FUNCTION : _addGroup});
+          arguments: {AppStrings.classesType : _classesType,
+          AppStrings.function : _addGroup});
 
   void _addGroup(Group group){
     setState(() {
@@ -177,8 +177,8 @@ class _DetailClassesTypeState extends State<DetailClassesType> {
 
   void _navigateToEditClassesType() => {
         Navigator.pushNamed(context, AppUrls.EDIT_CLASSES_TYPE,
-            arguments: {AppStrings.CLASSES_TYPE: _classesType,
-            AppStrings.FUNCTION : _updateClassesType})
+            arguments: {AppStrings.classesType: _classesType,
+            AppStrings.function : _updateClassesType})
       };
 
   void _updateClassesType(ClassesType updated){

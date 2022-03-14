@@ -15,22 +15,22 @@ class EditPhonePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     _args = ModalRoute.of(context)!.settings.arguments as Map;
-    _phone = _args[AppStrings.PHONE_NUMBER];
-    _updateParentFunction = _args[AppStrings.FUNCTION];
+    _phone = _args[AppStrings.phoneNumber];
+    _updateParentFunction = _args[AppStrings.function];
 
     _createPhoneTemplate = CreatePhoneTemplate(
       phone: _phone,
     );
     return Scaffold(
       appBar: AppBar(
-        title: Text('${AppStrings.EDIT} ${AppStrings.CONTACT.toLowerCase()}'),
+        title: Text('${AppStrings.edit} ${AppStrings.contact.toLowerCase()}'),
       ),
       body: Column(
         children: [
           _createPhoneTemplate,
           TextButton(
             onPressed: () => _actionAfterConfirmButtonClick(context),
-            child: const Text(AppStrings.OK),
+            child: const Text(AppStrings.ok),
           )
         ],
       ),
@@ -47,7 +47,7 @@ class EditPhonePage extends StatelessWidget {
     SnackBarInfoTemplate(
         context: context,
         message:
-            '${AppStrings.EDITED} ${AppStrings.CONTACT.toLowerCase()}: ${_phone.owner.target!.introduceYourself()}');
+            '${AppStrings.edited} ${AppStrings.contact.toLowerCase()}: ${_phone.owner.target!.introduceYourself()}');
     Navigator.pop(context);
   }
 

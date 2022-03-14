@@ -30,8 +30,8 @@ class _AddClassesToGroup extends State<AddClassesToGroup> {
   @override
   Widget build(BuildContext context) {
     _args = ModalRoute.of(context)!.settings.arguments as Map;
-    widget._group = _args[AppStrings.GROUP];
-    _addClasses = _args[AppStrings.FUNCTION];
+    widget._group = _args[AppStrings.group];
+    _addClasses = _args[AppStrings.function];
     return Scaffold(
       appBar: AppBar(
         title: Text(widget._group.name, style: Theme.of(context).textTheme.headline1,),
@@ -42,7 +42,7 @@ class _AddClassesToGroup extends State<AddClassesToGroup> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              AppStrings.CHOSE_DATE_OF_CLASSES,
+              AppStrings.choseDateOfClasses,
               style: Theme.of(context).textTheme.headline3
             ),
             Row(
@@ -67,7 +67,7 @@ class _AddClassesToGroup extends State<AddClassesToGroup> {
                         }, currentTime: DateTime.now(), locale: LocaleType.pl);
                       },
                       child: Text(
-                        AppStrings.CHOSE_DATE,
+                        AppStrings.choseDate,
                         style: Theme.of(context).textTheme.headline3,
                       ),
                     ),
@@ -94,7 +94,7 @@ class _AddClassesToGroup extends State<AddClassesToGroup> {
                         }, currentTime: DateTime.now(), locale: LocaleType.pl);
                       },
                       child: Text(
-                        AppStrings.CHOSE_TIME,
+                        AppStrings.choseTime,
                         style: Theme.of(context).textTheme.headline3,
                       ),
                     ),
@@ -107,7 +107,7 @@ class _AddClassesToGroup extends State<AddClassesToGroup> {
               ],
             ),
             ElevatedButton(
-                onPressed: _addToDatabase, child: const Text(AppStrings.ADD))
+                onPressed: _addToDatabase, child: const Text(AppStrings.add))
           ],
         ),
       ),
@@ -120,7 +120,7 @@ class _AddClassesToGroup extends State<AddClassesToGroup> {
       SnackBarInfoTemplate(
           context: context,
           message:
-              '${AppStrings.CREATED_NEW_CLASSES} ${AppStrings.IN_DAY} ${formatDate(widget.getClasses().dateTime)}');
+              '${AppStrings.createdNewClasses} ${AppStrings.inDay} ${formatDate(widget.getClasses().dateTime)}');
     });
     Navigator.pop(context);
   }

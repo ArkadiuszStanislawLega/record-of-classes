@@ -75,7 +75,7 @@ class _AddStudentToGroupPageState extends State<AddStudentToGroupPage> {
       actionPane: const SlidableDrawerActionPane(),
       secondaryActions: [
         IconSlideAction(
-          caption: AppStrings.ADD,
+          caption: AppStrings.add,
           color: Colors.green,
           icon: Icons.add,
           onTap: () => _updateDatabase(student),
@@ -93,7 +93,7 @@ class _AddStudentToGroupPageState extends State<AddStudentToGroupPage> {
         onTap: () => Navigator.pushNamed(
           context,
           AppUrls.DETAIL_STUDENT,
-          arguments: {AppStrings.STUDENT: student},
+          arguments: {AppStrings.student: student},
         ),
       ),
     );

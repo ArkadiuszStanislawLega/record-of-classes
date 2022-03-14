@@ -122,24 +122,24 @@ class _FinanceMainPageState extends State<FinanceMainPage> {
             Container(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                AppStrings.MANAGE_FINANCES,
+                AppStrings.manageFinances,
                 style: Theme.of(context).textTheme.headline1,
               ),
             ),
             OneRowPropertyTemplate(
-                title: '${AppStrings.PAID_CLASSES}:',
+                title: '${AppStrings.paidClasses}:',
                 value: _paid.length.toString()),
             OneRowPropertyTemplate(
-                title: '${AppStrings.UNPAID_CLASSES}:',
+                title: '${AppStrings.unpaidClasses}:',
                 value: _unpaid.length.toString()),
             OneRowPropertyTemplate(
-                title: '${AppStrings.TOTAL_PAID}:',
+                title: '${AppStrings.totalPaid}:',
                 value:
-                    '${_paidPrice.toStringAsFixed(2)} ${AppStrings.CURRENCY}'),
+                    '${_paidPrice.toStringAsFixed(2)} ${AppStrings.currency}'),
             OneRowPropertyTemplate(
-                title: '${AppStrings.TOTAL_UNPAID}:',
+                title: '${AppStrings.totalUnpaid}:',
                 value:
-                    '${_unpaidPrice.toStringAsFixed(2)} ${AppStrings.CURRENCY}'),
+                    '${_unpaidPrice.toStringAsFixed(2)} ${AppStrings.currency}'),
           ],
         ),
       ),

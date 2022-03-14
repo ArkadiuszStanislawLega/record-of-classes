@@ -24,7 +24,7 @@ class CreateParentPage extends StatelessWidget {
     _selectedStudent = ModalRoute.of(context)!.settings.arguments as Student;
     return Scaffold(
       appBar: AppBar(
-        title: const Text(AppStrings.ADD_PARENT),
+        title: const Text(AppStrings.addParent),
       ),
       body: Column(
         children: [
@@ -32,7 +32,7 @@ class CreateParentPage extends StatelessWidget {
           _createPhone,
           TextButton(
               onPressed: () => _createParent(context),
-              child: const Text(AppStrings.ADD_PARENT))
+              child: const Text(AppStrings.addParent))
         ],
       ),
     );
@@ -95,7 +95,7 @@ class CreateParentPage extends StatelessWidget {
   void _createParentSuccessfulMessage(BuildContext context) {
     var parent = _createParentTemplate.getParent();
     _snackBarInfo(context,
-        '${AppStrings.SUCCESFULLY_ADDED} ${parent.surname} ${parent.surname} ${AppStrings.TO_DATABASE}.');
+        '${AppStrings.successfullyAdded} ${parent.surname} ${parent.surname} ${AppStrings.toDatabase}.');
   }
 
   void _clearValues() {
@@ -104,7 +104,7 @@ class CreateParentPage extends StatelessWidget {
   }
 
   void _createParentUnsuccessfulMessage(BuildContext context) =>
-      _snackBarInfo(context, AppStrings.FAIL_TO_ADD_NEW_PARENT_TO_DATABASE);
+      _snackBarInfo(context, AppStrings.failedToAddNewParentToDatabase);
 
   void _snackBarInfo(BuildContext context, String message) {
     SnackBarInfoTemplate(message: message, context: context);

@@ -25,7 +25,7 @@ class _StudentsInGroupListItemTemplateState
         actionPane: const SlidableDrawerActionPane(),
         secondaryActions: [
           IconSlideAction(
-            caption: AppStrings.DELETE,
+            caption: AppStrings.delete,
             color: Colors.deepOrange,
             icon: Icons.remove,
             onTap: updateDatabase,
