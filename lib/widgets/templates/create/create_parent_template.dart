@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/models/person.dart';
-import 'package:record_of_classes/widgets/templates/text_field_template.dart';
+import 'package:record_of_classes/widgets/templates/text_fields/text_field_template.dart';
 
 class CreateParentTemplate extends StatefulWidget {
   CreateParentTemplate({Key? key}) : super(key: key);

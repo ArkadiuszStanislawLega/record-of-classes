@@ -7,7 +7,7 @@ enum PersonType {
   parent
 }
 
-String ConverterPersonTypeToString(PersonType value){
+String converterPersonTypeToString(PersonType value){
   switch(value){
     case PersonType.none:
       return AppStrings.noneType;

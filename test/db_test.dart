@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/person.dart';
 import 'package:record_of_classes/objectbox.g.dart';
 

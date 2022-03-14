@@ -61,7 +61,7 @@ class _PhoneBookListItemTemplateState extends State<PhoneBookListItemTemplate> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(widget.phone.owner.target!.introduceYourself()),
-              Text(ConverterPersonTypeToString(widget.phone.owner.target!.type))
+              Text(converterPersonTypeToString(widget.phone.owner.target!.type))
             ],
           ),
           onTap: _navigateToParentProfile,

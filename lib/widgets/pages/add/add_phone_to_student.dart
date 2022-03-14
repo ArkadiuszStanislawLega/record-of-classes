@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:record_of_classes/constants/app_strings.dart';
-import 'package:record_of_classes/main.dart';
-import 'package:record_of_classes/models/person.dart';
-import 'package:record_of_classes/models/phone.dart';
 import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/widgets/templates/create/create_phone_template.dart';
 import 'package:record_of_classes/widgets/templates/snack_bar_info_template.dart';

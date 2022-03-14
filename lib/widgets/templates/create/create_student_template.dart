@@ -5,7 +5,7 @@ import 'package:record_of_classes/models/account.dart';
 import 'package:record_of_classes/models/person.dart';
 import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/widgets/templates/create/create_person_template.dart';
-import 'package:record_of_classes/widgets/templates/text_field_template_num.dart';
+import 'package:record_of_classes/widgets/templates/text_fields/text_field_template_num.dart';
 
 class CreateStudentTemplate extends StatelessWidget {
   CreateStudentTemplate({Key? key}) : super(key: key);

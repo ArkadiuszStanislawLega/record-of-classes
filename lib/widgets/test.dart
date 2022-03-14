@@ -11,34 +11,35 @@ class Test extends StatefulWidget {
 }
 
 class _TestState extends State<Test> {
-
   late Store _store;
   late Stream<List<Account>> _accountsSteam;
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('text'),),
-      body:
-     StreamBuilder<List<Account>>(
-      stream: _accountsSteam,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return ListView.builder(
-            itemCount: snapshot.data!.length,
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            itemBuilder: (context, index) {
-              Account account = snapshot.data!.elementAt(index);
-              return Text('${account.id.toString()} ${account.student.target!.person.target!.introduceYourself()}');
-            },
-          );
-        } else {
-          return const Center(child: CircularProgressIndicator());
-        }
-      },
-     ),);
+      appBar: AppBar(
+        title: const Text('text'),
+      ),
+      body: StreamBuilder<List<Account>>(
+        stream: _accountsSteam,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return ListView.builder(
+              itemCount: snapshot.data!.length,
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                Account account = snapshot.data!.elementAt(index);
+                return Text(
+                    '${account.id.toString()} ${account.student.target!.person.target!.introduceYourself()}');
+              },
+            );
+          } else {
+            return const Center(child: CircularProgressIndicator());
+          }
+        },
+      ),
+    );
   }
 
   @override

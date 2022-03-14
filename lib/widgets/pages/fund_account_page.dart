@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/widgets/templates/snack_bar_info_template.dart';
-import 'package:record_of_classes/widgets/templates/text_field_template.dart';
-import 'package:record_of_classes/widgets/templates/text_field_template_double.dart';
+import 'package:record_of_classes/widgets/templates/text_fields/text_field_template_double.dart';
 
 class FundAccountPage extends StatefulWidget {
   const FundAccountPage({Key? key}) : super(key: key);

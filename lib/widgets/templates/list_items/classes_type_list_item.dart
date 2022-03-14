@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/constants/app_urls.dart';
 import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/models/classes_type.dart';
 import 'package:record_of_classes/widgets/templates/snack_bar_info_template.dart';
 
 class ClassesTypeListItem extends StatelessWidget {
-  ClassesTypeListItem({Key? key, required this.classesType}) : super(key: key);
+  const ClassesTypeListItem({Key? key, required this.classesType}) : super(key: key);
   final ClassesType classesType;
-  late Store _store;
 
   @override
   Widget build(BuildContext context) {

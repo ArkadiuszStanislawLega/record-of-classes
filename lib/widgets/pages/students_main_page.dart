@@ -19,13 +19,16 @@ class StudentsMainPage extends StatefulWidget {
 }
 
 class _StudentsMainPageState extends State<StudentsMainPage> {
+  static const double titleHeight = 220.0;
+
   late Stream<List<Student>> _studentsStream;
-  bool _isSortingAscending = true;
-  late List<Student> _studentsList, _filteredStudentsList = [];
+  late List<Student> _studentsList;
+
+  final List<Student> _filteredStudentsList = [];
+
   String _inputSurname = '';
   int _inputAge = 0;
-
-  static const double titleHeight = 220.0;
+  bool _isSortingAscending = true;
 
   @override
   Widget build(BuildContext context) {

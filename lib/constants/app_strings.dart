@@ -100,7 +100,7 @@ class AppStrings {
       groupOfClasses = 'Grupa zajęć',
       groups = 'Grupy',
       houseNumber = 'Numer domu',
-      ID = 'ID',
+      id = 'ID',
       importDatabase = 'Importuj bazę danych',
       inDay = 'w dniu',
       list = 'Lista',

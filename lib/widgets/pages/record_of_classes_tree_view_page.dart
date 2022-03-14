@@ -32,7 +32,7 @@ class _RecordOfClassesTreeViewPageState
   late Stream<List<ClassesType>> _classesTypeStream;
   late TreeNodeData _selectedTreeNodeData;
 
-  List<TreeNodeData> _elements = [];
+  final List<TreeNodeData> _elements = [];
 
   final double _itemsOffset = 15.0;
 
@@ -134,7 +134,7 @@ class _RecordOfClassesTreeViewPageState
       },
       onLongPress: (data) {
         var node = data as TreeNodeData;
-        delete(data);
+        delete(node);
       },
       controller: _controller,
     );
@@ -170,7 +170,7 @@ class _RecordOfClassesTreeViewPageState
   }
 
   void _removeDialogWindow(TreeNodeData item) {
-    Widget content = Text('');
+    Widget content = const Text('');
 
     if (item.object is Classes) {
       var classes = item.object as Classes;

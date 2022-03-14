@@ -132,9 +132,9 @@ void printDataFromDB() {
   ObjectBox.store.box<Parent>().getAll().forEach((element) {
     print('${element.toString()} ${element.person.target.toString()}');
     print('dzieci:');
-    element.children.forEach((children) {
+    for (var children in element.children) {
       print(children.toString());
-    });
+    }
   });
 
   print('-----------Phones-----------');

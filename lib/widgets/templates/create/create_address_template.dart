@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/models/address.dart';
-import 'package:record_of_classes/widgets/templates/text_field_template.dart';
+import 'package:record_of_classes/widgets/templates/text_fields/text_field_template.dart';
 
 class CreateAddressTemplate extends StatefulWidget {
   CreateAddressTemplate({Key? key, this.address}) : super(key: key) {

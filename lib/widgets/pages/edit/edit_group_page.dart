@@ -107,7 +107,6 @@ class _EditGroupPageState extends State<EditGroupPage> {
   }
 
   void _updateDatabase() {
-    print('update');
     _group.addToDb();
     _group.address.target!.addToDb();
   }

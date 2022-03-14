@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/models/phone.dart';
-import 'package:record_of_classes/widgets/templates/text_field_template.dart';
-import 'package:record_of_classes/widgets/templates/text_field_template_num.dart';
+import 'package:record_of_classes/widgets/templates/text_fields/text_field_template.dart';
+import 'package:record_of_classes/widgets/templates/text_fields/text_field_template_num.dart';
 
 class CreatePhoneTemplate extends StatefulWidget {
   CreatePhoneTemplate({Key? key, this.phone}) : super(key: key);

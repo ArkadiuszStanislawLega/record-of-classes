@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:record_of_classes/constants/app_strings.dart';
-import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/parent.dart';
 import 'package:record_of_classes/models/phone.dart';
 import 'package:record_of_classes/widgets/templates/create/create_phone_template.dart';

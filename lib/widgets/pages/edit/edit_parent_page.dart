@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:objectbox/objectbox.dart';
 import 'package:record_of_classes/constants/app_strings.dart';
-import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/parent.dart';
-import 'package:record_of_classes/models/person.dart';
 import 'package:record_of_classes/widgets/templates/snack_bar_info_template.dart';
 
 class EditParentPage extends StatefulWidget {
