@@ -145,7 +145,7 @@ class _StudentsMainPageState extends State<StudentsMainPage> {
   }
 
   void _navigateToCreateStudent() =>
-      Navigator.pushNamed(context, AppUrls.CREATE_STUDENT,
+      Navigator.pushNamed(context, AppUrls.createStudent,
           arguments: _addStudentToDb);
 
   void _addStudentToDb(Student student) {

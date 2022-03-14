@@ -83,7 +83,7 @@ class _StudentDetailPage extends State<StudentDetailPage> {
   }
 
   void _navigateToEditStudent() =>
-      Navigator.pushNamed(context, AppUrls.EDIT_STUDENT, arguments: {
+      Navigator.pushNamed(context, AppUrls.editStudent, arguments: {
         AppStrings.student: _student,
         AppStrings.function: _updateStudentInDbAfterEditing
       });
@@ -102,13 +102,13 @@ class _StudentDetailPage extends State<StudentDetailPage> {
   }
 
   void _navigateToAddSiblings() =>
-      Navigator.pushNamed(context, AppUrls.ADD_SIBLING, arguments: {
+      Navigator.pushNamed(context, AppUrls.addSibling, arguments: {
         AppStrings.student: _student,
         AppStrings.function: _addSiblingToDb
       });
 
   void _navigateToAddParent() =>
-      Navigator.pushNamed(context, AppUrls.ADD_PARENT, arguments: {
+      Navigator.pushNamed(context, AppUrls.addParent, arguments: {
         AppStrings.student: _student,
         AppStrings.addFunction: _addParentToStudentInDb,
         AppStrings.removeFunction: _removeParentFromDb
@@ -127,7 +127,7 @@ class _StudentDetailPage extends State<StudentDetailPage> {
   }
 
   void _navigateToAddContact() =>
-      Navigator.pushNamed(context, AppUrls.ADD_CONTACT_TO_STUDENT, arguments: {
+      Navigator.pushNamed(context, AppUrls.addContactToStudent, arguments: {
         AppStrings.student: _student,
         AppStrings.function: _addContact
       });
@@ -139,7 +139,7 @@ class _StudentDetailPage extends State<StudentDetailPage> {
   }
 
   void _navigateToFundAccount() {
-    Navigator.pushNamed(context, AppUrls.FUND_ACCOUNT, arguments: {
+    Navigator.pushNamed(context, AppUrls.fundAccount, arguments: {
       AppStrings.student: _student,
       AppStrings.function: _fundAccountUpdateDb
     });
@@ -468,7 +468,7 @@ class _StudentDetailPage extends State<StudentDetailPage> {
   }
 
   void addParent() =>
-      Navigator.pushNamed(context, AppUrls.CREATE_PARENT, arguments: _student);
+      Navigator.pushNamed(context, AppUrls.createParent, arguments: _student);
 
   /// Function to send children.
   /// Updating siblings in database.

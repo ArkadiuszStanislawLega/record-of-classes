@@ -90,7 +90,7 @@ class _ClassesTypeTreeViewItemExpanded
 
   void _navigateToClassTypeDetailPage(
       {required BuildContext context, required ClassesType classesType}) {
-    Navigator.pushNamed(context, AppUrls.DETAIL_CLASSES_TYPE, arguments: {
+    Navigator.pushNamed(context, AppUrls.detailClassesType, arguments: {
       AppStrings.classesType: classesType,
       AppStrings.function: _updateClassesType
     });

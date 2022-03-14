@@ -88,12 +88,12 @@ class _PhoneBookListItemTemplateState extends State<PhoneBookListItemTemplate> {
       case PersonType.none:
         break;
       case PersonType.student:
-        Navigator.pushNamed(context, AppUrls.DETAIL_STUDENT, arguments: {
+        Navigator.pushNamed(context, AppUrls.detailStudent, arguments: {
           AppStrings.student: widget.phone.owner.target!.student.target
         });
         break;
       case PersonType.parent:
-        Navigator.pushNamed(context, AppUrls.DETAIL_PARENT,
+        Navigator.pushNamed(context, AppUrls.detailParent,
             arguments: widget.phone.owner.target!.parent.target);
         break;
       case PersonType.teacher:
@@ -118,7 +118,7 @@ class _PhoneBookListItemTemplateState extends State<PhoneBookListItemTemplate> {
   }
 
   void _navigateToEditContact() =>
-      Navigator.pushNamed(context, AppUrls.EDIT_PHONE, arguments: {
+      Navigator.pushNamed(context, AppUrls.editPhone, arguments: {
         AppStrings.phoneNumber: widget.phone,
         AppStrings.function: _updateModel
       });

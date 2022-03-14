@@ -43,7 +43,7 @@ class ParentOfStudentListItemTemplate extends StatelessWidget {
             subtitle: Text(
                 '${AppStrings.numberOfChildren}: ${parent.children.length.toString()}'),
             onTap: () {
-              Navigator.pushNamed(context, AppUrls.DETAIL_PARENT,
+              Navigator.pushNamed(context, AppUrls.detailParent,
                   arguments: parent);
             },
           ),

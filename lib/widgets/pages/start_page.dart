@@ -74,7 +74,7 @@ class _StartPageViewView extends State<StartPageView> {
   }
 
   _navigateToCreateClassesNewVersion() {
-    Navigator.pushNamed(context, AppUrls.CREATE_CLASSES);
+    Navigator.pushNamed(context, AppUrls.createClasses);
   }
 
   Widget _mainMenu() {
@@ -113,10 +113,10 @@ class _StartPageViewView extends State<StartPageView> {
     );
   }
 
-  void _navigateToAboutPage() => Navigator.pushNamed(context, AppUrls.ABOUT);
+  void _navigateToAboutPage() => Navigator.pushNamed(context, AppUrls.about);
 
   void _navigateToManageDatabase() =>
-      Navigator.pushNamed(context, AppUrls.MANAGE_DATABASE);
+      Navigator.pushNamed(context, AppUrls.manageDatabase);
 
   Widget _button(
       {required Icon icon,
@@ -154,22 +154,22 @@ class _StartPageViewView extends State<StartPageView> {
   }
 
   void _navigateToPhoneBook() =>
-      Navigator.pushNamed(context, AppUrls.PHONE_BOOK);
+      Navigator.pushNamed(context, AppUrls.phoneBook);
 
   void _navigateToStudentsMainPage() => Navigator.pushNamed(
         context,
-        AppUrls.STUDENS_MAIN_PAGE,
+        AppUrls.studentsMainPage,
       );
 
   void _navigateFinanceMainPage() =>
-      Navigator.pushNamed(context, AppUrls.FINANCE_MAIN_PAGE);
+      Navigator.pushNamed(context, AppUrls.financeMainPage);
 
   void _navigateGroupsMainPage() =>
-      Navigator.pushNamed(context, AppUrls.GROUPS_MAIN_PAGE);
+      Navigator.pushNamed(context, AppUrls.groupsMainPage);
 
   void _navigatorClassesMainPage() =>
-      Navigator.pushNamed(context, AppUrls.CLASSES_MAIN_PAGE);
+      Navigator.pushNamed(context, AppUrls.classesMainPage);
 
   void _navigatorClassesTypeMainPage() =>
-      Navigator.pushNamed(context, AppUrls.CLASSES_TYPE_MAIN_PAGE);
+      Navigator.pushNamed(context, AppUrls.classesTypeMainPage);
 }

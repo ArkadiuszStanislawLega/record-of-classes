@@ -88,7 +88,7 @@ class _ClassesTreeViewItemExpanded extends State<ClassesTreeViewItemExpanded> {
   }
 
   void _navigateToClassesDetailPage(BuildContext context) =>
-      Navigator.pushNamed(context, AppUrls.DETAIL_CLASSES, arguments: {
+      Navigator.pushNamed(context, AppUrls.detailClasses, arguments: {
         AppStrings.classes: widget.classes,
         AppStrings.function: _updateClasses
       });

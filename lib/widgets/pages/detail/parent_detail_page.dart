@@ -54,10 +54,10 @@ class _ParentDetailPage extends State<ParentDetailPage> {
   }
 
   void _navigateToEditParent() =>
-      Navigator.pushNamed(context, AppUrls.EDIT_PARENT, arguments: _parent);
+      Navigator.pushNamed(context, AppUrls.editParent, arguments: _parent);
 
   void _navigateToAddPhone() =>
-      Navigator.pushNamed(context, AppUrls.ADD_PHONE, arguments: _parent);
+      Navigator.pushNamed(context, AppUrls.addPhone, arguments: _parent);
 
   SliverAppBar _customAppBar() {
     return SliverAppBar(

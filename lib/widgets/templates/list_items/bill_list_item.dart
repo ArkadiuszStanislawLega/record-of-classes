@@ -82,7 +82,7 @@ class _BillListItem extends State<BillListItem> {
             ],
           ),
           onTap: () {
-            Navigator.pushNamed(context, AppUrls.DETAIL_STUDENT, arguments: {
+            Navigator.pushNamed(context, AppUrls.detailStudent, arguments: {
               AppStrings.student:
                   widget.bill.studentAccount.target!.student.target!
             });

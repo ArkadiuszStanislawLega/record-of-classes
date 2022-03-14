@@ -52,7 +52,7 @@ class _GroupTreeViewItemExpanded extends State<GroupTreeViewItemExpanded> {
   }
 
   void _navigateToGroupDetailPage(BuildContext context) =>
-      Navigator.pushNamed(context, AppUrls.DETAIL_GROUP, arguments: {
+      Navigator.pushNamed(context, AppUrls.detailGroup, arguments: {
         AppStrings.group: widget.group,
         AppStrings.function: _updateGroup
       });

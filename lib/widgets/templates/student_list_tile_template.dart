@@ -32,7 +32,7 @@ class _StudentListTileTemplateState extends State<StudentListTileTemplate> {
   }
 
   void _navigateToStudentProfile() =>
-      Navigator.pushNamed(context, AppUrls.DETAIL_STUDENT,
+      Navigator.pushNamed(context, AppUrls.detailStudent,
           arguments: {AppStrings.student : widget.student,
           AppStrings.function : widget.updatingFunction});
 }

@@ -116,7 +116,7 @@ class _CreateParentPage extends State<AddParentPage> {
   }
 
   void _navigateToCreateParentPage() =>
-      Navigator.pushNamed(context, AppUrls.CREATE_PARENT,
+      Navigator.pushNamed(context, AppUrls.createParent,
           arguments: _selectedStudent);
 
   SliverList _content() => _studentsSliverList();

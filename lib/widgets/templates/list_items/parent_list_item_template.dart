@@ -60,7 +60,7 @@ class _ParentListItemTemplate extends State<ParentListItemTemplate> {
   }
 
   void enterParentProfile() {
-    Navigator.pushNamed(context, AppUrls.DETAIL_PARENT,
+    Navigator.pushNamed(context, AppUrls.detailParent,
         arguments: widget.parent);
   }
 

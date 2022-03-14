@@ -59,7 +59,7 @@ class _GroupListItemTemplateState extends State<GroupListItemTemplate> {
   }
 
   void _navigateToGroupProfile() =>
-      Navigator.pushNamed(context, AppUrls.DETAIL_GROUP, arguments: {
+      Navigator.pushNamed(context, AppUrls.detailGroup, arguments: {
         AppStrings.group: widget.group,
         AppStrings.function: _updateGroup
       });

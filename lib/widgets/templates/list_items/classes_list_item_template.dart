@@ -61,7 +61,7 @@ class _ClassesListItemTemplate extends State<ClassesListItemTemplate> {
   }
 
   void _navigateToGroupProfile(BuildContext context) =>
-      Navigator.pushNamed(context, AppUrls.DETAIL_CLASSES, arguments: {
+      Navigator.pushNamed(context, AppUrls.detailClasses, arguments: {
         AppStrings.classes: widget.classes,
         AppStrings.function: _updateModel
       });

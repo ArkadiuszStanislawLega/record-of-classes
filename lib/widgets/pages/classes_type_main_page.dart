@@ -61,7 +61,7 @@ class _ClassesTypeMainPageState extends State<ClassesTypeMainPage> {
   }
 
   void _navigateToAddNewClassPage() =>
-      Navigator.pushNamed(context, AppUrls.CREATE_CLASSES_TYPE);
+      Navigator.pushNamed(context, AppUrls.createClassesType);
 
   SliverList _content() => _classesTypesSliverList();
 

@@ -299,7 +299,7 @@ class _RecordOfClassesTreeViewPageState
     if (dataNode.object is Group) {
       Navigator.pushNamed(
         context,
-        AppUrls.ADD_CLASSES_TO_GROUP,
+        AppUrls.addClassesToGroup,
         arguments: {
           AppStrings.group: dataNode.object,
           AppStrings.function: _addClasses
@@ -310,7 +310,7 @@ class _RecordOfClassesTreeViewPageState
     if (dataNode.object is ClassesType) {
       Navigator.pushNamed(
         context,
-        AppUrls.CREATE_GROUP,
+        AppUrls.createGroup,
         arguments: {
           AppStrings.classesType: dataNode.object,
           AppStrings.function: _addGroup

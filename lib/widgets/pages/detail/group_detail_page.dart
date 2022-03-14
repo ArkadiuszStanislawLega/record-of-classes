@@ -76,7 +76,7 @@ class _DetailGroupPageState extends State<DetailGroupPage> {
   }
 
   void _navigateToAddClasses() =>
-      Navigator.pushNamed(context, AppUrls.ADD_CLASSES_TO_GROUP, arguments: {
+      Navigator.pushNamed(context, AppUrls.addClassesToGroup, arguments: {
         AppStrings.group: _group,
         AppStrings.function: _addClassesToGroup
       });
@@ -88,10 +88,10 @@ class _DetailGroupPageState extends State<DetailGroupPage> {
   }
 
   void _navigateToAddStudent() =>
-      Navigator.pushNamed(context, AppUrls.ADD_STUDENT_TO_GROUP,
+      Navigator.pushNamed(context, AppUrls.addStudentToGroup,
           arguments: _group);
 
-  _navigateToEditGroupPage() => Navigator.pushNamed(context, AppUrls.EDIT_GROUP,
+  _navigateToEditGroupPage() => Navigator.pushNamed(context, AppUrls.editGroup,
       arguments: {AppStrings.group: _group, AppStrings.function: _updateGroup});
 
   void _updateGroup(Group updated) {
