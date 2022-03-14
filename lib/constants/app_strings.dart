@@ -149,6 +149,7 @@ class AppStrings {
       PRICE_FOR_MONTH = 'Cena za miesiąc',
       REMOVED_FROM_DATABASE = 'usnięto z bazy danych',
       REMOVED = 'usunięta',
+      STUDENT_AGE = 'Wiek ucznia',
       SIBLINGS = 'Rodzeństwo',
       SUCCESFULLY_ADDED = 'Pomyślnie dodano',
       SUCCESFULLY = 'pomyślnie',

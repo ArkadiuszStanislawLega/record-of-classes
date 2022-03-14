@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:record_of_classes/constants/app_urls.dart';
 import 'package:record_of_classes/constants/app_strings.dart';
@@ -24,7 +25,7 @@ class _StudentsMainPageState extends State<StudentsMainPage> {
   String _inputSurname = '';
   int _inputAge = 0;
 
-  static const double titleHeight = 250.0;
+  static const double titleHeight = 220.0;
 
   @override
   Widget build(BuildContext context) {
@@ -62,38 +63,7 @@ class _StudentsMainPageState extends State<StudentsMainPage> {
             Row(
               children: [
                 SizedBox(
-                  width: MediaQuery.of(context).size.width - 100,
-                  child: TextField(
-                    style: Theme.of(context).textTheme.headline2,
-                    onChanged: (input) {
-                      setState(() {
-                        if (input != '') {
-                          _inputAge = int.tryParse(input)! > 0 ? int.parse(input) : 0;
-                          print('nie jest pusty input age ${_inputAge}');
-                          _filterBySurnameAndAge();
-                        }
-                        else {
-                          print('jest pusty input age');
-                          _inputAge = 0;
-                        }
-                      });
-
-                    },
-                    decoration: InputDecoration(
-                      label: Text('Wiek szukanej osoby',
-                          style: Theme.of(context).textTheme.headline2),
-                    ),
-                  ),
-                ),
-                TextButton(
-                    onPressed: _filterBySurnameAndAge,
-                    child: Text('Sort by age')),
-              ],
-            ),
-            Row(
-              children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.width - 100,
+                  width: MediaQuery.of(context).size.width * 0.5,
                   child: TextField(
                     style: Theme.of(context).textTheme.headline2,
                     onChanged: (input) {
@@ -101,16 +71,26 @@ class _StudentsMainPageState extends State<StudentsMainPage> {
                       setState(() {
                         _filterBySurnameAndAge();
                       });
-
-                      // setState(() {
-                      //   print(_inputSurname);
-                      //   for (var person in _sortStudentsList()) {
-                      //     _filteredStudentsList.add(person.student.target!);
-                      //   }
-                      // });
                     },
                     decoration: InputDecoration(
                       label: Text(AppStrings.FIND_STUDENT,
+                          style: Theme.of(context).textTheme.headline2),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.5 - 100,
+                  child: TextField(
+                    style: Theme.of(context).textTheme.headline2,
+                    keyboardType: TextInputType.number,
+                    inputFormatters: <TextInputFormatter>[
+                      FilteringTextInputFormatter.digitsOnly
+                    ],
+                    onChanged: (input) {
+                      _updateInputAge(input);
+                    },
+                    decoration: InputDecoration(
+                      label: Text(AppStrings.STUDENT_AGE,
                           style: Theme.of(context).textTheme.headline2),
                     ),
                   ),
@@ -151,25 +131,17 @@ class _StudentsMainPageState extends State<StudentsMainPage> {
     );
   }
 
-  void _filteringList(input) {
-    _filteredStudentsList = [];
-    if (_studentsList.isNotEmpty) {
-      setState(
-        () {
-          if (input != '') {
-            for (var student in _studentsList) {
-              if (student.person.target!.surname.contains(input)) {
-                _filteredStudentsList.add(student);
-              }
-            }
-          } else {
-            for (var student in _studentsList) {
-              _filteredStudentsList.add(student);
-            }
-          }
-        },
-      );
-    }
+  void _updateInputAge(String input) {
+    setState(
+      () {
+        if (input != '') {
+          _inputAge = int.tryParse(input)! > 0 ? int.parse(input) : 0;
+          _filterBySurnameAndAge();
+        } else {
+          _inputAge = 0;
+        }
+      },
+    );
   }
 
   void _navigateToCreateStudent() =>
@@ -296,13 +268,14 @@ class _StudentsMainPageState extends State<StudentsMainPage> {
     }
   }
 
-  void _filterOnlyBySurname(){
+  void _filterOnlyBySurname() {
     List<Person> lp = _sortStudentsList();
     if (lp.isNotEmpty) {
       for (var person in lp) {
         if (person.personType == 2) {
-          person.student.target == null ? '' : _filteredStudentsList.add(
-              person.student.target!);
+          person.student.target == null
+              ? ''
+              : _filteredStudentsList.add(person.student.target!);
         }
       }
     }
