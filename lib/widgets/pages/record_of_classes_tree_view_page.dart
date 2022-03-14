@@ -19,7 +19,7 @@ import 'package:record_of_classes/widgets/templates/icon_in_card_template.dart';
 import 'package:record_of_classes/widgets/templates/tree_view_items/classes_type_tree_view_item_expanded.dart';
 
 class RecordOfClassesTreeViewPage extends StatefulWidget {
-  RecordOfClassesTreeViewPage({Key? key}) : super(key: key);
+  const RecordOfClassesTreeViewPage({Key? key}) : super(key: key);
 
   @override
   _RecordOfClassesTreeViewPageState createState() =>

@@ -223,7 +223,7 @@ class _RecordOfClassesApp extends State<RecordOfClassesApp> {
         AppUrls.studentsMainPage: (context) => const StudentsMainPage(),
         AppUrls.createStudent: (context) => CreateStudentPage(),
         AppUrls.detailStudent: (context) => const StudentDetailPage(),
-        AppUrls.editStudent: (context) => EditStudentPage(),
+        AppUrls.editStudent: (context) => const EditStudentPage(),
         AppUrls.addSibling: (context) => const AddSiblingsToStudentPage(),
         AppUrls.addContactToStudent: (context) => AddPhoneToStudentPage(),
 
@@ -235,7 +235,7 @@ class _RecordOfClassesApp extends State<RecordOfClassesApp> {
         AppUrls.classesTypeMainPage: (context) => const ClassesTypeMainPage(),
         AppUrls.createClassesType: (context) => CreateClassesTypePage(),
         AppUrls.editClassesType: (context) => const EditClassesTypePage(),
-        AppUrls.detailClassesType: (context) => DetailClassesType(),
+        AppUrls.detailClassesType: (context) => const DetailClassesType(),
 
         AppUrls.groupsMainPage: (context) => const GroupsMainPage(),
         AppUrls.createGroup: (context) => const CreateGroupPage(),
@@ -245,14 +245,14 @@ class _RecordOfClassesApp extends State<RecordOfClassesApp> {
         AppUrls.addStudentToGroup: (context) => const AddStudentToGroupPage(),
 
         AppUrls.classesMainPage: (context) => const ClassesMainPage(),
-        AppUrls.createClasses: (context) => RecordOfClassesTreeViewPage(),
+        AppUrls.createClasses: (context) => const RecordOfClassesTreeViewPage(),
         AppUrls.detailClasses: (context) => ClassesDetailPage(),
 
         AppUrls.financeMainPage: (context) => const FinanceMainPage(),
         AppUrls.fundAccount: (context) => const FundAccountPage(),
 
         AppUrls.phoneBook: (context) => const PhoneBookPage(),
-        AppUrls.addPhone: (context) => CreatePhonePage(),
+        AppUrls.addPhone: (context) => const CreatePhonePage(),
         AppUrls.editPhone: (context) => EditPhonePage(),
       },
     );

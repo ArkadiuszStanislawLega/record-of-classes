@@ -6,7 +6,7 @@ import 'package:record_of_classes/widgets/templates/create/create_phone_template
 import 'package:record_of_classes/widgets/templates/snack_bar_info_template.dart';
 
 class CreatePhonePage extends StatefulWidget {
-  CreatePhonePage({Key? key}) : super(key: key);
+  const CreatePhonePage({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {

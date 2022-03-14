@@ -9,7 +9,7 @@ import 'package:record_of_classes/widgets/templates/list_items/group_list_item_t
 import 'package:record_of_classes/widgets/templates/one_row_property_template.dart';
 
 class DetailClassesType extends StatefulWidget {
-  DetailClassesType({Key? key}) : super(key: key);
+  const DetailClassesType({Key? key}) : super(key: key);
 
   @override
   _DetailClassesTypeState createState() => _DetailClassesTypeState();

@@ -7,7 +7,7 @@ import 'package:record_of_classes/widgets/templates/text_fields/text_field_templ
 import 'package:record_of_classes/widgets/templates/text_fields/text_field_template_num.dart';
 
 class EditStudentPage extends StatefulWidget {
-  EditStudentPage({Key? key}) : super(key: key);
+  const EditStudentPage({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
