@@ -219,37 +219,45 @@ class _RecordOfClassesApp extends State<RecordOfClassesApp> {
         AppUrls.EMPTY: (context) => const StartPageView(),
         AppUrls.HOME: (context) => const StartPageView(),
         AppUrls.ABOUT: (context) => const AboutPage(),
+
+        AppUrls.STUDENS_MAIN_PAGE: (context) => const StudentsMainPage(),
         AppUrls.CREATE_STUDENT: (context) => CreateStudentPage(),
         AppUrls.DETAIL_STUDENT: (context) => const StudentDetailPage(),
         AppUrls.EDIT_STUDENT: (context) => EditStudentPage(),
+        AppUrls.ADD_SIBLING: (context) => const AddSiblingsToStudentPage(),
+
         AppUrls.ADD_PARENT: (context) => const AddParentPage(),
         AppUrls.CREATE_PARENT: (context) => CreateParentPage(),
         AppUrls.DETAIL_PARENT: (context) => const ParentDetailPage(),
         AppUrls.EDIT_PARENT: (context) => const EditParentPage(),
-        AppUrls.ADD_SIBLING: (context) => const AddSiblingsToStudentPage(),
+
+        AppUrls.CLASSES_TYPE_MAIN_PAGE: (context) => const ClassesTypeMainPage(),
         AppUrls.CREATE_CLASSES_TYPE: (context) => CreateClassesTypePage(),
-        AppUrls.DETAIL_CLASSES_TYPE: (context) => DetailClassesType(),
         AppUrls.EDIT_CLASSES_TYPE: (context) => const EditClassesTypePage(),
+        AppUrls.DETAIL_CLASSES_TYPE: (context) => DetailClassesType(),
+
+        AppUrls.GROUPS_MAIN_PAGE: (context) => const GroupsMainPage(),
         AppUrls.CREATE_GROUP: (context) => const CreateGroupPage(),
         AppUrls.EDIT_GROUP: (context) => const EditGroupPage(),
         AppUrls.DETAIL_GROUP: (context) => const DetailGroupPage(),
-        AppUrls.ADD_STUDENT_TO_GROUP: (context) =>
-            const AddStudentToGroupPage(),
+
         AppUrls.ADD_CLASSES_TO_GROUP: (context) => AddClassesToGroup(),
         AppUrls.ADD_CONTACT_TO_STUDENT: (context) => AddPhoneToStudentPage(),
-        AppUrls.DETAIL_CLASSES: (context) => ClassesDetailPage(),
-        AppUrls.STUDENS_MAIN_PAGE: (context) => const StudentsMainPage(),
+        AppUrls.ADD_STUDENT_TO_GROUP: (context) => const AddStudentToGroupPage(),
+
         AppUrls.CLASSES_MAIN_PAGE: (context) => const ClassesMainPage(),
-        AppUrls.CLASSES_TYPE_MAIN_PAGE: (context) =>
-            const ClassesTypeMainPage(),
+        AppUrls.CREATE_CLASSES: (context) => RecordOfClassesTreeViewPage(),
+        AppUrls.DETAIL_CLASSES: (context) => ClassesDetailPage(),
+
         AppUrls.FINANCE_MAIN_PAGE: (context) => const FinanceMainPage(),
-        AppUrls.GROUPS_MAIN_PAGE: (context) => const GroupsMainPage(),
+        AppUrls.FUND_ACCOUNT: (context) => const FundAccountPage(),
+
+        AppUrls.PHONE_BOOK: (context) => const PhoneBookPage(),
         AppUrls.ADD_PHONE: (context) => CreatePhonePage(),
         AppUrls.EDIT_PHONE: (context) => EditPhonePage(),
-        AppUrls.PHONE_BOOK: (context) => const PhoneBookPage(),
-        AppUrls.FUND_ACCOUNT: (context) => const FundAccountPage(),
-        AppUrls.CREATE_CLASSES_NEW_VERSION: (context) =>
-            RecordOfClassesTreeViewPage(),
+
+
+
         AppUrls.MANAGE_DATABASE: (context) => const ManageDatabasePage(),
         '/test': (context) => Test()
       },

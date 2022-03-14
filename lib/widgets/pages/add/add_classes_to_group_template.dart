@@ -37,7 +37,7 @@ class _AddClassesToGroup extends State<AddClassesToGroup> {
         title: Text(widget._group.name, style: Theme.of(context).textTheme.headline1,),
       ),
       body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 50.0, vertical: 20.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

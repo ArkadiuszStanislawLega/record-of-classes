@@ -74,7 +74,7 @@ class _StartPageViewView extends State<StartPageView> {
   }
 
   _navigateToCreateClassesNewVersion() {
-    Navigator.pushNamed(context, AppUrls.CREATE_CLASSES_NEW_VERSION);
+    Navigator.pushNamed(context, AppUrls.CREATE_CLASSES);
   }
 
   Widget _mainMenu() {
