@@ -46,14 +46,10 @@ class _ManageDatabasePageState extends State<ManageDatabasePage> {
   }
 
   Future<void> exportDb() async {
-
-    await getApplicationDocumentsDirectory().then(
-      (dir) {
-        FlutterShare.shareFile(
-          title: AppStrings.exportingDatabaseDialogTitle,
-          filePath: '${dir.path}/${AppStrings.databaseDirectory}',
-        );
-      },
+    String path = (await getExternalStorageDirectory())!.path;
+    FlutterShare.shareFile(
+      title: AppStrings.exportingDatabaseDialogTitle,
+      filePath: '$path/${AppStrings.databaseDirectory}',
     );
   }
 
@@ -73,8 +69,9 @@ class _ManageDatabasePageState extends State<ManageDatabasePage> {
               Navigator.of(context).pop();
               await _getImportedFile().then(
                 (selectedFile) async {
-                  await _getDatabaseFile().then(
-                      (currentDatabase) => _updateDatabaseFile('${selectedFile.path}', currentDatabase));
+                  await _getDatabaseFile().then((currentDatabase) =>
+                      _updateDatabaseFile(
+                          '${selectedFile.path}', currentDatabase));
                   return selectedFile;
                 },
               );
@@ -112,7 +109,8 @@ class _ManageDatabasePageState extends State<ManageDatabasePage> {
     );
   }
 
-  Future<void> _updateDatabaseFile(String importedFilePath, File database) async {
+  Future<void> _updateDatabaseFile(
+      String importedFilePath, File database) async {
     await rootBundle.load(importedFilePath).then(
       (data) {
         database.writeAsBytes(data.buffer.asUint8List());
