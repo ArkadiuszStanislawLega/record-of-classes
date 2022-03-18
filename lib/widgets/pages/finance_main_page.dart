@@ -68,40 +68,50 @@ class _FinanceMainPageState extends State<FinanceMainPage> {
     );
   }
 
+  DecoratedBox _pageNavigationButton(
+      {required BillListType billListType, required String title}) {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.only(
+            topRight: Radius.circular(30), topLeft: Radius.circular(30)),
+        boxShadow: [
+          BoxShadow(
+            spreadRadius: 9,
+            color: _currentTypeListSelected == billListType
+                ? Colors.black12
+                : Colors.transparent,
+            offset: const Offset(0, -1),
+            blurRadius: 4,
+          )
+        ],
+      ),
+      child: Text(
+        title,
+        style: _currentTypeListSelected == billListType
+            ? Theme.of(context).textTheme.headline2
+            : Theme.of(context).textTheme.bodyText2,
+      ),
+    );
+  }
+
   SliverAppBar _customAppBar() {
     return SliverAppBar(
       bottom: PreferredSize(
         preferredSize: const Size(0, 10),
-        child: Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              TextButton(
-                  onPressed: () {
-                    setState(() {
-                      _currentTypeListSelected = BillListType.single;
-                    });
-                  },
-                  child: Text(
-                    'Pojedyncze',
-                    style: _currentTypeListSelected == BillListType.single
-                        ? Theme.of(context).textTheme.headline2
-                        : Theme.of(context).textTheme.bodyText2,
-                  )),
-              TextButton(
-                  onPressed: () {
-                    setState(() {
-                      _currentTypeListSelected = BillListType.group;
-                    });
-                  },
-                  child: Text(
-                    'Pogrupuj',
-                    style: _currentTypeListSelected == BillListType.group
-                        ? Theme.of(context).textTheme.headline2
-                        : Theme.of(context).textTheme.bodyText2,
-                  )),
-            ],
-          ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            TextButton(
+              onPressed: _switchToSingle,
+              child: _pageNavigationButton(
+                  billListType: BillListType.single, title: AppStrings.single),
+            ),
+            TextButton(
+              onPressed: _switchToGrouped,
+              child: _pageNavigationButton(
+                  billListType: BillListType.group, title: AppStrings.grouping),
+            )
+          ],
         ),
       ),
       stretch: true,
@@ -131,6 +141,18 @@ class _FinanceMainPageState extends State<FinanceMainPage> {
         ),
       ),
     );
+  }
+
+  void _switchToGrouped() {
+    setState(() {
+      _currentTypeListSelected = BillListType.group;
+    });
+  }
+
+  void _switchToSingle() {
+    setState(() {
+      _currentTypeListSelected = BillListType.single;
+    });
   }
 
   SliverList _content() => _pageNavigator();
