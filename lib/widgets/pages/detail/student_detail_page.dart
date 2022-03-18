@@ -327,7 +327,7 @@ class _StudentDetailPage extends State<StudentDetailPage> {
     setState(() {
       if (!bill.isPaid) {
         bill.setIsPaidInDb();
-        _student.account.target!.addValueToBalance(-bill.price);
+        _student.account.target!.reduceBalance(bill.price);
       }
     });
   }
@@ -336,7 +336,7 @@ class _StudentDetailPage extends State<StudentDetailPage> {
     setState(() {
       if (bill.isPaid) {
         bill.setIsUnpaidInDb();
-        _student.account.target!.addValueToBalance(bill.price);
+        _student.account.target!.fundBalance(bill.price);
       }
     });
   }

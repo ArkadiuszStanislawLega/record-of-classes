@@ -58,7 +58,7 @@ class Student implements DbModel {
   }
 
   void fundAccountDb(double value) {
-    account.target!.balance += value;
+    account.target!.fundBalance(value);
     account.target!.addToDb();
   }
 

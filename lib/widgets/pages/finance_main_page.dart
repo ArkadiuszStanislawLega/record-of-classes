@@ -256,7 +256,7 @@ class _FinanceMainPageState extends State<FinanceMainPage> {
     setState(() {
       if (!bill.isPaid) {
         bill.setIsPaidInDb();
-        bill.studentAccount.target!.addValueToBalance(-bill.price);
+        bill.studentAccount.target!.reduceBalance(bill.price);
       }
     });
   }
@@ -265,7 +265,7 @@ class _FinanceMainPageState extends State<FinanceMainPage> {
     setState(() {
       if (bill.isPaid) {
         bill.setIsUnpaidInDb();
-        bill.studentAccount.target!.addValueToBalance(bill.price);
+        bill.studentAccount.target!.fundBalance(bill.price);
       }
     });
   }

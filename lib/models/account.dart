@@ -61,9 +61,18 @@ class Account implements DbModel{
     ObjectBox.store.box<Account>().remove(id);
   }
 
-  void addValueToBalance(double value) {
-    balance += value;
-    addToDb();
+  void fundBalance(double value) {
+    if (value > 0) {
+      balance += value;
+      addToDb();
+    }
+  }
+
+  void reduceBalance(double value) {
+    if (value > 0) {
+      balance -= value;
+      addToDb();
+    }
   }
 
   void addBill(Bill bill) {
