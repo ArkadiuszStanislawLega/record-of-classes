@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/main.dart';
+import 'package:record_of_classes/models/account.dart';
 import 'package:record_of_classes/models/bill.dart';
 import 'package:record_of_classes/widgets/templates/list_items/bill_list_item.dart';
+import 'package:record_of_classes/widgets/templates/list_items/grouped_bills_list_item.dart';
 import 'package:record_of_classes/widgets/templates/one_row_property_template.dart';
 
 class FinanceMainPage extends StatefulWidget {
@@ -13,13 +15,16 @@ class FinanceMainPage extends StatefulWidget {
   _FinanceMainPageState createState() => _FinanceMainPageState();
 }
 
+enum BillListType { single, group }
+
 class _FinanceMainPageState extends State<FinanceMainPage> {
-  static const double titleHeight = 220.0;
+  static const double titleHeight = 240.0;
   late Stream<List<Bill>> _billsStream;
 
   final List<Bill> _unpaid = [], _paid = [];
   double _unpaidPrice = 0.0, _paidPrice = 0.0;
   bool _isNotPaidFilter = true;
+  BillListType _currentTypeListSelected = BillListType.group;
 
   @override
   void initState() {
@@ -65,6 +70,40 @@ class _FinanceMainPageState extends State<FinanceMainPage> {
 
   SliverAppBar _customAppBar() {
     return SliverAppBar(
+      bottom: PreferredSize(
+        preferredSize: const Size(0, 10),
+        child: Container(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              TextButton(
+                  onPressed: () {
+                    setState(() {
+                      _currentTypeListSelected = BillListType.single;
+                    });
+                  },
+                  child: Text(
+                    'Pojedyncze',
+                    style: _currentTypeListSelected == BillListType.single
+                        ? Theme.of(context).textTheme.headline2
+                        : Theme.of(context).textTheme.bodyText2,
+                  )),
+              TextButton(
+                  onPressed: () {
+                    setState(() {
+                      _currentTypeListSelected = BillListType.group;
+                    });
+                  },
+                  child: Text(
+                    'Pogrupuj',
+                    style: _currentTypeListSelected == BillListType.group
+                        ? Theme.of(context).textTheme.headline2
+                        : Theme.of(context).textTheme.bodyText2,
+                  )),
+            ],
+          ),
+        ),
+      ),
       stretch: true,
       onStretchTrigger: () => Future<void>.value(),
       expandedHeight: titleHeight,
@@ -146,8 +185,30 @@ class _FinanceMainPageState extends State<FinanceMainPage> {
     );
   }
 
-  SliverList _pageNavigator() =>
-      _isNotPaidFilter ? _unpaidSliverList() : _paidSliverList();
+  SliverList _pageNavigator() {
+    if (_currentTypeListSelected == BillListType.group) {
+      return _groupedBills();
+    }
+    return _isNotPaidFilter ? _unpaidSliverList() : _paidSliverList();
+  }
+
+  SliverList _groupedBills() {
+    List<Account> filteredAccounts = [];
+    List<Account> accounts = ObjectBox.store.box<Account>().getAll();
+    for (var value in accounts) {
+      if (value.countUnpaidBills() > 0) {
+        filteredAccounts.add(value);
+      }
+    }
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+        (BuildContext context, int index) => GroupedBillsListItem(
+          account: filteredAccounts.elementAt(index),
+        ),
+        childCount: filteredAccounts.length,
+      ),
+    );
+  }
 
   SliverList _unpaidSliverList() {
     return SliverList(

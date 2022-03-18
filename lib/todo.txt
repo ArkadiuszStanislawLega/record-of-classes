@@ -5,4 +5,4 @@
     [X] sortowanie po wieku
 [X] zarządzanie finansami - po kliknieciu itemu przejscie do profilu studenta
 [X] poprawić w itemach zarządanie długimi nazwami
-[ ] poprawić sharing - na androidzie ścieżka jest zła
+[X] poprawić sharing - na androidzie ścieżka jest zła

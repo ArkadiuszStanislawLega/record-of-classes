@@ -30,11 +30,12 @@ class CreateStudentPage extends StatelessWidget {
   }
 
   void _onPressCreateButtonEvent(BuildContext context) {
+    _createdStudent = _createStudentTemplate.getStudent();
     if (_addFunction == null) {
       _createdStudent = _createStudentTemplate.getStudent();
       _createdStudent.addToDb();
     } else {
-      _addFunction!(_createStudentTemplate.getStudent());
+      _addFunction!(_createdStudent);
     }
     _infoCreatedStudent(context);
     Navigator.pop(context);

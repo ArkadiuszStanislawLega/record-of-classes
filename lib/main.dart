@@ -41,6 +41,7 @@ import 'package:record_of_classes/widgets/pages/finance_main_page.dart';
 import 'package:record_of_classes/widgets/pages/fund_account_page.dart';
 import 'package:record_of_classes/widgets/pages/groups_main_page.dart';
 import 'package:record_of_classes/widgets/pages/phone_book_page.dart';
+import 'package:record_of_classes/widgets/pages/start_2_page.dart';
 import 'package:record_of_classes/widgets/pages/start_page.dart';
 import 'package:record_of_classes/widgets/pages/detail/student_detail_page.dart';
 import 'package:record_of_classes/widgets/pages/students_main_page.dart';
