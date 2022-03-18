@@ -16,6 +16,7 @@ import 'models/bill.dart';
 import 'models/classes.dart';
 import 'models/classes_type.dart';
 import 'models/group.dart';
+import 'models/log.dart';
 import 'models/parent.dart';
 import 'models/person.dart';
 import 'models/phone.dart';
@@ -465,6 +466,35 @@ final _entities = <ModelEntity>[
             relationTarget: 'Person')
       ],
       relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[]),
+  ModelEntity(
+      id: const IdUid(13, 8320701260738490398),
+      name: 'Log',
+      lastPropertyId: const IdUid(4, 6904665903451738380),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 7347948342105445517),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 7130796705849388726),
+            name: 'participatingClassId',
+            type: 6,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 7116864523351254003),
+            name: 'date',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 6904665903451738380),
+            name: 'value',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[])
 ];
 
@@ -488,7 +518,7 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(12, 7751236531251891487),
+      lastEntityId: const IdUid(13, 8320701260738490398),
       lastIndexId: const IdUid(22, 6364611693031497144),
       lastRelationId: const IdUid(18, 3962742370877392650),
       lastSequenceId: const IdUid(0, 0),
@@ -720,8 +750,8 @@ ModelDefinition getObjectBoxModel() {
           final buffer = fb.BufferContext(fbData);
           final rootOffset = buffer.derefObject(0);
 
-          final object = Bill()
-            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
+          final object = Bill(
+              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0))
             ..isPaid =
                 const fb.BoolReader().vTableGet(buffer, rootOffset, 6, false)
             ..price =
@@ -755,8 +785,8 @@ ModelDefinition getObjectBoxModel() {
           final buffer = fb.BufferContext(fbData);
           final rootOffset = buffer.derefObject(0);
 
-          final object = Classes()
-            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
+          final object = Classes(
+              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0))
             ..dateTime = DateTime.fromMillisecondsSinceEpoch(
                 const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0));
           object.group.targetId =
@@ -873,8 +903,8 @@ ModelDefinition getObjectBoxModel() {
           final buffer = fb.BufferContext(fbData);
           final rootOffset = buffer.derefObject(0);
 
-          final object = Parent()
-            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final object = Parent(
+              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0));
           object.person.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
           object.person.attach(store);
@@ -984,6 +1014,39 @@ ModelDefinition getObjectBoxModel() {
           object.person.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
           object.person.attach(store);
+          return object;
+        }),
+    Log: EntityDefinition<Log>(
+        model: _entities[12],
+        toOneRelations: (Log object) => [],
+        toManyRelations: (Log object) => {},
+        getId: (Log object) => object.id,
+        setId: (Log object, int id) {
+          object.id = id;
+        },
+        objectToFB: (Log object, fb.Builder fbb) {
+          final valueOffset = fbb.writeString(object.value);
+          fbb.startTable(5);
+          fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.participatingClassId);
+          fbb.addInt64(2, object.date.millisecondsSinceEpoch);
+          fbb.addOffset(3, valueOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = Log(
+              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
+              participatingClassId:
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0),
+              value:
+                  const fb.StringReader().vTableGet(buffer, rootOffset, 10, ''))
+            ..date = DateTime.fromMillisecondsSinceEpoch(
+                const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0));
+
           return object;
         })
   };
@@ -1244,4 +1307,20 @@ class Teacher_ {
   /// see [Teacher.person]
   static final person =
       QueryRelationToOne<Teacher, Person>(_entities[11].properties[1]);
+}
+
+/// [Log] entity fields to define ObjectBox queries.
+class Log_ {
+  /// see [Log.id]
+  static final id = QueryIntegerProperty<Log>(_entities[12].properties[0]);
+
+  /// see [Log.participatingClassId]
+  static final participatingClassId =
+      QueryIntegerProperty<Log>(_entities[12].properties[1]);
+
+  /// see [Log.date]
+  static final date = QueryIntegerProperty<Log>(_entities[12].properties[2]);
+
+  /// see [Log.value]
+  static final value = QueryStringProperty<Log>(_entities[12].properties[3]);
 }

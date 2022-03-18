@@ -1,12 +1,15 @@
 import 'package:objectbox/objectbox.dart';
+import 'package:record_of_classes/enumerators/ActionType.dart';
+import 'package:record_of_classes/enumerators/ModelType.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/db_model.dart';
+import 'package:record_of_classes/models/log.dart';
 import 'package:record_of_classes/models/student.dart';
 
 import 'bill.dart';
 
 @Entity()
-class Account implements DbModel{
+class Account implements DbModel {
   late int id;
   late double balance;
   final student = ToOne<Student>();
@@ -57,35 +60,74 @@ class Account implements DbModel{
     }
     bills.clear();
     student.target = null;
-    addToDb();
+    update(this);
     ObjectBox.store.box<Account>().remove(id);
+
+    Log log = Log(
+        actionType: ActionType.remove,
+        modelType: ModelType.account,
+        participatingClassId: id);
+    log.addToDb();
   }
 
   void fundBalance(double value) {
     if (value > 0) {
       balance += value;
-      addToDb();
+      update(this);
+
+      Log log = Log(
+          modelType: ModelType.account,
+          actionType: ActionType.increase,
+          participatingClassId: id,
+          value: value.toString());
+      log.addToDb();
     }
   }
 
   void reduceBalance(double value) {
     if (value > 0) {
       balance -= value;
-      addToDb();
+      update(this);
+
+      Log log = Log(
+          modelType: ModelType.account,
+          actionType: ActionType.decrease,
+          participatingClassId: id,
+          value: value.toString());
+      log.addToDb();
     }
   }
 
   void addBill(Bill bill) {
     bills.add(bill);
-    addToDb();
+    update(this);
   }
 
   @override
-  void addToDb() => ObjectBox.store.box<Account>().put(this);
+  void addToDb() {
+    ObjectBox.store.box<Account>().put(this);
+
+    Log log = Log(
+        modelType: ModelType.account,
+        actionType: ActionType.add,
+        participatingClassId: id);
+
+    log.addToDb();
+  }
 
   @override
   getFromDb() => ObjectBox.store.box<Account>().get(id);
 
   @override
-  void update(updateObject) => addToDb();
+  void update(updateObject) {
+    balance = updateObject.blance;
+    addToDb();
+
+    Log log = Log(
+        modelType: ModelType.account,
+        actionType: ActionType.update,
+        participatingClassId: id);
+
+    log.addToDb();
+  }
 }
