@@ -43,54 +43,27 @@ class _FinanceMainPageState extends State<FinanceMainPage> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           _prepareData(snapshot.data!);
-          return DefaultTabController(
-            length: 2,
-            child: Scaffold(
+          return Scaffold(
               body: CustomScrollView(
                 slivers: [
                   _customAppBar(),
                   _content(),
                 ],
               ),
-              floatingActionButton: SpeedDial(
-                icon: _isNotPaidFilter
-                    ? Icons.filter_alt_outlined
-                    : Icons.filter_alt,
-                backgroundColor: Colors.amber,
-                onPress: _onPressChangeFiltering,
-              ),
-            ),
-          );
+              floatingActionButton:
+                  _currentTypeListSelected == BillListType.single
+                      ? SpeedDial(
+                          icon: _isNotPaidFilter
+                              ? Icons.filter_alt_outlined
+                              : Icons.filter_alt,
+                          backgroundColor: Colors.amber,
+                          onPress: _onPressChangeFiltering,
+                        )
+                      : const SizedBox());
         } else {
           return const Center(child: CircularProgressIndicator());
         }
       },
-    );
-  }
-
-  DecoratedBox _pageNavigationButton(
-      {required BillListType billListType, required String title}) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.only(
-            topRight: Radius.circular(30), topLeft: Radius.circular(30)),
-        boxShadow: [
-          BoxShadow(
-            spreadRadius: 9,
-            color: _currentTypeListSelected == billListType
-                ? Colors.black12
-                : Colors.transparent,
-            offset: const Offset(0, -1),
-            blurRadius: 4,
-          )
-        ],
-      ),
-      child: Text(
-        title,
-        style: _currentTypeListSelected == billListType
-            ? Theme.of(context).textTheme.headline2
-            : Theme.of(context).textTheme.bodyText2,
-      ),
     );
   }
 
@@ -143,6 +116,32 @@ class _FinanceMainPageState extends State<FinanceMainPage> {
     );
   }
 
+  DecoratedBox _pageNavigationButton(
+      {required BillListType billListType, required String title}) {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.only(
+            topRight: Radius.circular(30), topLeft: Radius.circular(30)),
+        boxShadow: [
+          BoxShadow(
+            spreadRadius: 9,
+            color: _currentTypeListSelected == billListType
+                ? Colors.black12
+                : Colors.transparent,
+            offset: const Offset(0, -1),
+            blurRadius: 4,
+          )
+        ],
+      ),
+      child: Text(
+        title,
+        style: _currentTypeListSelected == billListType
+            ? Theme.of(context).textTheme.headline2
+            : Theme.of(context).textTheme.bodyText2,
+      ),
+    );
+  }
+
   void _switchToGrouped() {
     setState(() {
       _currentTypeListSelected = BillListType.group;
@@ -181,7 +180,7 @@ class _FinanceMainPageState extends State<FinanceMainPage> {
         child: Column(
           children: [
             Container(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.only(top: 16.0),
               child: Text(
                 AppStrings.manageFinances,
                 style: Theme.of(context).textTheme.headline1,
@@ -215,13 +214,7 @@ class _FinanceMainPageState extends State<FinanceMainPage> {
   }
 
   SliverList _groupedBills() {
-    List<Account> filteredAccounts = [];
-    List<Account> accounts = ObjectBox.store.box<Account>().getAll();
-    for (var value in accounts) {
-      if (value.countUnpaidBills() > 0) {
-        filteredAccounts.add(value);
-      }
-    }
+    List<Account> filteredAccounts = _getAccountWithUnpaidBills();
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) => GroupedBillsListItem(
@@ -230,6 +223,20 @@ class _FinanceMainPageState extends State<FinanceMainPage> {
         childCount: filteredAccounts.length,
       ),
     );
+  }
+
+  List<Account> _getAccountWithUnpaidBills() {
+    List<Account> filteredAccounts = [];
+    List<Account> accounts = ObjectBox.store.box<Account>().getAll();
+    for (var value in accounts) {
+      if (value.countUnpaidBills() > 0) {
+        filteredAccounts.add(value);
+      }
+    }
+    filteredAccounts.sort((firstAccount, secondAccount) => firstAccount
+        .student.target!.person.target!.surname
+        .compareTo(secondAccount.student.target!.person.target!.surname));
+    return filteredAccounts;
   }
 
   SliverList _unpaidSliverList() {
