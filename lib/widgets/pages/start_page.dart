@@ -66,6 +66,11 @@ class _StartPageViewView extends State<StartPageView> {
               title: AppStrings.phones.toLowerCase(),
               icon: const Icon(Icons.book),
               iconColor: Colors.brown.shade200),
+          _button(
+              onPressed: _navigatorLogMainPage,
+              title: 'log',
+              icon: const Icon(Icons.psychology),
+              iconColor: Colors.green.shade200),
         ],
       ),
       drawer: _mainMenu(),
@@ -171,4 +176,7 @@ class _StartPageViewView extends State<StartPageView> {
 
   void _navigatorClassesTypeMainPage() =>
       Navigator.pushNamed(context, AppUrls.classesTypeMainPage);
+
+  void _navigatorLogMainPage() =>
+      Navigator.pushNamed(context, AppUrls.log);
 }

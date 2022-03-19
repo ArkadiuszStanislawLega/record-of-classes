@@ -64,8 +64,8 @@ class Account implements DbModel {
     ObjectBox.store.box<Account>().remove(id);
 
     Log log = Log(
-        actionType: ActionType.remove,
-        modelType: ModelType.account,
+        actionType: ActionType.remove.index,
+        modelType: ModelType.account.index,
         participatingClassId: id);
     log.addToDb();
   }
@@ -76,8 +76,8 @@ class Account implements DbModel {
       update(this);
 
       Log log = Log(
-          modelType: ModelType.account,
-          actionType: ActionType.increase,
+          modelType: ModelType.account.index,
+          actionType: ActionType.increase.index,
           participatingClassId: id,
           value: value.toString());
       log.addToDb();
@@ -90,8 +90,8 @@ class Account implements DbModel {
       update(this);
 
       Log log = Log(
-          modelType: ModelType.account,
-          actionType: ActionType.decrease,
+          modelType: ModelType.account.index,
+          actionType: ActionType.decrease.index,
           participatingClassId: id,
           value: value.toString());
       log.addToDb();
@@ -108,10 +108,9 @@ class Account implements DbModel {
     ObjectBox.store.box<Account>().put(this);
 
     Log log = Log(
-        modelType: ModelType.account,
-        actionType: ActionType.add,
+        modelType: ModelType.account.index,
+        actionType: ActionType.add.index,
         participatingClassId: id);
-
     log.addToDb();
   }
 
@@ -120,12 +119,12 @@ class Account implements DbModel {
 
   @override
   void update(updateObject) {
-    balance = updateObject.blance;
+    balance = updateObject.balance;
     addToDb();
 
     Log log = Log(
-        modelType: ModelType.account,
-        actionType: ActionType.update,
+        modelType: ModelType.account.index,
+        actionType: ActionType.update.index,
         participatingClassId: id);
 
     log.addToDb();

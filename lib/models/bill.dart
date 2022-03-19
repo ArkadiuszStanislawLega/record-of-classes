@@ -13,7 +13,7 @@ class Bill implements DbModel {
   final studentAccount = ToOne<Account>();
   final attendance = ToOne<Attendance>();
 
-  Bill({this.id = 0});
+  Bill({this.id = 0, this.isPaid = false, this.price = 0.0});
 
   @override
   String toString() {

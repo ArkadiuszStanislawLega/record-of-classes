@@ -467,7 +467,7 @@
     },
     {
       "id": "13:8320701260738490398",
-      "lastPropertyId": "4:6904665903451738380",
+      "lastPropertyId": "8:4052771601871698768",
       "name": "Log",
       "properties": [
         {
@@ -490,6 +490,26 @@
           "id": "4:6904665903451738380",
           "name": "value",
           "type": 9
+        },
+        {
+          "id": "5:974790161641923063",
+          "name": "actionType",
+          "type": 6
+        },
+        {
+          "id": "6:3351071500763998102",
+          "name": "modelType",
+          "type": 6
+        },
+        {
+          "id": "7:7450540750696206815",
+          "name": "dbActionType",
+          "type": 6
+        },
+        {
+          "id": "8:4052771601871698768",
+          "name": "dbModelType",
+          "type": 6
         }
       ],
       "relations": []

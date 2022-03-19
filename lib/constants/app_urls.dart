@@ -28,6 +28,7 @@ class AppUrls {
       fundAccount = '/fund_account',
       groupsMainPage = '/groups_main_page',
       home = '/home',
+      log = '/log',
       manageDatabase = '/manage_database',
       phoneBook = '/phone_book_page',
       studentsMainPage = '/students_main_page';
