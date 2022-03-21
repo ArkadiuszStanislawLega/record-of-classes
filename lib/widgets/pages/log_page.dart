@@ -25,6 +25,7 @@ class _LogPageState extends State<LogPage> {
 
   Widget _list() {
     List<Log> logs = ObjectBox.store.box<Log>().getAll();
+    logs.sort((firstLog, secondLog) => firstLog.date.compareTo(secondLog.date) == 0 ? 0 : 1);
     return ListView.builder(
       padding: const EdgeInsets.all(8),
       itemCount: logs.length,

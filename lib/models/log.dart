@@ -13,7 +13,7 @@ class Log implements DbModel {
   late int modelType;
   late ActionType? eActionType;
   late ModelType? eModelType;
-  late String valueBefore;
+  late String valueBeforeChange;
   late String value;
 
   int? get dbActionType {
@@ -76,6 +76,7 @@ class Log implements DbModel {
       this.participatingClassId = 0,
       this.actionType = 0,
       this.modelType = 0,
+      this.valueBeforeChange = '',
       this.value = '',
       this.eActionType = ActionType.none,
       this.eModelType = ModelType.none}) {
@@ -92,14 +93,11 @@ class Log implements DbModel {
   @override
   void addToDb() {
     ObjectBox.store.box<Log>().put(this);
-    print(ModelType.account.index);
-    print(this);
   }
 
   @override
   getFromDb() {
     ObjectBox.store.box<Log>().get(id);
-    print(this);
   }
 
   @override

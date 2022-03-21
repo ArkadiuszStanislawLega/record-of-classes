@@ -470,7 +470,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(13, 8320701260738490398),
       name: 'Log',
-      lastPropertyId: const IdUid(8, 4052771601871698768),
+      lastPropertyId: const IdUid(9, 2649204837924431534),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -512,6 +512,11 @@ final _entities = <ModelEntity>[
             id: const IdUid(8, 4052771601871698768),
             name: 'dbModelType',
             type: 6,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(9, 2649204837924431534),
+            name: 'valueBeforeChange',
+            type: 9,
             flags: 0)
       ],
       relations: <ModelRelation>[],
@@ -771,11 +776,11 @@ ModelDefinition getObjectBoxModel() {
           final rootOffset = buffer.derefObject(0);
 
           final object = Bill(
-              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0))
-            ..isPaid =
-                const fb.BoolReader().vTableGet(buffer, rootOffset, 6, false)
-            ..price =
-                const fb.Float64Reader().vTableGet(buffer, rootOffset, 12, 0);
+              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
+              isPaid:
+                  const fb.BoolReader().vTableGet(buffer, rootOffset, 6, false),
+              price: const fb.Float64Reader()
+                  .vTableGet(buffer, rootOffset, 12, 0));
           object.attendance.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0);
           object.attendance.attach(store);
@@ -1046,7 +1051,9 @@ ModelDefinition getObjectBoxModel() {
         },
         objectToFB: (Log object, fb.Builder fbb) {
           final valueOffset = fbb.writeString(object.value);
-          fbb.startTable(9);
+          final valueBeforeChangeOffset =
+              fbb.writeString(object.valueBeforeChange);
+          fbb.startTable(10);
           fbb.addInt64(0, object.id);
           fbb.addInt64(1, object.participatingClassId);
           fbb.addInt64(2, object.date.millisecondsSinceEpoch);
@@ -1055,6 +1062,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addInt64(5, object.modelType);
           fbb.addInt64(6, object.dbActionType);
           fbb.addInt64(7, object.dbModelType);
+          fbb.addOffset(8, valueBeforeChangeOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -1076,8 +1084,10 @@ ModelDefinition getObjectBoxModel() {
                 const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0))
             ..dbActionType =
                 const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 16)
-            ..dbModelType = const fb.Int64Reader()
-                .vTableGetNullable(buffer, rootOffset, 18);
+            ..dbModelType =
+                const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 18)
+            ..valueBeforeChange =
+                const fb.StringReader().vTableGet(buffer, rootOffset, 20, '');
 
           return object;
         })
@@ -1371,4 +1381,8 @@ class Log_ {
   /// see [Log.dbModelType]
   static final dbModelType =
       QueryIntegerProperty<Log>(_entities[12].properties[7]);
+
+  /// see [Log.valueBeforeChange]
+  static final valueBeforeChange =
+      QueryStringProperty<Log>(_entities[12].properties[8]);
 }

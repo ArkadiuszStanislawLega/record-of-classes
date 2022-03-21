@@ -72,28 +72,30 @@ class Account implements DbModel {
 
   void fundBalance(double value) {
     if (value > 0) {
-      balance += value;
-      update(this);
-
       Log log = Log(
           modelType: ModelType.account.index,
           actionType: ActionType.increase.index,
           participatingClassId: id,
+          valueBeforeChange: balance.toString(),
           value: value.toString());
+
+      balance += value;
+      ObjectBox.store.box<Account>().put(this);
       log.addToDb();
     }
   }
 
   void reduceBalance(double value) {
     if (value > 0) {
-      balance -= value;
-      update(this);
-
       Log log = Log(
           modelType: ModelType.account.index,
           actionType: ActionType.decrease.index,
           participatingClassId: id,
-          value: value.toString());
+          valueBeforeChange: balance.toString(),
+          value: '-${value.toString()}');
+
+      balance -= value;
+      ObjectBox.store.box<Account>().put(this);
       log.addToDb();
     }
   }
@@ -120,7 +122,7 @@ class Account implements DbModel {
   @override
   void update(updateObject) {
     balance = updateObject.balance;
-    addToDb();
+    ObjectBox.store.box<Account>().put(this);
 
     Log log = Log(
         modelType: ModelType.account.index,

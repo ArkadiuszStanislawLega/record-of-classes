@@ -63,9 +63,6 @@ class _LogListItemTemplateState extends State<LogListItemTemplate> {
             child: Column(
               children: [
                 _account.id > 0 ? _showAccount() : _showBill(),
-                widget.log.value == ''
-                    ? const SizedBox()
-                    : Text('Wartość: ${widget.log.value}'),
               ],
             ),
           ),
@@ -75,19 +72,31 @@ class _LogListItemTemplateState extends State<LogListItemTemplate> {
   }
 
   Widget _showAccount() {
-    return Column(
-      children: [
-        Text(_account.student.target!.introduceYourself()),
-        Text('Aktualny stan konta: ${_account.balance.toString()}${AppStrings.currency}')
-      ],
-    );
+    return widget.log.eActionType == ActionType.add
+        ? Column(
+            children: [
+              Text(
+                  'Utworzono konto dla: ${_account.student.target!.person.target!.introduceYourself()}')
+            ],
+          )
+        : Column(
+            children: [
+              Text(_account.student.target!.introduceYourself()),
+              Text(
+                  'Konto przed zmianą: ${widget.log.valueBeforeChange}${AppStrings.currency}'),
+              Text('Wartość zmiany: ${widget.log.value}${AppStrings.currency}'),
+              (double.tryParse(widget.log.valueBeforeChange) != null &&
+                      double.tryParse(widget.log.value) != null)
+                  ? Text(
+                      'Konto po zmianie: ${(double.parse(widget.log.valueBeforeChange) + double.parse(widget.log.value)).toStringAsFixed(2)}${AppStrings.currency}')
+                  : SizedBox()
+            ],
+          );
   }
 
   Widget _showBill() {
     return Column(
-      children: [
-        Text(_bill.toString())
-      ],
+      children: [Text(_bill.toString())],
     );
   }
 
