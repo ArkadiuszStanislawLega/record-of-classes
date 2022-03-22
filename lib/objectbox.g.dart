@@ -504,16 +504,6 @@ final _entities = <ModelEntity>[
             type: 6,
             flags: 0),
         ModelProperty(
-            id: const IdUid(7, 7450540750696206815),
-            name: 'dbActionType',
-            type: 6,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(8, 4052771601871698768),
-            name: 'dbModelType',
-            type: 6,
-            flags: 0),
-        ModelProperty(
             id: const IdUid(9, 2649204837924431534),
             name: 'valueBeforeChange',
             type: 9,
@@ -558,7 +548,9 @@ ModelDefinition getObjectBoxModel() {
         3706186507634068022,
         4785750695672916933,
         7851124295830647492,
-        3511719454620364937
+        3511719454620364937,
+        7450540750696206815,
+        4052771601871698768
       ],
       retiredRelationUids: const [
         1221970440210856162,
@@ -1060,8 +1052,6 @@ ModelDefinition getObjectBoxModel() {
           fbb.addOffset(3, valueOffset);
           fbb.addInt64(4, object.actionType);
           fbb.addInt64(5, object.modelType);
-          fbb.addInt64(6, object.dbActionType);
-          fbb.addInt64(7, object.dbModelType);
           fbb.addOffset(8, valueBeforeChangeOffset);
           fbb.finish(fbb.endTable());
           return object.id;
@@ -1078,16 +1068,12 @@ ModelDefinition getObjectBoxModel() {
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0),
               modelType:
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0),
+              valueBeforeChange:
+                  const fb.StringReader().vTableGet(buffer, rootOffset, 20, ''),
               value:
                   const fb.StringReader().vTableGet(buffer, rootOffset, 10, ''))
             ..date = DateTime.fromMillisecondsSinceEpoch(
-                const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0))
-            ..dbActionType =
-                const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 16)
-            ..dbModelType =
-                const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 18)
-            ..valueBeforeChange =
-                const fb.StringReader().vTableGet(buffer, rootOffset, 20, '');
+                const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0));
 
           return object;
         })
@@ -1374,15 +1360,7 @@ class Log_ {
   static final modelType =
       QueryIntegerProperty<Log>(_entities[12].properties[5]);
 
-  /// see [Log.dbActionType]
-  static final dbActionType =
-      QueryIntegerProperty<Log>(_entities[12].properties[6]);
-
-  /// see [Log.dbModelType]
-  static final dbModelType =
-      QueryIntegerProperty<Log>(_entities[12].properties[7]);
-
   /// see [Log.valueBeforeChange]
   static final valueBeforeChange =
-      QueryStringProperty<Log>(_entities[12].properties[8]);
+      QueryStringProperty<Log>(_entities[12].properties[6]);
 }

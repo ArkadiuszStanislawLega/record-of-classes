@@ -10,6 +10,7 @@ import 'package:record_of_classes/models/bill.dart';
 import 'package:record_of_classes/models/classes.dart';
 import 'package:record_of_classes/models/classes_type.dart';
 import 'package:record_of_classes/models/group.dart';
+import 'package:record_of_classes/models/log.dart';
 import 'package:record_of_classes/models/parent.dart';
 import 'package:record_of_classes/models/student.dart';
 import 'package:record_of_classes/models/teacher.dart';

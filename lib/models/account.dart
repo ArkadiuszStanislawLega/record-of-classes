@@ -76,7 +76,7 @@ class Account implements DbModel {
           modelType: ModelType.account.index,
           actionType: ActionType.increase.index,
           participatingClassId: id,
-          valueBeforeChange: balance.toString(),
+          valueBeforeChange: balance.toStringAsFixed(2),
           value: value.toString());
 
       balance += value;
@@ -91,7 +91,7 @@ class Account implements DbModel {
           modelType: ModelType.account.index,
           actionType: ActionType.decrease.index,
           participatingClassId: id,
-          valueBeforeChange: balance.toString(),
+          valueBeforeChange: balance.toStringAsFixed(2),
           value: '-${value.toString()}');
 
       balance -= value;

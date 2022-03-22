@@ -12,13 +12,9 @@ class CreateClassesTypePage extends StatelessWidget {
       AddNewClassesTypeTemplate();
 
   late ClassesType _createdClassType;
-  late Function? _createFunction;
-  Map _args = {};
 
   @override
   Widget build(BuildContext context) {
-    // _args = ModalRoute.of(context)!.settings.arguments as Map;
-    // _createFunction = _args[AppStrings.function];
 
     return Scaffold(
       appBar: AppBar(
@@ -41,7 +37,6 @@ class CreateClassesTypePage extends StatelessWidget {
       _createdClassType = _addNewClassesTypeTemplate.getClassType();
       _createdClassType.teacher.target = _getTeacherFromDb();
       _createdClassType.addToDb();
-      // _createFunction!(_createdClassType);
 
       SnackBarInfoTemplate(
           context: context,

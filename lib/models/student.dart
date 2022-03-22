@@ -57,10 +57,7 @@ class Student implements DbModel {
     personBox.remove(parent.person.target!.id);
   }
 
-  void fundAccountDb(double value) {
-    account.target!.fundBalance(value);
-    account.target!.addToDb();
-  }
+  void fundAccountDb(double value) => account.target!.fundBalance(value);
 
   void removeSelectedParentRelation(Parent parent) {
     parent.children.removeWhere((s) => s.id == id);
