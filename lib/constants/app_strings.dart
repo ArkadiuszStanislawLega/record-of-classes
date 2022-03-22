@@ -76,6 +76,7 @@ class AppStrings {
       date = 'Data',
       dateOfClasses = 'Data zajęć',
       delete = 'Usuń',
+  deletedStudent = 'Usunięty uczeń',
       details = 'Szczegóły',
       dialogWarningMessageRemoveClasses =
           'Potwierdzenie usunięcia sprawi że wszystkie rachunki i obecności z tych zajęć zostaną usunięte bezpowrotnie. Opłacone zajęcia nie zwrócą środków na saldo uczestników za zajęcia w których są potwierdzone obecności.',
@@ -143,6 +144,7 @@ class AppStrings {
       numberOfStudentContacts = 'Ilość numerów uczniów',
       ok = 'OK',
       onDate = 'w dniu',
+      operationHistory = 'Historia operacji',
       otherwiseTheDbWillNotBeImpoertedCorrectly =
           'W przeciwnym wypadku nie zostanie poprawnie zaimportowana baza.',
       paid = 'Zapłacono',

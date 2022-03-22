@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:record_of_classes/constants/app_colours.dart';
 import 'package:record_of_classes/constants/app_strings.dart';
 import 'package:record_of_classes/enumerators/ActionType.dart';
+import 'package:record_of_classes/enumerators/ModelType.dart';
 import 'package:record_of_classes/main.dart';
 import 'package:record_of_classes/models/account.dart';
 import 'package:record_of_classes/models/bill.dart';
@@ -18,19 +20,9 @@ class _LogListItemTemplateState extends State<LogListItemTemplate> {
   Account _account = Account();
   Bill _bill = Bill();
 
-  final Map _colorsDependsOnActionType = {
-    ActionType.none.index: Colors.white,
-    ActionType.add.index: Colors.green,
-    ActionType.remove.index: Colors.red,
-    ActionType.update.index: Colors.blue,
-    ActionType.create.index: Colors.lightGreenAccent,
-    ActionType.increase.index: Colors.black38,
-    ActionType.decrease.index: Colors.orange,
-  };
-
   @override
   Widget build(BuildContext context) {
-    _enumToModel();
+    _downloadModelDependsOnType();
     return Container(
       margin: const EdgeInsets.only(bottom: 2.0),
       decoration: const BoxDecoration(
@@ -45,25 +37,8 @@ class _LogListItemTemplateState extends State<LogListItemTemplate> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Container(
-                  padding: const EdgeInsets.all(10.0),
-                  color: Colors.blue,
-                  child: Text(
-                    widget.log.id.toString(),
-                    style: Theme.of(context).textTheme.headline2,
-                  ),
-                ),
-                Container(
-                  padding: const EdgeInsets.all(10.0),
-                  decoration: const BoxDecoration(
-                      borderRadius:
-                          BorderRadius.only(bottomRight: Radius.circular(20)),
-                      color: Colors.black26),
-                  child: Text(
-                    '${formatDate(widget.log.date)} ${formatTime(widget.log.date)}',
-                    style: Theme.of(context).textTheme.headline2,
-                  ),
-                ),
+                _showIdNumber(),
+                _showDate(),
               ],
             ),
           ),
@@ -73,23 +48,7 @@ class _LogListItemTemplateState extends State<LogListItemTemplate> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  margin: const EdgeInsets.only(top: 9.0),
-                  padding: const EdgeInsets.all(5.0),
-                  decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.only(
-                          bottomRight: Radius.circular(20)),
-                      color: _colorsDependsOnActionType[widget.log.actionType]),
-                  child: RotatedBox(
-                    quarterTurns: 1,
-                    child: RichText(
-                      text: TextSpan(
-                        text: _actionTypeToString(),
-                        style: Theme.of(context).textTheme.headline2,
-                      ),
-                    ),
-                  ),
-                ),
+                _showTypeOfLog(),
                 Column(
                   children: [
                     _account.id > 0 ? _showAccount() : _showBill(),
@@ -103,29 +62,85 @@ class _LogListItemTemplateState extends State<LogListItemTemplate> {
     );
   }
 
+  Widget _showIdNumber() => Container(
+        padding: const EdgeInsets.all(10.0),
+        color: Colors.blue,
+        child: Text(
+          widget.log.id.toString(),
+          style: Theme.of(context).textTheme.headline2,
+        ),
+      );
+
+  Widget _showDate() => Container(
+        padding: const EdgeInsets.all(10.0),
+        decoration: const BoxDecoration(
+            borderRadius: BorderRadius.only(bottomRight: Radius.circular(20)),
+            color: Colors.black26),
+        child: Text(
+          '${formatDate(widget.log.date)} ${formatTime(widget.log.date)}',
+          style: Theme.of(context).textTheme.headline2,
+        ),
+      );
+
+  Widget _showTypeOfLog() => Container(
+        margin: const EdgeInsets.only(top: 9.0),
+        padding: EdgeInsets.all(widget.log.id > 9 ? 9.0 : 5.0),
+        decoration: BoxDecoration(
+            borderRadius:
+                const BorderRadius.only(bottomRight: Radius.circular(20)),
+            color: AppColors.colorsDependsOnActionType[widget.log.actionType]),
+        child: RotatedBox(
+          quarterTurns: 1,
+          child: RichText(
+            text: TextSpan(
+              text: _convertActionTypeToString(),
+              style: Theme.of(context).textTheme.headline2,
+            ),
+          ),
+        ),
+      );
+
   Widget _showAccount() {
-    return widget.log.eActionType == ActionType.add
-        ? Column(
-            children: [
-              Text(
-                  '${AppStrings.accountWasCreatedFor}: ${_account.student.target!.person.target!.introduceYourself()}')
-            ],
-          )
-        : Column(
-            children: [
-              Text(_account.student.target!.introduceYourself()),
-              Text(
-                  '${AppStrings.accountBalanceBeforeChange}: ${widget.log.valueBeforeChange}${AppStrings.currency}'),
-              Text(
-                  '${AppStrings.changeValue}: ${widget.log.value}${AppStrings.currency}'),
-              (double.tryParse(widget.log.valueBeforeChange) != null &&
-                      double.tryParse(widget.log.value) != null)
-                  ? Text(
-                      '${AppStrings.accountBalanceBeforeChange}: ${(double.parse(widget.log.valueBeforeChange) + double.parse(widget.log.value)).toStringAsFixed(2)}${AppStrings.currency}')
-                  : SizedBox()
-            ],
-          );
+    final Map _accountWidgetDependsOnType = {
+      ActionType.add: _showCreatedAccount(),
+      ActionType.update: _showUpdateAccount(),
+      ActionType.increase: _showUpdateAccount(),
+      ActionType.decrease: _showUpdateAccount(),
+    };
+    if (_accountWidgetDependsOnType.containsKey(widget.log.eActionType)) {
+      return _accountWidgetDependsOnType[widget.log.eActionType];
+    }
+    return _showUpdateAccount();
   }
+
+  Widget _showCreatedAccount() => Column(
+        children: [
+          Text(
+              '${AppStrings.accountWasCreatedFor}: ${_account.student.target!.person.target!.introduceYourself()}')
+        ],
+      );
+
+  Widget _showUpdateAccount() => Column(
+        children: [
+          Text(
+            _account.student.target == null
+                ? AppStrings.deletedStudent
+                : _account.student.target!.introduceYourself(),
+          ),
+          Text(
+            '${AppStrings.accountBalanceBeforeChange}: ${widget.log.valueBeforeChange}${AppStrings.currency}',
+          ),
+          Text(
+            '${AppStrings.changeValue}: ${widget.log.value}${AppStrings.currency}',
+          ),
+          (double.tryParse(widget.log.valueBeforeChange) != null &&
+                  double.tryParse(widget.log.value) != null)
+              ? Text(
+                  '${AppStrings.accountBalanceAfterChange}: ${(double.parse(widget.log.valueBeforeChange) + double.parse(widget.log.value)).toStringAsFixed(2)}${AppStrings.currency}',
+                )
+              : const SizedBox()
+        ],
+      );
 
   Widget _showBill() {
     return Column(
@@ -133,28 +148,19 @@ class _LogListItemTemplateState extends State<LogListItemTemplate> {
     );
   }
 
-  void _enumToModel() {
-    if (widget.log.modelType == 1) {
+  void _downloadModelDependsOnType() {
+    if (widget.log.modelType == ModelType.account.index) {
       _account =
           ObjectBox.store.box<Account>().get(widget.log.participatingClassId)!;
-    } else if (widget.log.modelType == 2) {
+    } else if (widget.log.modelType == ModelType.bill.index) {
       _bill = ObjectBox.store.box<Bill>().get(widget.log.participatingClassId)!;
     }
   }
 
-  String _actionTypeToString() {
-    Map strings = {
-      ActionType.none.index: AppStrings.lack,
-      ActionType.add.index: AppStrings.added,
-      ActionType.remove.index: AppStrings.removed,
-      ActionType.update.index: AppStrings.updated,
-      ActionType.create.index: AppStrings.created,
-      ActionType.increase.index: AppStrings.enlarged,
-      ActionType.decrease.index: AppStrings.reduced,
-    };
-    if (strings.containsKey(widget.log.actionType)) {
-      return strings[widget.log.actionType];
+  String _convertActionTypeToString() {
+    if (convertActionTypeToString.containsKey(widget.log.actionType)) {
+      return convertActionTypeToString[widget.log.actionType];
     }
-    return strings[ActionType.none];
+    return convertActionTypeToString[ActionType.none];
   }
 }

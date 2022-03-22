@@ -1,6 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:record_of_classes/enumerators/ActionType.dart';
 
 class AppColors{
+  static final Map colorsDependsOnActionType = {
+    ActionType.none.index: Colors.white,
+    ActionType.add.index: Colors.green,
+    ActionType.remove.index: Colors.red,
+    ActionType.update.index: Colors.blue,
+    ActionType.create.index: Colors.lightGreenAccent,
+    ActionType.increase.index: Colors.black38,
+    ActionType.decrease.index: Colors.orange,
+  };
+
   static final Color classesTypeBackground = Colors.brown.shade700,
       groupBackground = Colors.brown.shade300,
       borderColor = Colors.white60,
